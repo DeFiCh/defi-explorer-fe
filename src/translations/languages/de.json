@@ -1,0 +1,337 @@
+{
+  "components": {
+    "keyValueLi": {
+      "copied": "Kopiert!"
+    },
+    "syncStatus": {
+      "synchronized": "Synchronisiert",
+      "syncing": "Synchronisieren",
+      "synced": "Synchronisiert",
+      "justNow": "Synchronisiert gerade jetzt",
+      "aMinuteAgo": "Synchronisiert vor einer minute",
+      "blockInfo": "Block %{latestSyncedBlock} von %{latestBlock}",
+      "network": "Netzwerk"
+    }
+  },
+  "containers": {
+    "sideBar": {
+      "balance": "Balance",
+      "dfi": "DFI",
+      "wallet": "Brieftasche",
+      "masterNodes": "Masterknoten",
+      "blockchain": "Blockchain",
+      "tokens": "Zeichen",
+      "exchange": "Austausch",
+      "help": "Helfen",
+      "settings": "Einstellungen",
+      "console": "Konsole"
+    },
+    "blockChainPage": {
+      "blockChainPage": {
+        "title": "Blockchain – DeFi Blockchain-Client",
+        "blockchain": "Blockchain"
+      },
+      "blockChainTable": {
+        "height": "Höhe",
+        "age": "Alter",
+        "transactions": "Transaktionen",
+        "minedBy": "Gefördert durch",
+        "size": "Größe",
+        "paginationRange": "%{from} – %{to} von %{total} - Blöcke",
+        "noBlocks": "Keine Blöcke zur Verfügung",
+        "loading": "Wird geladen..."
+      },
+      "blockPage": {
+        "block": "Block",
+        "title": "– DeFi Blockchain-Client",
+        "blockchain": "Blockchain",
+        "transactions": "Transaktionen",
+        "noOfTransactions": "Anzahl der Transaktionen",
+        "difficulty": "Schwierigkeit",
+        "height": "Höhe",
+        "bits": "Bits",
+        "blockReward": "Block-Belohnung",
+        "version": "Version",
+        "minedBy": "Gefördert durch",
+        "nonce": "Nonce",
+        "blockHash": "Block-hash",
+        "merkleRoot": "Merkle root"
+      },
+      "blockTxn": {
+        "noInputs": "Keine Eingänge (Neu Generierten Coins)",
+        "copied": "Kopiert!",
+        "dFI": "DFI",
+        "unparsedAddress": "Nicht geparste Adresse",
+        "paginationRange": "%{from} – %{to} von %{total} von Transaktionen",
+        "noTransactions": "Keine Transaktionen verfügbar",
+        "loading": "Loading..."
+      },
+      "minerPage": {
+        "miner": "Bergmann",
+        "defiBlockChainClient": "DeFi Blockchain-Client",
+        "blockchain": "Blockchain"
+      }
+    },
+    "errors": {
+      "title": "DFI Block Processing Center – DeFi Blockchain-Client",
+      "header": "DFI Block Processing Center",
+      "detail": "Es scheint, Sie haben stolperte zufällig hier. Dies ist, wo unsere Mitarbeiter sorgen dafür, dass jeder DFI-block ordnungsgemäß befestigt an der Kette. Denn dies ist ein Sperrgebiet, wir bitten Sie, sich umzudrehen.",
+      "goBack": "Gehen Sie zurück"
+    },
+    "exchangePage": {
+      "title": "Exchange – DeFi Blockchain-Client",
+      "exchange": "Exchange",
+      "section": "Abschnitt",
+      "footerBar": "Footer Bar"
+    },
+    "helpPage": {
+      "title": "Hilfe – DeFi Blockchain-Client",
+      "help": "Helfen",
+      "section": "Abschnitt"
+    },
+    "masterNodes": {
+      "masterNodesPage": {
+        "title": "Masternodes – DeFi Blockchain-Client",
+        "createMasterNode": "Erstellen",
+        "masterNodes": "Masternodes",
+        "statistics": "Statistik",
+        "list": "Liste",
+        "weeklyIncome": "Wöchentliches Einkommen",
+        "volume": "Volumen",
+        "marketCap": "Cap-Markt",
+        "returnPerAnnum": "Rendite pro Jahr",
+        "paidRewards": "Bezahlte Prämien",
+        "rewardFrequency": "Belohnung Frequenz",
+        "activeMasterNodes": "Aktive masternodes",
+        "supply": "Lieferung",
+        "lockedInCollateral": "Gesperrt Sicherheiten",
+        "costPerMasterNode": "Kosten pro Master-Knoten",
+        "masternodeWorth": "Master-Knoten lohnt sich",
+        "searchBar": "Suche nach Masternodes"
+      },
+      "masterNodesList": {
+        "ownerAddress": "Besitzer Adresse",
+        "operatorAddress": "Betreiber-Adresse",
+        "registered": "Registriert",
+        "mintedBlocks": "Geprägt Blöcke",
+        "noMasterNodes": "Keine Masterknoten verfügbar"
+      },
+      "createMasterNode": {
+        "title": "Erstellen Sie Master-Knoten",
+        "masterNodeName": "Master-Knoten-Name",
+        "lackOfBalanceMsg": "Keine Master-Knoten aufgrund fehlender Mittel. Mindestens 1 million DFI ist erforderlich zum erstellen der master-Knoten",
+        "confirmationText": "Sind Sie sicher, dass Sie möchten, erstellen Sie ein master-Knoten?",
+        "restartNodeConfirmationText": "Are you sure you want to restart a node?",
+        "createNodeButton": "Erstellen Sie Master-Knoten",
+        "noButtonText": "Abbrechen",
+        "yesButtonText": "Weiter",
+        "masternodeOperator": "Master-Knoten Betreiber",
+        "masternodeOwner": "Master-Knoten Besitzer",
+        "backToMasternodePage": "Schließen",
+        "restartNodeButton": "Restart node",
+        "masterNodeSuccess": "You can manually set masternode config in defi.conf or you can automatic set this masternode config by restarting the node.",
+        "collaterAddress": "Collateral Address",
+        "masternodeOperatorNotOptional": "Operator Address",
+        "masternodeOperatorOptional": "Operator Address (Optional)",
+        "noticeMasternodeOperator": "If masternode operator is different from owner",
+        "noticeMasternodeOwner": "Owner address where collateral funds will be drawned from"
+      },
+      "masternodeDetailPage": {
+        "masternodeDetailTitle": "Master-Knoten-Detail-Seite %{hash}",
+        "masternode": "Master-Knoten",
+        "masternodeDetail": "Master-Knoten-Details",
+        "ownerAddress": "Besitzer Adresse",
+        "operatorAddress": "Betreiber-Adresse",
+        "state": "Zustand",
+        "hash": "Hash",
+        "registered": "Registriert",
+        "mintedBlocks": "Geprägt Blöcke",
+        "resignHeight": "Rücktritt Höhe",
+        "resignTx": "Rücktritt Tx",
+        "banHeight": "Ban Höhe",
+        "banTx": "Ban Tx",
+        "resignMasterNode": "Rücktritt",
+        "confirmation": "Sind Sie sicher, dass Sie zurücktreten möchten ein master-Knoten?",
+        "noButtonText": "Abbrechen",
+        "yesButtonText": "Weiter",
+        "successText": "Erfolg",
+        "backToMasternodePage": "Zurück zu Master-Knoten Seite"
+      },
+      "masternodeTab": {
+        "myMasternodes": "Bergwerk",
+        "network": "Netzwerk"
+      }
+    },
+    "settings": {
+      "title": "Einstellungen – DeFi Blockchain-Client",
+      "settings": "Einstellungen",
+      "general": "Allgemeine",
+      "display": "Anzeigen",
+      "launchOptions": "Start Optionen",
+      "launchAtLogin": "Start bei der Anmeldung",
+      "minimizedAtLaunch": "Minimiert beim starten",
+      "storage": "Lagerung",
+      "pruneBlockStorage": "Prune block storage",
+      "blockPruneStorage": "Block storage zu beschneiden",
+      "gb": "GB",
+      "databaseSize": "Größe des Datenbank-cache",
+      "utxoConsolidator": "UTXO Konsolidierer",
+      "maximumAmount": "Maximaler Wert von jedem UTXO",
+      "maximumCount": "Maximale Anzahl von UTXOs",
+      "feeRate": "Gebührensatz in DFI/kB",
+      "mib": "MiB",
+      "scriptVerification": "Skript verification",
+      "noOfThreads": "Anzahl der threads",
+      "appLanguage": "App Sprache",
+      "english": "Englisch",
+      "german": "Deutsch",
+      "french": "French",
+      "displayAmount": "Anzeige Beträge in Einheit",
+      "dFI": "DFI",
+      "fi": "fi",
+      "conversionLabel": "1 %{from} = %{conversion} %{to}",
+      "µDFI": "µDFI",
+      "displayMode": "Display-Modus",
+      "sameAsSystem": "Gleiche wie system",
+      "light": "Licht",
+      "dark": "Dunkel",
+      "unsavedChanges": "Sie haben ungespeicherte änderungen",
+      "saveSettings": "Speichern Sie die Einstellungen",
+      "network": "Netzwerk",
+      "mainnet": "Mainnet",
+      "testnet": "Testnet",
+      "regnet": "Regnet"
+    },
+    "wallet": {
+      "sendPage": {
+        "sendDFITitle": "Senden DFI – DeFi Blockchain-Client",
+        "wallet": "Brieftasche",
+        "sendDFI": "Senden DFI",
+        "amount": "Höhe",
+        "dFI": "DFI",
+        "max": "MAX",
+        "toAddress": "Adresse",
+        "walletBalance": "Brieftasche-Guthaben",
+        "amountToSend": "Betrag senden",
+        "cancel": "Abbrechen",
+        "continue": "Weiter",
+        "to": "Zu",
+        "pleaseVerifyAmount": "Bitte überprüfen Sie den Betrag und Empfänger",
+        "completeSend": "Komplett Senden",
+        "sendFailed": "Beim Senden des Betrags ist ein Fehler aufgetreten",
+        "transactionSuccessMsg": "Die Transaktion war ein voller Erfolg. Ihr wallet-Guthaben wird aktualisiert, sobald die Transaktion bestätigt wurde durch die DeFi-Blockchain.",
+        "backToWallet": "Zurück zum Geldbeutel",
+        "dfiAddress": "DFI-Adresse"
+      },
+      "receivePage": {
+        "receiveDFITitle": "Erhalten DFI – DeFi Blockchain-Client",
+        "wallet": "Brieftasche",
+        "receiveDFI": "Erhalten DFI",
+        "optional": "Freiwillig",
+        "amount": "Höhe",
+        "dFI": "DFI",
+        "message": "Nachricht",
+        "label": "Label",
+        "amountToReceive": "Betrag zu Erhalten",
+        "addressNotAvailable": "Adresse nicht verfügbar",
+        "cancel": "Abbrechen",
+        "continue": "Weiter",
+        "receive": "Receive",
+        "newAddressButton": "New Address",
+        "addressLabel": "Address label",
+        "createNewAddressNotice": "Give your new DFI address a meaningful label",
+        "createNewReceiveAddressLabel": "Create new receive address",
+        "backButton": "Back",
+        "createButton": "Create"
+      },
+      "paymentRequests": {
+        "time": "Zeit",
+        "amount": "Höhe",
+        "message": "Nachricht",
+        "cancelRequest": "Anforderung Abbrechen"
+      },
+      "paymentRequestList": {
+        "label": "Label",
+        "address": "Address",
+        "created": "Created"
+      },
+      "paymentRequestPage": {
+        "paymentRequestTitle": "Zahlungsaufforderung %{id} – DeFi Blockchain-Client",
+        "paymentRequest": "Zahlungsaufforderung",
+        "wallet": "Brieftasche",
+        "delete": "Löschen",
+        "label": "Label",
+        "amount": "Höhe",
+        "time": "Zeit",
+        "message": "Nachricht",
+        "address": "Adresse",
+        "uRI": "URI"
+      },
+      "walletPage": {
+        "walletDefiClient": "Brieftasche – DeFi Blockchain-Client",
+        "wallet": "Brieftasche",
+        "delete": "Löschen",
+        "send": "Senden",
+        "receive": "Erhalten",
+        "paymentRequests": "Zahlungsanordnungen",
+        "noPaymentRequests": "Keine Zahlung Anfragen zur Verfügung",
+        "paginationRange": "%{from} – %{to} von %{total} Zahlungsaufforderung",
+        "transactions": "Transaktionen",
+        "availableBalance": "Verfügbares Guthaben",
+        "pending": "Ausstehend"
+      },
+      "walletTxns": {
+        "height": "Höhe",
+        "time": "Zeit",
+        "amount": "Höhe",
+        "hash": "Hash",
+        "paginationRange": "%{from} – %{to} von %{total} Transaktion",
+        "noTransactions": "Keine Transaktionen verfügbar"
+      }
+    },
+    "console": {
+      "consolePage": {
+        "consoleDefiClient": "Konsole – DeFi Blockchain-Client",
+        "defiCliCommand": "Geben Sie Defi-cli-Befehl",
+        "console": "Konsole",
+        "submit": "Senden",
+        "forRef": "Für Referenz",
+        "example": [
+          {
+            "title": "sendtoaddress",
+            "highlightText": "sendtoaddress \"address\" Betrag ( \"Kommentar\", \"comment_to\" subtractfeefromamount austauschbare conf_target \"estimate_mode\" )",
+            "cmdText": "defi-cli sendtoaddress \"1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 \"Spende\" \"seans outpost\""
+          },
+          {
+            "title": "getblock",
+            "highlightText": "getblock \"blockhash\" ( Ausführlichkeit )",
+            "cmdText": "defi-cli getblock \"00000000c937983704a73af28acdec37b049d214adbda81d7e2a3dd146f6ed09\""
+          }
+        ]
+      },
+      "consoleResultPage": {
+        "resultPage": "CLI-Ergebnis",
+        "back": "Zurück"
+      }
+    }
+  },
+  "alerts": {
+    "configurationFailure": "Konfigurationsfehler",
+    "walletBalanceFailure": "Brieftasche Balance Fehler",
+    "pendingBalanceFailure": "Pending Balance Fehler",
+    "addReceiveTxnsFailure": "Fügen Sie Erhalten Txns Fehler",
+    "removeReceiveTxnsFailure": "Entfernen Sie Den Empfangs-Txns Fehler",
+    "paymentRequestsFailure": "Zahlung-Anfragen Scheitern",
+    "walletTxnsFailure": "Brieftasche Txns Fehler",
+    "sendDataFailure": "Senden Von Daten Fehler",
+    "errorOccurred": "Fehler aufgetreten",
+    "success": "Erfolg",
+    "backupSuccess": "Brieftasche backup erfolgreich abgeschlossen",
+    "importSuccess": "Import-wallet erfolgreich abgeschlossen",
+    "masterNodeOperatorAddressFailure": "Masternode operator address is not present",
+    "restartNode": "Restarting Node",
+    "nodeDisconnected": "Node is disconnected",
+    "electronRequiredError": "Electron app is needed for restart",
+    "addressIsNotAPartOfWallet": "%{addressName} is not a part of wallet."
+  }
+}
