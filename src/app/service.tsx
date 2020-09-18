@@ -1,5 +1,4 @@
 import { isElectron, ipcRendererFunc } from '../utils/isElectron';
-import RpcClient from '../utils/rpc-client';
 import * as log from '../utils/electronLogger';
 import { eventChannel } from 'redux-saga';
 
@@ -36,14 +35,4 @@ export const stopBinary = () => {
   }
   // For webapp
   return { success: true, data: {} };
-};
-
-export const backupWallet = async (paths: string) => {
-  const rpcClient = new RpcClient();
-  return '';
-};
-
-export const importWallet = async (paths: string[]) => {
-  const rpcClient = new RpcClient();
-  return '';
 };
