@@ -1,0 +1,123 @@
+//
+// Floating labels
+//
+
+.form-label-group {
+  position: relative;
+}
+
+.form-label-group label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  display: block;
+  width: 100%;
+  margin-bottom: 0; /* Override default `<label>` margin */
+  padding: $input-padding-y $input-padding-x;
+  pointer-events: none;
+  cursor: text; /* Match the input under the label */
+  border: 1px solid transparent;
+  transition: all .1s ease-in-out;
+  color: $input-placeholder-color;
+}
+
+.form-label-group .col > label {
+  left: $form-grid-gutter-width / 2;
+}
+
+.form-label-group input::placeholder,
+.form-label-group textarea::placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown),
+.form-label-group textarea:not(:placeholder-shown) {
+  padding-top: 1rem;
+  padding-bottom: .25rem;
+
+  ~ label {
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    font-size: .75rem;
+    font-weight: $font-weight-medium;
+    color: $secondary;
+  }
+
+  &:focus ~ label {
+    color: theme-color("primary");
+  }
+}
+
+
+/* Fallback for Edge
+-------------------------------------------------- */
+@supports (-ms-ime-align: auto) {
+  .form-label-group > label {
+    display: none;
+  }
+  .form-label-group input::-ms-input-placeholder {
+    color: $secondary;
+  }
+}
+
+/* Fallback for IE
+-------------------------------------------------- */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .form-label-group > label {
+    display: none;
+  }
+  .form-label-group input:-ms-input-placeholder {
+    color: $secondary;
+  }
+}
+
+
+//
+// Switches
+//
+
+.form-check-label.switch {
+  display: flex;
+  align-items: center;
+
+  input[type="checkbox"] {
+    position: relative;
+    display: inline-block;
+    appearance: none;
+    width: 48px;
+    height: 32px;
+    border: $input-border-width solid $input-border-color;
+    border-radius: 24px;
+    background-color: $dfi-scent;
+    box-shadow: $input-box-shadow;
+    margin-top: 0;
+    margin-right: 16px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    &:before {
+      content: "";
+      display: block;
+      width: 32px;
+      height: 32px;
+      border: $input-border-width solid $input-border-color;
+      border-radius: 24px;
+      background-color: $white;
+      position: absolute;
+      left: -1px;
+      top: -1px;
+      transition: all 0.2s ease;
+    }
+
+    &:checked {
+      background-color: $primary;
+      box-shadow: none;
+
+      &:before {
+        left: 16px;
+      }
+    }
+  }
+}
+
