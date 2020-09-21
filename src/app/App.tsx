@@ -11,8 +11,9 @@ const App: React.FunctionComponent<AppProps> = (props: AppProps) => {
   return <h1>Defi Explorer</h1>
 };
 
-const mapStateToProps = () => {};
+const mapStateToProps = () => ({});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));
