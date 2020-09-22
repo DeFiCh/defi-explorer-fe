@@ -1,6 +1,10 @@
-import { combineReducers } from '@reduxjs/toolkit';
-import { i18nReducer } from 'react-redux-i18n';
+import { combineReducers } from "@reduxjs/toolkit";
+import { i18nReducer } from "react-redux-i18n";
+import websocketReducer from "../containers/Websocket/reducer";
+import appReducer from "../containers/App/reducer";
 
 export default combineReducers({
-  i18n: i18nReducer
+  app: appReducer,
+  i18n: i18nReducer,
+  websocket: websocketReducer,
 });

@@ -1,2 +1,4 @@
-export const BLOCKCHAIN_START_ERROR = 'Unable to start blockchain';
-export const BLOCKCHAIN_START_SUCCESS = 'blockchain started successfully';
+export const BACKEND_BASE_URL = '127.0.0.1';
+export const BACKEND_BASE_PORT = 3000;
+export const CHAIN = process.env.CHAIN || 'DFI';
+export const NETWORK = process.env.NETWORK || 'mainnet';
