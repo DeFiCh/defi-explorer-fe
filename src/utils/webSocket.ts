@@ -1,17 +1,17 @@
-import { BACKEND_BASE_URL, BACKEND_BASE_PORT } from '../constants';
-import io from 'socket.io-client';
-import store from '../app/rootStore';
+import { BACKEND_BASE_URL, BACKEND_BASE_PORT } from "../constants";
+import io from "socket.io-client";
+import store from "../app/rootStore";
 import {
   connected,
   disconnected,
-  newLatestBlocks,
+  newLatestBlock,
   newLatestTransaction,
-  newLatestCoins,
+  newLatestCoin,
   setErrorMessage,
-} from '../containers/Websocket/reducer';
+} from "../containers/Websocket/reducer";
 
 class Websocket {
-  socket: SocketIOClient.Socket;
+  socket?: SocketIOClient.Socket;
   chain: string;
   network: string;
 
@@ -21,32 +21,35 @@ class Websocket {
     } = store.getState();
     this.chain = chain;
     this.network = network;
+    this.connect();
   }
 
   connect = () => {
-    this.socket = io(`https://${BACKEND_BASE_URL}:${BACKEND_BASE_PORT}`, {
-      transports: ['websocket'],
+    this.socket = io(`http://${BACKEND_BASE_URL}:${BACKEND_BASE_PORT}`, {
+      transports: ["websocket"],
     });
-    this.socket.on('connect', () => {
-      store.dispatch(connected());
-      this.socket.emit('room', `/${this.chain}/${this.network}/inv`);
+    this.socket.on("connect", () => {
+      if (this.socket) {
+        store.dispatch(connected());
+        this.socket.emit("room", `/${this.chain}/${this.network}/inv`);
+      }
     });
 
-    this.socket.on('disconnect', () => {
+    this.socket.on("disconnect", () => {
       store.dispatch(disconnected());
     });
 
-    this.socket.on('tx', (data) => {
+    this.socket.on("tx", (data) => {
       store.dispatch(newLatestTransaction(data));
     });
 
-    this.socket.on('block', (data) => {
-      store.dispatch(newLatestBlocks(data));
+    this.socket.on("block", (data) => {
+      store.dispatch(newLatestBlock(data));
     });
-    this.socket.on('coin', (data) => {
-      store.dispatch(newLatestCoins(data));
+    this.socket.on("coin", (data) => {
+      store.dispatch(newLatestCoin(data));
     });
-    this.socket.on('error', (data) => {
+    this.socket.on("error", (data) => {
       store.dispatch(setErrorMessage(data));
     });
   };

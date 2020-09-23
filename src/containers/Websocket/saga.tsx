@@ -1,32 +1,86 @@
-import { actionChannel, all, take } from 'redux-saga/effects';
+import { cloneDeep } from "lodash";
 import {
-  newLatestBlocks,
+  actionChannel,
+  all,
+  call,
+  put,
+  select,
+  take,
+} from "redux-saga/effects";
+import {
+  LATEST_BLOCKS_LIMIT,
+  LATEST_TRANSACTIONS_LIMIT,
+} from "../../constants";
+import {
+  newLatestBlock,
   newLatestTransaction,
-  newLatestCoins,
-} from './reducer';
+  newLatestCoin,
+  storeLatestBlocks,
+  storeLatestTransactions,
+  storeLatestCoins,
+} from "./reducer";
+
+const insertLatest = (arr: any[], newData, limit: number) => {
+  const cloneArr = cloneDeep(arr);
+  if (cloneArr.length >= limit) {
+    cloneArr.splice(-1, 1);
+  }
+  cloneArr.push(newData);
+  return cloneArr;
+};
 
 function* watchLatestTransaction() {
   const requestChan = yield actionChannel(newLatestTransaction.type);
   while (true) {
-    const { payload } = yield take(requestChan);
-    console.log(payload);
+    const action = yield take(requestChan);
+    yield call(prepareLatestTransactions, action);
   }
 }
 
 function* watchLatestBlocks() {
-  const requestChan = yield actionChannel(newLatestBlocks.type);
+  const requestChan = yield actionChannel(newLatestBlock.type);
   while (true) {
-    const { payload } = yield take(requestChan);
-    console.log(payload);
+    const action = yield take(requestChan);
+    yield call(prepareLatestBlock, action);
   }
 }
 
 function* watchLatestCoins() {
-  const requestChan = yield actionChannel(newLatestCoins.type);
+  const requestChan = yield actionChannel(newLatestCoin.type);
   while (true) {
-    const { payload } = yield take(requestChan);
-    console.log(payload);
+    const action = yield take(requestChan);
+    yield call(prepareLatestCoins, action);
   }
+}
+
+function* prepareLatestBlock(action) {
+  const { blocks } = yield select((state) => state.websocket);
+  const updatedBlock = insertLatest(
+    blocks,
+    action.payload,
+    LATEST_BLOCKS_LIMIT
+  );
+  yield put(storeLatestBlocks(updatedBlock));
+}
+
+function* prepareLatestTransactions(action) {
+  const { transactions } = yield select((state) => state.websocket);
+  const updatedTransactions = insertLatest(
+    transactions,
+    action.payload,
+    LATEST_TRANSACTIONS_LIMIT
+  );
+  yield put(storeLatestTransactions(updatedTransactions));
+}
+
+function* prepareLatestCoins(action) {
+  const { coins } = yield select((state) => state.websocket);
+  const updatedCoins = insertLatest(
+    coins,
+    action.payload,
+    LATEST_TRANSACTIONS_LIMIT
+  );
+  yield put(storeLatestTransactions(updatedCoins));
 }
 
 function* mySaga() {

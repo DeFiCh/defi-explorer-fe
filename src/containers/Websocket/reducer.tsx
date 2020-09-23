@@ -13,14 +13,14 @@ const configSlice = createSlice({
   initialState,
   reducers: {
     newLatestTransaction(state, action) {},
-    storeLatestTransaction(state, action) {
+    storeLatestTransactions(state, action) {
       state.transactions = action.payload;
     },
-    newLatestBlocks(state, action) {},
+    newLatestBlock(state, action) {},
     storeLatestBlocks(state, action) {
       state.blocks = action.payload;
     },
-    newLatestCoins(state, action) {},
+    newLatestCoin(state, action) {},
     storeLatestCoins(state, action) {
       state.coins = action.payload;
     },
@@ -39,14 +39,14 @@ const configSlice = createSlice({
 const { actions, reducer } = configSlice;
 
 export const {
-  storeLatestTransaction,
+  storeLatestTransactions,
   storeLatestBlocks,
   storeLatestCoins,
   connected,
   disconnected,
   newLatestTransaction,
-  newLatestBlocks,
-  newLatestCoins,
+  newLatestBlock,
+  newLatestCoin,
   setErrorMessage,
 } = actions;
 

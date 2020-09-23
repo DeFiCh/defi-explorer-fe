@@ -6,7 +6,7 @@ export const initialState = {
 };
 
 const configSlice = createSlice({
-  name: 'websocket',
+  name: 'app',
   initialState,
   reducers: {},
 });
