@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { RouteComponentProps } from "react-router-dom";
 import { Container } from "reactstrap";
+import NavbarComponent from "../containers/NavBar";
 import routes from "../routes";
 import Websocket from "../utils/webSocket";
 import "./App.scss"; // INFO: do not move down, placed on purpose
@@ -21,7 +22,9 @@ const App: React.FunctionComponent<AppProps> = (props: AppProps) => {
         <title>DeFi Blockchain Explorer</title>
       </Helmet>
       <main>
-        <Container>{routes(location)}</Container>
+        <Container>
+          <NavbarComponent />
+          {routes(location)}</Container>
       </main>
     </div>
   );

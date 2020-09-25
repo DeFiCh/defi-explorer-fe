@@ -5,3 +5,4 @@ export const BLOCKCHAIN_MINER_BASE_PATH = `${BLOCKCHAIN_BASE_PATH}/miner`;
 export const BLOCKCHAIN_MINER_PARAM_PATH = `${BLOCKCHAIN_MINER_BASE_PATH}/:id`;
 export const INDEX_PATH = '/index.html';
 export const HOME_PAGE_PATH = '/';
+export const RICH_LIST_PATH = '/rich-list';

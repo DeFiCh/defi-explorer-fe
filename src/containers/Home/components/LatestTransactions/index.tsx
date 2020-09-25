@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { I18n } from "react-redux-i18n";
 import { RouteComponentProps } from "react-router-dom";
 import { Row, Col } from "reactstrap";
 
@@ -13,7 +14,7 @@ const LatestTransactionsComponent: React.FunctionComponent<LatestTransactionsCom
   const {transactions} = props;
   return (
     <>
-      <h1>Latest Transactions</h1>
+      <h1>{I18n.t("containers.homePage.latestTransaction.latestTransactionTitle")}</h1>
       <div>
         {transactions.map((item, id) => (
           <Row key={id}>

@@ -1,18 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
+import { BASE_UNIT } from "../../constants";
 
 export const initialState = {
-  chain: process.env.CHAIN || 'DFI',
-  network: process.env.CHAIN || 'mainnet',
+  chain: process.env.CHAIN || "DFI",
+  network: process.env.CHAIN || "mainnet",
+  unit: BASE_UNIT,
 };
 
 const configSlice = createSlice({
-  name: 'app',
+  name: "app",
   initialState,
-  reducers: {},
+  reducers: {
+    changeUnit(state, action) {
+      state.unit = action.payload;
+    },
+  },
 });
 
 const { actions, reducer } = configSlice;
 
-export const {} = actions;
+export const { changeUnit } = actions;
 
 export default reducer;

@@ -15,13 +15,28 @@
   },
   "containers": {
     "homePage": {
+      "latestTransaction": {
+        "latestTransactionTitle": "Latest Transaction"
+      },
       "latestBlock": {
         "height": "Height",
         "time": "Time",
         "transactionCount": "Transaction Count",
-        "size": "Size"
+        "size": "Size",
+        "latestBlockTitle": "Latest Blocks"
       },
       "about": {
+        "aboutTitle": "About",
+        "aboutContent": "DeFi Blockchain’s primary vision is to enable decentralized finance with Bitcoin-grade security, strength and immutability. It's a blockchain dedicated to fast, intelligent and transparent financial services, accessible by everyone.",
+        "forMoreInfoNotice": "For more information, please visit our website at",
+        "defichainLink": "defichain.io",
+        "resource": {
+          "resourceTitle": "Resource",
+          "gitHubLink": "GitHub",
+          "binaryReleasesLink": "Binary releases",
+          "whitePaperLink": "White paper",
+          "richListLink": "Rich list"
+        },
         "quickStatus": {
           "generalInformation": "General Information",
           "supply": "Supply",
@@ -36,6 +51,15 @@
           "rewardsCommunity": "Community",
           "rewardsMinter": "Minter"
         }
+      }
+    },
+    "navBar": {
+      "menuDropdown": {
+        "network": "Network",
+        "units": "Units"
+      },
+      "searchBar": {
+        "searchPlaceHolderText": "Search for block, transaction or address"
       }
     }
   },

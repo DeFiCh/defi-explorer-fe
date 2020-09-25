@@ -1,15 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
   isConnected: false,
-  isError: '',
+  isError: "",
   blocks: [],
   transactions: [],
   coins: [],
 };
 
 const configSlice = createSlice({
-  name: 'websocket',
+  name: "websocket",
   initialState,
   reducers: {
     newLatestTransaction(state, action) {},
@@ -31,8 +31,8 @@ const configSlice = createSlice({
       state.isConnected = false;
     },
     setErrorMessage(state, action) {
-      state.isError = action.payload || '';
-    }
+      state.isError = action.payload || "";
+    },
   },
 });
 
