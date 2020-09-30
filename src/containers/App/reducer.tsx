@@ -3,7 +3,7 @@ import { BASE_UNIT } from "../../constants";
 
 export const initialState = {
   chain: process.env.CHAIN || "DFI",
-  network: process.env.CHAIN || "mainnet",
+  network: process.env.CHAIN || "testnet",
   unit: BASE_UNIT,
 };
 

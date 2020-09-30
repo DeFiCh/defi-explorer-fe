@@ -5,16 +5,18 @@ import { RouteComponentProps } from "react-router-dom";
 import { Row, Col } from "reactstrap";
 
 interface LatestTransactionsComponentProps extends RouteComponentProps {
-  transactions: any[];  
+  transactions: any[];
 }
 
 const LatestTransactionsComponent: React.FunctionComponent<LatestTransactionsComponentProps> = (
   props: LatestTransactionsComponentProps
 ) => {
-  const {transactions} = props;
+  const { transactions } = props;
   return (
     <>
-      <h1>{I18n.t("containers.homePage.latestTransaction.latestTransactionTitle")}</h1>
+      <h1>
+        {I18n.t("containers.homePage.latestTransaction.latestTransactionTitle")}
+      </h1>
       <div>
         {transactions.map((item, id) => (
           <Row key={id}>
@@ -29,10 +31,12 @@ const LatestTransactionsComponent: React.FunctionComponent<LatestTransactionsCom
 
 const mapStateToProps = (state) => {
   const {
-    websocket: { transactions },
+    websocket: {
+      transactionResponse: { data },
+    },
   } = state;
   return {
-    transactions,
+    transactions: data,
   };
 };
 

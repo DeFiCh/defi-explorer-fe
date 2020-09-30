@@ -17,7 +17,7 @@ const LatestBlocksComponent: React.FunctionComponent<LatestBlocksComponentProps>
     <>
       <h1>{I18n.t("containers.homePage.latestBlock.latestBlockTitle")}</h1>
       <div>
-        <Table columns={getColumns()} data={blocks} height={400}/>
+        <Table columns={getColumns()} data={blocks} height={400} />
       </div>
     </>
   );
@@ -25,10 +25,12 @@ const LatestBlocksComponent: React.FunctionComponent<LatestBlocksComponentProps>
 
 const mapStateToProps = (state) => {
   const {
-    websocket: { blocks },
+    websocket: {
+      blockResponse: { data },
+    },
   } = state;
   return {
-    blocks,
+    blocks: data,
   };
 };
 

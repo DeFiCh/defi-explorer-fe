@@ -6,6 +6,7 @@ import {
   put,
   select,
   take,
+  takeLatest,
 } from "redux-saga/effects";
 import {
   LATEST_BLOCKS_LIMIT,
@@ -18,6 +19,15 @@ import {
   storeLatestBlocks,
   storeLatestTransactions,
   storeLatestCoins,
+  fetchLatestBlocks,
+  fetchLatestTransactions,
+  fetchLatestCoins,
+  fetchLatestBlocksSuccess,
+  fetchLatestTransactionsSuccess,
+  fetchLatestCoinsSuccess,
+  fetchLatestBlocksFail,
+  fetchLatestTransactionsFail,
+  fetchLatestCoinsFail,
 } from "./reducer";
 
 const insertLatest = (arr: any[], newData, limit: number) => {
@@ -83,11 +93,21 @@ function* prepareLatestCoins(action) {
   yield put(storeLatestTransactions(updatedCoins));
 }
 
+function* handleFetchLatestBlocks() {}
+function* handleFetchLatestTransactions() {}
+function* handleFetchLatestCoins() {}
+
 function* mySaga() {
   yield all([
     watchLatestTransaction(),
     watchLatestBlocks(),
     watchLatestCoins(),
+    yield takeLatest(fetchLatestBlocks.type, handleFetchLatestBlocks),
+    yield takeLatest(
+      fetchLatestTransactions.type,
+      handleFetchLatestTransactions
+    ),
+    yield takeLatest(fetchLatestCoins.type, handleFetchLatestCoins),
   ]);
 }
 

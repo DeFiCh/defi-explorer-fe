@@ -8,9 +8,10 @@ import defiAppIcon from "../../assets/svg/logo-defi.svg";
 import { INDEX_PATH } from "../../constants";
 import { NavLink as RRNavLink, withRouter } from "react-router-dom";
 import { I18n } from "react-redux-i18n";
+import { isInputValid } from "../../utils/utility";
 
 const NavbarComponent = () => {
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState<string>("");
   const [showSearchBar, setShowSearchBar] = useState(false);
 
   const handleOnChange = (event) => {

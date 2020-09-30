@@ -28,11 +28,11 @@ const MenuDropdown = (props) => {
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
   const loadRadioButton = () => (
-    <FormGroup onChange={(event) => changeUnit(event.target.value)}>
-      {UNIT_OPTIONS.map((item) => (
+    <FormGroup>
+      {UNIT_OPTIONS.map((item, idx) => (
         <>
-          <DropdownItem onClick={() => changeUnit(item)}>
-            <FormGroup check>
+          <DropdownItem key={`dropDownUnit_${idx}`} onClick={() => changeUnit(item)}>
+            <FormGroup>
               <Label check>
                 <Input
                   type="radio"
