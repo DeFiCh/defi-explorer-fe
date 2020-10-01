@@ -1,29 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { I18n } from "react-redux-i18n";
 import { RouteComponentProps } from "react-router-dom";
-import { Row, Col } from "reactstrap";
+import { fetchLatestTransactions } from "../../../Websocket/reducer";
+import getColumns from "./getColumns";
+import Table from "../../../../components/Table";
+
 
 interface LatestTransactionsComponentProps extends RouteComponentProps {
   transactions: any[];
+  fetchLatestTransactions: () => void;
 }
 
 const LatestTransactionsComponent: React.FunctionComponent<LatestTransactionsComponentProps> = (
   props: LatestTransactionsComponentProps
 ) => {
-  const { transactions } = props;
+  const { transactions, fetchLatestTransactions } = props;
+  useEffect(() => {
+    fetchLatestTransactions();
+  }, []);
   return (
     <>
       <h1>
         {I18n.t("containers.homePage.latestTransaction.latestTransactionTitle")}
       </h1>
       <div>
-        {transactions.map((item, id) => (
-          <Row key={id}>
-            <Col xs={9}>{item.txid}</Col>
-            <Col xs={3}>{item.value}</Col>
-          </Row>
-        ))}
+        <Table columns={getColumns(props)} data={transactions} />
       </div>
     </>
   );
@@ -40,4 +42,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(LatestTransactionsComponent);
+const mapDispatchToProps = {
+  fetchLatestTransactions,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LatestTransactionsComponent);

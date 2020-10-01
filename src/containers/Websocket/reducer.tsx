@@ -54,10 +54,6 @@ const configSlice = createSlice({
     fetchLatestBlocks(state) {
       state.blockResponse.isLoading = true;
     },
-    fetchLatestBlocksSuccess(state, action) {
-      state.blockResponse.isLoading = false;
-      state.blockResponse.data = action.payload;
-    },
     fetchLatestBlocksFail(state, action) {
       state.blockResponse.isLoading = false;
       state.blockResponse.isError = action.payload;
@@ -65,20 +61,12 @@ const configSlice = createSlice({
     fetchLatestTransactions(state) {
       state.transactionResponse.isLoading = true;
     },
-    fetchLatestTransactionsSuccess(state, action) {
-      state.transactionResponse.isLoading = false;
-      state.transactionResponse.data = action.payload;
-    },
     fetchLatestTransactionsFail(state, action) {
       state.transactionResponse.isLoading = false;
       state.transactionResponse.isError = action.payload;
     },
     fetchLatestCoins(state) {
       state.coinResponse.isLoading = true;
-    },
-    fetchLatestCoinsSuccess(state, action) {
-      state.coinResponse.isLoading = false;
-      state.coinResponse.data = action.payload;
     },
     fetchLatestCoinsFail(state, action) {
       state.coinResponse.isLoading = false;
@@ -100,13 +88,10 @@ export const {
   newLatestCoin,
   setErrorMessage,
   fetchLatestBlocks,
-  fetchLatestBlocksSuccess,
   fetchLatestBlocksFail,
   fetchLatestTransactions,
-  fetchLatestTransactionsSuccess,
   fetchLatestTransactionsFail,
   fetchLatestCoins,
-  fetchLatestCoinsSuccess,
   fetchLatestCoinsFail,
 } = actions;
 

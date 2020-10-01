@@ -1,5 +1,5 @@
 import React from "react";
-import { useTable, useBlockLayout } from "react-table";
+import { useTable, useBlockLayout, useFlexLayout } from "react-table";
 
 export default function VirtualizedTable(columns, data) {
   const {
@@ -9,31 +9,25 @@ export default function VirtualizedTable(columns, data) {
     rows,
     totalColumnsWidth,
     prepareRow,
-  } = useTable({ columns, data }, useBlockLayout);
+  } = useTable({ columns, data }, useFlexLayout);
 
-  const RenderRow = React.useCallback(
-    ({ index, style }) => {
-      const row = rows[index]
-      prepareRow(row)
+  const RenderRow = React.useCallback(() => {
+    return rows.map((row, i) => {
+      prepareRow(row);
       return (
-        <div
-          {...row.getRowProps({
-            style,
-          })}
-          className="tr"
-        >
-          {row.cells.map(cell => {
+        <tr {...row.getRowProps()}>
+          {row.cells.map((cell) => {
+            console.log(cell);
             return (
-              <div {...cell.getCellProps()} className="td">
-                {cell.render('Cell')}
-              </div>
-            )
+              <td {...cell.getCellProps()} className={cell.column.className || ''}>
+                {cell.render("Cell")}
+              </td>
+            );
           })}
-        </div>
-      )
-    },
-    [prepareRow, rows]
-  )
+        </tr>
+      );
+    });
+  }, [prepareRow, rows]);
 
   return {
     RenderRow,

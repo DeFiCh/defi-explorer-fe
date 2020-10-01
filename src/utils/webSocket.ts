@@ -1,4 +1,4 @@
-import { BACKEND_BASE_URL, BACKEND_BASE_PORT } from "../constants";
+import { WS_PREFIX } from "../constants";
 import io from "socket.io-client";
 import store from "../app/rootStore";
 import {
@@ -25,11 +25,13 @@ class Websocket {
   }
 
   connect = () => {
-    this.socket = io(`http://${BACKEND_BASE_URL}:${BACKEND_BASE_PORT}`, {
+    console.log(WS_PREFIX)
+    this.socket = io('https://mainnet-api.defichain.io', {
       transports: ["websocket"],
     });
     this.socket.on("connect", () => {
       if (this.socket) {
+        console.log('COnnected')
         store.dispatch(connected());
         this.socket.emit("room", `/${this.chain}/${this.network}/inv`);
       }

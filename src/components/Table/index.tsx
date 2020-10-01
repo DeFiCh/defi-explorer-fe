@@ -10,43 +10,30 @@ interface TableProps {
 }
 
 const Table = (props: TableProps) => {
-  const { columns, data } = props;
-  const defaultItemSize = 35;
+  const { columns, data, height, itemSize } = props;
   const {
     RenderRow,
     getTableBodyProps,
     getTableProps,
     headerGroups,
-    rows,
-    totalColumnsWidth,
   } = VirtualizedTableFunction(columns, data);
 
   return (
     <>
-      <div {...getTableProps()} className="table">
-        <div>
+      <table {...getTableProps()}>
+        <thead>
           {headerGroups.map((headerGroup) => (
-            <div {...headerGroup.getHeaderGroupProps()} className="tr">
+            <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <div {...column.getHeaderProps()} className="th">
-                  {column.render("Header")}
-                </div>
+                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
               ))}
-            </div>
+            </tr>
           ))}
-        </div>
-
-        <div {...getTableBodyProps()}>
-          <FixedSizeList
-            height={props.height || rows.length * defaultItemSize}
-            itemCount={rows.length}
-            itemSize={defaultItemSize}
-            width={totalColumnsWidth}
-          >
-            {RenderRow}
-          </FixedSizeList>
-        </div>
-      </div>
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {RenderRow()}
+        </tbody>
+      </table>
     </>
   );
 };

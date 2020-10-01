@@ -6,3 +6,7 @@ export const BLOCKCHAIN_MINER_PARAM_PATH = `${BLOCKCHAIN_MINER_BASE_PATH}/:id`;
 export const INDEX_PATH = '/index.html';
 export const HOME_PAGE_PATH = '/';
 export const RICH_LIST_PATH = '/rich-list';
+export const TRANSACTION_BASE_PATH = `/tx`;
+export const TRANSACTION_ID_PARAM_BASE_PATH = `${TRANSACTION_BASE_PATH}/:txid`;
+export const BLOCK_PAGE_BASE_PATH = `/block`;
+export const BLOCK_NUM_PARAM_BASE_PATH = `${BLOCK_PAGE_BASE_PATH}/:blockNum`;

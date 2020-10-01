@@ -47,6 +47,7 @@
     "http-status-codes": "^1.4.0",
     "is-electron": "^2.2.0",
     "lodash": "^4.17.15",
+    "moment": "^2.29.0",
     "prop-types": "^15.7.2",
     "qrcode.react": "^1.0.0",
     "react": "^16.13.1",

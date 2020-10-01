@@ -18,25 +18,23 @@ import {
   newLatestCoin,
   storeLatestBlocks,
   storeLatestTransactions,
-  storeLatestCoins,
   fetchLatestBlocks,
   fetchLatestTransactions,
   fetchLatestCoins,
-  fetchLatestBlocksSuccess,
-  fetchLatestTransactionsSuccess,
-  fetchLatestCoinsSuccess,
   fetchLatestBlocksFail,
   fetchLatestTransactionsFail,
-  fetchLatestCoinsFail,
 } from "./reducer";
+import {
+  handleLatestBlockService,
+  handleLatestTransactionsService,
+} from "./service";
 
 const insertLatest = (arr: any[], newData, limit: number) => {
   const cloneArr = cloneDeep(arr);
   if (cloneArr.length >= limit) {
     cloneArr.splice(-1, 1);
   }
-  cloneArr.push(newData);
-  return cloneArr;
+  return [newData, ...cloneArr];
 };
 
 function* watchLatestTransaction() {
@@ -64,7 +62,9 @@ function* watchLatestCoins() {
 }
 
 function* prepareLatestBlock(action) {
-  const { blocks } = yield select((state) => state.websocket);
+  const {
+    blockResponse: { data: blocks },
+  } = yield select((state) => state.websocket);
   const updatedBlock = insertLatest(
     blocks,
     action.payload,
@@ -74,7 +74,9 @@ function* prepareLatestBlock(action) {
 }
 
 function* prepareLatestTransactions(action) {
-  const { transactions } = yield select((state) => state.websocket);
+  const {
+    transactionResponse: { data: transactions },
+  } = yield select((state) => state.websocket);
   const updatedTransactions = insertLatest(
     transactions,
     action.payload,
@@ -84,7 +86,9 @@ function* prepareLatestTransactions(action) {
 }
 
 function* prepareLatestCoins(action) {
-  const { coins } = yield select((state) => state.websocket);
+  const {
+    coinResponse: { data: coins },
+  } = yield select((state) => state.websocket);
   const updatedCoins = insertLatest(
     coins,
     action.payload,
@@ -93,8 +97,32 @@ function* prepareLatestCoins(action) {
   yield put(storeLatestTransactions(updatedCoins));
 }
 
-function* handleFetchLatestBlocks() {}
-function* handleFetchLatestTransactions() {}
+function* handleFetchLatestBlocks() {
+  const query = {
+    limit: LATEST_BLOCKS_LIMIT,
+    anchorsOnly: false,
+  };
+  try {
+    const resp = yield call(handleLatestBlockService, query);
+    yield put(storeLatestBlocks(resp.data));
+  } catch (err) {
+    console.error(err);
+    yield put(fetchLatestBlocksFail(err.message));
+  }
+}
+function* handleFetchLatestTransactions() {
+  try {
+    const resp = yield call(handleLatestTransactionsService);
+    if (Array.isArray(resp.data)) {
+      yield put(
+        storeLatestTransactions(resp.data.slice(0, LATEST_TRANSACTIONS_LIMIT))
+      );
+    }
+  } catch (err) {
+    console.error(err);
+    yield put(fetchLatestTransactionsFail(err.message));
+  }
+}
 function* handleFetchLatestCoins() {}
 
 function* mySaga() {

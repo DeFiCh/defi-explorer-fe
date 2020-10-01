@@ -33,7 +33,7 @@ const MenuDropdown = (props) => {
         <>
           <DropdownItem key={`dropDownUnit_${idx}`} onClick={() => changeUnit(item)}>
             <FormGroup>
-              <Label check>
+              <Label>
                 <Input
                   type="radio"
                   name="unit"

@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { BACKEND_BASE_URL, BACKEND_BASE_PORT } from "../constants";
+import { API_PREFIX } from "../constants";
 import store from "../app/rootStore";
 
 export default class ApiRequest {
@@ -9,7 +9,7 @@ export default class ApiRequest {
       app: { chain, network },
     } = store.getState();
     this.client = axios.create({
-      baseURL: `http://${BACKEND_BASE_URL}:${BACKEND_BASE_PORT}/api/${chain}/${network}`,
+      baseURL: `${API_PREFIX}/${chain}/${network}`,
       headers: {
         "cache-control": "no-cache",
       },
