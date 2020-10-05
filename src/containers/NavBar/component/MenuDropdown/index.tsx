@@ -50,8 +50,6 @@ const MenuDropdown = (props) => {
     </FormGroup>
   );
 
-  const useCallBackRadioButton = useCallback(loadRadioButton, [unit]);
-
   return (
     <Dropdown isOpen={dropdownOpen} toggle={toggle}>
       <DropdownToggle
@@ -75,7 +73,7 @@ const MenuDropdown = (props) => {
           {I18n.t("containers.navBar.menuDropdown.unit")}
         </DropdownItem>
         <DropdownItem divider />
-        {useCallBackRadioButton()}
+        {loadRadioButton()}
       </DropdownMenu>
     </Dropdown>
   );

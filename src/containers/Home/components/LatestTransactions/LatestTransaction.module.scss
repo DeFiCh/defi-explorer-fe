@@ -7,7 +7,8 @@
 .columnEllipsis {
   white-space: nowrap;
   overflow: hidden;
-  button {
+  width: 450px;
+  a {
     text-overflow: ellipsis;
     text-transform: none;
   }

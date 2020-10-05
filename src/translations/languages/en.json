@@ -11,10 +11,34 @@
       "aMinuteAgo": "Synchronized a minute ago",
       "blockInfo": "Block %{latestSyncedBlock} of %{latestBlock}",
       "network": "Network"
+    },
+    "footerComponent": {
+      "deFiChain": {
+        "deFiChainTitle": "DeFiChain",
+        "defiChainLink": "DeFichain.io",
+        "gitHubLink": "GitHub",
+        "whitePaperLink": "White paper"
+      },
+      "explorer": {
+        "explorerTitle": "Explorer",
+        "blocks": "Blocks",
+        "richList": "Rich List",
+        "transactions": "Transactions",
+        "broadcastMessage": "Broadcast Message",
+        "verifyMessage": "Verify Message",
+        "tokens": "Tokens",
+        "pairs": "Pairs"
+      },
+      "about": {
+        "aboutContent": "DeFi Blockchain’s primary vision is to enable decentralized finance with Bitcoin-grade security, strength and immutability. It's a blockchain dedicated to fast, intelligent and transparent financial services, accessible by everyone.",
+        "forMoreInfoNotice": "For more information, please visit our website at",
+        "defiChainLink": "deFichain.io"
+      }
     }
   },
   "containers": {
     "homePage": {
+      "viewAll": "View All",
       "latestTransaction": {
         "latestTransactionTitle": "Latest Transaction"
       },
@@ -26,17 +50,6 @@
         "latestBlockTitle": "Latest Blocks"
       },
       "about": {
-        "aboutTitle": "About",
-        "aboutContent": "DeFi Blockchain’s primary vision is to enable decentralized finance with Bitcoin-grade security, strength and immutability. It's a blockchain dedicated to fast, intelligent and transparent financial services, accessible by everyone.",
-        "forMoreInfoNotice": "For more information, please visit our website at",
-        "defichainLink": "defichain.io",
-        "resource": {
-          "resourceTitle": "Resource",
-          "gitHubLink": "GitHub",
-          "binaryReleasesLink": "Binary releases",
-          "whitePaperLink": "White paper",
-          "richListLink": "Rich list"
-        },
         "quickStatus": {
           "generalInformation": "General Information",
           "supply": "Supply",

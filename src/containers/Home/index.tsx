@@ -13,31 +13,19 @@ const HomePage: React.FunctionComponent<HomePageProps> = (
   return (
     <>
       <Row>
-        <Col xs={12} md={8}>
+        <Col xs={12}>
           <Row>
             <Col xs={12}>
               <LatestBlocks {...props} />
-            </Col>
-            <Col xs={12} className='text-center'>
-              <span>
-                <Button>
-                  See all blocks
-                </Button>
-              </span>
-              <span className='ml-4'>
-                <Button>
-                  See all anchored blocks
-                </Button>
-              </span>
             </Col>
             <Col xs={12} className="mt-4">
               <LatestTransactions {...props} />
             </Col>
           </Row>
         </Col>
-        <Col xs={12} md={4}>
+        {/* <Col xs={12} md={4}>
           <About />
-        </Col>
+        </Col> */}
       </Row>
     </>
   );

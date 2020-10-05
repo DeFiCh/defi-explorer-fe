@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { RouteComponentProps } from "react-router-dom";
 import { Container } from "reactstrap";
+import FooterComponent from "../components/Footer";
 import NavbarComponent from "../containers/NavBar";
 import routes from "../routes";
 import Websocket from "../utils/webSocket";
@@ -21,10 +22,12 @@ const App: React.FunctionComponent<AppProps> = (props: AppProps) => {
       <Helmet>
         <title>DeFi Blockchain Explorer</title>
       </Helmet>
-      <main>
+      <main className="overflow-auto">
         <Container>
           <NavbarComponent />
-          {routes(location)}</Container>
+          {routes(location)}
+          <FooterComponent />
+        </Container>
       </main>
     </div>
   );

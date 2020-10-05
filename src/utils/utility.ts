@@ -35,3 +35,37 @@ const isValidBlockOrTx = (inputValue) => {
 };
 
 const isValidBlockIndex = (inputValue) => isFinite(inputValue);
+export const range = (from: number, to: number, step = 1) => {
+  let i = from;
+  const range: number[] = [];
+
+  while (i <= to) {
+    range.push(i);
+    i += step;
+  }
+
+  return range;
+};
+
+export const fetchPageNumbers = (
+  currentPage: number,
+  totalPages: number,
+  pageNeighbors: number
+) => {
+  const totalNumbers = pageNeighbors * 2;
+  const totalBlocks = totalNumbers + 1;
+  if (totalPages >= totalBlocks) {
+    const prev =
+      currentPage === totalPages
+        ? currentPage - pageNeighbors - 1
+        : currentPage - pageNeighbors;
+    const next =
+      currentPage === 1
+        ? currentPage + pageNeighbors + 1
+        : currentPage + pageNeighbors;
+    const startPage = Math.max(1, prev);
+    const endPage = Math.min(totalPages, next);
+    return range(startPage, endPage);
+  }
+  return range(1, totalPages);
+};
