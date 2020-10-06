@@ -16,6 +16,7 @@
     "test:console": "jest",
     "test:snapshot:update": "jest --updateSnapshot --silent",
     "start": "npm run init && webpack-dev-server --mode development --open",
+    "lint": "tslint --project tsconfig.json --config tslint.json",
     "start:dev": "webpack-dev-server --mode development --open",
     "build:react": "webpack --mode production",
     "storybook": "start-storybook -p 9009",
@@ -45,9 +46,12 @@
     "flat": "^5.0.2",
     "foreman": "^3.0.1",
     "http-status-codes": "^1.4.0",
+    "husky": "^4.3.0",
     "is-electron": "^2.2.0",
+    "lint-staged": "^10.4.0",
     "lodash": "^4.17.15",
     "moment": "^2.29.0",
+    "pretty-quick": "^3.0.2",
     "prop-types": "^15.7.2",
     "qrcode.react": "^1.0.0",
     "react": "^16.13.1",
@@ -123,5 +127,14 @@
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
+  },
+  "lint-staged": {
+    "**/*.ts": "npm run lint",
+    "**/*.tsx": "npm run lint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && lint-staged"
+    }
   }
 }
