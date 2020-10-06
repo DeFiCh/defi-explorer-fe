@@ -49,6 +49,9 @@
         "size": "Size",
         "latestBlockTitle": "Latest Blocks"
       },
+      "searchBar": {
+        "searchBarNotice": "Decentralized finance enabled on Bitcoin"
+      },
       "about": {
         "quickStatus": {
           "generalInformation": "General Information",

@@ -1,9 +1,10 @@
 import React from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { Button, Col, Row } from "reactstrap";
-import About from "./components/About";
+import { Col, Row } from "reactstrap";
+// import About from "./components/About";
 import LatestBlocks from "./components/LatestBlocks";
 import LatestTransactions from "./components/LatestTransactions";
+import SearchBar from "./components/SearchBarComponent";
 
 interface HomePageProps extends RouteComponentProps {}
 
@@ -13,6 +14,9 @@ const HomePage: React.FunctionComponent<HomePageProps> = (
   return (
     <>
       <Row>
+        <Col xs="12">
+          <SearchBar />
+        </Col>
         <Col xs={12}>
           <Row>
             <Col xs={12}>
@@ -23,9 +27,6 @@ const HomePage: React.FunctionComponent<HomePageProps> = (
             </Col>
           </Row>
         </Col>
-        {/* <Col xs={12} md={4}>
-          <About />
-        </Col> */}
       </Row>
     </>
   );

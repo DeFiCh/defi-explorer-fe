@@ -14,6 +14,7 @@ import {
   VERIFY_MESSAGE_PATH,
   TOKENS_PATH,
   PAIRS_PATH,
+  FOOTER_DEFICHAIN_STAMP,
 } from "../../constants";
 
 const FooterComponent = () => (
@@ -109,6 +110,7 @@ const FooterComponent = () => (
             </Col>
           </Row>
         </Col>
+        <Col xs="12" className='text-secondary'>{FOOTER_DEFICHAIN_STAMP}</Col>
       </Row>
     </footer>
   </>

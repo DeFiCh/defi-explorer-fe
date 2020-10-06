@@ -77,6 +77,10 @@ function* prepareLatestTransactions(action) {
   const {
     transactionResponse: { data: transactions },
   } = yield select((state) => state.websocket);
+  console.log({
+    transactions,
+    payload: action.payload,
+  })
   const updatedTransactions = insertLatest(
     transactions,
     action.payload,

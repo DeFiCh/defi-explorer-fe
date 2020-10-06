@@ -1,6 +1,5 @@
 import React, { FormEvent, useState } from "react";
 import { Col, Form, Input, NavLink, Row } from "reactstrap";
-import SearchBar from "./component/SearchBar";
 import classnames from "classnames";
 import { Mobile } from "../../components/Responsive";
 import MenuDropdown from "./component/MenuDropdown";
@@ -11,30 +10,6 @@ import { I18n } from "react-redux-i18n";
 import { isInputValid } from "../../utils/utility";
 
 const NavbarComponent = () => {
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [showSearchBar, setShowSearchBar] = useState(false);
-
-  const handleOnChange = (event) => {
-    setSearchValue(event.target.value);
-  };
-
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-  };
-
-  const loadSearchInputBar = () => {
-    return (
-      <Form onSubmit={handleSubmit}>
-        <Input
-          value={searchValue}
-          placeholder={I18n.t(
-            "containers.navBar.searchBar.searchPlaceHolderText"
-          )}
-          onChange={handleOnChange}
-        />
-      </Form>
-    );
-  };
   return (
     <>
       <Row>
@@ -45,28 +20,12 @@ const NavbarComponent = () => {
         </Col>
         <Col xs={10}>
           <Row>
-            <Col xs={8}>
-              <SearchBar
-                showSearchBar={showSearchBar}
-                setShowSearchBar={setShowSearchBar}
-                loadSearchInputBar={loadSearchInputBar}
-              />
-            </Col>
-            <Col xs={4}>
+            <Col xs={{ size: 4, offset: 8 }}>
               <MenuDropdown />
             </Col>
           </Row>
         </Col>
       </Row>
-      <Mobile>
-        <Row
-          className={classnames({
-            "d-none": !showSearchBar,
-          })}
-        >
-          <Col xs={12}>{loadSearchInputBar()}</Col>
-        </Row>
-      </Mobile>
     </>
   );
 };
