@@ -1,7 +1,7 @@
 import React from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { Col, Row } from "reactstrap";
-// import About from "./components/About";
+// import About from './components/About';
 import LatestBlocks from "./components/LatestBlocks";
 import LatestTransactions from "./components/LatestTransactions";
 import SearchBar from "./components/SearchBarComponent";

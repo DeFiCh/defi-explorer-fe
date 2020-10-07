@@ -1,31 +1,54 @@
-import React, { FormEvent, useState } from "react";
-import { Col, Form, Input, NavLink, Row } from "reactstrap";
-import classnames from "classnames";
-import { Mobile } from "../../components/Responsive";
+import React from "react";
+import { Nav, NavItem, NavLink, Row } from "reactstrap";
 import MenuDropdown from "./component/MenuDropdown";
 import defiAppIcon from "../../assets/svg/logo-defi.svg";
-import { INDEX_PATH } from "../../constants";
+import {
+  INDEX_PATH,
+  TOKENS_PATH,
+  PAIRS_PATH,
+  BLOCKS_PAGE,
+  TRANSACTIONS_PAGE
+} from "../../constants";
 import { NavLink as RRNavLink, withRouter } from "react-router-dom";
 import { I18n } from "react-redux-i18n";
-import { isInputValid } from "../../utils/utility";
+import styles from "./NavBar.module.scss";
 
 const NavbarComponent = () => {
   return (
     <>
-      <Row>
-        <Col xs={2}>
-          <NavLink to={INDEX_PATH} tag={RRNavLink}>
-            <img src={defiAppIcon} />
-          </NavLink>
-        </Col>
-        <Col xs={10}>
-          <Row>
-            <Col xs={{ size: 4, offset: 8 }}>
-              <MenuDropdown />
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+      <div className={styles.navs}>
+        <Nav className="bg-white">
+          <NavItem>
+            <NavLink to={INDEX_PATH} tag={RRNavLink}>
+              <img src={defiAppIcon} />
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink to={BLOCKS_PAGE} tag={RRNavLink}>
+              {I18n.t("containers.navBar.blocks")}
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink to={TRANSACTIONS_PAGE} tag={RRNavLink}>
+              {I18n.t("containers.navBar.transactions")}
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink to={TOKENS_PATH} tag={RRNavLink}>
+              {I18n.t("containers.navBar.tokens")}
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink to={PAIRS_PATH} tag={RRNavLink}>
+              {I18n.t("containers.navBar.pairs")}
+            </NavLink>
+          </NavItem>
+
+          <NavItem>
+            <MenuDropdown />
+          </NavItem>
+        </Nav>
+      </div>
     </>
   );
 };

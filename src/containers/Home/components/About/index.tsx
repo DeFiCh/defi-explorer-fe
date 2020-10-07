@@ -6,7 +6,7 @@ import {
   RICH_LIST_PATH,
   GITHUB_LINK,
   RELEASE_LINK,
-  WHITE_PAPER_LINK,
+  WHITE_PAPER_LINK
 } from "../../../../constants";
 import QuickStatus from "../QuickStatus";
 

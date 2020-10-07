@@ -15,7 +15,7 @@ interface AppProps extends RouteComponentProps {}
 const App: React.FunctionComponent<AppProps> = (props: AppProps) => {
   const { location } = props;
   useEffect(() => {
-    new Websocket();
+    const webSockete = new Websocket();
   }, []);
   return (
     <div id="app">
@@ -23,8 +23,8 @@ const App: React.FunctionComponent<AppProps> = (props: AppProps) => {
         <title>DeFi Blockchain Explorer</title>
       </Helmet>
       <main className="overflow-auto">
+        <NavbarComponent />
         <Container>
-          <NavbarComponent />
           {routes(location)}
           <FooterComponent />
         </Container>

@@ -9,7 +9,7 @@ import {
   Input,
   InputGroup,
   InputGroupAddon,
-  Row,
+  Row
 } from "reactstrap";
 import styles from "./SearchBarComponent.module.scss";
 
@@ -19,7 +19,7 @@ function SearchBarComponent(props: SearchBarProps) {
   const {} = props;
   const [searchValue, setSearchValue] = useState<string>("");
 
-  const handleOnChange = (event) => {
+  const handleOnChange = event => {
     setSearchValue(event.target.value);
   };
 
@@ -47,7 +47,11 @@ function SearchBarComponent(props: SearchBarProps) {
                   onChange={handleOnChange}
                 />
                 <InputGroupAddon addonType="append">
-                  <Button color="link" className='text-secondary' onClick={handleSubmit}>
+                  <Button
+                    color="link"
+                    className="text-secondary"
+                    onClick={handleSubmit}
+                  >
                     <MdSearch />
                   </Button>
                 </InputGroupAddon>
@@ -60,7 +64,7 @@ function SearchBarComponent(props: SearchBarProps) {
   );
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = {};
 

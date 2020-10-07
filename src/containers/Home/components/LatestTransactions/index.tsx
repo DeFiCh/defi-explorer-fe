@@ -21,7 +21,7 @@ const LatestTransactionsComponent: React.FunctionComponent<LatestTransactionsCom
   }, []);
 
   const loadRows = useCallback(() => {
-    return transactions.map((item) => (
+    return transactions.map(item => (
       <tr key={item.txid}>
         <td>
           <Link to={`${TRANSACTION_BASE_PATH}/${item.txid}`}>{item.txid}</Link>
@@ -45,7 +45,7 @@ const LatestTransactionsComponent: React.FunctionComponent<LatestTransactionsCom
           <Col xs="2">
             <Button
               color="link"
-              className='float-right'
+              className="float-right"
               onClick={() => props.history.push(TRANSACTION_BASE_PATH)}
             >
               {I18n.t("containers.homePage.viewAll")}
@@ -66,19 +66,19 @@ const LatestTransactionsComponent: React.FunctionComponent<LatestTransactionsCom
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const {
     websocket: {
-      transactionResponse: { data },
-    },
+      transactionResponse: { data }
+    }
   } = state;
   return {
-    transactions: data,
+    transactions: data
   };
 };
 
 const mapDispatchToProps = {
-  fetchLatestTransactions,
+  fetchLatestTransactions
 };
 
 export default connect(

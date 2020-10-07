@@ -9,7 +9,7 @@ import {
   FormGroup,
   Input,
   Label,
-  Button,
+  Button
 } from "reactstrap";
 import { UNIT_OPTIONS } from "../../../../constants";
 import { changeUnit } from "../../../App/reducer";
@@ -21,17 +21,20 @@ interface MenuDropdown {
   changeUnit: (unit: string) => void;
 }
 
-const MenuDropdown = (props) => {
+const MenuDropdown = props => {
   const { network, unit, changeUnit } = props;
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const toggle = () => setDropdownOpen((prevState) => !prevState);
+  const toggle = () => setDropdownOpen(prevState => !prevState);
 
   const loadRadioButton = () => (
     <FormGroup>
       {UNIT_OPTIONS.map((item, idx) => (
         <>
-          <DropdownItem key={`dropDownUnit_${idx}`} onClick={() => changeUnit(item)}>
+          <DropdownItem
+            key={`dropDownUnit_${idx}`}
+            onClick={() => changeUnit(item)}
+          >
             <FormGroup>
               <Label>
                 <Input
@@ -84,12 +87,12 @@ const mapStateToProps = ({ app }) => {
   return {
     chain,
     network,
-    unit,
+    unit
   };
 };
 
 const mapDispatchToProps = {
-  changeUnit: (unit: string) => changeUnit(unit),
+  changeUnit: (unit: string) => changeUnit(unit)
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuDropdown);

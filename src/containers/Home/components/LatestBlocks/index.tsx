@@ -23,12 +23,10 @@ const LatestBlocksComponent: React.FunctionComponent<LatestBlocksComponentProps>
   }, []);
 
   const loadRows = useCallback(() => {
-    return blocks.map((block) => (
-      <tr key={block.hash} >
+    return blocks.map(block => (
+      <tr key={block.hash}>
         <td>
-          <Link
-            to={`${BLOCK_PAGE_BASE_PATH}/${block.height}`}
-          >
+          <Link to={`${BLOCK_PAGE_BASE_PATH}/${block.height}`}>
             {block.height}
           </Link>
         </td>
@@ -55,7 +53,7 @@ const LatestBlocksComponent: React.FunctionComponent<LatestBlocksComponentProps>
           <Col xs="2">
             <Button
               color="link"
-              className='float-right'
+              className="float-right"
               onClick={() => props.history.push(BLOCK_PAGE_BASE_PATH)}
             >
               {I18n.t("containers.homePage.viewAll")}
@@ -86,19 +84,19 @@ const LatestBlocksComponent: React.FunctionComponent<LatestBlocksComponentProps>
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const {
     websocket: {
-      blockResponse: { data },
-    },
+      blockResponse: { data }
+    }
   } = state;
   return {
-    blocks: data,
+    blocks: data
   };
 };
 
 const mapDispatchToProps = {
-  fetchLatestBlocks,
+  fetchLatestBlocks
 };
 
 export default connect(

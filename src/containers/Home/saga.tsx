@@ -2,10 +2,10 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import {
   quickStatusSuccess,
   startQuickStatus,
-  setQuickStatusError,
+  setQuickStatusError
 } from "./reducer";
 import { handleQuickStatus } from "./services";
-import flatten from 'flat'
+import flatten from "flat";
 
 function* fetchQuickStatus() {
   try {

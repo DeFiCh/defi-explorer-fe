@@ -6,18 +6,18 @@ export const initialState = {
   blockResponse: {
     isLoading: false,
     data: [],
-    isError: "",
+    isError: ""
   },
   transactionResponse: {
     isLoading: false,
     data: [],
-    isError: "",
+    isError: ""
   },
   coinResponse: {
     isLoading: false,
     data: [],
-    isError: "",
-  },
+    isError: ""
+  }
 };
 
 const configSlice = createSlice({
@@ -71,8 +71,8 @@ const configSlice = createSlice({
     fetchLatestCoinsFail(state, action) {
       state.coinResponse.isLoading = false;
       state.coinResponse.isError = action.payload;
-    },
-  },
+    }
+  }
 });
 
 const { actions, reducer } = configSlice;
@@ -92,7 +92,7 @@ export const {
   fetchLatestTransactions,
   fetchLatestTransactionsFail,
   fetchLatestCoins,
-  fetchLatestCoinsFail,
+  fetchLatestCoinsFail
 } = actions;
 
 export default reducer;

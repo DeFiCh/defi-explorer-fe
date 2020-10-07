@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
   quickStatus: {},
-  quickStatusError: "",
+  quickStatusError: ""
 };
 
 const configSlice = createSlice({
@@ -15,8 +15,8 @@ const configSlice = createSlice({
     },
     setQuickStatusError(state, action) {
       state.quickStatusError = action.payload;
-    },
-  },
+    }
+  }
 });
 
 const { actions, reducer } = configSlice;
@@ -24,7 +24,7 @@ const { actions, reducer } = configSlice;
 export const {
   quickStatusSuccess,
   startQuickStatus,
-  setQuickStatusError,
+  setQuickStatusError
 } = actions;
 
 export default reducer;

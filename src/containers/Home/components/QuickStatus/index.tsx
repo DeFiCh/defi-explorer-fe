@@ -127,18 +127,18 @@ const QuickStatusComponent: React.FunctionComponent<QuickStatusComponentProps> =
     </>
   );
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const {
-    home: { quickStatus, quickStatusError },
+    home: { quickStatus, quickStatusError }
   } = state;
   return {
     quickStatus,
-    quickStatusError,
+    quickStatusError
   };
 };
 
 const mapDispatchToProps = {
-  startQuickStatus,
+  startQuickStatus
 };
 
 export default connect(

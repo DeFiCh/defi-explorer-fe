@@ -76,7 +76,11 @@
       },
       "searchBar": {
         "searchPlaceHolderText": "Search for block, transaction or address"
-      }
+      },
+      "blocks": "Blocks",
+      "transactions": "Transactions",
+      "tokens": "Tokens",
+      "pairs": "Pairs"
     }
   },
   "alerts": {}

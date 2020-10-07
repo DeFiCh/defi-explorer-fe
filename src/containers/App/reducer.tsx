@@ -4,7 +4,7 @@ import { BASE_UNIT } from "../../constants";
 export const initialState = {
   chain: process.env.CHAIN || "DFI",
   network: process.env.CHAIN || "mainnet",
-  unit: BASE_UNIT,
+  unit: BASE_UNIT
 };
 
 const configSlice = createSlice({
@@ -13,8 +13,8 @@ const configSlice = createSlice({
   reducers: {
     changeUnit(state, action) {
       state.unit = action.payload;
-    },
-  },
+    }
+  }
 });
 
 const { actions, reducer } = configSlice;

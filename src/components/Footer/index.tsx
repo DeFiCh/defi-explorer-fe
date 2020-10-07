@@ -7,14 +7,14 @@ import {
   DEFICHAIN_IO_SITE,
   GITHUB_LINK,
   WHITE_PAPER_LINK,
-  BLOCK_PAGE_BASE_PATH,
+  BLOCKS_PAGE,
   RICH_LIST_PATH,
-  TRANSACTION_BASE_PATH,
+  TRANSACTIONS_PAGE,
   BROADCAST_MESSAGE_PATH,
   VERIFY_MESSAGE_PATH,
   TOKENS_PATH,
   PAIRS_PATH,
-  FOOTER_DEFICHAIN_STAMP,
+  FOOTER_DEFICHAIN_STAMP
 } from "../../constants";
 
 const FooterComponent = () => (
@@ -29,7 +29,7 @@ const FooterComponent = () => (
               </h5>
             </Col>
             <Col xs="6">
-              <Link to={BLOCK_PAGE_BASE_PATH}>
+              <Link to={BLOCKS_PAGE}>
                 {I18n.t("components.footerComponent.explorer.blocks")}
               </Link>
             </Col>
@@ -39,7 +39,7 @@ const FooterComponent = () => (
               </Link>
             </Col>
             <Col xs="6">
-              <Link to={TRANSACTION_BASE_PATH}>
+              <Link to={TRANSACTIONS_PAGE}>
                 {I18n.t("components.footerComponent.explorer.transactions")}
               </Link>
             </Col>
@@ -110,7 +110,9 @@ const FooterComponent = () => (
             </Col>
           </Row>
         </Col>
-        <Col xs="12" className='text-secondary'>{FOOTER_DEFICHAIN_STAMP}</Col>
+        <Col xs="12" className="text-secondary">
+          {FOOTER_DEFICHAIN_STAMP}
+        </Col>
       </Row>
     </footer>
   </>

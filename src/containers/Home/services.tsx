@@ -1,12 +1,15 @@
-import { QUICK_STATS_ENDPOINT, QUICK_STATS_BASE_ENDPOINT } from "../../constants/endpoint";
+import {
+  QUICK_STATS_ENDPOINT,
+  QUICK_STATS_BASE_ENDPOINT
+} from "../../constants/endpoint";
 import ApiRequest from "../../utils/apiRequest";
 
 export const handleQuickStatus = async () => {
   const apiRequest = new ApiRequest();
   const resp = await apiRequest.get(QUICK_STATS_ENDPOINT, {
-    baseURL: QUICK_STATS_BASE_ENDPOINT,
+    baseURL: QUICK_STATS_BASE_ENDPOINT
   });
-  return processResponse(resp.data)
+  return processResponse(resp.data);
 };
 
 const processResponse: any = (resp: any) => {
@@ -18,4 +21,4 @@ const processResponse: any = (resp: any) => {
   } = resp;
 
   return { rewards, supply, blockHeight, chain };
-}
+};
