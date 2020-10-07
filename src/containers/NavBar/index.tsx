@@ -7,7 +7,7 @@ import {
   TOKENS_PATH,
   PAIRS_PATH,
   BLOCKS_PAGE,
-  TRANSACTIONS_PAGE
+  TRANSACTIONS_PAGE,
 } from "../../constants";
 import { NavLink as RRNavLink, withRouter } from "react-router-dom";
 import { I18n } from "react-redux-i18n";
@@ -20,7 +20,10 @@ const NavbarComponent = () => {
         <Nav className="bg-white">
           <NavItem>
             <NavLink to={INDEX_PATH} tag={RRNavLink}>
-              <img src={defiAppIcon} />
+              <span>
+                <img src={defiAppIcon} />
+              </span>
+              <span>Explorer</span>
             </NavLink>
           </NavItem>
           <NavItem>
