@@ -1,0 +1,34 @@
+// App and Bootstrap variables required
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "../../scss/variables";
+@import "../../scss/bootstrap/variables";
+
+.footer {
+  flex-shrink: 0;
+  margin-top: 2rem;
+  a {
+    color: $secondary;
+    display: flex;
+    align-items: center;
+    text-transform: none;
+    font-weight: $font-weight-normal;
+
+    &:hover:not(.active) {
+      color: inherit;
+      svg {
+        color: $secondary;
+      }
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+      margin-right: 12px;
+    }
+  }
+}
+.primaryLink {
+  color: $primary !important;
+}

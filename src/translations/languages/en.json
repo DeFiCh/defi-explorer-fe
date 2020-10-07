@@ -11,444 +11,77 @@
       "aMinuteAgo": "Synchronized a minute ago",
       "blockInfo": "Block %{latestSyncedBlock} of %{latestBlock}",
       "network": "Network"
+    },
+    "footerComponent": {
+      "deFiChain": {
+        "deFiChainTitle": "DeFiChain",
+        "defiChainLink": "DeFichain.io",
+        "gitHubLink": "GitHub",
+        "whitePaperLink": "White paper"
+      },
+      "explorer": {
+        "explorerTitle": "Explorer",
+        "blocks": "Blocks",
+        "richList": "Rich List",
+        "transactions": "Transactions",
+        "broadcastMessage": "Broadcast Message",
+        "verifyMessage": "Verify Message",
+        "tokens": "Tokens",
+        "pairs": "Pairs"
+      },
+      "about": {
+        "aboutContent": "DeFi Blockchain’s primary vision is to enable decentralized finance with Bitcoin-grade security, strength and immutability. It's a blockchain dedicated to fast, intelligent and transparent financial services, accessible by everyone.",
+        "forMoreInfoNotice": "For more information, please visit our website at",
+        "defiChainLink": "deFichain.io"
+      }
     }
   },
   "containers": {
-    "sideBar": {
-      "balance": "Balance",
-      "dfi": "DFI",
-      "wallet": "Wallet",
-      "masterNodes": "Masternodes",
-      "blockchain": "Blockchain",
-      "tokens": "Tokens",
-      "exchange": "Exchange",
-      "help": "Help",
-      "settings": "Settings",
-      "console": "Console"
-    },
-    "blockChainPage": {
-      "blockChainPage": {
-        "title": "Blockchain – DeFi Blockchain Client",
-        "blockchain": "Blockchain"
+    "homePage": {
+      "viewAll": "View All",
+      "latestTransaction": {
+        "latestTransactionTitle": "Latest Transaction"
       },
-      "blockChainTable": {
+      "latestBlock": {
         "height": "Height",
-        "age": "Age",
-        "transactions": "Transactions",
-        "minedBy": "Mined by",
+        "time": "Time",
+        "transactionCount": "Transaction Count",
         "size": "Size",
-        "paginationRange": "%{from} – %{to} of %{total} blocks",
-        "noBlocks": "No blocks available",
-        "loading": "Loading..."
+        "latestBlockTitle": "Latest Blocks"
       },
-      "blockPage": {
-        "block": "Block",
-        "title": "– DeFi Blockchain Client",
-        "blockchain": "Blockchain",
-        "transactions": "Transactions",
-        "noOfTransactions": "Number of transactions",
-        "difficulty": "Difficulty",
-        "height": "Height",
-        "bits": "Bits",
-        "blockReward": "Block reward",
-        "version": "Version",
-        "minedBy": "Mined by",
-        "nonce": "Nonce",
-        "blockHash": "Block hash",
-        "merkleRoot": "Merkle root"
+      "searchBar": {
+        "searchBarNotice": "Decentralized finance enabled on Bitcoin"
       },
-      "blockTxn": {
-        "noInputs": "No Inputs (Newly Generated Coins)",
-        "copied": "Copied!",
-        "dFI": "DFI",
-        "unparsedAddress": "Unparsed address",
-        "paginationRange": "%{from} – %{to} of %{total} transactions",
-        "noTransactions": "No transactions available",
-        "loading": "Loading..."
-      },
-      "minerPage": {
-        "miner": "Miner",
-        "defiBlockChainClient": "DeFi Blockchain Client",
-        "blockchain": "Blockchain"
-      }
-    },
-    "errors": {
-      "title": "DFI Block Processing Center – DeFi Blockchain Client",
-      "header": "DFI Block Processing Center",
-      "detail": "It seems you have stumbled here by accident. This is where our workers make sure every DFI block is properly fastened to the chain. As this is a restricted area, we kindly ask that you turn around.",
-      "goBack": "Go back"
-    },
-    "exchangePage": {
-      "title": "Exchange – DeFi Blockchain Client",
-      "exchange": "Exchange",
-      "section": "Section",
-      "footerBar": "Footer Bar"
-    },
-    "helpPage": {
-      "title": "Help – DeFi Blockchain Client",
-      "help": "Help",
-      "section": "Section"
-    },
-    "masterNodes": {
-      "masterNodesPage": {
-        "title": "Masternodes – DeFi Blockchain Client",
-        "createMasterNode": "Create",
-        "masterNodes": "Masternodes",
-        "statistics": "Statistics",
-        "list": "List",
-        "weeklyIncome": "Weekly income",
-        "volume": "Volume",
-        "marketCap": "Market cap",
-        "returnPerAnnum": "Return per annum",
-        "paidRewards": "Paid rewards",
-        "rewardFrequency": "Reward frequency",
-        "activeMasterNodes": "Active masternodes",
-        "supply": "Supply",
-        "lockedInCollateral": "Locked in collateral",
-        "costPerMasterNode": "Cost per masternode",
-        "masternodeWorth": "Masternode worth",
-        "searchBar": "Search masternodes"
-      },
-      "masterNodesList": {
-        "ownerAddress": "Owner Address",
-        "operatorAddress": "Operator Address",
-        "registered": "Registered",
-        "mintedBlocks": "Minted Blocks",
-        "noMasterNodes": "No Masternodes Available"
-      },
-      "createMasterNode": {
-        "title": "Create Master Node",
-        "masterNodeName": "MasterNode Name",
-        "lackOfBalanceMsg": "Unable to create masternode due to lack of funds. Minimum 1 million DFI is required to create master node",
-        "confirmationText": "Are you sure you want to create a master node?",
-        "restartNodeConfirmationText": "Are you sure you want to restart a node?",
-        "createNodeButton": "Create Master Node",
-        "noButtonText": "Cancel",
-        "yesButtonText": "Continue",
-        "masternodeOperator": "Masternode Operator",
-        "masternodeOwner": "Masternode Owner",
-        "backToMasternodePage": "Close",
-        "restartNodeButton": "Restart node",
-        "masterNodeSuccess": "You can manually set masternode config in defi.conf or you can automatic set this masternode config by restarting the node.",
-        "collaterAddress": "Collateral Address",
-        "masternodeOperatorNotOptional": "Operator Address",
-        "masternodeOperatorOptional": "Operator Address (Optional)",
-        "noticeMasternodeOperator": "If masternode operator is different from owner",
-        "noticeMasternodeOwner": "Owner address where collateral funds will be drawned from"
-      },
-      "masternodeDetailPage": {
-        "masternodeDetailTitle": "Masternode Detail Page %{hash}",
-        "masternode": "Masternode",
-        "masternodeDetail": "Masternode Details",
-        "ownerAddress": "Owner Address",
-        "operatorAddress": "Operator Address",
-        "state": "State",
-        "hash": "Hash",
-        "registered": "Registered",
-        "mintedBlocks": "Minted Blocks",
-        "resignHeight": "Resign Height",
-        "resignTx": "Resign Tx",
-        "banHeight": "Ban Height",
-        "banTx": "Ban Tx",
-        "resignMasterNode": "Resign",
-        "confirmation": "Are you sure you want to resign a master node?",
-        "noButtonText": "Cancel",
-        "yesButtonText": "Continue",
-        "successText": "Success",
-        "backToMasternodePage": "Back to Masternode Page"
-      },
-      "masternodeTab": {
-        "myMasternodes": "Mine",
-        "network": "Network"
-      }
-    },
-    "tokens": {
-      "tokensPage": {
-        "title": "Tokens – DeFi Blockchain Client",
-        "createToken": "Create",
-        "tokens": "Tokens",
-        "searchTokens": "Search Tokens",
-        "dat": "DAT",
-        "dct": "DCT",
-        "paginationRange": "%{from} – %{to} of %{total} tokens",
-        "datLabels": {
-          "type": "Type",
-          "price": "Price",
-          "volume": "Volume (24H)",
-          "marketCap": "Market Cap",
-          "holders": "Holders",
-          "decimal": "Decimal",
-          "limit": "Limit",
-          "mintingSupport": "Minting Support",
-          "tradeable": "Tradeable"
-        },
-        "dctLabels": {
-          "id": "ID",
-          "totalInitialSupply": "Total initial supply",
-          "finalSupplyLimit": "Final supply limit",
-          "mintingSupport": "Minting Support",
-          "tradeable": "Tradeable",
-          "type": "Type",
-          "decimal": "Decimal",
-          "limit": "Limit"
+      "about": {
+        "quickStatus": {
+          "generalInformation": "General Information",
+          "supply": "Supply",
+          "rewards": "Rewards",
+          "chain": "Chain",
+          "block": "Block",
+          "total": "Total",
+          "supplyCirculation": "Circulation",
+          "supplyFoundation": "Foundation",
+          "supplyCommunity": "Community",
+          "rewardsTotal": "Total",
+          "rewardsCommunity": "Community",
+          "rewardsMinter": "Minter"
         }
-      },
-      "createToken": {
-        "back": "back",
-        "yes": "Yes",
-        "no": "No",
-        "cancel": "CANCEL",
-        "continue": "CONTINUE",
-        "createTitle": "Create DCT (DeFi Custom Token)",
-        "updateTitle": "Update DCT (DeFi Custom Token)",
-        "name": "Name of token",
-        "symbol": "Ticker Symbol",
-        "decimal": "Decimal",
-        "decimalText": "Number of decimal places. Cannot be changed once set.",
-        "limit": "Limit",
-        "mintingSupport": "Minting support?",
-        "optionalFinalSupplyLimit": "Final supply limit (optional)",
-        "optionalFinalSupplyLimitText": "Immutable total supply limit. Leave blank for unlimited supply. Cannot be changed once set.",
-        "tradeable": "Trade-able?",
-        "dfiRequired": "DFI required",
-        "collateralAddress": "Collateral Address",
-        "collateralAddressError": "Minimum 1000 DFI is required",
-        "createTokenButton": "CREATE TOKEN",
-        "createConfirmationText": "Are you sure you want to create a token?",
-        "updateConfirmationText": "Are you sure you want to update a token?",
-        "createTokenSuccess": "Token is Created Successfully",
-        "updateTokenSuccess": "Token is Updated Successfully",
-        "tokenHash": "Token Hash",
-        "backToTokenPage": "Back To Token Page",
-        "updateTokenButton": "UPDATE TOKEN"
-      },
-      "tokenInfo": {
-        "back": "BACK",
-        "name": "Name",
-        "symbol": "Symbol",
-        "type": "Type",
-        "price": "Price",
-        "id": "ID",
-        "decimals": "Decimals",
-        "holders": "Holders",
-        "limit": "Limit",
-        "minitingSupport": "Minting Support",
-        "tradeable": "Trade-able?",
-        "marketCap": "Market Cap",
-        "volume": "Volume (24 H)",
-        "officialSite": "Official site",
-        "transfers": "Transfers",
-        "holders": "Holders",
-        "info": "Info",
-        "exchange": "Exchange",
-        "dex": "DEX",
-        "readContract": "Read Contract",
-        "writeContract": "Write Contract",
-        "analysis": "Analysis",
-        "comments": "Comments",
-        "noButtonText": "Cancel",
-        "yesButtonText": "Continue",
-        "successText": "Success",
-        "backToTokenPage": "Back to Token Page",
-        "confirmation": "Are you sure you want to destroy a token?",
-        "deleteToken": "Delete Token",
-        "editToken": "Edit Token"
-      },
-      "transfersList": {
-        "txnHash": "Txn Hash",
-        "age": "Age",
-        "from": "From",
-        "to": "To",
-        "amount": "Amount"
-      },
-      "dctDistribution": {
-        "back": "BACK",
-        "add": "ADD",
-        "cancel": "CANCEL",
-        "continue": "CONTINUE",
-        "dfiRequired": "DFI required",
-        "chooseFile": "CHOOSE FILE",
-        "dctDistribution": "DCT Distribution",
-        "uploadCsv": "UPLOAD CSV",
-        "addAddress": "ADD ADDRESS",
-        "address": "Address",
-        "addAddressesText": "Add addresses to your initial distribution list.",
-        "enterDfiAddress": "Enter DFI address",
-        "dragAndUploadCSV": "Drag or choose a CSV file to upload.",
-        "verifyingCollateral": "Verifying Collateral",
-        "chooseFile": "Choose File"
       }
     },
-    "settings": {
-      "title": "Settings – DeFi Blockchain Client",
-      "settings": "Settings",
-      "general": "General",
-      "display": "Display",
-      "launchOptions": "Launch options",
-      "launchAtLogin": "Launch at login",
-      "minimizedAtLaunch": "Minimized at launch",
-      "storage": "Storage",
-      "pruneBlockStorage": "Prune block storage",
-      "blockPruneStorage": "Block storage to prune",
-      "gb": "GB",
-      "utxoConsolidator": "UTXO Consolidator",
-      "databaseSize": "Size of database cache",
-      "maximumAmount": "Maximum value of each UTXO",
-      "maximumCount": "Maximum number of UTXOs",
-      "feeRate": "Specific fee rate in DFI/kB",
-      "mib": "MiB",
-      "scriptVerification": "Script verification",
-      "noOfThreads": "Number of threads",
-      "appLanguage": "App language",
-      "english": "English",
-      "german": "German",
-      "french": "French",
-      "displayAmount": "Display amounts in unit",
-      "dFI": "DFI",
-      "fi": "fi",
-      "conversionLabel": "1 %{from} = %{conversion} %{to}",
-      "µDFI": "µDFI",
-      "displayMode": "Display mode",
-      "sameAsSystem": "Same as system",
-      "light": "Light",
-      "dark": "Dark",
-      "unsavedChanges": "You have unsaved changes",
-      "saveSettings": "Save settings",
-      "network": "Network",
-      "mainnet": "Mainnet",
-      "testnet": "Testnet",
-      "regnet": "Regnet"
-    },
-    "wallet": {
-      "sendPage": {
-        "sendDFITitle": "Send DFI – DeFi Blockchain Client",
-        "wallet": "Wallet",
-        "sendDFI": "Send DFI",
-        "amount": "Amount",
-        "dFI": "DFI",
-        "max": "MAX",
-        "toAddress": "To address",
-        "walletBalance": "Wallet balance",
-        "amountToSend": "Amount to send",
-        "cancel": "Cancel",
-        "continue": "Continue",
-        "to": "To",
-        "pleaseVerifyAmount": "Please verify the amount and recipient",
-        "completeSend": "Complete Send",
-        "sendFailed": "Error ocurred while sending amount",
-        "transactionSuccessMsg": "The transaction was a success. Your wallet balance will update once the transaction has been confirmed by the DeFi Blockchain.",
-        "backToWallet": "Back to wallet",
-        "dfiAddress": "DFI Address"
+    "navBar": {
+      "menuDropdown": {
+        "network": "Network",
+        "units": "Units"
       },
-      "receivePage": {
-        "receiveDFITitle": "Receive DFI – DeFi Blockchain Client",
-        "wallet": "Wallet",
-        "receiveDFI": "Receive DFI",
-        "optional": "Optional",
-        "amount": "Amount",
-        "dFI": "DFI",
-        "message": "Message",
-        "label": "Label",
-        "amountToReceive": "Amount to Receive",
-        "addressNotAvailable": "Address not available",
-        "cancel": "Cancel",
-        "continue": "Continue",
-        "receive": "Receive",
-        "newAddressButton": "New Address",
-        "addressLabel": "Address label",
-        "createNewAddressNotice": "Give your new DFI address a meaningful label",
-        "createNewReceiveAddressLabel": "Create new receive address",
-        "backButton": "back",
-        "createButton": "Create"
+      "searchBar": {
+        "searchPlaceHolderText": "Search for block, transaction or address"
       },
-      "paymentRequests": {
-        "time": "Time",
-        "amount": "Amount",
-        "message": "Message",
-        "cancelRequest": "Cancel request"
-      },
-      "paymentRequestList": {
-        "label": "Label",
-        "address": "Address",
-        "created": "Created"
-      },
-      "paymentRequestPage": {
-        "paymentRequestTitle": "Payment request %{id} – DeFi Blockchain Client",
-        "paymentRequest": "Payment request",
-        "wallet": "Wallet",
-        "delete": "Delete",
-        "label": "Label",
-        "amount": "Amount",
-        "time": "Time",
-        "message": "Message",
-        "address": "Address",
-        "uRI": "URI"
-      },
-      "walletPage": {
-        "walletDefiClient": "Wallet – DeFi Blockchain Client",
-        "wallet": "Wallet",
-        "delete": "Delete",
-        "send": "Send",
-        "receive": "Receive",
-        "paymentRequests": "Payment requests",
-        "noPaymentRequests": "No payment requests available",
-        "paginationRange": "%{from} – %{to} of %{total} payment request",
-        "transactions": "Transactions",
-        "availableBalance": "Available balance",
-        "pending": "Pending"
-      },
-      "walletTxns": {
-        "height": "Height",
-        "time": "Time",
-        "amount": "Amount",
-        "hash": "Hash",
-        "paginationRange": "%{from} – %{to} of %{total} transaction",
-        "noTransactions": "No transactions available"
-      }
-    },
-    "console": {
-      "consolePage": {
-        "consoleDefiClient": "Console – DeFi Blockchain Client",
-        "defiCliCommand": "Enter Defi-cli command",
-        "console": "Console",
-        "submit": "Submit",
-        "forRef": "For Reference",
-        "example": [
-          {
-            "title": "sendtoaddress",
-            "highlightText": "sendtoaddress \"address\" amount ( \"comment\" \"comment_to\" subtractfeefromamount replaceable conf_target \"estimate_mode\" )",
-            "cmdText": "defi-cli sendtoaddress \"1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 \"donation\" \"seans outpost\""
-          },
-          {
-            "title": "getblock",
-            "highlightText": "getblock \"blockhash\" ( verbosity )",
-            "cmdText": "defi-cli getblock \"00000000c937983704a73af28acdec37b049d214adbda81d7e2a3dd146f6ed09\""
-          }
-        ]
-      },
-      "consoleResultPage": {
-        "resultPage": "CLI Result",
-        "back": "Back"
-      }
+      "blocks": "Blocks",
+      "transactions": "Transactions",
+      "tokens": "Tokens",
+      "pairs": "Pairs"
     }
   },
-  "alerts": {
-    "configurationFailure": "Configuration Failure",
-    "walletBalanceFailure": "Wallet Balance Failure",
-    "pendingBalanceFailure": "Pending Balance Failure",
-    "addReceiveTxnsFailure": "Add Receive Txns Failure",
-    "removeReceiveTxnsFailure": "Remove Receive Txns Failure",
-    "paymentRequestsFailure": "Payment Requests Failure",
-    "walletTxnsFailure": "Wallet Txns failure",
-    "sendDataFailure": "Send Data Failure",
-    "errorOccurred": "Error occurred",
-    "success": "Success",
-    "backupSuccess": "Wallet backup done successfully",
-    "importSuccess": "Import wallet done successfully",
-    "masterNodeOperatorAddressFailure": "Masternode operator address is not present",
-    "restartNode": "Restarting Node",
-    "nodeDisconnected": "Node is disconnected",
-    "electronRequiredError": "Electron app is needed for restart",
-    "addressIsNotAPartOfWallet": "%{addressName} is not a part of wallet."
-  }
+  "alerts": {}
 }
