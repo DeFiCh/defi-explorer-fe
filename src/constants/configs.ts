@@ -13,7 +13,5 @@ export const QUICK_STATUS_INTERVAL = 60000;
 export const DESKTOP_VIEW = { minWidth: 992 };
 export const TABLET_VIEW = { minWidth: 768, maxWidth: 991 };
 export const MOBILE_VIEW = { maxWidth: 767 };
-export const UNIT_OPTIONS = ["DFI", "mDFI"];
-export const BASE_UNIT = UNIT_OPTIONS[0];
 export const VERSION_NUM = version;
 export const FOOTER_DEFICHAIN_STAMP = `DefiChain Explorer v${VERSION_NUM}`;

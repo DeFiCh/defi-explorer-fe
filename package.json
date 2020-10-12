@@ -60,6 +60,7 @@
     "react-console-component": "^0.6.1",
     "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
+    "react-ellipsis-text": "^1.2.1",
     "react-helmet": "^5.2.1",
     "react-hot-loader": "^4.12.20",
     "react-icons": "^3.9.0",

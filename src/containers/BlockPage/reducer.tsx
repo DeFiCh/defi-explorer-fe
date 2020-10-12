@@ -1,9 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
-  block: {},
-  isLoading: false,
-  isError: "",
+  block: {
+    isLoading: false,
+    isError: "",
+    data: {},
+  },
+  transactions: {
+    isLoading: false,
+    isError: "",
+    data: {},
+  },
 };
 
 const configSlice = createSlice({
@@ -11,17 +18,32 @@ const configSlice = createSlice({
   initialState,
   reducers: {
     getBlockFromHash(state, action) {
-      state.isLoading = true;
+      state.block.isLoading = true;
+      state.transactions.isLoading = true;
+      state.block.data = {};
+      state.block.isError = "";
+      state.transactions.data = {};
+      state.transactions.isError = "";
     },
     getBlockFromHashSuccess(state, action) {
-      state.isLoading = false;
-      state.block = action.payload;
-      state.isError = "";
+      state.block.isLoading = false;
+      state.block.data = action.payload;
+      state.block.isError = "";
     },
     getBlockFromHashFailure(state, action) {
-      state.isLoading = false;
-      state.block = {};
-      state.isError = action.payload;
+      state.block.isLoading = false;
+      state.block.data = {};
+      state.block.isError = action.payload;
+    },
+    getTransactionsFromHashSuccess(state, action) {
+      state.transactions.isLoading = false;
+      state.transactions.data = action.payload;
+      state.transactions.isError = "";
+    },
+    getTransactionsFromHashFailure(state, action) {
+      state.transactions.isLoading = false;
+      state.transactions.data = {};
+      state.transactions.isError = action.payload;
     },
   },
 });
@@ -32,6 +54,8 @@ export const {
   getBlockFromHash,
   getBlockFromHashSuccess,
   getBlockFromHashFailure,
+  getTransactionsFromHashSuccess,
+  getTransactionsFromHashFailure,
 } = actions;
 
 export default reducer;
