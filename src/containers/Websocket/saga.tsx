@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash";
+import { cloneDeep } from 'lodash';
 import {
   actionChannel,
   all,
@@ -6,12 +6,12 @@ import {
   put,
   select,
   take,
-  takeLatest
-} from "redux-saga/effects";
+  takeLatest,
+} from 'redux-saga/effects';
 import {
   LATEST_BLOCKS_LIMIT,
-  LATEST_TRANSACTIONS_LIMIT
-} from "../../constants";
+  LATEST_TRANSACTIONS_LIMIT,
+} from '../../constants';
 import {
   newLatestBlock,
   newLatestTransaction,
@@ -22,12 +22,12 @@ import {
   fetchLatestTransactions,
   fetchLatestCoins,
   fetchLatestBlocksFail,
-  fetchLatestTransactionsFail
-} from "./reducer";
+  fetchLatestTransactionsFail,
+} from './reducer';
 import {
   handleLatestBlockService,
-  handleLatestTransactionsService
-} from "./service";
+  handleLatestTransactionsService,
+} from './service';
 
 const insertLatest = (arr: any[], newData, limit: number) => {
   const cloneArr = cloneDeep(arr);
@@ -63,8 +63,8 @@ function* watchLatestCoins() {
 
 function* prepareLatestBlock(action) {
   const {
-    blockResponse: { data: blocks }
-  } = yield select(state => state.websocket);
+    blockResponse: { data: blocks },
+  } = yield select((state) => state.websocket);
   const updatedBlock = insertLatest(
     blocks,
     action.payload,
@@ -75,12 +75,9 @@ function* prepareLatestBlock(action) {
 
 function* prepareLatestTransactions(action) {
   const {
-    transactionResponse: { data: transactions }
-  } = yield select(state => state.websocket);
-  console.log({
-    transactions,
-    payload: action.payload
-  });
+    transactionResponse: { data: transactions },
+  } = yield select((state) => state.websocket);
+
   const tx = action.payload || {};
   const { mintHeight, mintTxid, value, spentHeight, spentTxid } = tx;
   if (mintHeight > 0) {
@@ -103,8 +100,8 @@ function* prepareLatestTransactions(action) {
 
 function* prepareLatestCoins(action) {
   const {
-    coinResponse: { data: coins }
-  } = yield select(state => state.websocket);
+    coinResponse: { data: coins },
+  } = yield select((state) => state.websocket);
   const updatedCoins = insertLatest(
     coins,
     action.payload,
@@ -116,7 +113,7 @@ function* prepareLatestCoins(action) {
 function* handleFetchLatestBlocks() {
   const query = {
     limit: LATEST_BLOCKS_LIMIT,
-    anchorsOnly: false
+    anchorsOnly: false,
   };
   try {
     const resp = yield call(handleLatestBlockService, query);
@@ -151,7 +148,7 @@ function* mySaga() {
       fetchLatestTransactions.type,
       handleFetchLatestTransactions
     ),
-    yield takeLatest(fetchLatestCoins.type, handleFetchLatestCoins)
+    yield takeLatest(fetchLatestCoins.type, handleFetchLatestCoins),
   ]);
 }
 

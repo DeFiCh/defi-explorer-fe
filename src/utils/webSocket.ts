@@ -1,6 +1,6 @@
-import { WS_PREFIX } from "../constants";
-import io from "socket.io-client";
-import store from "../app/rootStore";
+import { WS_PREFIX } from '../constants';
+import io from 'socket.io-client';
+import store from '../app/rootStore';
 import {
   connected,
   disconnected,
@@ -8,7 +8,7 @@ import {
   newLatestTransaction,
   newLatestCoin,
   setErrorMessage,
-} from "../containers/Websocket/reducer";
+} from '../containers/Websocket/reducer';
 
 class Websocket {
   socket?: SocketIOClient.Socket;
@@ -25,33 +25,32 @@ class Websocket {
   }
 
   connect = () => {
-    console.log(WS_PREFIX)
     this.socket = io('https://mainnet-api.defichain.io', {
-      transports: ["websocket"],
+      transports: ['websocket'],
     });
-    this.socket.on("connect", () => {
+    this.socket.on('connect', () => {
       if (this.socket) {
-        console.log('COnnected')
+        console.log('COnnected');
         store.dispatch(connected());
-        this.socket.emit("room", `/${this.chain}/${this.network}/inv`);
+        this.socket.emit('room', `/${this.chain}/${this.network}/inv`);
       }
     });
 
-    this.socket.on("disconnect", () => {
+    this.socket.on('disconnect', () => {
       store.dispatch(disconnected());
     });
 
-    this.socket.on("tx", (data) => {
+    this.socket.on('tx', (data) => {
       store.dispatch(newLatestTransaction(data));
     });
 
-    this.socket.on("block", (data) => {
+    this.socket.on('block', (data) => {
       store.dispatch(newLatestBlock(data));
     });
-    this.socket.on("coin", (data) => {
+    this.socket.on('coin', (data) => {
       store.dispatch(newLatestCoin(data));
     });
-    this.socket.on("error", (data) => {
+    this.socket.on('error', (data) => {
       store.dispatch(setErrorMessage(data));
     });
   };

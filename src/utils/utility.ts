@@ -1,5 +1,5 @@
-import { DEFAULT_UNIT } from "../constants";
-import { unitConversion } from "./unitConversion";
+import { DEFAULT_UNIT } from '../constants';
+import { unitConversion } from './unitConversion';
 
 export const setIntervalSynchronous = (func, delay) => {
   let intervalFunction;
@@ -18,13 +18,13 @@ export const setIntervalSynchronous = (func, delay) => {
 
 export const isInputValid = (inputValue) => {
   if (isValidBlockOrTx(inputValue)) {
-    return { isValid: true, type: "blockOrTx" };
+    return { isValid: true, type: 'blockOrTx' };
     // } else if (this.isValidAddress(inputValue)) {
     //   return { isValid: true, type: 'addr' };
   } else if (isValidBlockIndex(inputValue)) {
-    return { isValid: true, type: "blockOrTx" };
+    return { isValid: true, type: 'blockOrTx' };
   } else {
-    return { isValid: false, type: "invalid" };
+    return { isValid: false, type: 'invalid' };
   }
 };
 
