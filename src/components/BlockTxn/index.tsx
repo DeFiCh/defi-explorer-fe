@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Button, Card } from "reactstrap";
-import { MdInfo, MdArrowForward } from "react-icons/md";
-import styles from "./BlockTxn.module.scss";
-import CopyToClipboard from "../CopyToClipboard";
-import classnames from "classnames";
-import { I18n } from "react-redux-i18n";
-import { getAmountInSelectedUnit } from "../../utils/utility";
-import { ITxn } from "../../utils/interfaces";
+import React, { useState } from 'react';
+import { Button, Card } from 'reactstrap';
+import { MdInfo, MdArrowForward } from 'react-icons/md';
+import styles from './BlockTxn.module.scss';
+import CopyToClipboard from '../CopyToClipboard';
+import classnames from 'classnames';
+import { I18n } from 'react-redux-i18n';
+import { getAmountInSelectedUnit } from '../../utils/utility';
+import { ITxn } from '../../utils/interfaces';
 
 interface BlockTxnProps {
   txn: ITxn;
@@ -31,18 +31,18 @@ const BlockTxn: React.FunctionComponent<BlockTxnProps> = (
         <span className={styles.hash}>
           <div
             className={classnames(
-              { "d-block": copied },
+              { 'd-block': copied },
               styles.copiedIndicator
             )}
           >
-            {I18n.t("containers.blockChainPage.blockTxn.copied")}
+            {I18n.t('containers.blockChainPage.blockTxn.copied')}
           </div>
           <span className={styles.hashSpan}>{txn.hash}</span>
           <CopyToClipboard value={txn.hash} handleCopy={handleCopy} />
         </span>
         <span className={styles.time}>
           <span className={styles.timeSpan}>{txn.time}</span>
-          <Button color="link" size="sm" className="padless ml-2">
+          <Button color='link' size='sm' className='padless ml-2'>
             <MdInfo />
           </Button>
         </span>
@@ -59,7 +59,7 @@ const BlockTxn: React.FunctionComponent<BlockTxnProps> = (
                 {to.address
                   ? to.address
                   : I18n.t(
-                      "containers.blockChainPage.blockTxn.unparsedAddress"
+                      'containers.blockChainPage.blockTxn.unparsedAddress'
                     )}
               </span>
               <span className={styles.amount}>

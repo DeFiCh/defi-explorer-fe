@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CopyToClipIcon from '../../components/CopyToClipIcon';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
-import { RouteComponentProps } from 'react-router-dom';
-import { Col, Row } from 'reactstrap';
+import { NavLink, RouteComponentProps } from 'react-router-dom';
+import { Button, Col, Collapse, Row } from 'reactstrap';
 import KeyValueLi from '../../components/KeyValueLi';
 import { AppBlock } from '../../utils/interfaces';
 import { getBlockFromHash } from './reducer';
-import { BLOCK_PAGE_BASE_PATH } from '../../constants';
+import { BLOCK_PAGE_BASE_PATH, TRANSACTION_BASE_PATH } from '../../constants';
 import moment from 'moment';
 import TransactionHashRow from '../TransactionHashRow';
+import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
+import styles from './BlockPage.module.scss';
 
 interface RouteInfo {
   blockHash: string;
@@ -49,7 +51,7 @@ const BlockPage: React.FunctionComponent<BlockPageProps> = (
     isError,
     transactions,
   } = props;
-  const arr = new Array(10).fill(1, 0);
+  const [isOpen, setIsOpen] = useState('');
 
   useEffect(() => {
     getBlockFromHash(params.blockHash);
@@ -62,7 +64,43 @@ const BlockPage: React.FunctionComponent<BlockPageProps> = (
       return (
         <>
           {transactions.data.map((item, id) => (
-            <TransactionHashRow id={id} tx={item} {...props} />
+            <>
+              <Row>
+                <Col xs='1'>
+                  <Button
+                    color='link'
+                    className={styles.btnDropdown}
+                    onClick={() => {
+                      if (isOpen === id) {
+                        setIsOpen('');
+                      } else {
+                        setIsOpen(id);
+                      }
+                    }}
+                  >
+                    {isOpen === id ? <MdArrowDropDown /> : <MdArrowDropUp />}
+                  </Button>
+                </Col>
+                <Col xs='9'>
+                  <Button
+                    to={`${TRANSACTION_BASE_PATH}/${item.txid}`}
+                    color='link'
+                    tag={NavLink}
+                    className='text-lowercase'
+                  >
+                    {item.txid}
+                  </Button>
+                  <span>
+                    <CopyToClipIcon value={item.txid!} uid={`txidCopy_${id}`} />
+                  </span>
+                </Col>
+                <Col xs='12'>
+                  <Collapse isOpen={isOpen === id}>
+                    <TransactionHashRow id={id} tx={item} {...props} />
+                  </Collapse>
+                </Col>
+              </Row>
+            </>
           ))}
         </>
       );

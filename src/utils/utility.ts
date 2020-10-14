@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { DEFAULT_UNIT } from '../constants';
 import { unitConversion } from './unitConversion';
 
@@ -80,4 +81,8 @@ export const getAmountInSelectedUnit = (
 ) => {
   const to = toUnit;
   return unitConversion(from, to, amount);
+};
+
+export const getTime = (time: Date) => {
+  return moment(time).format('lll');
 };

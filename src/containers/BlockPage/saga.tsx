@@ -1,15 +1,15 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest } from 'redux-saga/effects';
 import {
   getBlockFromHash,
   getBlockFromHashFailure,
   getBlockFromHashSuccess,
   getTransactionsFromHashSuccess,
   getTransactionsFromHashFailure,
-} from "./reducer";
+} from './reducer';
 import {
   getBlockFromHashService,
   getTransactionsFromBlockHashService,
-} from "./services";
+} from './services';
 
 export function* handleGetBlockFromHash(action) {
   const { blockHash } = action.payload;

@@ -101,6 +101,12 @@
       "version": "Version",
       "nextBlock": "Next Block",
       "confirmations": "Confirmations"
+    },
+    "addressPage": {
+      "summary": "Summary",
+      "addressTitle": "Address",
+      "confirmedBalance": "Confirmed Balance",
+      "nroTransactions": "Nro. Transactions"
     }
   },
   "alerts": {}
