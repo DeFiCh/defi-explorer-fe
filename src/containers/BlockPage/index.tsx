@@ -58,7 +58,8 @@ const BlockPage: React.FunctionComponent<BlockPageProps> = (
   }, [params]);
 
   const loadTransatioTable = () => {
-    if (transactions.isLoading) return <div>Loading</div>;
+    if (transactions.isLoading)
+      return <div>{I18n.t('containers.blockPage.loading')}</div>;
     if (transactions.isError) return <div>{transactions.isError}</div>;
     if (Array.isArray(transactions.data)) {
       return (
@@ -86,13 +87,10 @@ const BlockPage: React.FunctionComponent<BlockPageProps> = (
                     to={`${TRANSACTION_BASE_PATH}/${item.txid}`}
                     color='link'
                     tag={NavLink}
-                    className='text-lowercase'
+                    className={styles.txIdData}
                   >
                     {item.txid}
                   </Button>
-                  <span>
-                    <CopyToClipIcon value={item.txid!} uid={`txidCopy_${id}`} />
-                  </span>
                 </Col>
                 <Col xs='12'>
                   <Collapse isOpen={isOpen === id}>
@@ -109,7 +107,7 @@ const BlockPage: React.FunctionComponent<BlockPageProps> = (
   };
 
   const loadHtml = () => {
-    if (isLoading) return <div>Loading</div>;
+    if (isLoading) return <div>{I18n.t('containers.blockPage.loading')}</div>;
     if (isError) return <div>{isError}</div>;
     return (
       <>
@@ -191,7 +189,7 @@ const BlockPage: React.FunctionComponent<BlockPageProps> = (
             </Row>
           </Col>
           <Col xs='12' className='mt-4'>
-            <h1>Transactions</h1>
+            <h1>{I18n.t('containers.blockPage.transactions')}</h1>
           </Col>
           <Col xs='12' className='mt-4'>
             {loadTransatioTable()}

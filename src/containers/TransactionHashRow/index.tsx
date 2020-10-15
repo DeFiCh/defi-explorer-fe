@@ -1,36 +1,45 @@
-import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import { MdArrowDropDown, MdArrowDropUp, MdArrowForward } from 'react-icons/md';
+import { MdArrowForward } from 'react-icons/md';
 import { connect } from 'react-redux';
-import { NavLink, RouteComponentProps } from 'react-router-dom';
-import { Button, Card, CardBody, Col, Collapse, Row } from 'reactstrap';
-import { mDFI, TRANSACTION_BASE_PATH } from '../../constants';
+import { I18n } from 'react-redux-i18n';
+import { Badge, Card, CardBody, Col, Row } from 'reactstrap';
+import { mDFI } from '../../constants';
 import { getAmountInSelectedUnit, getTime } from '../../utils/utility';
 import AddressRow from './Components/addressRow';
-import { fetchNewTxnDataRequest } from './reducer';
-import styles from './TransactionHashRow.module.scss';
+import { fetchNewTxnIpOpDataRequest } from './reducer';
 
-interface TransactionHashRowProps extends RouteComponentProps {
+interface TransactionHashRowProps {
   tx: any;
   id: string | number;
-  fetchNewTxnDataRequest: (txid: string) => void;
+  transactions: any;
+  fetchNewTxnIpOpDataRequest: (txid: string) => void;
   data: any;
   unit: string;
 }
 
 const TransactionHashRow = (props: TransactionHashRowProps) => {
-  const { tx, id, fetchNewTxnDataRequest, data, unit } = props;
-  const [isOpen, setIsOpen] = useState(false);
+  const {
+    tx,
+    id,
+    fetchNewTxnIpOpDataRequest,
+    data,
+    unit,
+    transactions,
+  } = props;
   const [InputOutput, setInputOutput] = useState({
     inputs: [],
     outputs: [],
   });
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState('');
-  const toggle = () => setIsOpen(!isOpen);
+  const [txnData, setTxnData] = useState({
+    isLoading: true,
+    isError: '',
+    data: {},
+  });
 
   useEffect(() => {
-    fetchNewTxnDataRequest(`${tx.txid}`);
+    fetchNewTxnIpOpDataRequest(`${tx.txid}`);
   }, []);
 
   useEffect(() => {
@@ -57,31 +66,66 @@ const TransactionHashRow = (props: TransactionHashRowProps) => {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (transactions[tx.txid]) {
+      setTxnData(transactions[tx.txid]);
+    }
+  }, [transactions]);
+
   const loadInputOutputData = () => {
-    if (isLoading) return <div>Loading</div>;
+    if (isLoading)
+      return <div>{I18n.t('containers.transactionHashRow.loading')}</div>;
     if (isError) return <div>{isError}</div>;
     return (
       <Row>
-        <Col xs='5'>
+        <Col xs='12' md='5'>
           {InputOutput.inputs.length > 0 ? (
             InputOutput.inputs.map((item) => (
               <AddressRow item={item} unit={unit} />
             ))
           ) : (
-            <div className='text-center'>No input address</div>
+            <div className='text-center'>
+              {I18n.t('containers.transactionHashRow.noInputAddress')}
+            </div>
           )}
         </Col>
-        <Col xs='2' className='text-center'>
+        <Col xs='12' md='2' className='text-center'>
           <MdArrowForward />
         </Col>
-        <Col xs='5'>
+        <Col xs='12' md='5'>
           {InputOutput.outputs.length > 0 ? (
             InputOutput.outputs.map((item) => (
               <AddressRow item={item} unit={unit} />
             ))
           ) : (
-            <div className='text-center'>No output address</div>
+            <div className='text-center'>
+              {I18n.t('containers.transactionHashRow.noOutputAddress')}
+            </div>
           )}
+        </Col>
+      </Row>
+    );
+  };
+
+  const loadTxnData = () => {
+    if (txnData.isLoading)
+      return <div>{I18n.t('containers.transactionHashRow.loading')}</div>;
+    if (txnData.isError) return <div>{isError}</div>;
+    return (
+      <Row>
+        <Col xs='12' className='text-right'>
+          <Badge>{getTime(txnData.data.blockTime)}</Badge>
+        </Col>
+        <Col xs='12'>{loadInputOutputData()}</Col>
+        <Col xs='12' className='text-right'>
+          <Badge className='mr-2'>
+            {I18n.t('containers.transactionHashRow.confirmations', {
+              confirmations: txnData.data.confirmations,
+            })}
+          </Badge>
+          <Badge>
+            {getAmountInSelectedUnit(txnData.data.value, unit, mDFI)} {unit}
+          </Badge>
         </Col>
       </Row>
     );
@@ -90,18 +134,7 @@ const TransactionHashRow = (props: TransactionHashRowProps) => {
   return (
     <div key={id}>
       <Card>
-        <CardBody>
-          <Row>
-            <Col xs='12' className='text-right'>
-              {getTime(tx.blockTime)}
-            </Col>
-            <Col xs='12'>{loadInputOutputData()}</Col>
-            <Col xs='12' className='text-right'>
-              <span>{getAmountInSelectedUnit(tx.value, unit, mDFI)}</span>
-              <span> {unit}</span>
-            </Col>
-          </Row>
-        </CardBody>
+        <CardBody>{loadTxnData()}</CardBody>
       </Card>
     </div>
   );
@@ -109,11 +142,13 @@ const TransactionHashRow = (props: TransactionHashRowProps) => {
 
 const mapStateToProps = ({ transactionHashRow, app }) => ({
   data: transactionHashRow.data,
+  transactions: transactionHashRow.transactions,
   unit: app.unit,
 });
 
 const mapDispatchToProps = {
-  fetchNewTxnDataRequest: (txid: string) => fetchNewTxnDataRequest(txid),
+  fetchNewTxnIpOpDataRequest: (txid: string) =>
+    fetchNewTxnIpOpDataRequest(txid),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TransactionHashRow);

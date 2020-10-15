@@ -6,16 +6,12 @@ import { NavLink, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Collapse, Row } from 'reactstrap';
 import KeyValueLi from '../../components/KeyValueLi';
 import { getAddress } from './reducer';
-import {
-  BLOCK_PAGE_BASE_PATH,
-  mDFI,
-  TRANSACTION_BASE_PATH,
-} from '../../constants';
-import moment from 'moment';
+import { mDFI, TRANSACTION_BASE_PATH } from '../../constants';
 import TransactionHashRow from '../TransactionHashRow';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import styles from './AddressPage.module.scss';
 import { getAmountInSelectedUnit } from '../../utils/utility';
+import QRCode from 'qrcode.react';
 
 interface RouteInfo {
   address: string;
@@ -49,7 +45,8 @@ const AddressPage: React.FunctionComponent<AddressPageProps> = (
   }, [params]);
 
   const loadTransatioTable = () => {
-    if (transactions.isLoading) return <div>Loading</div>;
+    if (transactions.isLoading)
+      return <div>{I18n.t('containers.addressPage.loading')}</div>;
     if (transactions.isError) return <div>{transactions.isError}</div>;
     if (Array.isArray(transactions.data)) {
       return (
@@ -77,13 +74,10 @@ const AddressPage: React.FunctionComponent<AddressPageProps> = (
                     to={`${TRANSACTION_BASE_PATH}/${item.txid}`}
                     color='link'
                     tag={NavLink}
-                    className='text-lowercase'
+                    className={styles.txIdData}
                   >
                     {item.txid}
                   </Button>
-                  <span>
-                    <CopyToClipIcon value={item.txid!} uid={`txidCopy_${id}`} />
-                  </span>
                 </Col>
                 <Col xs='12'>
                   <Collapse isOpen={isOpen === id}>
@@ -99,8 +93,8 @@ const AddressPage: React.FunctionComponent<AddressPageProps> = (
     return <div />;
   };
 
-  const loadHtml = () => {
-    if (isLoading) return <div>Loading</div>;
+  const loadAddressPage = () => {
+    if (isLoading) return <div>{I18n.t('containers.addressPage.loading')}</div>;
     if (isError) return <div>{isError}</div>;
     return (
       <>
@@ -114,36 +108,39 @@ const AddressPage: React.FunctionComponent<AddressPageProps> = (
             </h1>
             <div className='my-2'>
               <span>{params.address}</span>
-              {/* <span>
-                <CopyToClipIcon value={params.address!} uid={'blockHashCopy'} />
-              </span> */}
+              <span>
+                <CopyToClipIcon value={params.address!} uid={'addressCopy'} />
+              </span>
             </div>
           </Col>
           <Col xs='12'>
             <h1>{I18n.t('containers.addressPage.summary')}</h1>
             <Row>
-              <Col xs='12'>
-                <KeyValueLi
-                  label={I18n.t('containers.addressPage.confirmedBalance')}
-                  value={`${getAmountInSelectedUnit(
-                    balance || 0,
-                    unit,
-                    mDFI
-                  )} ${unit}`}
-                />
-                <KeyValueLi
-                  label={I18n.t('containers.addressPage.nroTransactions')}
-                  value={`${getAmountInSelectedUnit(
-                    balance || 0,
-                    unit,
-                    mDFI
-                  )} ${unit}`}
-                />
+              <Col xs='12' md='8'>
+                <div className='mb-4'>
+                  <KeyValueLi
+                    label={I18n.t('containers.addressPage.confirmedBalance')}
+                    value={`${getAmountInSelectedUnit(
+                      balance || 0,
+                      unit,
+                      mDFI
+                    )} ${unit}`}
+                  />
+                  <KeyValueLi
+                    label={I18n.t('containers.addressPage.nroTransactions')}
+                    value={`${transactions.total}`}
+                  />
+                </div>
+              </Col>
+              <Col xs='12' md='4'>
+                <div className='text-center'>
+                  <QRCode value={params.address!} size={240} />
+                </div>
               </Col>
             </Row>
           </Col>
           <Col xs='12' className='mt-4'>
-            <h1>Transactions</h1>
+            <h1>{I18n.t('containers.addressPage.transactions')}</h1>
           </Col>
           <Col xs='12' className='mt-4'>
             {loadTransatioTable()}
@@ -152,7 +149,7 @@ const AddressPage: React.FunctionComponent<AddressPageProps> = (
       </>
     );
   };
-  return <div className='mt-4'>{loadHtml()}</div>;
+  return <div className='mt-4'>{loadAddressPage()}</div>;
 };
 
 const mapStateToProps = (state) => {

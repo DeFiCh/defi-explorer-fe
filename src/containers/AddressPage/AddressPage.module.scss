@@ -5,12 +5,15 @@
 @import '../../scss/variables';
 @import '../../scss/bootstrap/variables';
 
+.txIdData {
+  text-transform: none !important;
+  padding: 0 !important;
+}
+
 .btnDropdown {
   position: relative;
-  padding: 0 !important;
   svg {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 0;
   }
 }

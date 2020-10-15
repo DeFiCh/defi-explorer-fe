@@ -10,6 +10,7 @@ export const initialState = {
     isLoading: false,
     isError: '',
     data: {},
+    total: 0,
   },
 };
 
@@ -37,7 +38,8 @@ const configSlice = createSlice({
     },
     getTransactionsFromAddressSuccess(state, action) {
       state.transactions.isLoading = false;
-      state.transactions.data = action.payload;
+      state.transactions.data = action.payload.txns;
+      state.transactions.total = action.payload.total;
       state.transactions.isError = '';
     },
     getTransactionsFromAddressFailure(state, action) {

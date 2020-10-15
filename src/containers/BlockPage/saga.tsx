@@ -9,12 +9,14 @@ import {
 import {
   getBlockFromHashService,
   getTransactionsFromBlockHashService,
+  getConfirmations,
 } from './services';
 
 export function* handleGetBlockFromHash(action) {
   const { blockHash } = action.payload;
   try {
     const data = yield call(getBlockFromHashService, blockHash);
+    data.confirmations = yield call(getConfirmations, data.height);
     yield put(getBlockFromHashSuccess(data));
     yield call(handleGetTransactionsFromHash, action);
   } catch (err) {

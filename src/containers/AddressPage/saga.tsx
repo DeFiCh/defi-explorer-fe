@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { txnListSchema } from '../../utils/schemas/rpcResponseSchema';
 import { orderByHeight, toAppCoin } from '../../utils/tx';
 import {
   getAddress,
@@ -29,7 +30,12 @@ export function* handleGetTransactionsFromAddress(action) {
     const data = yield call(getTransactionsFromAddressService, address);
     const formattedData = data.map(toAppCoin);
     const txs = yield call(orderByHeight, formattedData);
-    yield put(getTransactionsFromAddressSuccess(txs.slice(0, 10))); // TODO: remove slice from here
+    yield put(
+      getTransactionsFromAddressSuccess({
+        txns: txs.slice(0, 10),
+        total: txs.length,
+      })
+    ); // TODO: remove slice from here
   } catch (err) {
     yield put(getTransactionsFromAddressFailure(err.message));
   }
