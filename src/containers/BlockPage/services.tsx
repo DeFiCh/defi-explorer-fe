@@ -1,7 +1,7 @@
-import moment from "moment";
-import { GET_BLOCK, GET_TX } from "../../constants/endpoint";
-import ApiRequest from "../../utils/apiRequest";
-import { ApiBlock, AppBlock } from "../../utils/interfaces";
+import moment from 'moment';
+import { GET_BLOCK, GET_TX } from '../../constants/endpoint';
+import ApiRequest from '../../utils/apiRequest';
+import { ApiBlock, AppBlock } from '../../utils/interfaces';
 
 export const getBlockFromHashService = async (blockHash: string) => {
   const apiRequest = new ApiRequest();
@@ -21,6 +21,12 @@ export const getTransactionsFromBlockHashService = async (
   return data;
 };
 
+export const getConfirmations = async (blockHeight) => {
+  const apiRequest = new ApiRequest();
+  const { data } = await apiRequest.get(`${GET_BLOCK}/tip`);
+  return blockHeight >= 0 ? data.height - blockHeight : blockHeight;
+};
+
 export const toAppBlock = (block: ApiBlock): AppBlock => {
   const difficulty: number = 0x1e0fffff / block.bits;
   return {
@@ -32,7 +38,7 @@ export const toAppBlock = (block: ApiBlock): AppBlock => {
     merkleroot: block.merkleRoot,
     version: block.version,
     difficulty,
-    bits: "0x" + block.bits.toString(16),
+    bits: '0x' + block.bits.toString(16),
     hash: block.hash,
     time: block.time,
     tx: {
@@ -43,7 +49,7 @@ export const toAppBlock = (block: ApiBlock): AppBlock => {
     nextblockhash: block.nextBlockHash,
     poolInfo: {
       poolName: block.minedBy,
-      url: "",
+      url: '',
     },
     reward: block.reward,
     btcTxHash: block.btcTxHash || null,

@@ -1,12 +1,12 @@
-import React, { EventHandler, useState } from "react";
-import EllipsisText from "react-ellipsis-text";
-import CopyToClipboard from "../CopyToClipboard";
-import classnames from "classnames";
-import QrCode from "../QrCode";
-import { I18n } from "react-redux-i18n";
-import styles from "./KeyValueLi.module.scss";
-import { Button } from "reactstrap";
-import { NavLink } from "react-router-dom";
+import React, { EventHandler, useState } from 'react';
+import EllipsisText from 'react-ellipsis-text';
+import CopyToClipboard from '../CopyToClipboard';
+import classnames from 'classnames';
+import QrCode from '../QrCode';
+import { I18n } from 'react-redux-i18n';
+import styles from './KeyValueLi.module.scss';
+import { Button } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
 
 interface KeyValueLiProps {
   copyable?: boolean | string;
@@ -32,21 +32,26 @@ const KeyValueLi: React.FunctionComponent<KeyValueLiProps> = (
   const prepareEllipsisHref = () => {
     if (props.href) {
       return (
-        <Button to={props.href} tag={NavLink} color="link" className="p-0">
-          <EllipsisText text={props.value} length={"50"} />
+        <Button
+          to={props.href}
+          tag={NavLink}
+          color='link'
+          className={styles.href}
+        >
+          <EllipsisText text={props.value} length={'50'} />
         </Button>
       );
     }
-    return <EllipsisText text={props.value} length={"50"} />;
+    return <EllipsisText text={props.value} length={'50'} />;
   };
   return (
     <div className={styles.keyValueLi}>
       <div className={styles.label}>{props.label}</div>
       <div className={styles.value}>
         <div
-          className={classnames({ "d-flex": copied }, styles.copiedIndicator)}
+          className={classnames({ 'd-flex': copied }, styles.copiedIndicator)}
         >
-          {I18n.t("components.keyValueLi.copied")}
+          {I18n.t('components.keyValueLi.copied')}
         </div>
         {prepareEllipsisHref()}
         {props.popsQR && (

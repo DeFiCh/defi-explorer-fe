@@ -3,6 +3,7 @@ import { all, fork } from 'redux-saga/effects';
 import websocketSaga from '../containers/Websocket/saga';
 import homePageSaga from '../containers/Home/saga';
 import blockPageSaga from '../containers/BlockPage/saga';
+import addressPageSaga from '../containers/AddressPage/saga';
 import transactionHashRowSaga from '../containers/TransactionHashRow/saga';
 
 function* rootSaga() {
@@ -11,6 +12,7 @@ function* rootSaga() {
     fork(homePageSaga),
     fork(blockPageSaga),
     fork(transactionHashRowSaga),
+    fork(addressPageSaga),
   ]);
 }
 
