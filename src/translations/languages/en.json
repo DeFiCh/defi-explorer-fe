@@ -86,6 +86,7 @@
       "pairs": "Pairs"
     },
     "blockPage": {
+      "transactions": "Transactions",
       "blockTitle": "Block #%{height}",
       "blockHash": "Block Hash",
       "summary": "Summary",
@@ -100,13 +101,36 @@
       "size": "Size (bytes)",
       "version": "Version",
       "nextBlock": "Next Block",
-      "confirmations": "Confirmations"
+      "confirmations": "Confirmations",
+      "loading": "Loading"
     },
     "addressPage": {
       "summary": "Summary",
       "addressTitle": "Address",
       "confirmedBalance": "Confirmed Balance",
-      "nroTransactions": "Nro. Transactions"
+      "nroTransactions": "Nro. Transactions",
+      "transactions": "Transactions",
+      "loading": "Loading"
+    },
+    "transactionHashRow": {
+      "noInputAddress": "No input address",
+      "noOutputAddress": "No output address",
+      "loading": "Loading",
+      "confirmations": "Confirmations: %{confirmations}"
+    },
+    "transactionPage": {
+      "loading": "Loading",
+      "transactionTitle": "Transaction",
+      "summary": "Summary",
+      "txHash": "Tx Hash",
+      "details": "Details",
+      "size": "Size",
+      "feeRate": "Fee Rate",
+      "receivedTime": "Received Time",
+      "minedTime": "Mined Time",
+      "includedInBlock": "Included in Block",
+      "sizeFormat": "%{size} (bytes)",
+      "feeFormat": "%{fee} (sat/bytes)"
     }
   },
   "alerts": {}
