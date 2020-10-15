@@ -83,6 +83,9 @@ export const getAmountInSelectedUnit = (
   return unitConversion(from, to, amount);
 };
 
-export const getTime = (time: Date) => {
+export const getTime = (time: Date | string | number) => {
+  if (typeof time === 'number') {
+    return moment(time * 1000).format('lll');
+  }
   return moment(time).format('lll');
 };
