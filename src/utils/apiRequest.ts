@@ -1,6 +1,6 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { API_PREFIX } from "../constants";
-import store from "../app/rootStore";
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { API_PREFIX } from '../constants';
+import store from '../app/rootStore';
 
 export default class ApiRequest {
   client: AxiosInstance;
@@ -11,7 +11,7 @@ export default class ApiRequest {
     this.client = axios.create({
       baseURL: `${API_PREFIX}/${chain}/${network}`,
       headers: {
-        "cache-control": "no-cache",
+        'cache-control': 'no-cache',
       },
     });
   }

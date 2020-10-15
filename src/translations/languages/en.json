@@ -12,6 +12,9 @@
       "blockInfo": "Block %{latestSyncedBlock} of %{latestBlock}",
       "network": "Network"
     },
+    "copyToClipIcon": {
+      "copied": "Copied!"
+    },
     "footerComponent": {
       "deFiChain": {
         "deFiChainTitle": "DeFiChain",
@@ -81,6 +84,29 @@
       "transactions": "Transactions",
       "tokens": "Tokens",
       "pairs": "Pairs"
+    },
+    "blockPage": {
+      "blockTitle": "Block #%{height}",
+      "blockHash": "Block Hash",
+      "summary": "Summary",
+      "numOfTxns": "Number Of Transactions",
+      "height": "Height",
+      "block": "Block Reward",
+      "timestamp": "Timestamp",
+      "merkleRoot": "Merkle Root",
+      "previousBlock": "Previous Block",
+      "difficulty": "Difficulty",
+      "bits": "Bits",
+      "size": "Size (bytes)",
+      "version": "Version",
+      "nextBlock": "Next Block",
+      "confirmations": "Confirmations"
+    },
+    "addressPage": {
+      "summary": "Summary",
+      "addressTitle": "Address",
+      "confirmedBalance": "Confirmed Balance",
+      "nroTransactions": "Nro. Transactions"
     }
   },
   "alerts": {}

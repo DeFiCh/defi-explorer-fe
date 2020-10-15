@@ -1,3 +1,7 @@
+import moment from 'moment';
+import { DEFAULT_UNIT } from '../constants';
+import { unitConversion } from './unitConversion';
+
 export const setIntervalSynchronous = (func, delay) => {
   let intervalFunction;
   let timeoutId;
@@ -15,13 +19,13 @@ export const setIntervalSynchronous = (func, delay) => {
 
 export const isInputValid = (inputValue) => {
   if (isValidBlockOrTx(inputValue)) {
-    return { isValid: true, type: "blockOrTx" };
+    return { isValid: true, type: 'blockOrTx' };
     // } else if (this.isValidAddress(inputValue)) {
     //   return { isValid: true, type: 'addr' };
   } else if (isValidBlockIndex(inputValue)) {
-    return { isValid: true, type: "blockOrTx" };
+    return { isValid: true, type: 'blockOrTx' };
   } else {
-    return { isValid: false, type: "invalid" };
+    return { isValid: false, type: 'invalid' };
   }
 };
 
@@ -68,4 +72,17 @@ export const fetchPageNumbers = (
     return range(startPage, endPage);
   }
   return range(1, totalPages);
+};
+
+export const getAmountInSelectedUnit = (
+  amount: number | string,
+  toUnit: string,
+  from: string = DEFAULT_UNIT
+) => {
+  const to = toUnit;
+  return unitConversion(from, to, amount);
+};
+
+export const getTime = (time: Date) => {
+  return moment(time).format('lll');
 };

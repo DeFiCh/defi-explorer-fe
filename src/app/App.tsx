@@ -15,7 +15,7 @@ interface AppProps extends RouteComponentProps {}
 const App: React.FunctionComponent<AppProps> = (props: AppProps) => {
   const { location } = props;
   useEffect(() => {
-    const webSockete = new Websocket();
+    const webSocket = new Websocket();
   }, []);
   return (
     <div id="app">

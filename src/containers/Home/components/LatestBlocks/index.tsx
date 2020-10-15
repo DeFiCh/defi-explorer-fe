@@ -26,7 +26,7 @@ const LatestBlocksComponent: React.FunctionComponent<LatestBlocksComponentProps>
     return blocks.map(block => (
       <tr key={block.hash}>
         <td>
-          <Link to={`${BLOCK_PAGE_BASE_PATH}/${block.height}`}>
+          <Link to={`${BLOCK_PAGE_BASE_PATH}/${block.hash}`}>
             {block.height}
           </Link>
         </td>
