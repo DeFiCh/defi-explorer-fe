@@ -108,6 +108,7 @@
       "summary": "Summary",
       "addressTitle": "Address",
       "confirmedBalance": "Confirmed Balance",
+      "paginationRange": "%{from} – %{to} of %{total} transactions",
       "nroTransactions": "Nro. Transactions",
       "transactions": "Transactions",
       "loading": "Loading"

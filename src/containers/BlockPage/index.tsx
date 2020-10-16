@@ -94,7 +94,7 @@ const BlockPage: React.FunctionComponent<BlockPageProps> = (
                 </Col>
                 <Col xs='12'>
                   <Collapse isOpen={isOpen === id}>
-                    <TransactionHashRow id={id} tx={item} {...props} />
+                    {isOpen === id && <TransactionHashRow id={id} tx={item} {...props} />}
                   </Collapse>
                 </Col>
               </Row>
