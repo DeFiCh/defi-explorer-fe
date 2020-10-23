@@ -132,6 +132,16 @@
       "includedInBlock": "Included in Block",
       "sizeFormat": "%{size} (bytes)",
       "feeFormat": "%{fee} (sat/bytes)"
+    },
+    "blockpageList": {
+      "loading": "Loading",
+      "blockListPageTitle": "Blocks",
+      "height": "Height",
+      "time": "Time",
+      "transactionCount": "Transaction Count",
+      "size": "Size",
+      "latestBlockTitle": "Latest Blocks",
+      "paginationRange": "%{to} – %{from} of %{total} blocks"
     }
   },
   "alerts": {}

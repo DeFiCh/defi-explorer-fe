@@ -15,6 +15,7 @@ export const PAIRS_PATH = '/pairs';
 export const BLOCK_PAGE_BASE_PATH = `/block`;
 export const TRANSACTION_BASE_PATH = `/tx`;
 export const ADDRESS_BASE_PATH = `/address`;
+export const BLOCK_LIST_PAGE_BASE_PATH = `/blocks`;
 export const TRANSACTION_PAGE_INFO_PATH = `${TRANSACTION_BASE_PATH}/:txId`;
 export const BLOCK_PAGE_INFO_PATH = `${BLOCK_PAGE_BASE_PATH}/:blockHash`;
 export const ADDRESS_PAGE_BASE_PATH = `${ADDRESS_BASE_PATH}/:address`;
