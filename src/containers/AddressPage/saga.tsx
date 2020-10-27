@@ -33,12 +33,10 @@ export function* handleGetTransactionsFromAddress(action) {
     const data = yield call(getTransactionsFromAddressService, address, {
       limit: 10,
     });
-    const formattedData = data.map(toAppCoin);
-    const txs = yield call(orderByHeight, formattedData);
     const { total } = yield call(getTotalTransactionFromAddressCount, address);
     yield put(
       getTransactionsFromAddressSuccess({
-        txns: txs,
+        txns: data,
         total,
       })
     );
@@ -54,11 +52,9 @@ export function* handleTransactionPaginationFromAddress(action) {
       skip: pageNumber * pageSize,
       limit: pageSize,
     });
-    const formattedData = data.map(toAppCoin);
-    const txs = yield call(orderByHeight, formattedData);
     yield put(
       startPaginateTransactionsFromAddressSuccess({
-        txns: txs,
+        txns: data,
       })
     );
   } catch (err) {

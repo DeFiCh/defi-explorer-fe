@@ -7,7 +7,7 @@ import { Button, Col, Collapse, Row } from 'reactstrap';
 import KeyValueLi from '../../components/KeyValueLi';
 import { getAddress, startPaginateTransactionsFromAddress } from './reducer';
 import { mDFI, TRANSACTION_BASE_PATH } from '../../constants';
-import TransactionHashRow from '../TransactionHashRow';
+import TransactionHashRow from '../TransactionHashRow/TransactionHashRowDupe';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import styles from './AddressPage.module.scss';
 import { getAmountInSelectedUnit } from '../../utils/utility';
@@ -36,7 +36,7 @@ const AddressPage: React.FunctionComponent<AddressPageProps> = (
     getAddress,
     isLoading,
     isError,
-    address: { balance, confirmed, unconfirmed },
+    address: { balance },
     transactions,
     unit,
     startPaginateTransactionsFromAddress,
@@ -52,7 +52,11 @@ const AddressPage: React.FunctionComponent<AddressPageProps> = (
   const fetchData = (pageNumber: number) => {
     setCurrentPage(pageNumber);
     setIsOpen('');
-    startPaginateTransactionsFromAddress(params.address, pageSize, pageNumber);
+    startPaginateTransactionsFromAddress(
+      params.address,
+      pageSize,
+      pageNumber - 1
+    );
   };
 
   useEffect(() => {
@@ -86,12 +90,12 @@ const AddressPage: React.FunctionComponent<AddressPageProps> = (
                 </Col>
                 <Col xs='9'>
                   <Button
-                    to={`${TRANSACTION_BASE_PATH}/${item.txid}`}
+                    to={`${TRANSACTION_BASE_PATH}/${item.transactions.txid}`}
                     color='link'
                     tag={NavLink}
                     className={styles.txIdData}
                   >
-                    {item.txid}
+                    {item.transactions.txid}
                   </Button>
                 </Col>
                 <Col xs='12'>

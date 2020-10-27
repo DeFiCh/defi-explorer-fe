@@ -13,7 +13,7 @@ export const getTransactionsFromAddressService = async (
 ) => {
   const apiRequest = new ApiRequest();
   const { data } = await apiRequest.get(
-    `${ADDRESS_BASE_PATH}/${address}/newtxs`,
+    `${ADDRESS_BASE_PATH}/${address}/transactions`,
     {
       params: query,
     }
