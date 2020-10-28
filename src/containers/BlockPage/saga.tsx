@@ -1,5 +1,4 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { BLOCK_PAGE_TRANSACTIONS_LIMIT } from '../../constants';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import {
   getBlockFromHash,
   getBlockFromHashFailure,
@@ -18,7 +17,9 @@ export function* handleGetBlockFromHash(action) {
   const { blockHash } = action.payload;
   try {
     const data = yield call(getBlockFromHashService, blockHash);
-    data.confirmations = yield call(getConfirmations, data.height);
+    const confirmationData = yield call(getConfirmations);
+    data.confirmations =
+      data.height >= 0 ? confirmationData - data.height : data.height;
     yield put(getBlockFromHashSuccess(data));
     yield call(paginationGetTransactionsFromHash, action);
   } catch (err) {
@@ -33,6 +34,13 @@ export function* paginationGetTransactionsFromHash(action) {
       blockHash,
       skip: pageNumber * pageSize,
       limit: pageSize,
+    });
+    const confirmationData = yield call(getConfirmations);
+    data.forEach((item) => {
+      item.transactions.confirmations =
+        item.transactions.blockHeight >= 0
+          ? confirmationData - item.transactions.blockHeight
+          : item.transactions.blockHeight;
     });
     yield put(getTransactionsFromHashSuccess(data));
   } catch (err) {
