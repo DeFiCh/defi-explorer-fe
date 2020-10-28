@@ -28,10 +28,10 @@ export const getTransactionsFromBlockHashService = async (_: {
   return processData(data);
 };
 
-export const getConfirmations = async (blockHeight) => {
+export const getConfirmations = async () => {
   const apiRequest = new ApiRequest();
   const { data } = await apiRequest.get(`${GET_BLOCK}/tip`);
-  return blockHeight >= 0 ? data.height - blockHeight : blockHeight;
+  return data.height;
 };
 
 export const toAppBlock = (block: ApiBlock): AppBlock => {

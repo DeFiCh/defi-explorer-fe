@@ -12,6 +12,7 @@ import {
 } from './reducer';
 import {
   getAddressService,
+  getConfirmations,
   getTotalTransactionFromAddressCount,
   getTransactionsFromAddressService,
 } from './services';
@@ -34,6 +35,13 @@ export function* handleGetTransactionsFromAddress(action) {
       limit: 10,
     });
     const { total } = yield call(getTotalTransactionFromAddressCount, address);
+    const confirmationData = yield call(getConfirmations);
+    data.forEach((item) => {
+      item.transactions.confirmations =
+        item.transactions.blockHeight >= 0
+          ? confirmationData - item.transactions.blockHeight
+          : item.transactions.blockHeight;
+    });
     yield put(
       getTransactionsFromAddressSuccess({
         txns: data,
@@ -51,6 +59,13 @@ export function* handleTransactionPaginationFromAddress(action) {
     const data = yield call(getTransactionsFromAddressService, address, {
       skip: pageNumber * pageSize,
       limit: pageSize,
+    });
+    const confirmationData = yield call(getConfirmations);
+    data.forEach((item) => {
+      item.transactions.confirmations =
+        item.transactions.blockHeight >= 0
+          ? confirmationData - item.transactions.blockHeight
+          : item.transactions.blockHeight;
     });
     yield put(
       startPaginateTransactionsFromAddressSuccess({
