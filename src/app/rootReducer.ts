@@ -7,6 +7,7 @@ import blockPageReducer from '../containers/BlockPage/reducer';
 import addressPageReducer from '../containers/AddressPage/reducer';
 import transactionPageReducer from '../containers/TransactionPage/reducer';
 import transactionHashRowReducer from '../containers/TransactionHashRow/reducer';
+import blockListPageReducer from '../containers/BlockListPage/reducer';
 
 export default combineReducers({
   app: appReducer,
@@ -17,4 +18,5 @@ export default combineReducers({
   addressPage: addressPageReducer,
   transactionHashRow: transactionHashRowReducer,
   transactionPage: transactionPageReducer,
+  blockListPage: blockListPageReducer,
 });
