@@ -9,16 +9,23 @@ export const getBlockFromHashService = async (blockHash: string) => {
   return toAppBlock(resp.data);
 };
 
-export const getTransactionsFromBlockHashService = async (
-  blockHash: string
-) => {
+export const getTransactionsFromBlockHashService = async (_: {
+  blockHash: string;
+  skip?: number;
+  limit: number;
+}) => {
+  const { blockHash, skip, limit } = _;
   const apiRequest = new ApiRequest();
-  const { data } = await apiRequest.get(GET_TX, {
-    params: {
-      blockHash,
-    },
-  });
-  return data;
+  const { data } = await apiRequest.get(
+    `${GET_BLOCK}/${blockHash}/transactions`,
+    {
+      params: {
+        skip,
+        limit,
+      },
+    }
+  );
+  return processData(data);
 };
 
 export const getConfirmations = async (blockHeight) => {
@@ -55,4 +62,49 @@ export const toAppBlock = (block: ApiBlock): AppBlock => {
     btcTxHash: block.btcTxHash || null,
     isAnchor: !!block.btcTxHash,
   };
+};
+
+const processData = (data: any[]) => {
+  return data.map((item) => {
+    const {
+      chain,
+      network,
+      txid,
+      blockHeight,
+      blockHash,
+      blockTime,
+      blockTimeNormalized,
+      coinbase,
+      fee,
+      size,
+      locktime,
+      inputCount,
+      outputCount,
+      value,
+      wallets,
+      input,
+      output,
+    } = item;
+    return {
+      transactions: {
+        chain,
+        network,
+        txid,
+        blockHeight,
+        blockHash,
+        blockTime,
+        blockTimeNormalized,
+        coinbase,
+        fee,
+        size,
+        locktime,
+        inputCount,
+        outputCount,
+        value,
+        wallets,
+      },
+      input,
+      output,
+    };
+  });
 };
