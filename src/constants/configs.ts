@@ -9,6 +9,7 @@ export const CHAIN = process.env.CHAIN || 'DFI';
 export const NETWORK = process.env.NETWORK || 'mainnet';
 export const LATEST_BLOCKS_LIMIT = 10;
 export const LATEST_TRANSACTIONS_LIMIT = 5;
+export const BLOCK_PAGE_TRANSACTIONS_LIMIT = 10;
 export const QUICK_STATUS_INTERVAL = 60000;
 export const DESKTOP_VIEW = { minWidth: 992 };
 export const TABLET_VIEW = { minWidth: 768, maxWidth: 991 };

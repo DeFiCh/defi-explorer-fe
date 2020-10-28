@@ -6,11 +6,16 @@ import { NavLink, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Collapse, Row } from 'reactstrap';
 import KeyValueLi from '../../components/KeyValueLi';
 import { AppBlock } from '../../utils/interfaces';
-import { getBlockFromHash } from './reducer';
-import { BLOCK_PAGE_BASE_PATH, TRANSACTION_BASE_PATH } from '../../constants';
+import { getBlockFromHash, startPagination } from './reducer';
+import {
+  BLOCK_PAGE_BASE_PATH,
+  TRANSACTION_BASE_PATH,
+  BLOCK_PAGE_TRANSACTIONS_LIMIT,
+} from '../../constants';
 import moment from 'moment';
-import TransactionHashRow from '../TransactionHashRow';
+import TransactionHashRow from '../TransactionHashRow/TransactionHashRowDupe';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
+import Pagination from '../../components/Pagination';
 import styles from './BlockPage.module.scss';
 
 interface RouteInfo {
@@ -23,6 +28,11 @@ interface BlockPageProps extends RouteComponentProps<RouteInfo> {
   isLoading: boolean;
   isError: string;
   transactions: any;
+  startPagination: (
+    blockHash: string,
+    pageSize: number,
+    pageNumber: number
+  ) => void;
 }
 
 const BlockPage: React.FunctionComponent<BlockPageProps> = (
@@ -50,12 +60,24 @@ const BlockPage: React.FunctionComponent<BlockPageProps> = (
     isLoading,
     isError,
     transactions,
+    startPagination,
   } = props;
   const [isOpen, setIsOpen] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = BLOCK_PAGE_TRANSACTIONS_LIMIT;
+  const pagesCount = Math.ceil(txlength / pageSize);
+  const to = txlength - (currentPage - 1) * pageSize;
+  const from = Math.max(to - pageSize, 0);
 
   useEffect(() => {
     getBlockFromHash(params.blockHash);
   }, [params]);
+
+  const fetchData = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    setIsOpen('');
+    startPagination(params.blockHash, pageSize, pageNumber - 1);
+  };
 
   const loadTransatioTable = () => {
     if (transactions.isLoading)
@@ -89,12 +111,14 @@ const BlockPage: React.FunctionComponent<BlockPageProps> = (
                     tag={NavLink}
                     className={styles.txIdData}
                   >
-                    {item.txid}
+                    {item.transactions.txid}
                   </Button>
                 </Col>
                 <Col xs='12'>
                   <Collapse isOpen={isOpen === id}>
-                    {isOpen === id && <TransactionHashRow id={id} tx={item} {...props} />}
+                    {isOpen === id && (
+                      <TransactionHashRow id={id} tx={item} {...props} />
+                    )}
                   </Collapse>
                 </Col>
               </Row>
@@ -194,6 +218,18 @@ const BlockPage: React.FunctionComponent<BlockPageProps> = (
           <Col xs='12' className='mt-4'>
             {loadTransatioTable()}
           </Col>
+          <Col xs='12'>
+            <Pagination
+              label={I18n.t('containers.addressPage.paginationRange', {
+                to,
+                total: txlength,
+                from: from + 1,
+              })}
+              currentPage={currentPage}
+              pagesCount={pagesCount}
+              handlePageClick={fetchData}
+            />
+          </Col>
         </Row>
       </>
     );
@@ -219,6 +255,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   getBlockFromHash: (blockHash) => getBlockFromHash({ blockHash }),
+  startPagination: (blockHash, pageSize, pageNumber) =>
+    startPagination({
+      blockHash,
+      pageSize,
+      pageNumber,
+    }),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BlockPage);

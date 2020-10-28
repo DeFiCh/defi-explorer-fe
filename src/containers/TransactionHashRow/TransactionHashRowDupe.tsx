@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { MdArrowForward } from 'react-icons/md';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
@@ -27,9 +27,9 @@ const TransactionHashRow = (props: TransactionHashRowProps) => {
               <Row>
                 <Col xs='12' md='5'>
                   {tx.input.length > 0 ? (
-                    tx.input.map((item) => (
-                      <AddressRow item={item} unit={unit} />
-                    ))
+                    tx.input
+                      .filter((item) => item.address !== 'false')
+                      .map((item) => <AddressRow item={item} unit={unit} />)
                   ) : (
                     <div className='text-center'>
                       {I18n.t('containers.transactionHashRow.noInputAddress')}
@@ -41,9 +41,9 @@ const TransactionHashRow = (props: TransactionHashRowProps) => {
                 </Col>
                 <Col xs='12' md='5'>
                   {tx.output.length > 0 ? (
-                    tx.output.map((item) => (
-                      <AddressRow item={item} unit={unit} />
-                    ))
+                    tx.output
+                      .filter((item) => item.address !== 'false')
+                      .map((item) => <AddressRow item={item} unit={unit} />)
                   ) : (
                     <div className='text-center'>
                       {I18n.t('containers.transactionHashRow.noOutputAddress')}

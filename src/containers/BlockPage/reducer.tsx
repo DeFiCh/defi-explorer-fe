@@ -45,6 +45,10 @@ const configSlice = createSlice({
       state.transactions.data = {};
       state.transactions.isError = action.payload;
     },
+    startPagination(state, action) {
+      state.transactions.isLoading = true;
+      state.transactions.isError = '';
+    },
   },
 });
 
@@ -56,6 +60,7 @@ export const {
   getBlockFromHashFailure,
   getTransactionsFromHashSuccess,
   getTransactionsFromHashFailure,
+  startPagination,
 } = actions;
 
 export default reducer;
