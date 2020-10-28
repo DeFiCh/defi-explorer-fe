@@ -5,7 +5,6 @@ import homePageSaga from '../containers/Home/saga';
 import blockPageSaga from '../containers/BlockPage/saga';
 import addressPageSaga from '../containers/AddressPage/saga';
 import transactionPageSaga from '../containers/TransactionPage/saga';
-import transactionHashRowSaga from '../containers/TransactionHashRow/saga';
 import blockListPageSaga from '../containers/BlockListPage/saga';
 import transactionsListPageSaga from '../containers/TransactionsListPage/saga';
 
@@ -14,7 +13,6 @@ function* rootSaga() {
     fork(websocketSaga),
     fork(homePageSaga),
     fork(blockPageSaga),
-    fork(transactionHashRowSaga),
     fork(addressPageSaga),
     fork(transactionPageSaga),
     fork(blockListPageSaga),

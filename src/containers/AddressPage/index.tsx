@@ -7,7 +7,7 @@ import { Button, Col, Collapse, Row } from 'reactstrap';
 import KeyValueLi from '../../components/KeyValueLi';
 import { getAddress, startPaginateTransactionsFromAddress } from './reducer';
 import { mDFI, TRANSACTION_BASE_PATH } from '../../constants';
-import TransactionHashRow from '../TransactionHashRow/TransactionHashRowDupe';
+import TransactionHashRow from '../TransactionHashRow';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import styles from './AddressPage.module.scss';
 import { getAmountInSelectedUnit } from '../../utils/utility';
