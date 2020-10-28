@@ -142,6 +142,13 @@
       "size": "Size",
       "latestBlockTitle": "Latest Blocks",
       "paginationRange": "%{to} – %{from} of %{total} blocks"
+    },
+    "transactionsListPage": {
+      "loading": "Loading",
+      "txid": "Transaction Id",
+      "value": "Value",
+      "TransactionsListPageTitle": "Transactions",
+      "paginationRange": "%{to} – %{from} of %{total} transactions"
     }
   },
   "alerts": {}

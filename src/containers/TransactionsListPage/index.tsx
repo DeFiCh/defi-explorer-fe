@@ -18,7 +18,7 @@ interface TransactionsListPageProps extends RouteComponentProps {
   isError: string;
   total: number;
   fetchTransactionsListStarted: () => void;
-  startPagination: (pageNumber: number) => void;
+  startPagination: (pageSize: number, pageNumber: number) => void;
 }
 
 const TransactionsListPage: React.FunctionComponent<TransactionsListPageProps> = (
@@ -46,7 +46,7 @@ const TransactionsListPage: React.FunctionComponent<TransactionsListPageProps> =
 
   const fetchData = (pageNumber: number) => {
     setCurrentPage(pageNumber);
-    startPagination(pageNumber);
+    startPagination(pageSize, pageNumber - 1);
   };
 
   const loadRows = useCallback(() => {
@@ -62,34 +62,40 @@ const TransactionsListPage: React.FunctionComponent<TransactionsListPageProps> =
     ));
   }, [transactions]);
 
-  const blockHtmlPage = () => {
-    if (isLoading) return <>{I18n.t('containers.transactionsList.loading')}</>;
+  const transactionListHtmlPage = () => {
+    if (isLoading)
+      return <>{I18n.t('containers.transactionsListPage.loading')}</>;
     if (isError) return <> {isError}</>;
-    return (
-      <div className={`${styles.tableResponsive} table-responsive-xl`}>
-        <Table className={styles.table}>
-          <thead>
-            <tr>
-              <th>{I18n.t('containers.transactionsList.txid')}</th>
-              <th>{I18n.t('containers.transactionsList.value')}</th>
-            </tr>
-          </thead>
-          <tbody>{loadRows()}</tbody>
-        </Table>
-      </div>
-    );
+    return loadRows();
   };
+
   return (
     <div>
-      <h1>{I18n.t('containers.transactionsList.TransactionsListPageTitle')}</h1>
+      <h1>
+        {I18n.t('containers.transactionsListPage.TransactionsListPageTitle')}
+      </h1>
       <Row>
         <Col xs='12'>
-          <Card className={styles.card}>{blockHtmlPage()}</Card>
+          <Card className={styles.card}>
+            <div className={`${styles.tableResponsive} table-responsive-xl`}>
+              <Table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>{I18n.t('containers.transactionsListPage.txid')}</th>
+                    <th className='text-right'>
+                      {I18n.t('containers.transactionsListPage.value')}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>{transactionListHtmlPage()}</tbody>
+              </Table>
+            </div>
+          </Card>
         </Col>
         <Col xs='12'>
           <Col xs='12'>
             <Pagination
-              label={I18n.t('containers.transactionsList.paginationRange', {
+              label={I18n.t('containers.transactionsListPage.paginationRange', {
                 from: from + 1,
                 total,
                 to,
@@ -107,7 +113,7 @@ const TransactionsListPage: React.FunctionComponent<TransactionsListPageProps> =
 
 const mapStateToProps = (state) => {
   const {
-    TransactionsListPage: { isLoading, data, isError, total },
+    transactionsListPage: { isLoading, data, isError, total },
   } = state;
   return {
     isLoading,
@@ -119,7 +125,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchTransactionsListStarted,
-  startPagination: (pageNumber: number) => startPagination({ pageNumber }),
+  startPagination: (pageSize: number, pageNumber: number) =>
+    startPagination({ pageNumber, pageSize }),
 };
 
 export default connect(

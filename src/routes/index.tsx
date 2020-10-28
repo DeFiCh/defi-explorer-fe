@@ -4,6 +4,7 @@ import {
   HOME_PAGE_PATH,
   INDEX_PATH,
   TRANSACTION_PAGE_INFO_PATH,
+  TRANSACTIONS_PAGE,
   BLOCK_PAGE_INFO_PATH,
   ADDRESS_PAGE_BASE_PATH,
   BLOCK_LIST_PAGE_BASE_PATH,
@@ -13,6 +14,7 @@ import AddressPage from '../containers/AddressPage';
 import TransactionPage from '../containers/TransactionPage';
 import HomePageComponent from '../containers/Home';
 import BlockListPage from '../containers/BlockListPage';
+import TransactionsListPage from '../containers/TransactionsListPage';
 
 const routes = (location) => (
   <Switch location={location}>
@@ -25,8 +27,8 @@ const routes = (location) => (
     />
     <Route exact path={BLOCK_PAGE_INFO_PATH} component={BlockPage} />
     <Route exact path={ADDRESS_PAGE_BASE_PATH} component={AddressPage} />
-    <Route exact path={ADDRESS_PAGE_BASE_PATH} component={AddressPage} />
     <Route exact path={BLOCK_LIST_PAGE_BASE_PATH} component={BlockListPage} />
+    <Route exact path={TRANSACTIONS_PAGE} component={TransactionsListPage} />
   </Switch>
 );
 

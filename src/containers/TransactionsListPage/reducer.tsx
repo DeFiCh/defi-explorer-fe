@@ -8,13 +8,14 @@ export const initialState = {
 };
 
 const configSlice = createSlice({
-  name: 'blockListPage',
+  name: 'transactionListPage',
   initialState,
   reducers: {
     fetchTransactionsListStarted(state) {
       state.isLoading = true;
       state.data = [];
       state.isError = '';
+      state.total = 0;
     },
     fetchTransactionsListFailure(state, action) {
       state.isLoading = false;
@@ -41,6 +42,9 @@ const configSlice = createSlice({
       state.data = [];
       state.isError = action.payload;
     },
+    setTotalTransactionsCount(state, action) {
+      state.total = action.payload;
+    },
   },
 });
 
@@ -53,6 +57,7 @@ export const {
   startPagination,
   startPaginationSuccess,
   startPaginationFailure,
+  setTotalTransactionsCount,
 } = actions;
 
 export default reducer;

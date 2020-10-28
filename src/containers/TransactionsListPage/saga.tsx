@@ -1,5 +1,5 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { BLOCKS_LIST_PAGE_LIMIT } from '../../constants';
+import { call, put, takeLatest } from 'redux-saga/effects';
+import { TRANSACTIONS_LIST_PAGE_LIMIT } from '../../constants';
 import {
   fetchTransactionsListStarted,
   fetchTransactionsListFailure,
@@ -7,36 +7,32 @@ import {
   startPagination,
   startPaginationFailure,
   startPaginationSuccess,
+  setTotalTransactionsCount,
 } from './reducer';
-import { handleBlockList } from './services';
+import { handleGetTotalTransactions, handleTransactionsList } from './services';
 
-function* fetchBlocksListStartedSaga() {
+function* fetchBlocksListStartedSaga(action) {
   try {
     const queryParams = {
-      limit: BLOCKS_LIST_PAGE_LIMIT,
-      anchorsOnly: false,
+      limit: TRANSACTIONS_LIST_PAGE_LIMIT,
     };
-    const { data } = yield call(handleBlockList, queryParams);
-    yield put(fetchTransactionsListFailure(data));
+    const { data } = yield call(handleTransactionsList, queryParams);
+    yield put(fetchTransactionsListSuccess(data));
+    const { total } = yield call(handleGetTotalTransactions);
+    yield put(setTotalTransactionsCount(total));
   } catch (err) {
-    yield put(fetchTransactionsListSuccess(err.message));
+    yield put(fetchTransactionsListFailure(err.message));
   }
 }
 
 function* fetchStartPaginationSaga(action) {
-  const { total } = yield select((state) => state.blockListPage);
-  const { pageNumber } = action.payload;
-  const limit = BLOCKS_LIST_PAGE_LIMIT;
-  const since = total - (pageNumber - 1) * limit;
+  const { pageNumber, pageSize } = action.payload;
   try {
     const queryParams = {
-      limit,
-      since,
-      paging: 'height',
-      direction: -1,
-      anchorsOnly: false,
+      skip: pageNumber * pageSize,
+      limit: pageSize,
     };
-    const { data } = yield call(handleBlockList, queryParams);
+    const { data } = yield call(handleTransactionsList, queryParams);
     yield put(startPaginationSuccess(data));
   } catch (err) {
     yield put(startPaginationFailure(err.message));
