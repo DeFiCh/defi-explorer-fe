@@ -11,7 +11,6 @@ import TransactionHashRow from '../TransactionHashRow';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import styles from './TransactionPage.module.scss';
 import { getTime } from '../../utils/utility';
-import { AppTx } from '../../utils/tx';
 
 interface RouteInfo {
   txId: string;
@@ -21,7 +20,7 @@ interface TransactionPageProps extends RouteComponentProps<RouteInfo> {
   getTransactionFromTxidRequest: (txId: string) => void;
   isLoading: boolean;
   isError: string;
-  transaction: AppTx;
+  data: any;
 }
 
 const TransactionPage: React.FunctionComponent<TransactionPageProps> = (
@@ -32,7 +31,7 @@ const TransactionPage: React.FunctionComponent<TransactionPageProps> = (
     getTransactionFromTxidRequest,
     isLoading,
     isError,
-    transaction,
+    data,
   } = props;
   const [isOpen, setIsOpen] = useState(false);
 
@@ -53,17 +52,17 @@ const TransactionPage: React.FunctionComponent<TransactionPageProps> = (
       </Col>
       <Col xs='11'>
         <Button
-          to={`${TRANSACTION_BASE_PATH}/${transaction.txid}`}
+          to={`${TRANSACTION_BASE_PATH}/${data.transactions.txid}`}
           color='link'
           tag={NavLink}
           className={styles.txIdData}
         >
-          {transaction.txid}
+          {data.transactions.txid}
         </Button>
       </Col>
       <Col xs='12'>
         <Collapse isOpen={isOpen}>
-          <TransactionHashRow id={'detail'} tx={transaction} />
+          {isOpen && <TransactionHashRow id={'detail'} tx={data} />}
         </Collapse>
       </Col>
     </Row>
@@ -73,60 +72,63 @@ const TransactionPage: React.FunctionComponent<TransactionPageProps> = (
     if (isLoading)
       return <div>{I18n.t('containers.TransactionPage.loading')}</div>;
     if (isError) return <div>{isError}</div>;
-    return (
-      <>
-        <Row>
-          <Col xs='12'>
-            <h1>{I18n.t('containers.transactionPage.transactionTitle')}</h1>
-            <div className='my-2'>
-              <span>{I18n.t('containers.transactionPage.txHash')}: </span>
-              <span>{params.txId}</span>
-              <span>
-                <CopyToClipIcon value={params.txId!} uid={'txIdCopy'} />
-              </span>
-            </div>
-          </Col>
-          <Col xs='12'>
-            <h1>{I18n.t('containers.transactionPage.summary')}</h1>
-            <Row>
-              <Col xs='12'>
-                <KeyValueLi
-                  label={I18n.t('containers.transactionPage.size')}
-                  value={I18n.t('containers.transactionPage.sizeFormat', {
-                    size: transaction.size,
-                  })}
-                />
-                <KeyValueLi
-                  label={I18n.t('containers.transactionPage.feeRate')}
-                  value={I18n.t('containers.transactionPage.feeFormat', {
-                    fee: transaction.fee || 0,
-                  })}
-                />
-                <KeyValueLi
-                  label={I18n.t('containers.transactionPage.receivedTime')}
-                  value={`${getTime(transaction.time)}`}
-                />
-                <KeyValueLi
-                  label={I18n.t('containers.transactionPage.minedTime')}
-                  value={`${getTime(transaction.blocktime)}`}
-                />
-                <KeyValueLi
-                  label={I18n.t('containers.transactionPage.includedInBlock')}
-                  value={`${transaction.blockhash}`}
-                  href={`${BLOCK_PAGE_BASE_PATH}/${transaction.blockhash}`}
-                />
-              </Col>
-            </Row>
-          </Col>
-          <Col xs='12' className='mt-4'>
-            <h1>{I18n.t('containers.transactionPage.details')}</h1>
-          </Col>
-          <Col xs='12' className='mt-4'>
-            {loadDetailComponent()}
-          </Col>
-        </Row>
-      </>
-    );
+    if (data && data.transactions) {
+      return (
+        <>
+          <Row>
+            <Col xs='12'>
+              <h1>{I18n.t('containers.transactionPage.transactionTitle')}</h1>
+              <div className='my-2'>
+                <span>{I18n.t('containers.transactionPage.txHash')}: </span>
+                <span>{params.txId}</span>
+                <span>
+                  <CopyToClipIcon value={params.txId!} uid={'txIdCopy'} />
+                </span>
+              </div>
+            </Col>
+            <Col xs='12'>
+              <h1>{I18n.t('containers.transactionPage.summary')}</h1>
+              <Row>
+                <Col xs='12'>
+                  <KeyValueLi
+                    label={I18n.t('containers.transactionPage.size')}
+                    value={I18n.t('containers.transactionPage.sizeFormat', {
+                      size: data.transactions.size,
+                    })}
+                  />
+                  <KeyValueLi
+                    label={I18n.t('containers.transactionPage.feeRate')}
+                    value={I18n.t('containers.transactionPage.feeFormat', {
+                      fee: data.transactions.fee || 0,
+                    })}
+                  />
+                  <KeyValueLi
+                    label={I18n.t('containers.transactionPage.receivedTime')}
+                    value={`${getTime(data.transactions.time)}`}
+                  />
+                  <KeyValueLi
+                    label={I18n.t('containers.transactionPage.minedTime')}
+                    value={`${getTime(data.transactions.blocktime)}`}
+                  />
+                  <KeyValueLi
+                    label={I18n.t('containers.transactionPage.includedInBlock')}
+                    value={`${data.transactions.blockhash}`}
+                    href={`${BLOCK_PAGE_BASE_PATH}/${data.transactions.blockhash}`}
+                  />
+                </Col>
+              </Row>
+            </Col>
+            <Col xs='12' className='mt-4'>
+              <h1>{I18n.t('containers.transactionPage.details')}</h1>
+            </Col>
+            <Col xs='12' className='mt-4'>
+              {loadDetailComponent()}
+            </Col>
+          </Row>
+        </>
+      );
+    }
+    return <div />;
   };
   return <div className='mt-4'>{loadTransactionPage()}</div>;
 };
@@ -139,7 +141,7 @@ const mapStateToProps = (state) => {
   return {
     isLoading,
     isError,
-    transaction: data,
+    data,
   };
 };
 

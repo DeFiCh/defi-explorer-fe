@@ -13,7 +13,7 @@ import {
   BLOCK_PAGE_TRANSACTIONS_LIMIT,
 } from '../../constants';
 import moment from 'moment';
-import TransactionHashRow from '../TransactionHashRow/TransactionHashRowDupe';
+import TransactionHashRow from '../TransactionHashRow';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import Pagination from '../../components/Pagination';
 import styles from './BlockPage.module.scss';

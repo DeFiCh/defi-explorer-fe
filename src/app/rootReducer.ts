@@ -7,7 +7,6 @@ import blockPageReducer from '../containers/BlockPage/reducer';
 import addressPageReducer from '../containers/AddressPage/reducer';
 import transactionPageReducer from '../containers/TransactionPage/reducer';
 import transactionsListPageReducer from '../containers/TransactionsListPage/reducer';
-import transactionHashRowReducer from '../containers/TransactionHashRow/reducer';
 import blockListPageReducer from '../containers/BlockListPage/reducer';
 
 export default combineReducers({
@@ -17,7 +16,6 @@ export default combineReducers({
   home: homeReducer,
   blockPage: blockPageReducer,
   addressPage: addressPageReducer,
-  transactionHashRow: transactionHashRowReducer,
   transactionPage: transactionPageReducer,
   blockListPage: blockListPageReducer,
   transactionsListPage: transactionsListPageReducer,
