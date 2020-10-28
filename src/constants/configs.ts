@@ -11,6 +11,7 @@ export const LATEST_BLOCKS_LIMIT = 10;
 export const BLOCKS_LIST_PAGE_LIMIT = 10;
 export const LATEST_TRANSACTIONS_LIMIT = 5;
 export const BLOCK_PAGE_TRANSACTIONS_LIMIT = 10;
+export const TRANSACTIONS_LIST_PAGE_LIMIT = 10;
 export const QUICK_STATUS_INTERVAL = 60000;
 export const DESKTOP_VIEW = { minWidth: 992 };
 export const TABLET_VIEW = { minWidth: 768, maxWidth: 991 };
