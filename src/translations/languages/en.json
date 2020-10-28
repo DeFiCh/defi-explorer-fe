@@ -108,6 +108,7 @@
       "summary": "Summary",
       "addressTitle": "Address",
       "confirmedBalance": "Confirmed Balance",
+      "paginationRange": "%{from} – %{to} of %{total} transactions",
       "nroTransactions": "Nro. Transactions",
       "transactions": "Transactions",
       "loading": "Loading"
@@ -131,6 +132,23 @@
       "includedInBlock": "Included in Block",
       "sizeFormat": "%{size} (bytes)",
       "feeFormat": "%{fee} (sat/bytes)"
+    },
+    "blockpageList": {
+      "loading": "Loading",
+      "blockListPageTitle": "Blocks",
+      "height": "Height",
+      "time": "Time",
+      "transactionCount": "Transaction Count",
+      "size": "Size",
+      "latestBlockTitle": "Latest Blocks",
+      "paginationRange": "%{to} – %{from} of %{total} blocks"
+    },
+    "transactionsListPage": {
+      "loading": "Loading",
+      "txid": "Transaction Id",
+      "value": "Value",
+      "TransactionsListPageTitle": "Transactions",
+      "paginationRange": "%{to} – %{from} of %{total} transactions"
     }
   },
   "alerts": {}

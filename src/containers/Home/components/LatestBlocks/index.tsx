@@ -1,12 +1,15 @@
-import React, { useCallback, useEffect } from "react";
-import { connect } from "react-redux";
-import { I18n } from "react-redux-i18n";
-import { Link, RouteComponentProps } from "react-router-dom";
-import { fetchLatestBlocks } from "../../../Websocket/reducer";
-import styles from "../../Home.module.scss";
-import { Card, Table, Row, Col, Button } from "reactstrap";
-import { BLOCK_PAGE_BASE_PATH } from "../../../../constants";
-import moment from "moment";
+import React, { useCallback, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { I18n } from 'react-redux-i18n';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { fetchLatestBlocks } from '../../../Websocket/reducer';
+import styles from '../../Home.module.scss';
+import { Card, Table, Row, Col, Button } from 'reactstrap';
+import {
+  BLOCK_LIST_PAGE_BASE_PATH,
+  BLOCK_PAGE_BASE_PATH,
+} from '../../../../constants';
+import moment from 'moment';
 
 interface LatestBlocksComponentProps extends RouteComponentProps {
   blocks: any[];
@@ -23,7 +26,7 @@ const LatestBlocksComponent: React.FunctionComponent<LatestBlocksComponentProps>
   }, []);
 
   const loadRows = useCallback(() => {
-    return blocks.map(block => (
+    return blocks.map((block) => (
       <tr key={block.hash}>
         <td>
           <Link to={`${BLOCK_PAGE_BASE_PATH}/${block.hash}`}>
@@ -47,16 +50,16 @@ const LatestBlocksComponent: React.FunctionComponent<LatestBlocksComponentProps>
     <>
       <h1>
         <Row>
-          <Col xs="10">
-            {I18n.t("containers.homePage.latestBlock.latestBlockTitle")}
+          <Col xs='10'>
+            {I18n.t('containers.homePage.latestBlock.latestBlockTitle')}
           </Col>
-          <Col xs="2">
+          <Col xs='2'>
             <Button
-              color="link"
-              className="float-right"
-              onClick={() => props.history.push(BLOCK_PAGE_BASE_PATH)}
+              color='link'
+              className='float-right'
+              onClick={() => props.history.push(BLOCK_LIST_PAGE_BASE_PATH)}
             >
-              {I18n.t("containers.homePage.viewAll")}
+              {I18n.t('containers.homePage.viewAll')}
             </Button>
           </Col>
         </Row>
@@ -67,12 +70,12 @@ const LatestBlocksComponent: React.FunctionComponent<LatestBlocksComponentProps>
             <Table className={styles.table}>
               <thead>
                 <tr>
-                  <th>{I18n.t("containers.homePage.latestBlock.height")}</th>
-                  <th>{I18n.t("containers.homePage.latestBlock.time")}</th>
+                  <th>{I18n.t('containers.homePage.latestBlock.height')}</th>
+                  <th>{I18n.t('containers.homePage.latestBlock.time')}</th>
                   <th>
-                    {I18n.t("containers.homePage.latestBlock.transactionCount")}
+                    {I18n.t('containers.homePage.latestBlock.transactionCount')}
                   </th>
-                  <th>{I18n.t("containers.homePage.latestBlock.size")}</th>
+                  <th>{I18n.t('containers.homePage.latestBlock.size')}</th>
                 </tr>
               </thead>
               <tbody>{loadRows()}</tbody>
@@ -84,19 +87,19 @@ const LatestBlocksComponent: React.FunctionComponent<LatestBlocksComponentProps>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const {
     websocket: {
-      blockResponse: { data }
-    }
+      blockResponse: { data },
+    },
   } = state;
   return {
-    blocks: data
+    blocks: data,
   };
 };
 
 const mapDispatchToProps = {
-  fetchLatestBlocks
+  fetchLatestBlocks,
 };
 
 export default connect(

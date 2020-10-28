@@ -9,7 +9,7 @@ export const initialState = {
   transactions: {
     isLoading: false,
     isError: '',
-    data: {},
+    data: [],
     total: 0,
   },
 };
@@ -23,7 +23,8 @@ const configSlice = createSlice({
       state.transactions.isLoading = true;
       state.address.data = {};
       state.address.isError = '';
-      state.transactions.data = {};
+      state.transactions.data = [];
+      state.transactions.total = 0;
       state.transactions.isError = '';
     },
     getAddressSuccess(state, action) {
@@ -44,7 +45,20 @@ const configSlice = createSlice({
     },
     getTransactionsFromAddressFailure(state, action) {
       state.transactions.isLoading = false;
-      state.transactions.data = {};
+      state.transactions.data = [];
+      state.transactions.isError = action.payload;
+    },
+    startPaginateTransactionsFromAddress(state, action) {
+      state.transactions.isLoading = true;
+      state.transactions.isError = '';
+    },
+    startPaginateTransactionsFromAddressSuccess(state, action) {
+      state.transactions.isLoading = false;
+      state.transactions.data = action.payload.txns;
+      state.transactions.isError = '';
+    },
+    startPaginateTransactionsFromAddressFailue(state, action) {
+      state.transactions.isLoading = false;
       state.transactions.isError = action.payload;
     },
   },
@@ -58,6 +72,9 @@ export const {
   getAddressFailure,
   getTransactionsFromAddressSuccess,
   getTransactionsFromAddressFailure,
+  startPaginateTransactionsFromAddress,
+  startPaginateTransactionsFromAddressSuccess,
+  startPaginateTransactionsFromAddressFailue,
 } = actions;
 
 export default reducer;

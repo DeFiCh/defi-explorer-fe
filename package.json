@@ -15,7 +15,7 @@
     "test": "jest --silent",
     "test:console": "jest",
     "test:snapshot:update": "jest --updateSnapshot --silent",
-    "start": "npm run init && webpack-dev-server --mode development --open",
+    "start": "npm run start:dev",
     "lint": "tslint --project tsconfig.json --config tslint.json",
     "start:dev": "webpack-dev-server --mode development --open",
     "build:react": "webpack --mode production",

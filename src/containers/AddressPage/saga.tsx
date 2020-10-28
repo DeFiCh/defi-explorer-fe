@@ -1,5 +1,4 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { txnListSchema } from '../../utils/schemas/rpcResponseSchema';
 import { orderByHeight, toAppCoin } from '../../utils/tx';
 import {
   getAddress,
@@ -7,9 +6,13 @@ import {
   getAddressFailure,
   getTransactionsFromAddressSuccess,
   getTransactionsFromAddressFailure,
+  startPaginateTransactionsFromAddress,
+  startPaginateTransactionsFromAddressSuccess,
+  startPaginateTransactionsFromAddressFailue,
 } from './reducer';
 import {
   getAddressService,
+  getTotalTransactionFromAddressCount,
   getTransactionsFromAddressService,
 } from './services';
 
@@ -27,22 +30,44 @@ export function* handleGetAddress(action) {
 export function* handleGetTransactionsFromAddress(action) {
   const { address } = action.payload;
   try {
-    const data = yield call(getTransactionsFromAddressService, address);
-    const formattedData = data.map(toAppCoin);
-    const txs = yield call(orderByHeight, formattedData);
+    const data = yield call(getTransactionsFromAddressService, address, {
+      limit: 10,
+    });
+    const { total } = yield call(getTotalTransactionFromAddressCount, address);
     yield put(
       getTransactionsFromAddressSuccess({
-        txns: txs.slice(0, 10),
-        total: txs.length,
+        txns: data,
+        total,
       })
-    ); // TODO: remove slice from here
+    );
   } catch (err) {
     yield put(getTransactionsFromAddressFailure(err.message));
   }
 }
 
+export function* handleTransactionPaginationFromAddress(action) {
+  const { address, pageSize, pageNumber } = action.payload;
+  try {
+    const data = yield call(getTransactionsFromAddressService, address, {
+      skip: pageNumber * pageSize,
+      limit: pageSize,
+    });
+    yield put(
+      startPaginateTransactionsFromAddressSuccess({
+        txns: data,
+      })
+    );
+  } catch (err) {
+    yield put(startPaginateTransactionsFromAddressFailue(err.message));
+  }
+}
+
 function* mySaga() {
   yield takeLatest(getAddress.type, handleGetAddress);
+  yield takeLatest(
+    startPaginateTransactionsFromAddress.type,
+    handleTransactionPaginationFromAddress
+  );
 }
 
 export default mySaga;

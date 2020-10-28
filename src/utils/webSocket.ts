@@ -25,7 +25,7 @@ class Websocket {
   }
 
   connect = () => {
-    this.socket = io('https://mainnet-api.defichain.io', {
+    this.socket = io(WS_PREFIX, {
       transports: ['websocket'],
     });
     this.socket.on('connect', () => {

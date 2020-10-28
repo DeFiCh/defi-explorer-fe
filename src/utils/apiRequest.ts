@@ -1,7 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { API_PREFIX } from '../constants';
 import store from '../app/rootStore';
-import { GET_BLOCK } from '../constants/endpoint';
 
 export default class ApiRequest {
   client: AxiosInstance;

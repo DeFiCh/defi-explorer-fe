@@ -5,12 +5,13 @@ import { I18n } from 'react-redux-i18n';
 import { NavLink, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Collapse, Row } from 'reactstrap';
 import KeyValueLi from '../../components/KeyValueLi';
-import { getAddress } from './reducer';
+import { getAddress, startPaginateTransactionsFromAddress } from './reducer';
 import { mDFI, TRANSACTION_BASE_PATH } from '../../constants';
-import TransactionHashRow from '../TransactionHashRow';
+import TransactionHashRow from '../TransactionHashRow/TransactionHashRowDupe';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import styles from './AddressPage.module.scss';
 import { getAmountInSelectedUnit } from '../../utils/utility';
+import Pagination from '../../components/Pagination';
 import QRCode from 'qrcode.react';
 
 interface RouteInfo {
@@ -24,6 +25,7 @@ interface AddressPageProps extends RouteComponentProps<RouteInfo> {
   transactions: any;
   address: any;
   unit: string;
+  startPaginateTransactionsFromAddress: (address, pageSize, pageNumber) => void;
 }
 
 const AddressPage: React.FunctionComponent<AddressPageProps> = (
@@ -34,11 +36,28 @@ const AddressPage: React.FunctionComponent<AddressPageProps> = (
     getAddress,
     isLoading,
     isError,
-    address: { balance, confirmed, unconfirmed },
+    address: { balance },
     transactions,
     unit,
+    startPaginateTransactionsFromAddress,
   } = props;
   const [isOpen, setIsOpen] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
+
+  const pagesCount = Math.ceil(transactions.total / pageSize);
+  const to = transactions.total - (currentPage - 1) * pageSize;
+  const from = Math.max(to - pageSize, 0);
+
+  const fetchData = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    setIsOpen('');
+    startPaginateTransactionsFromAddress(
+      params.address,
+      pageSize,
+      pageNumber - 1
+    );
+  };
 
   useEffect(() => {
     getAddress(params.address);
@@ -52,7 +71,7 @@ const AddressPage: React.FunctionComponent<AddressPageProps> = (
       return (
         <>
           {transactions.data.map((item, id) => (
-            <>
+            <div>
               <Row>
                 <Col xs='1'>
                   <Button
@@ -71,21 +90,23 @@ const AddressPage: React.FunctionComponent<AddressPageProps> = (
                 </Col>
                 <Col xs='9'>
                   <Button
-                    to={`${TRANSACTION_BASE_PATH}/${item.txid}`}
+                    to={`${TRANSACTION_BASE_PATH}/${item.transactions.txid}`}
                     color='link'
                     tag={NavLink}
                     className={styles.txIdData}
                   >
-                    {item.txid}
+                    {item.transactions.txid}
                   </Button>
                 </Col>
                 <Col xs='12'>
                   <Collapse isOpen={isOpen === id}>
-                    <TransactionHashRow id={id} tx={item} {...props} />
+                    {isOpen === id && (
+                      <TransactionHashRow id={id} tx={item} {...props} />
+                    )}
                   </Collapse>
                 </Col>
               </Row>
-            </>
+            </div>
           ))}
         </>
       );
@@ -145,6 +166,18 @@ const AddressPage: React.FunctionComponent<AddressPageProps> = (
           <Col xs='12' className='mt-4'>
             {loadTransatioTable()}
           </Col>
+          <Col xs='12'>
+            <Pagination
+              label={I18n.t('containers.addressPage.paginationRange', {
+                to,
+                total: transactions.total,
+                from: from + 1,
+              })}
+              currentPage={currentPage}
+              pagesCount={pagesCount}
+              handlePageClick={fetchData}
+            />
+          </Col>
         </Row>
       </>
     );
@@ -172,6 +205,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   getAddress: (address) => getAddress({ address }),
+  startPaginateTransactionsFromAddress: (address, pageSize, pageNumber) =>
+    startPaginateTransactionsFromAddress({
+      address,
+      pageSize,
+      pageNumber,
+    }),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddressPage);
