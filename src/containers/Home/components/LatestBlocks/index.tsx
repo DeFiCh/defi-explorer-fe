@@ -6,7 +6,7 @@ import { fetchLatestBlocks } from '../../../Websocket/reducer';
 import styles from '../../Home.module.scss';
 import { Card, Table, Row, Col, Button } from 'reactstrap';
 import {
-  BLOCK_LIST_PAGE_BASE_PATH,
+  BLOCK_PAGE_BASE_PATH,
   BLOCK_PAGE_BASE_PATH,
 } from '../../../../constants';
 import moment from 'moment';
@@ -57,7 +57,7 @@ const LatestBlocksComponent: React.FunctionComponent<LatestBlocksComponentProps>
             <Button
               color='link'
               className='float-right'
-              onClick={() => props.history.push(BLOCK_LIST_PAGE_BASE_PATH)}
+              onClick={() => props.history.push(BLOCK_PAGE_BASE_PATH)}
             >
               {I18n.t('containers.homePage.viewAll')}
             </Button>

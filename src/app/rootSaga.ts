@@ -7,6 +7,7 @@ import addressPageSaga from '../containers/AddressPage/saga';
 import transactionPageSaga from '../containers/TransactionPage/saga';
 import blockListPageSaga from '../containers/BlockListPage/saga';
 import transactionsListPageSaga from '../containers/TransactionsListPage/saga';
+import richListPageSaga from '../containers/RichListPage/saga';
 
 function* rootSaga() {
   yield all([
@@ -17,6 +18,7 @@ function* rootSaga() {
     fork(transactionPageSaga),
     fork(blockListPageSaga),
     fork(transactionsListPageSaga),
+    fork(richListPageSaga),
   ]);
 }
 

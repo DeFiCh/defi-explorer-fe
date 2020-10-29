@@ -5,17 +5,20 @@ import { I18n } from 'react-redux-i18n';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Card, Table, Row, Col } from 'reactstrap';
 import {
+  mDFI,
   TRANSACTIONS_LIST_PAGE_LIMIT,
   TRANSACTION_BASE_PATH,
 } from '../../constants';
 import { fetchTransactionsListStarted, startPagination } from './reducer';
 import Pagination from '../../components/Pagination';
 import styles from './TransactionsListPage.module.scss';
+import { getAmountInSelectedUnit } from '../../utils/utility';
 
 interface TransactionsListPageProps extends RouteComponentProps {
   isLoading: boolean;
   transactions: any[];
   isError: string;
+  unit: string;
   total: number;
   fetchTransactionsListStarted: () => void;
   startPagination: (pageSize: number, pageNumber: number) => void;
@@ -31,6 +34,7 @@ const TransactionsListPage: React.FunctionComponent<TransactionsListPageProps> =
     fetchTransactionsListStarted,
     total,
     startPagination,
+    unit,
   } = props;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -56,7 +60,9 @@ const TransactionsListPage: React.FunctionComponent<TransactionsListPageProps> =
           <Link to={`${TRANSACTION_BASE_PATH}/${item.txid}`}>{item.txid}</Link>
         </td>
         <td>
-          <div className='float-right'>{item.value}</div>
+          <div className='float-right'>
+            {getAmountInSelectedUnit(item.value, unit, mDFI)} {unit}
+          </div>
         </td>
       </tr>
     ));
@@ -114,12 +120,14 @@ const TransactionsListPage: React.FunctionComponent<TransactionsListPageProps> =
 const mapStateToProps = (state) => {
   const {
     transactionsListPage: { isLoading, data, isError, total },
+    app: { unit },
   } = state;
   return {
     isLoading,
     transactions: data,
     isError,
     total,
+    unit,
   };
 };
 

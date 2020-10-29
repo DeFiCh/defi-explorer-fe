@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import CopyToClipIcon from '../../components/CopyToClipIcon';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
-import { NavLink, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Collapse, Row } from 'reactstrap';
+import { RouteComponentProps } from 'react-router-dom';
+import { Col, Row, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import KeyValueLi from '../../components/KeyValueLi';
 import { getTransactionFromTxidRequest } from './reducer';
-import { BLOCK_PAGE_BASE_PATH, TRANSACTION_BASE_PATH } from '../../constants';
+import { mDFI, TRANSACTION_BASE_PATH } from '../../constants';
+import {
+  getAmountInSelectedUnit,
+  getTime,
+  getTimeFromNow,
+} from '../../utils/utility';
 import TransactionHashRow from '../TransactionHashRow';
-import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
-import styles from './TransactionPage.module.scss';
-import { getTime } from '../../utils/utility';
 
 interface RouteInfo {
   txId: string;
@@ -21,6 +22,7 @@ interface TransactionPageProps extends RouteComponentProps<RouteInfo> {
   isLoading: boolean;
   isError: string;
   data: any;
+  unit: string;
 }
 
 const TransactionPage: React.FunctionComponent<TransactionPageProps> = (
@@ -32,45 +34,16 @@ const TransactionPage: React.FunctionComponent<TransactionPageProps> = (
     isLoading,
     isError,
     data,
+    unit,
   } = props;
-  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     getTransactionFromTxidRequest(params.txId);
   }, [params]);
 
-  const loadDetailComponent = () => (
-    <Row>
-      <Col xs='1'>
-        <Button
-          color='link'
-          onClick={() => setIsOpen(!isOpen)}
-          className={styles.btnDropdown}
-        >
-          {isOpen ? <MdArrowDropDown /> : <MdArrowDropUp />}
-        </Button>
-      </Col>
-      <Col xs='11'>
-        <Button
-          to={`${TRANSACTION_BASE_PATH}/${data.transactions.txid}`}
-          color='link'
-          tag={NavLink}
-          className={styles.txIdData}
-        >
-          {data.transactions.txid}
-        </Button>
-      </Col>
-      <Col xs='12'>
-        <Collapse isOpen={isOpen}>
-          {isOpen && <TransactionHashRow id={'detail'} tx={data} />}
-        </Collapse>
-      </Col>
-    </Row>
-  );
-
   const loadTransactionPage = () => {
     if (isLoading)
-      return <div>{I18n.t('containers.TransactionPage.loading')}</div>;
+      return <div>{I18n.t('containers.transactionPage.loading')}</div>;
     if (isError) return <div>{isError}</div>;
     if (data && data.transactions) {
       return (
@@ -78,43 +51,73 @@ const TransactionPage: React.FunctionComponent<TransactionPageProps> = (
           <Row>
             <Col xs='12'>
               <h1>{I18n.t('containers.transactionPage.transactionTitle')}</h1>
-              <div className='my-2'>
-                <span>{I18n.t('containers.transactionPage.txHash')}: </span>
-                <span>{params.txId}</span>
-                <span>
-                  <CopyToClipIcon value={params.txId!} uid={'txIdCopy'} />
-                </span>
-              </div>
             </Col>
             <Col xs='12'>
-              <h1>{I18n.t('containers.transactionPage.summary')}</h1>
               <Row>
                 <Col xs='12'>
-                  <KeyValueLi
-                    label={I18n.t('containers.transactionPage.size')}
-                    value={I18n.t('containers.transactionPage.sizeFormat', {
-                      size: data.transactions.size,
-                    })}
-                  />
-                  <KeyValueLi
-                    label={I18n.t('containers.transactionPage.feeRate')}
-                    value={I18n.t('containers.transactionPage.feeFormat', {
-                      fee: data.transactions.fee || 0,
-                    })}
-                  />
-                  <KeyValueLi
-                    label={I18n.t('containers.transactionPage.receivedTime')}
-                    value={`${getTime(data.transactions.time)}`}
-                  />
-                  <KeyValueLi
-                    label={I18n.t('containers.transactionPage.minedTime')}
-                    value={`${getTime(data.transactions.blocktime)}`}
-                  />
-                  <KeyValueLi
-                    label={I18n.t('containers.transactionPage.includedInBlock')}
-                    value={`${data.transactions.blockhash}`}
-                    href={`${BLOCK_PAGE_BASE_PATH}/${data.transactions.blockhash}`}
-                  />
+                  <Row>
+                    <Col xs='12' md='8'>
+                      <KeyValueLi
+                        label={I18n.t(
+                          'containers.transactionPage.transactionHash'
+                        )}
+                        noEllipsis
+                        value={`${data.transactions.txid}`}
+                      />
+                    </Col>
+                    <Col xs='12' md='4'>
+                      <KeyValueLi
+                        label={I18n.t('containers.transactionPage.age')}
+                        value={`${getTimeFromNow(data.transactions.time)}`}
+                      />
+                    </Col>
+                    <Col xs='12' md='4'>
+                      <KeyValueLi
+                        label={I18n.t('containers.transactionPage.minedTime')}
+                        value={`${getTime(data.transactions.blocktime)}`}
+                      />
+                    </Col>
+                    <Col xs='12' md='4'>
+                      <KeyValueLi
+                        label={I18n.t('containers.transactionPage.blockheight')}
+                        value={`${data.transactions.blockheight}`}
+                      />
+                    </Col>
+                    <Col xs='12' md='4'>
+                      <KeyValueLi
+                        label={I18n.t(
+                          'containers.transactionPage.confirmations'
+                        )}
+                        value={`${data.transactions.confirmations}`}
+                      />
+                    </Col>
+                    <Col xs='12' md='4'>
+                      <KeyValueLi
+                        label={I18n.t('containers.transactionPage.size')}
+                        value={I18n.t('containers.transactionPage.sizeFormat', {
+                          size: data.transactions.size,
+                        })}
+                      />
+                    </Col>
+                    <Col xs='12' md='4'>
+                      <KeyValueLi
+                        label={I18n.t('containers.transactionPage.feeRate')}
+                        value={I18n.t('containers.transactionPage.feeFormat', {
+                          fee: data.transactions.fee || 0,
+                        })}
+                      />
+                    </Col>
+                    <Col xs='12' md='4'>
+                      <KeyValueLi
+                        label={I18n.t('containers.transactionPage.amount')}
+                        value={`${getAmountInSelectedUnit(
+                          data.transactions.valueOut,
+                          unit,
+                          mDFI
+                        )} ${unit}`}
+                      />
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
             </Col>
@@ -122,7 +125,7 @@ const TransactionPage: React.FunctionComponent<TransactionPageProps> = (
               <h1>{I18n.t('containers.transactionPage.details')}</h1>
             </Col>
             <Col xs='12' className='mt-4'>
-              {loadDetailComponent()}
+              <TransactionHashRow id={'detail'} tx={data} />
             </Col>
           </Row>
         </>
@@ -130,18 +133,37 @@ const TransactionPage: React.FunctionComponent<TransactionPageProps> = (
     }
     return <div />;
   };
-  return <div className='mt-4'>{loadTransactionPage()}</div>;
+  return (
+    <>
+      <div className='mt-4'>
+        <Breadcrumb tag='nav' listTag='div'>
+          <BreadcrumbItem tag='a' href={TRANSACTION_BASE_PATH}>
+            {I18n.t('containers.transactionPage.transactionListBreadCrumb')}
+          </BreadcrumbItem>
+          {` > `}
+          <BreadcrumbItem active tag='span'>
+            {I18n.t('containers.transactionPage.transactionTxidBreadCrumb', {
+              txId: params.txId,
+            })}
+          </BreadcrumbItem>
+        </Breadcrumb>
+      </div>
+      <div className='mt-4'>{loadTransactionPage()}</div>
+    </>
+  );
 };
 
 const mapStateToProps = (state) => {
   const {
     transactionPage: { isLoading, isError, data },
+    app: { unit },
   } = state;
 
   return {
     isLoading,
     isError,
     data,
+    unit,
   };
 };
 

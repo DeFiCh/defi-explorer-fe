@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react';
 import CopyToClipIcon from '../../components/CopyToClipIcon';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
-import { NavLink, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Collapse, Row } from 'reactstrap';
+import { RouteComponentProps } from 'react-router-dom';
+import { Col, Row } from 'reactstrap';
 import KeyValueLi from '../../components/KeyValueLi';
 import { getAddress, startPaginateTransactionsFromAddress } from './reducer';
-import { mDFI, TRANSACTION_BASE_PATH } from '../../constants';
+import { mDFI } from '../../constants';
 import TransactionHashRow from '../TransactionHashRow';
-import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
-import styles from './AddressPage.module.scss';
 import { getAmountInSelectedUnit } from '../../utils/utility';
 import Pagination from '../../components/Pagination';
 import QRCode from 'qrcode.react';
@@ -41,7 +39,6 @@ const AddressPage: React.FunctionComponent<AddressPageProps> = (
     unit,
     startPaginateTransactionsFromAddress,
   } = props;
-  const [isOpen, setIsOpen] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
 
@@ -51,7 +48,6 @@ const AddressPage: React.FunctionComponent<AddressPageProps> = (
 
   const fetchData = (pageNumber: number) => {
     setCurrentPage(pageNumber);
-    setIsOpen('');
     startPaginateTransactionsFromAddress(
       params.address,
       pageSize,
@@ -71,42 +67,7 @@ const AddressPage: React.FunctionComponent<AddressPageProps> = (
       return (
         <>
           {transactions.data.map((item, id) => (
-            <div>
-              <Row>
-                <Col xs='1'>
-                  <Button
-                    color='link'
-                    className={styles.btnDropdown}
-                    onClick={() => {
-                      if (isOpen === id) {
-                        setIsOpen('');
-                      } else {
-                        setIsOpen(id);
-                      }
-                    }}
-                  >
-                    {isOpen === id ? <MdArrowDropDown /> : <MdArrowDropUp />}
-                  </Button>
-                </Col>
-                <Col xs='9'>
-                  <Button
-                    to={`${TRANSACTION_BASE_PATH}/${item.transactions.txid}`}
-                    color='link'
-                    tag={NavLink}
-                    className={styles.txIdData}
-                  >
-                    {item.transactions.txid}
-                  </Button>
-                </Col>
-                <Col xs='12'>
-                  <Collapse isOpen={isOpen === id}>
-                    {isOpen === id && (
-                      <TransactionHashRow id={id} tx={item} {...props} />
-                    )}
-                  </Collapse>
-                </Col>
-              </Row>
-            </div>
+            <TransactionHashRow id={id} tx={item} />
           ))}
         </>
       );
