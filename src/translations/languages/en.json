@@ -88,6 +88,7 @@
     },
     "blockPage": {
       "transactions": "Transactions",
+      "Block": "Block",
       "blockTitle": "Block #%{height}",
       "blockHash": "Block Hash",
       "summary": "Summary",
@@ -103,7 +104,9 @@
       "version": "Version",
       "nextBlock": "Next Block",
       "confirmations": "Confirmations",
-      "loading": "Loading"
+      "loading": "Loading",
+      "blockListBreadCrumb": "Block",
+      "blockHashBreadCrumb": "Block %{blockHash}"
     },
     "addressPage": {
       "summary": "Summary",

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import CopyToClipIcon from '../../components/CopyToClipIcon';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
 import { RouteComponentProps } from 'react-router-dom';
-import { Col, Row } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Col, Row } from 'reactstrap';
 import KeyValueLi from '../../components/KeyValueLi';
 import { AppBlock } from '../../utils/interfaces';
 import { getBlockFromHash, startPagination } from './reducer';
@@ -90,7 +89,7 @@ const BlockPage: React.FunctionComponent<BlockPageProps> = (
     return <div />;
   };
 
-  const loadHtml = () => {
+  const blockPageHtml = () => {
     if (isLoading) return <div>{I18n.t('containers.blockPage.loading')}</div>;
     if (isError) return <div>{isError}</div>;
     return (
@@ -102,61 +101,78 @@ const BlockPage: React.FunctionComponent<BlockPageProps> = (
                 height,
               })}
             </h1>
-            <div className='my-2'>
-              <span>{I18n.t('containers.blockPage.blockHash')}: </span>
-              <span>{hash}</span>
-              <span>
-                <CopyToClipIcon value={hash!} uid={'blockHashCopy'} />
-              </span>
-            </div>
           </Col>
           <Col xs='12'>
-            <h1>{I18n.t('containers.blockPage.summary')}</h1>
             <Row>
-              <Col xs='12' md='6'>
+              <Col xs='12' md='8'>
+                <KeyValueLi
+                  label={I18n.t('containers.blockPage.Block')}
+                  value={`${hash}`}
+                  noEllipsis
+                />
+              </Col>
+              <Col xs='12' md='4'>
                 <KeyValueLi
                   label={I18n.t('containers.blockPage.numOfTxns')}
                   value={`${txlength}`}
                 />
+              </Col>
+              <Col xs='12' md='4'>
                 <KeyValueLi
                   label={I18n.t('containers.blockPage.height')}
                   value={`${height}`}
                 />
+              </Col>
+              <Col xs='12' md='4'>
                 <KeyValueLi
                   label={I18n.t('containers.blockPage.block')}
                   value={`${reward}`}
                 />
+              </Col>
+              <Col xs='12' md='4'>
                 <KeyValueLi
                   label={I18n.t('containers.blockPage.timestamp')}
                   value={`${moment(time).format('lll')}`}
                 />
+              </Col>
+              <Col xs='12' md='8'>
                 <KeyValueLi
                   label={I18n.t('containers.blockPage.merkleRoot')}
                   value={`${merkleroot}`}
-                />
-                <KeyValueLi
-                  label={I18n.t('containers.blockPage.previousBlock')}
-                  value={`${height - 1}`}
-                  href={`${BLOCK_PAGE_BASE_PATH}/${previousblockhash}`}
+                  noEllipsis
                 />
               </Col>
-              <Col xs='12' md='6'>
+              <Col xs='12' md='4'>
+                <KeyValueLi
+                  label={I18n.t('containers.blockPage.confirmations')}
+                  value={`${confirmations}`}
+                />
+              </Col>
+              <Col xs='12' md='4'>
                 <KeyValueLi
                   label={I18n.t('containers.blockPage.difficulty')}
                   value={`${difficulty}`}
                 />
+              </Col>
+              <Col xs='12' md='4'>
                 <KeyValueLi
                   label={I18n.t('containers.blockPage.bits')}
                   value={`${bits}`}
                 />
+              </Col>
+              <Col xs='12' md='4'>
                 <KeyValueLi
                   label={I18n.t('containers.blockPage.size')}
                   value={`${size}`}
                 />
+              </Col>
+              <Col xs='12' md='4'>
                 <KeyValueLi
                   label={I18n.t('containers.blockPage.version')}
                   value={`${version}`}
                 />
+              </Col>
+              <Col xs='12' md='4'>
                 <KeyValueLi
                   label={I18n.t('containers.blockPage.nextBlock')}
                   value={`${height + 1}`}
@@ -165,9 +181,12 @@ const BlockPage: React.FunctionComponent<BlockPageProps> = (
                     `${BLOCK_PAGE_BASE_PATH}/${nextblockhash}`
                   }
                 />
+              </Col>
+              <Col xs='12' md='4'>
                 <KeyValueLi
-                  label={I18n.t('containers.blockPage.confirmations')}
-                  value={`${confirmations}`}
+                  label={I18n.t('containers.blockPage.previousBlock')}
+                  value={`${height - 1}`}
+                  href={`${BLOCK_PAGE_BASE_PATH}/${previousblockhash}`}
                 />
               </Col>
             </Row>
@@ -194,7 +213,24 @@ const BlockPage: React.FunctionComponent<BlockPageProps> = (
       </>
     );
   };
-  return <div className='mt-4'>{loadHtml()}</div>;
+  return (
+    <>
+      <div className='mt-4'>
+        <Breadcrumb tag='nav' listTag='div'>
+          <BreadcrumbItem tag='a' href={BLOCK_PAGE_BASE_PATH}>
+            {I18n.t('containers.blockPage.blockListBreadCrumb')}
+          </BreadcrumbItem>
+          {` > `}
+          <BreadcrumbItem active tag='span'>
+            {I18n.t('containers.blockPage.blockHashBreadCrumb', {
+              blockHash: params.blockHash,
+            })}
+          </BreadcrumbItem>
+        </Breadcrumb>
+      </div>
+      <div className='mt-4'>{blockPageHtml()}</div>
+    </>
+  );
 };
 
 const mapStateToProps = (state) => {
