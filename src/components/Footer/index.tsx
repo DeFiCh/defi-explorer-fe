@@ -15,6 +15,7 @@ import {
   TOKENS_PATH,
   PAIRS_PATH,
   FOOTER_DEFICHAIN_STAMP,
+  ANCHOR_PAGE,
 } from '../../constants';
 
 const FooterComponent = () => (
@@ -61,6 +62,11 @@ const FooterComponent = () => (
             <Col xs='6'>
               <Link to={PAIRS_PATH}>
                 {I18n.t('components.footerComponent.explorer.pairs')}
+              </Link>
+            </Col>
+            <Col xs='6'>
+              <Link to={ANCHOR_PAGE}>
+                {I18n.t('components.footerComponent.explorer.anchoredBlocks')}
               </Link>
             </Col>
           </Row>

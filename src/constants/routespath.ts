@@ -17,3 +17,4 @@ export const ADDRESS_BASE_PATH = `/address`;
 export const TRANSACTION_PAGE_INFO_PATH = `${TRANSACTION_BASE_PATH}/:txId`;
 export const BLOCK_PAGE_INFO_PATH = `${BLOCK_PAGE_BASE_PATH}/:blockHash`;
 export const ADDRESS_PAGE_BASE_PATH = `${ADDRESS_BASE_PATH}/:address`;
+export const ANCHOR_PAGE = `${BLOCK_PAGE_BASE_PATH}/anchorsOnly`;
