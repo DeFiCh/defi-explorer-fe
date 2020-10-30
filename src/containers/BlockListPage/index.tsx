@@ -47,6 +47,8 @@ const BlockListPage: React.FunctionComponent<BlockListPageProps> = (
   };
 
   const loadRows = useCallback(() => {
+    if (isLoading) return <>{I18n.t('containers.blockpageList.loading')}</>;
+    if (isError) return <>{isError}</>;
     return blocks.map((block) => (
       <tr key={block.hash}>
         <td>
@@ -67,31 +69,28 @@ const BlockListPage: React.FunctionComponent<BlockListPageProps> = (
     ));
   }, [blocks]);
 
-  const blockHtmlPage = () => {
-    if (isLoading) return <>{I18n.t('containers.blockpageList.loading')}</>;
-    if (isError) return <> {isError}</>;
-    return (
-      <div className={`${styles.tableResponsive} table-responsive-xl`}>
-        <Table className={styles.table}>
-          <thead>
-            <tr>
-              <th>{I18n.t('containers.blockpageList.height')}</th>
-              <th>{I18n.t('containers.blockpageList.time')}</th>
-              <th>{I18n.t('containers.blockpageList.transactionCount')}</th>
-              <th>{I18n.t('containers.blockpageList.size')}</th>
-            </tr>
-          </thead>
-          <tbody>{loadRows()}</tbody>
-        </Table>
-      </div>
-    );
-  };
   return (
     <div>
       <h1>{I18n.t('containers.blockpageList.blockListPageTitle')}</h1>
       <Row>
         <Col xs='12'>
-          <Card className={styles.card}>{blockHtmlPage()}</Card>
+          <Card className={styles.card}>
+            <div className={`${styles.tableResponsive} table-responsive-xl`}>
+              <Table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>{I18n.t('containers.blockpageList.height')}</th>
+                    <th>{I18n.t('containers.blockpageList.time')}</th>
+                    <th>
+                      {I18n.t('containers.blockpageList.transactionCount')}
+                    </th>
+                    <th>{I18n.t('containers.blockpageList.size')}</th>
+                  </tr>
+                </thead>
+                <tbody>{loadRows()}</tbody>
+              </Table>
+            </div>
+          </Card>
         </Col>
         <Col xs='12'>
           <Col xs='12'>

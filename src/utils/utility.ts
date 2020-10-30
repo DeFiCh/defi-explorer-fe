@@ -89,3 +89,10 @@ export const getTime = (time: Date | string | number) => {
   }
   return moment(time).format('lll');
 };
+
+export const getTimeFromNow = (time: Date | string | number) => {
+  if (typeof time === 'number') {
+    return moment(time * 1000).fromNow();
+  }
+  return moment(time).fromNow();
+};

@@ -15,6 +15,7 @@ interface KeyValueLiProps {
   uid?: any;
   label?: string;
   href?: string | boolean;
+  noEllipsis?: boolean;
 }
 
 const KeyValueLi: React.FunctionComponent<KeyValueLiProps> = (
@@ -42,6 +43,8 @@ const KeyValueLi: React.FunctionComponent<KeyValueLiProps> = (
         </Button>
       );
     }
+    if (props.noEllipsis) return props.value;
+
     return <EllipsisText text={props.value} length={'50'} />;
   };
   return (

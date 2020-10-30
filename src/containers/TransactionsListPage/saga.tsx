@@ -11,7 +11,7 @@ import {
 } from './reducer';
 import { handleGetTotalTransactions, handleTransactionsList } from './services';
 
-function* fetchBlocksListStartedSaga(action) {
+function* fetchTransactionsListStartedSaga(action) {
   try {
     const queryParams = {
       limit: TRANSACTIONS_LIST_PAGE_LIMIT,
@@ -42,7 +42,7 @@ function* fetchStartPaginationSaga(action) {
 function* mySaga() {
   yield takeLatest(
     fetchTransactionsListStarted.type,
-    fetchBlocksListStartedSaga
+    fetchTransactionsListStartedSaga
   );
   yield takeLatest(startPagination.type, fetchStartPaginationSaga);
 }

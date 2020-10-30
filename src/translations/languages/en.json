@@ -83,10 +83,12 @@
       "blocks": "Blocks",
       "transactions": "Transactions",
       "tokens": "Tokens",
-      "pairs": "Pairs"
+      "pairs": "Pairs",
+      "explorerTitle": "Explorer"
     },
     "blockPage": {
       "transactions": "Transactions",
+      "Block": "Block",
       "blockTitle": "Block #%{height}",
       "blockHash": "Block Hash",
       "summary": "Summary",
@@ -102,7 +104,9 @@
       "version": "Version",
       "nextBlock": "Next Block",
       "confirmations": "Confirmations",
-      "loading": "Loading"
+      "loading": "Loading",
+      "blockListBreadCrumb": "Block",
+      "blockHashBreadCrumb": "Block %{blockHash}"
     },
     "addressPage": {
       "summary": "Summary",
@@ -114,24 +118,27 @@
       "loading": "Loading"
     },
     "transactionHashRow": {
-      "noInputAddress": "No input address",
-      "noOutputAddress": "No output address",
+      "noInputAddress": "No Inputs (Newly Generated Coins)",
+      "noOutputAddress": "No Outputs",
       "loading": "Loading",
       "confirmations": "Confirmations: %{confirmations}"
     },
     "transactionPage": {
       "loading": "Loading",
       "transactionTitle": "Transaction",
-      "summary": "Summary",
-      "txHash": "Tx Hash",
-      "details": "Details",
-      "size": "Size",
-      "feeRate": "Fee Rate",
-      "receivedTime": "Received Time",
+      "transactionHash": "Transaction Hash",
+      "age": "Age",
       "minedTime": "Mined Time",
-      "includedInBlock": "Included in Block",
+      "blockheight": "Block",
+      "confirmations": "Confirmations",
+      "size": "Size",
       "sizeFormat": "%{size} (bytes)",
-      "feeFormat": "%{fee} (sat/bytes)"
+      "feeRate": "Fee Rate",
+      "feeFormat": "%{fee} (sat/bytes)",
+      "amount": "Amount",
+      "details": "Details",
+      "transactionListBreadCrumb": "Transactions",
+      "transactionTxidBreadCrumb": "Transaction %{txId}"
     },
     "blockpageList": {
       "loading": "Loading",
@@ -149,6 +156,13 @@
       "value": "Value",
       "TransactionsListPageTitle": "Transactions",
       "paginationRange": "%{to} – %{from} of %{total} transactions"
+    },
+    "richListPage": {
+      "loading": "Loading",
+      "RichListPageTitle": "Rich List",
+      "address": "Address",
+      "balance": "Balance",
+      "paginationRange": "%{to} – %{from} of %{total}"
     }
   },
   "alerts": {}

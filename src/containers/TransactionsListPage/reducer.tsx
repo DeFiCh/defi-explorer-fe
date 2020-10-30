@@ -26,7 +26,6 @@ const configSlice = createSlice({
       state.isLoading = false;
       state.isError = '';
       state.data = action.payload;
-      state.total = action.payload[0].height;
     },
     startPagination(state, action) {
       state.isLoading = true;

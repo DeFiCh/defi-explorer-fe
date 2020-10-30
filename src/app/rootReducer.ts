@@ -8,6 +8,7 @@ import addressPageReducer from '../containers/AddressPage/reducer';
 import transactionPageReducer from '../containers/TransactionPage/reducer';
 import transactionsListPageReducer from '../containers/TransactionsListPage/reducer';
 import blockListPageReducer from '../containers/BlockListPage/reducer';
+import richListPageReducer from '../containers/RichListPage/reducer';
 
 export default combineReducers({
   app: appReducer,
@@ -19,4 +20,5 @@ export default combineReducers({
   transactionPage: transactionPageReducer,
   blockListPage: blockListPageReducer,
   transactionsListPage: transactionsListPageReducer,
+  richListPage: richListPageReducer,
 });

@@ -1,33 +1,37 @@
-import React, { useCallback, useEffect } from "react";
-import { connect } from "react-redux";
-import { I18n } from "react-redux-i18n";
-import { Link, RouteComponentProps } from "react-router-dom";
-import { Card, Table, Row, Col, Button } from "reactstrap";
-import { TRANSACTION_BASE_PATH } from "../../../../constants";
-import { fetchLatestTransactions } from "../../../Websocket/reducer";
-import styles from "../../Home.module.scss";
+import React, { useCallback, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { I18n } from 'react-redux-i18n';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Card, Table, Row, Col, Button } from 'reactstrap';
+import { mDFI, TRANSACTION_BASE_PATH } from '../../../../constants';
+import { getAmountInSelectedUnit } from '../../../../utils/utility';
+import { fetchLatestTransactions } from '../../../Websocket/reducer';
+import styles from '../../Home.module.scss';
 
 interface LatestTransactionsComponentProps extends RouteComponentProps {
   transactions: any[];
   fetchLatestTransactions: () => void;
+  unit: string;
 }
 
 const LatestTransactionsComponent: React.FunctionComponent<LatestTransactionsComponentProps> = (
   props: LatestTransactionsComponentProps
 ) => {
-  const { transactions, fetchLatestTransactions } = props;
+  const { transactions, fetchLatestTransactions, unit } = props;
   useEffect(() => {
     fetchLatestTransactions();
   }, []);
 
   const loadRows = useCallback(() => {
-    return transactions.map(item => (
+    return transactions.map((item) => (
       <tr key={item.txid}>
         <td>
           <Link to={`${TRANSACTION_BASE_PATH}/${item.txid}`}>{item.txid}</Link>
         </td>
         <td>
-          <div className="float-right">{item.value}</div>
+          <div className='float-right'>
+            {getAmountInSelectedUnit(item.value, unit, mDFI)} {unit}
+          </div>
         </td>
       </tr>
     ));
@@ -37,18 +41,18 @@ const LatestTransactionsComponent: React.FunctionComponent<LatestTransactionsCom
     <>
       <h1>
         <Row>
-          <Col xs="10">
+          <Col xs='10'>
             {I18n.t(
-              "containers.homePage.latestTransaction.latestTransactionTitle"
+              'containers.homePage.latestTransaction.latestTransactionTitle'
             )}
           </Col>
-          <Col xs="2">
+          <Col xs='2'>
             <Button
-              color="link"
-              className="float-right"
+              color='link'
+              className='float-right'
               onClick={() => props.history.push(TRANSACTION_BASE_PATH)}
             >
-              {I18n.t("containers.homePage.viewAll")}
+              {I18n.t('containers.homePage.viewAll')}
             </Button>
           </Col>
         </Row>
@@ -66,19 +70,21 @@ const LatestTransactionsComponent: React.FunctionComponent<LatestTransactionsCom
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const {
     websocket: {
-      transactionResponse: { data }
-    }
+      transactionResponse: { data },
+    },
+    app: { unit },
   } = state;
   return {
-    transactions: data
+    transactions: data,
+    unit,
   };
 };
 
 const mapDispatchToProps = {
-  fetchLatestTransactions
+  fetchLatestTransactions,
 };
 
 export default connect(
