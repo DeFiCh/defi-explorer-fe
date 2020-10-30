@@ -85,7 +85,7 @@ const AddressPage: React.FunctionComponent<AddressPageProps> = (
             <h1>
               {I18n.t('containers.addressPage.addressTitle')}{' '}
               <span>
-                {balance} {unit}
+                {`${getAmountInSelectedUnit(balance || 0, unit, mDFI)} ${unit}`}
               </span>
             </h1>
             <div className='my-2'>

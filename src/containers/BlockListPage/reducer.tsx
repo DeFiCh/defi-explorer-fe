@@ -11,7 +11,7 @@ const configSlice = createSlice({
   name: 'blockListPage',
   initialState,
   reducers: {
-    fetchBlocksListStarted(state) {
+    fetchBlocksListStarted(state, action) {
       state.isLoading = true;
       state.data = [];
       state.isError = '';
@@ -25,7 +25,7 @@ const configSlice = createSlice({
       state.isLoading = false;
       state.isError = '';
       state.data = action.payload;
-      state.total = action.payload[0].height;
+      state.total = (action.payload[0] && action.payload[0].height) || 0;
     },
     startPagination(state, action) {
       state.isLoading = true;

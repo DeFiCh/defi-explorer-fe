@@ -9,6 +9,7 @@ import {
   ADDRESS_PAGE_BASE_PATH,
   BLOCK_PAGE_BASE_PATH,
   RICH_LIST_PATH,
+  ANCHOR_PAGE,
 } from '../constants';
 import BlockPage from '../containers/BlockPage';
 import AddressPage from '../containers/AddressPage';
@@ -27,9 +28,14 @@ const routes = (location) => (
       path={TRANSACTION_PAGE_INFO_PATH}
       component={TransactionPage}
     />
+    <Route exact path={BLOCK_PAGE_BASE_PATH} component={BlockListPage} />
+    <Route
+      exact
+      path={ANCHOR_PAGE}
+      component={(props) => <BlockListPage {...props} anchorsOnly />}
+    />
     <Route exact path={BLOCK_PAGE_INFO_PATH} component={BlockPage} />
     <Route exact path={ADDRESS_PAGE_BASE_PATH} component={AddressPage} />
-    <Route exact path={BLOCK_PAGE_BASE_PATH} component={BlockListPage} />
     <Route
       exact
       path={TRANSACTION_BASE_PATH}

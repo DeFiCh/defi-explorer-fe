@@ -1,5 +1,4 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { BLOCKS_LIST_PAGE_LIMIT } from '../../constants';
 import {
   fetchBlocksListStarted,
   fetchBlocksListSuccess,
@@ -10,11 +9,12 @@ import {
 } from './reducer';
 import { handleBlockList } from './services';
 
-function* fetchBlocksListStartedSaga() {
+function* fetchBlocksListStartedSaga(action) {
+  const { anchorsOnly, pageSize } = action.payload;
   try {
     const queryParams = {
-      limit: BLOCKS_LIST_PAGE_LIMIT,
-      anchorsOnly: false,
+      limit: pageSize,
+      anchorsOnly,
     };
     const { data } = yield call(handleBlockList, queryParams);
     yield put(fetchBlocksListSuccess(data));
@@ -25,16 +25,15 @@ function* fetchBlocksListStartedSaga() {
 
 function* fetchStartPaginationSaga(action) {
   const { total } = yield select((state) => state.blockListPage);
-  const { pageNumber } = action.payload;
-  const limit = BLOCKS_LIST_PAGE_LIMIT;
-  const since = total - (pageNumber - 1) * limit;
+  const { pageNumber, anchorsOnly, pageSize } = action.payload;
+  const since = total + 1 - (pageNumber - 1) * pageSize;
   try {
     const queryParams = {
-      limit,
+      limit: pageSize,
       since,
       paging: 'height',
       direction: -1,
-      anchorsOnly: false,
+      anchorsOnly,
     };
     const { data } = yield call(handleBlockList, queryParams);
     yield put(startPaginationSuccess(data));

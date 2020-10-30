@@ -14,10 +14,15 @@ interface BlockListPageProps extends RouteComponentProps {
   blocks: any[];
   isError: string;
   total: number;
-  fetchBlocksListStarted: () => void;
-  startPagination: (pageNumber: number) => void;
+  fetchBlocksListStarted: (anchorsOnly: boolean, pageSize: number) => void;
+  startPagination: (
+    pageNumber: number,
+    pageSize: number,
+    anchorsOnly: boolean
+  ) => void;
+  anchorsOnly?: boolean;
 }
-
+// TODO: Anchored page is in work in progress
 const BlockListPage: React.FunctionComponent<BlockListPageProps> = (
   props: BlockListPageProps
 ) => {
@@ -28,22 +33,25 @@ const BlockListPage: React.FunctionComponent<BlockListPageProps> = (
     fetchBlocksListStarted,
     total,
     startPagination,
+    anchorsOnly,
   } = props;
   const [currentPage, setCurrentPage] = useState(1);
 
+  const totalCount = anchorsOnly ? blocks.length : total;
+
   const pageSize = BLOCKS_LIST_PAGE_LIMIT;
 
-  const pagesCount = Math.ceil(total / pageSize);
-  const to = total - (currentPage - 1) * pageSize;
+  const pagesCount = Math.ceil(totalCount / pageSize);
+  const to = totalCount - (currentPage - 1) * pageSize;
   const from = Math.max(to - pageSize, 0);
 
   useEffect(() => {
-    fetchBlocksListStarted();
+    fetchBlocksListStarted(!!anchorsOnly, pageSize);
   }, []);
 
   const fetchData = (pageNumber: number) => {
     setCurrentPage(pageNumber);
-    startPagination(pageNumber);
+    startPagination(pageNumber, pageSize, !!anchorsOnly);
   };
 
   const loadRows = useCallback(() => {
@@ -96,8 +104,8 @@ const BlockListPage: React.FunctionComponent<BlockListPageProps> = (
           <Col xs='12'>
             <Pagination
               label={I18n.t('containers.blockpageList.paginationRange', {
-                from: from + 1,
-                total,
+                from: from ? from + 1 : 0,
+                total: totalCount,
                 to,
               })}
               currentPage={currentPage}
@@ -124,8 +132,13 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  fetchBlocksListStarted,
-  startPagination: (pageNumber: number) => startPagination({ pageNumber }),
+  fetchBlocksListStarted: (anchorsOnly: boolean, pageSize: number) =>
+    fetchBlocksListStarted({ anchorsOnly, pageSize }),
+  startPagination: (
+    pageNumber: number,
+    pageSize: number,
+    anchorsOnly: boolean
+  ) => startPagination({ pageNumber, pageSize, anchorsOnly }),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BlockListPage);
