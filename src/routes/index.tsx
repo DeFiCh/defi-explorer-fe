@@ -11,6 +11,7 @@ import {
   BLOCK_PAGE_BASE_PATH,
   RICH_LIST_PATH,
   ANCHOR_PAGE,
+  TOKEN_PAGE_PATH,
 } from '../constants';
 import BlockPage from '../containers/BlockPage';
 import AddressPage from '../containers/AddressPage';
@@ -19,6 +20,7 @@ import HomePageComponent from '../containers/Home';
 import BlockListPage from '../containers/BlockListPage';
 import TransactionsListPage from '../containers/TransactionsListPage';
 import RichListPage from '../containers/RichListPage';
+import TokenPage from '../containers/TokensListPage/components/TokenPage';
 import TokensListPage from '../containers/TokensListPage';
 
 const routes = (location) => (
@@ -44,6 +46,7 @@ const routes = (location) => (
       component={TransactionsListPage}
     />
     <Route exact path={RICH_LIST_PATH} component={RichListPage} />
+    <Route exact path={TOKEN_PAGE_PATH} component={TokenPage} />
     <Route exact path={TOKEN_BASE_PATH} component={TokensListPage} />
   </Switch>
 );

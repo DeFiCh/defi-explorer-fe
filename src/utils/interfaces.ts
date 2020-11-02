@@ -2,6 +2,13 @@ export interface ITokenResponse {
   hash: string;
 }
 
+export interface ITokenPoolPairListParams {
+  start?: number;
+  including_start?: boolean;
+  limit?: number;
+  network: string;
+}
+
 export interface ITxn {
   hash: string;
   time: string;

@@ -164,6 +164,13 @@
       "address": "Address",
       "balance": "Balance",
       "paginationRange": "%{to} – %{from} of %{total}"
+    },
+    "tokensPageList": {
+      "loading": "Loading",
+      "tokensPageListTitle": "Tokens",
+      "name": "Name",
+      "symbol": "Symbol",
+      "category": "Category"
     }
   },
   "alerts": {}

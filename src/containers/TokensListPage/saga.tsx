@@ -1,39 +1,38 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { NETWORK } from '../../constants';
 import {
   fetchTokensListStartedRequest,
   fetchTokensListFailureRequest,
   fetchTokensListSuccessRequest,
-  startPaginationRequest,
+  fetchTokenPageStartedRequest,
+  fetchTokenPageFailureRequest,
+  fetchTokenPageSuccessRequest,
 } from './reducer';
-import { handleTokenList } from './services';
+import { handleGetToken, handleTokenList } from './services';
 
 function* fetchTokensListStarted(action) {
-  const { anchorsOnly, pageSize } = action.payload;
+  const { pageNumber, pageSize } = action.payload;
   try {
     const queryParams = {
+      start: (pageNumber - 1) * pageSize,
       limit: pageSize,
-      anchorsOnly,
+      network: NETWORK,
     };
-    const { data } = yield call(handleTokenList, queryParams);
+    const data = yield call(handleTokenList, queryParams);
     yield put(fetchTokensListSuccessRequest(data));
   } catch (err) {
     yield put(fetchTokensListFailureRequest(err.message));
   }
 }
 
-function* fetchStartPaginationSaga(action) {
-  const { total } = yield select((state) => state.blockListPage);
-  const { pageNumber, anchorsOnly, pageSize } = action.payload;
-  const since = total + 1 - (pageNumber - 1) * pageSize;
+function* fetchTokenPageStarted(action) {
+  const { tokenId } = action.payload;
+  const query = {
+    id: tokenId,
+    network: NETWORK,
+  };
   try {
-    const queryParams = {
-      limit: pageSize,
-      since,
-      paging: 'height',
-      direction: -1,
-      anchorsOnly,
-    };
-    const { data } = yield call(handleTokenList, queryParams);
+    const { data } = yield call(handleGetToken, query);
     yield put(fetchTokensListSuccessRequest(data));
   } catch (err) {
     yield put(fetchTokensListFailureRequest(err.message));
@@ -42,7 +41,7 @@ function* fetchStartPaginationSaga(action) {
 
 function* mySaga() {
   yield takeLatest(fetchTokensListStartedRequest.type, fetchTokensListStarted);
-  yield takeLatest(startPaginationRequest.type, fetchStartPaginationSaga);
+  yield takeLatest(fetchTokenPageStartedRequest.type, fetchTokenPageStarted);
 }
 
 export default mySaga;

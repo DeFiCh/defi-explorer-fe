@@ -9,7 +9,7 @@ import {
   Collapse,
 } from 'reactstrap';
 import {
-  TOKENS_PATH,
+  TOKEN_BASE_PATH,
   POOL_PATH,
   BLOCK_PAGE_BASE_PATH,
   TRANSACTION_BASE_PATH,
@@ -45,7 +45,7 @@ const NavbarComponent = () => {
             </NavLink>
           </NavItem> */}
           <NavItem>
-            <NavLink to={TOKENS_PATH} tag={RRNavLink}>
+            <NavLink to={TOKEN_BASE_PATH} tag={RRNavLink}>
               {I18n.t('containers.navBar.tokens')}
             </NavLink>
           </NavItem>

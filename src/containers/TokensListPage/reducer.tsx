@@ -2,8 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
   isLoading: false,
-  data: {},
+  data: [],
   isError: '',
+  tokenPage: {
+    isLoading: false,
+    data: {},
+    isError: '',
+  },
 };
 
 const configSlice = createSlice({
@@ -12,7 +17,7 @@ const configSlice = createSlice({
   reducers: {
     fetchTokensListStartedRequest(state, action) {
       state.isLoading = true;
-      state.data = {};
+      state.data = [];
       state.isError = '';
     },
     fetchTokensListFailureRequest(state, action) {
@@ -25,8 +30,20 @@ const configSlice = createSlice({
       state.data = action.payload;
       state.isError = '';
     },
-    startPaginationRequest(state, action) {
-      state.isLoading = true;
+    fetchTokenPageStartedRequest(state, action) {
+      state.tokenPage.isLoading = true;
+      state.tokenPage.data = {};
+      state.tokenPage.isError = '';
+    },
+    fetchTokenPageFailureRequest(state, action) {
+      state.tokenPage.isLoading = false;
+      state.tokenPage.isError = action.payload;
+      state.tokenPage.data = {};
+    },
+    fetchTokenPageSuccessRequest(state, action) {
+      state.tokenPage.isLoading = false;
+      state.tokenPage.data = action.payload;
+      state.tokenPage.isError = '';
     },
   },
 });
@@ -37,7 +54,9 @@ export const {
   fetchTokensListStartedRequest,
   fetchTokensListFailureRequest,
   fetchTokensListSuccessRequest,
-  startPaginationRequest,
+  fetchTokenPageStartedRequest,
+  fetchTokenPageFailureRequest,
+  fetchTokenPageSuccessRequest,
 } = actions;
 
 export default reducer;
