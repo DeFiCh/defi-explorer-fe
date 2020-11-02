@@ -5,9 +5,15 @@ import {
   UncontrolledPopover,
   PopoverHeader,
   PopoverBody,
+  DropdownItem,
+  Input,
+  Label,
 } from 'reactstrap';
 import { changeUnit } from '../../../App/reducer';
 import { MdKeyboardArrowDown } from 'react-icons/md';
+import { I18n } from 'react-redux-i18n';
+import { UNIT_OPTIONS } from '../../../../constants';
+import styles from '../../NavBar.module.scss';
 
 interface NetworkCurrency {
   network: string;
@@ -17,6 +23,27 @@ interface NetworkCurrency {
 
 const NetworkCurrency = (props: NetworkCurrency) => {
   const { network, unit, changeUnit } = props;
+
+  const loadRadioButton = () =>
+    UNIT_OPTIONS.map((item, idx) => (
+      <>
+        <DropdownItem
+          key={`dropDownUnit_${idx}`}
+          onClick={() => changeUnit(item)}
+        >
+          <Label>
+            <Input
+              type='radio'
+              name='unit'
+              value={item}
+              checked={item === unit}
+            />{' '}
+            {item}
+          </Label>
+        </DropdownItem>
+        <DropdownItem divider />
+      </>
+    ));
 
   return (
     <div>
@@ -30,14 +57,13 @@ const NetworkCurrency = (props: NetworkCurrency) => {
         trigger='legacy'
         placement='bottom'
         target='PopoverClick'
+        popperClassName={styles.networkPopover}
+        hideArrow
       >
-        <PopoverHeader>Click Trigger</PopoverHeader>
-        <PopoverBody>
-          Clicking on the triggering element makes this popover appear. Clicking
-          on it again will make it disappear. You can select this text, but
-          clicking away (somewhere other than the triggering element) will not
-          dismiss this popover.
-        </PopoverBody>
+        <PopoverHeader>
+          {I18n.t('containers.navBar.menuDropdown.units')}
+        </PopoverHeader>
+        <PopoverBody>{loadRadioButton()}</PopoverBody>
       </UncontrolledPopover>
     </div>
   );
