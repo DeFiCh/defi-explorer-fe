@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from "react";
-import { connect } from "react-redux";
-import { I18n } from "react-redux-i18n";
+import React, { useCallback, useState } from 'react';
+import { connect } from 'react-redux';
+import { I18n } from 'react-redux-i18n';
 import {
   Dropdown,
   DropdownToggle,
@@ -9,11 +9,11 @@ import {
   FormGroup,
   Input,
   Label,
-  Button
-} from "reactstrap";
-import { UNIT_OPTIONS } from "../../../../constants";
-import { changeUnit } from "../../../App/reducer";
-import defiLogo from "../../../../assets/svg/dfi.svg";
+  Button,
+} from 'reactstrap';
+import { UNIT_OPTIONS } from '../../../../constants';
+import { changeUnit } from '../../../App/reducer';
+import defiLogo from '../../../../assets/svg/dfi.svg';
 
 interface MenuDropdown {
   network: string;
@@ -21,11 +21,11 @@ interface MenuDropdown {
   changeUnit: (unit: string) => void;
 }
 
-const MenuDropdown = props => {
+const MenuDropdown = (props) => {
   const { network, unit, changeUnit } = props;
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const toggle = () => setDropdownOpen(prevState => !prevState);
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
 
   const loadRadioButton = () => (
     <FormGroup>
@@ -38,11 +38,11 @@ const MenuDropdown = props => {
             <FormGroup>
               <Label>
                 <Input
-                  type="radio"
-                  name="unit"
+                  type='radio'
+                  name='unit'
                   value={item}
                   checked={item === unit}
-                />{" "}
+                />{' '}
                 {item}
               </Label>
             </FormGroup>
@@ -55,13 +55,12 @@ const MenuDropdown = props => {
 
   return (
     <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-      <DropdownToggle
-        caret
-        color="link"
-      >{`${network.toUpperCase()}-${unit}`}</DropdownToggle>
+      <DropdownToggle caret color='link'>
+        {`${network.toUpperCase()}-${unit}`}
+      </DropdownToggle>
       <DropdownMenu>
         <DropdownItem header>
-          {I18n.t("containers.navBar.menuDropdown.network")}
+          {I18n.t('containers.navBar.menuDropdown.network')}
         </DropdownItem>
         <DropdownItem divider />
         <div>
@@ -69,11 +68,11 @@ const MenuDropdown = props => {
             <img src={defiLogo} />
           </span>
           <span>
-            <Button size="xs">{`${network.toUpperCase()}`}</Button>
+            <Button size='xs'>{`${network.toUpperCase()}`}</Button>
           </span>
         </div>
         <DropdownItem header>
-          {I18n.t("containers.navBar.menuDropdown.unit")}
+          {I18n.t('containers.navBar.menuDropdown.unit')}
         </DropdownItem>
         <DropdownItem divider />
         {loadRadioButton()}
@@ -87,12 +86,12 @@ const mapStateToProps = ({ app }) => {
   return {
     chain,
     network,
-    unit
+    unit,
   };
 };
 
 const mapDispatchToProps = {
-  changeUnit: (unit: string) => changeUnit(unit)
+  changeUnit: (unit: string) => changeUnit(unit),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuDropdown);

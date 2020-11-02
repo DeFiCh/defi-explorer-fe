@@ -1,12 +1,23 @@
 // App and Bootstrap variables required
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
-@import "../../scss/variables";
-@import "../../scss/bootstrap/variables";
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '../../scss/variables';
+@import '../../scss/bootstrap/variables';
 
-.navs {
+.navigation {
+  background-color: $white;
+  box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.2);
+  min-height: 80px;
   a {
     color: $secondary;
+    &:hover:not(.active) {
+      color: inherit;
+      color: $primary;
+    }
+  }
+  .logo {
+    color: $primary;
+    margin-right: 1rem;
   }
 }
