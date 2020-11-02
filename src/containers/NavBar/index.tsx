@@ -1,9 +1,14 @@
 import React from 'react';
-import { Nav, NavItem, NavLink, Row } from 'reactstrap';
-import MenuDropdown from './component/MenuDropdown';
-import defiAppIcon from '../../assets/svg/logo-defi.svg';
 import {
-  INDEX_PATH,
+  Nav,
+  NavItem,
+  NavLink,
+  Navbar,
+  NavbarBrand,
+  Collapse,
+} from 'reactstrap';
+import MenuDropdown from './component/MenuDropdown';
+import {
   TOKENS_PATH,
   PAIRS_PATH,
   BLOCK_PAGE_BASE_PATH,
@@ -12,21 +17,18 @@ import {
 import { NavLink as RRNavLink, withRouter } from 'react-router-dom';
 import { I18n } from 'react-redux-i18n';
 import styles from './NavBar.module.scss';
+import Logo from '../../components/Logo';
+import NetworkCurrency from './component/NetworkCurrency';
 
 const NavbarComponent = () => {
   return (
-    <>
-      <div className={styles.navs}>
-        <Nav className='bg-white'>
-          <NavItem>
-            <NavLink to={INDEX_PATH} tag={RRNavLink}>
-              <span>
-                <img src={defiAppIcon} />
-              </span>
-              <span>{I18n.t('containers.navBar.explorerTitle')}</span>
-            </NavLink>
-          </NavItem>
-
+    <Navbar className={styles.navigation} light expand='md'>
+      <NavbarBrand href='/' className='mr-auto'>
+        <Logo className={styles.logo} />
+        <span>{I18n.t('containers.navBar.explorerTitle')}</span>
+      </NavbarBrand>
+      <Collapse isOpen={true} navbar>
+        <Nav className='m-auto' navbar>
           <NavItem>
             <NavLink to={BLOCK_PAGE_BASE_PATH} tag={RRNavLink}>
               {I18n.t('containers.navBar.blocks')}
@@ -47,13 +49,10 @@ const NavbarComponent = () => {
               {I18n.t('containers.navBar.pairs')}
             </NavLink>
           </NavItem>
-
-          <NavItem>
-            <MenuDropdown />
-          </NavItem>
         </Nav>
-      </div>
-    </>
+        <NetworkCurrency />
+      </Collapse>
+    </Navbar>
   );
 };
 
