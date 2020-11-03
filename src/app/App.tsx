@@ -7,16 +7,16 @@ import { Container } from 'reactstrap';
 import FooterComponent from '../components/Footer';
 import NavbarComponent from '../containers/NavBar';
 import routes from '../routes';
-import Websocket from '../utils/webSocket';
 import './App.scss'; // INFO: do not move down, placed on purpose
+// import Websocket from '../utils/webSocket';
 
-interface AppProps extends RouteComponentProps {}
-
-const App: React.FunctionComponent<AppProps> = (props: AppProps) => {
+const App: React.FunctionComponent<RouteComponentProps> = (
+  props: RouteComponentProps
+) => {
   const { location } = props;
-  useEffect(() => {
-    const webSocket = new Websocket();
-  }, []);
+  // useEffect(() => {
+  //   const webSocket = new Websocket();
+  // }, []);
   return (
     <div id='app'>
       <Helmet>
@@ -24,7 +24,7 @@ const App: React.FunctionComponent<AppProps> = (props: AppProps) => {
       </Helmet>
       <main className='overflow-auto'>
         <NavbarComponent />
-        <Container fluid>
+        <Container fluid className='mt-5'>
           {routes(location)}
           <FooterComponent />
         </Container>

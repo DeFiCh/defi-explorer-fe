@@ -164,6 +164,41 @@
       "address": "Address",
       "balance": "Balance",
       "paginationRange": "%{to} – %{from} of %{total}"
+    },
+    "tokensPageList": {
+      "loading": "Loading",
+      "tokensPageListTitle": "Tokens",
+      "name": "Name",
+      "symbol": "Symbol",
+      "category": "Category",
+      "paginationRange": "%{to} – %{from} of %{total}"
+    },
+    "poolPairsListPage": {
+      "loading": "Loading",
+      "poolPairsListPageTitle": "Liquidity Pool Pairs",
+      "name": "Name",
+      "totalLiquidity": "Liquidity",
+      "commission": "Commission",
+      "paginationRange": "%{to} – %{from} of %{total}",
+      "noDataPresent": "No Pool Pair is present"
+    },
+    "tokenPage": {
+      "tokenListPageBreadCrumb": "Tokens",
+      "name": "Name",
+      "symbol": "Symbol",
+      "tokenId": "Id",
+      "category": "Category",
+      "decimal": "Decimal",
+      "pairsHeading": "Pairs",
+      "loading": "Loading"
+    },
+    "poolPairPage": {
+      "titlePair": "%{symbol} pair",
+      "poolPairListPageBreadCrumb": "Pool",
+      "oneCurrencyLabel": "1 %{symbol}",
+      "poolPairId": "Id",
+      "totalLiquidity": "Total Liquidity",
+      "loading": "Loading"
     }
   },
   "alerts": {}

@@ -9,6 +9,8 @@ import transactionPageReducer from '../containers/TransactionPage/reducer';
 import transactionsListPageReducer from '../containers/TransactionsListPage/reducer';
 import blockListPageReducer from '../containers/BlockListPage/reducer';
 import richListPageReducer from '../containers/RichListPage/reducer';
+import tokensListPageReducer from '../containers/TokensListPage/reducer';
+import poolPairsListPageReducer from '../containers/PoolPairsListPage/reducer';
 
 export default combineReducers({
   app: appReducer,
@@ -21,4 +23,6 @@ export default combineReducers({
   blockListPage: blockListPageReducer,
   transactionsListPage: transactionsListPageReducer,
   richListPage: richListPageReducer,
+  tokensListPage: tokensListPageReducer,
+  poolPairsListPage: poolPairsListPageReducer,
 });
