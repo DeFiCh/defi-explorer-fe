@@ -184,7 +184,6 @@
     },
     "tokenPage": {
       "tokenListPageBreadCrumb": "Tokens",
-      "tokenPageBreadCrumb": "Token %{name}",
       "name": "Name",
       "symbol": "Symbol",
       "tokenId": "Id",

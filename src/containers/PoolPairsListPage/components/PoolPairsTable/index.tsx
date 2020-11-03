@@ -7,7 +7,7 @@ import { POOL_BASE_PATH, TOKENS_LIST_PAGE_LIMIT } from '../../../../constants';
 import { fetchPoolPairsListStartedRequest } from '../../reducer';
 import Pagination from '../../../../components/Pagination';
 import styles from '../../PoolPairsListPage.module.scss';
-import TokenAvatar from '../../../TokensListPage/components/TokenAvatar';
+import TokenAvatar from '../../../../components/TokenAvatar';
 
 interface PoolPairsTable {
   fetchPoolPairsListStartedRequest: () => void;

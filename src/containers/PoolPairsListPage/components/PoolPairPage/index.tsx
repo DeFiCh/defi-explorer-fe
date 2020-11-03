@@ -6,7 +6,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, Row, Col } from 'reactstrap';
 import KeyValueLi from '../../../../components/KeyValueLi';
 import { POOL_BASE_PATH } from '../../../../constants';
-import TokenAvatar from '../../../TokensListPage/components/TokenAvatar';
+import TokenAvatar from '../../../../components/TokenAvatar';
 import { fetchPoolPairPageStartedRequest } from '../../reducer';
 
 interface RouteInfo {

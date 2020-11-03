@@ -5,7 +5,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Row, Col, Card, Table } from 'reactstrap';
 import { TOKENS_LIST_PAGE_LIMIT, TOKEN_BASE_PATH } from '../../constants';
 import { fetchTokensListStartedRequest } from './reducer';
-import TokenAvatar from './components/TokenAvatar';
+import TokenAvatar from '../../components/TokenAvatar';
 import Pagination from '../../components/Pagination';
 import styles from './TokensListPage.module.scss';
 

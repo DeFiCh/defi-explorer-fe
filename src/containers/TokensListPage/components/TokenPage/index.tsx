@@ -8,6 +8,7 @@ import KeyValueLi from '../../../../components/KeyValueLi';
 import { TOKEN_BASE_PATH } from '../../../../constants';
 import { fetchTokenPageStartedRequest } from '../../reducer';
 import PoolPairsTable from '../../../PoolPairsListPage/components/PoolPairsTable';
+import TokenAvatar from '../../../../components/TokenAvatar';
 
 interface RouteInfo {
   tokenId: string;
@@ -46,13 +47,17 @@ const TokenPage = (props: TokenPageProps) => {
             </BreadcrumbItem>
             {` > `}
             <BreadcrumbItem active tag='span'>
-              {I18n.t('containers.tokenPage.tokenPageBreadCrumb', {
-                name: data.name,
-              })}
+              {data.name}
             </BreadcrumbItem>
           </Breadcrumb>
         </div>
         <div className='mt-4'>
+          <h1>
+            <span>
+              <TokenAvatar token={data} />
+            </span>{' '}
+            {data.name}
+          </h1>
           <Row>
             <Col xs='12'>
               <Row>

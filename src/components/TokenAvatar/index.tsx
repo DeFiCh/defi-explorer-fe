@@ -1,5 +1,5 @@
 import React from 'react';
-import { getIcon } from '../../../../utils/utility';
+import { getIcon } from '../../utils/utility';
 
 interface TokenAvatar {
   token: any;
