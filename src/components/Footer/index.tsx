@@ -13,7 +13,7 @@ import {
   BROADCAST_MESSAGE_PATH,
   VERIFY_MESSAGE_PATH,
   TOKENS_PATH,
-  PAIRS_PATH,
+  POOL_PATH,
   FOOTER_DEFICHAIN_STAMP,
   ANCHOR_PAGE,
 } from '../../constants';
@@ -60,8 +60,8 @@ const FooterComponent = () => (
               </Link>
             </Col>
             <Col xs='6'>
-              <Link to={PAIRS_PATH}>
-                {I18n.t('components.footerComponent.explorer.pairs')}
+              <Link to={POOL_PATH}>
+                {I18n.t('components.footerComponent.explorer.pool')}
               </Link>
             </Col>
             <Col xs='6'>

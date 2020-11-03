@@ -30,7 +30,7 @@
         "broadcastMessage": "Broadcast Message",
         "verifyMessage": "Verify Message",
         "tokens": "Tokens",
-        "pairs": "Pairs",
+        "pool": "Pool",
         "anchoredBlocks": "Anchored Blocks"
       },
       "about": {
@@ -84,7 +84,7 @@
       "blocks": "Blocks",
       "transactions": "Transactions",
       "tokens": "Tokens",
-      "pairs": "Pairs",
+      "pool": "Pool",
       "explorerTitle": "Explorer"
     },
     "blockPage": {

@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Nav,
   NavItem,
   NavLink,
   Navbar,
   NavbarBrand,
+  NavbarToggler,
   Collapse,
 } from 'reactstrap';
-import MenuDropdown from './component/MenuDropdown';
 import {
   TOKENS_PATH,
-  PAIRS_PATH,
+  POOL_PATH,
   BLOCK_PAGE_BASE_PATH,
   TRANSACTION_BASE_PATH,
 } from '../../constants';
@@ -21,15 +21,20 @@ import Logo from '../../components/Logo';
 import NetworkCurrency from './component/NetworkCurrency';
 
 const NavbarComponent = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
+
   return (
     <Navbar className={styles.navigation} light expand='md'>
       <NavbarBrand href='/' className='mr-auto'>
         <Logo className={styles.logo} />
         <span>{I18n.t('containers.navBar.explorerTitle')}</span>
       </NavbarBrand>
-      <Collapse isOpen={true} navbar>
+      <NavbarToggler onClick={toggle} />
+      <Collapse isOpen={isOpen} navbar>
         <Nav className='m-auto' navbar>
-          <NavItem>
+          {/* <NavItem>
             <NavLink to={BLOCK_PAGE_BASE_PATH} tag={RRNavLink}>
               {I18n.t('containers.navBar.blocks')}
             </NavLink>
@@ -38,15 +43,15 @@ const NavbarComponent = () => {
             <NavLink to={TRANSACTION_BASE_PATH} tag={RRNavLink}>
               {I18n.t('containers.navBar.transactions')}
             </NavLink>
-          </NavItem>
+          </NavItem> */}
           <NavItem>
             <NavLink to={TOKENS_PATH} tag={RRNavLink}>
               {I18n.t('containers.navBar.tokens')}
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink to={PAIRS_PATH} tag={RRNavLink}>
-              {I18n.t('containers.navBar.pairs')}
+            <NavLink to={POOL_PATH} tag={RRNavLink}>
+              {I18n.t('containers.navBar.pool')}
             </NavLink>
           </NavItem>
         </Nav>

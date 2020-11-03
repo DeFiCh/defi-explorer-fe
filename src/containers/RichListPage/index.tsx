@@ -23,9 +23,7 @@ interface RichListPageProps extends RouteComponentProps {
   unit;
 }
 
-const RichListPage: React.FunctionComponent<RichListPageProps> = (
-  props: RichListPageProps
-) => {
+const RichListPage = (props) => {
   const {
     isLoading,
     richListData: { data = [], total = 0 },

@@ -8,7 +8,7 @@ body {
   width: 100vw;
 
   > main {
-    width: 100%;//calc(100% - 224px);
+    width: 100%; //calc(100% - 224px);
     border-left: $border-width solid $border-color;
     border-top-left-radius: $border-radius * 1.5;
     border-bottom-left-radius: $border-radius * 1.5;
@@ -152,5 +152,9 @@ body {
   .txn-status-confirmed,
   .txn-status-enabled {
     background-color: $green;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
   }
 }

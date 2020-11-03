@@ -5,10 +5,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { fetchLatestBlocks } from '../../../Websocket/reducer';
 import styles from '../../Home.module.scss';
 import { Card, Table, Row, Col, Button } from 'reactstrap';
-import {
-  BLOCK_PAGE_BASE_PATH,
-  BLOCK_PAGE_BASE_PATH,
-} from '../../../../constants';
+import { BLOCK_PAGE_BASE_PATH } from '../../../../constants';
 import moment from 'moment';
 
 interface LatestBlocksComponentProps extends RouteComponentProps {

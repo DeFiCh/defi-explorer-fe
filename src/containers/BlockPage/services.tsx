@@ -59,7 +59,7 @@ export const toAppBlock = (block: ApiBlock): AppBlock => {
       url: '',
     },
     reward: block.reward,
-    btcTxHash: block.btcTxHash || null,
+    btcTxHash: block.btcTxHash || '',
     isAnchor: !!block.btcTxHash,
   };
 };
