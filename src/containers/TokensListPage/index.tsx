@@ -5,10 +5,12 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Row, Col, Card, Table } from 'reactstrap';
 import { TOKENS_LIST_PAGE_LIMIT, TOKEN_BASE_PATH } from '../../constants';
 import { fetchTokensListStartedRequest } from './reducer';
+import TokenAvatar from './components/TokenAvatar';
+import Pagination from '../../components/Pagination';
 import styles from './TokensListPage.module.scss';
 
 interface TokensListPageProps extends RouteComponentProps {
-  fetchTokensListStartedRequest: (pageNumber: number, pageSize: number) => void;
+  fetchTokensListStartedRequest: () => void;
   isLoading: boolean;
   data: any[];
   isError: string;
@@ -16,28 +18,53 @@ interface TokensListPageProps extends RouteComponentProps {
 }
 
 const TokensListPage = (props: TokensListPageProps) => {
-  const {
-    fetchTokensListStartedRequest,
-    isLoading,
-    data,
-    isError,
-    unit,
-  } = props;
-  const [curretPage, setCurretPage] = useState(1);
+  const { fetchTokensListStartedRequest, isLoading, data, isError } = props;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [tableRows, setTableRows] = useState<any[]>([]);
   const pageSize = TOKENS_LIST_PAGE_LIMIT;
+  const totalCount = data.length;
+
+  const pagesCount = Math.ceil(totalCount / pageSize);
+  const to = totalCount - (currentPage - 1) * pageSize;
+  const from = Math.max(to - pageSize, 0);
+
+  const fetchData = (pageNum) => {
+    setCurrentPage(pageNum);
+    const rows = data.slice((pageNum - 1) * pageSize, pageNum * pageSize);
+    setTableRows(rows);
+  };
 
   useEffect(() => {
-    fetchTokensListStartedRequest(curretPage, pageSize);
+    fetchTokensListStartedRequest();
   }, []);
 
+  useEffect(() => {
+    fetchData(currentPage);
+  }, [data]);
+
   const loadRows = () => {
-    if (isLoading) return I18n.t('containers.tokensPageList.loading');
-    if (isError) return isError;
-    if (data.length)
-      return data.map((item) => (
+    if (isLoading)
+      return (
+        <tr key={'Loading'}>
+          <td>{I18n.t('containers.tokensPageList.loading')}</td>
+        </tr>
+      );
+    if (isError)
+      return (
+        <tr key='error'>
+          <td>{isError}</td>
+        </tr>
+      );
+    if (tableRows.length)
+      return tableRows.map((item) => (
         <tr key={item.tokenId}>
           <td>
-            <Link to={`${TOKEN_BASE_PATH}/${item.tokenId}`}>{item.name}</Link>
+            <span>
+              <TokenAvatar token={item} />
+            </span>{' '}
+            <Link to={`${TOKEN_BASE_PATH}/${item.tokenId}`}>
+              {item.name || 'Unknown'}
+            </Link>
           </td>
           <td>
             <div>{item.symbol}</div>
@@ -70,18 +97,18 @@ const TokensListPage = (props: TokensListPageProps) => {
           </Card>
         </Col>
         <Col xs='12'>
-          {/* <Col xs='12'>
-        <Pagination
-          label={I18n.t('containers.tokensPageList.paginationRange', {
-            from: from ? from + 1 : 0,
-            total: totalCount,
-            to,
-          })}
-          currentPage={currentPage}
-          pagesCount={pagesCount}
-          handlePageClick={fetchData}
-        />
-      </Col> */}
+          <Col xs='12'>
+            <Pagination
+              label={I18n.t('containers.tokensPageList.paginationRange', {
+                from: from + 1,
+                total: totalCount,
+                to,
+              })}
+              currentPage={currentPage}
+              pagesCount={pagesCount}
+              handlePageClick={fetchData}
+            />
+          </Col>
         </Col>
       </Row>
     </div>
@@ -96,11 +123,7 @@ const mapStateToProps = ({ tokensListPage, app }) => ({
 });
 
 const mapDispatchToProps = {
-  fetchTokensListStartedRequest: (pageNumber, pageSize) =>
-    fetchTokensListStartedRequest({
-      pageNumber,
-      pageSize,
-    }),
+  fetchTokensListStartedRequest,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TokensListPage);

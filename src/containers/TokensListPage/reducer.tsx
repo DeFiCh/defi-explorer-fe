@@ -12,7 +12,7 @@ export const initialState = {
 };
 
 const configSlice = createSlice({
-  name: 'TokenPage',
+  name: 'TokensListPage',
   initialState,
   reducers: {
     fetchTokensListStartedRequest(state, action) {

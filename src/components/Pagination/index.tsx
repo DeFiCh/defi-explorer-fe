@@ -16,6 +16,7 @@ interface IPaginationComponentProps {
   handlePageClick: (index: number) => void;
   showNextOnly?: boolean;
   disableNext?: boolean;
+  className?: string;
 }
 
 const PaginationComponent: React.FunctionComponent<IPaginationComponentProps> = (
@@ -39,9 +40,14 @@ const PaginationComponent: React.FunctionComponent<IPaginationComponentProps> = 
     );
   };
 
-  const { currentPage, pagesCount, label } = props;
+  const {
+    currentPage,
+    pagesCount,
+    label,
+    className = 'd-flex justify-content-between align-items-center mt-3',
+  } = props;
   return (
-    <div className='d-flex justify-content-between align-items-center mt-3'>
+    <div className={className}>
       <div>{label}</div>
       <Pagination className={styles.pagination}>
         {!props.showNextOnly && (

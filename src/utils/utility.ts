@@ -1,6 +1,10 @@
 import moment from 'moment';
 import { DEFAULT_UNIT } from '../constants';
 import { unitConversion } from './unitConversion';
+import DefiIcon from '../assets/svg/defi-icon.svg';
+import BTCIcon from '../assets/svg/icon-coin-bitcoin-lapis.svg';
+import EthIcon from '../assets/svg/eth-icon.svg';
+import USDTIcon from '../assets/svg/usdt-icon.svg';
 
 export const setIntervalSynchronous = (func, delay) => {
   let intervalFunction;
@@ -95,4 +99,16 @@ export const getTimeFromNow = (time: Date | string | number) => {
     return moment(time * 1000).fromNow();
   }
   return moment(time).fromNow();
+};
+
+export const getIcon = (symbol: string | null) => {
+  if (symbol === 'BTC') {
+    return BTCIcon;
+  } else if (symbol === 'ETH') {
+    return EthIcon;
+  } else if (symbol === 'USDT') {
+    return USDTIcon;
+  } else {
+    return DefiIcon;
+  }
 };

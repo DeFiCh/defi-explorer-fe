@@ -1,25 +1,37 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import { NETWORK } from '../../constants';
 import {
   fetchTokensListStartedRequest,
   fetchTokensListFailureRequest,
   fetchTokensListSuccessRequest,
   fetchTokenPageStartedRequest,
-  fetchTokenPageFailureRequest,
   fetchTokenPageSuccessRequest,
+  fetchTokenPageFailureRequest,
 } from './reducer';
 import { handleGetToken, handleTokenList } from './services';
 
-function* fetchTokensListStarted(action) {
-  const { pageNumber, pageSize } = action.payload;
+function* fetchTokensListStarted() {
   try {
-    const queryParams = {
-      start: (pageNumber - 1) * pageSize,
-      limit: pageSize,
-      network: NETWORK,
-    };
-    const data = yield call(handleTokenList, queryParams);
-    yield put(fetchTokensListSuccessRequest(data));
+    let cloneTokenList: any[] = [];
+    let start = 0;
+    let including_start = true;
+    while (true) {
+      const queryParams = {
+        start,
+        limit: 500,
+        network: NETWORK,
+        including_start,
+      };
+      const data = yield call(handleTokenList, queryParams);
+      cloneTokenList = cloneTokenList.concat(data);
+      yield put(fetchTokensListSuccessRequest(cloneTokenList));
+      if (data.length === 0) {
+        break;
+      } else {
+        including_start = false;
+        start = cloneTokenList[cloneTokenList.length - 1].tokenId;
+      }
+    }
   } catch (err) {
     yield put(fetchTokensListFailureRequest(err.message));
   }
@@ -32,10 +44,11 @@ function* fetchTokenPageStarted(action) {
     network: NETWORK,
   };
   try {
-    const { data } = yield call(handleGetToken, query);
-    yield put(fetchTokensListSuccessRequest(data));
+    const data = yield call(handleGetToken, query);
+
+    yield put(fetchTokenPageSuccessRequest(data));
   } catch (err) {
-    yield put(fetchTokensListFailureRequest(err.message));
+    yield put(fetchTokenPageFailureRequest(err.message));
   }
 }
 
