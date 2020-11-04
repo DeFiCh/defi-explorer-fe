@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
-import { RouteComponentProps } from 'react-router-dom';
+import { NavLink, RouteComponentProps } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, Row, Col } from 'reactstrap';
 import KeyValueLi from '../../../../components/KeyValueLi';
 import { POOL_BASE_PATH } from '../../../../constants';
@@ -41,7 +41,7 @@ const TokenPage = (props: TokenPageProps) => {
       <>
         <div className='mt-4'>
           <Breadcrumb tag='nav' listTag='div'>
-            <BreadcrumbItem tag='a' href={POOL_BASE_PATH}>
+            <BreadcrumbItem tag={NavLink} to={POOL_BASE_PATH}>
               {I18n.t('containers.poolPairPage.poolPairListPageBreadCrumb')}
             </BreadcrumbItem>
             {` > `}
@@ -89,6 +89,43 @@ const TokenPage = (props: TokenPageProps) => {
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.totalLiquidity')}
                 value={`${data.totalLiquidity}`}
+              />
+            </Col>
+            <Col xs='12' md='4'>
+              <KeyValueLi
+                label={I18n.t('containers.poolPairPage.reserve', {
+                  symbol: data.tokenInfo.idTokenA.symbol,
+                })}
+                value={I18n.t('containers.poolPairPage.reserveData', {
+                  value: data.reserveA,
+                  symbol: data.tokenInfo.idTokenA.symbol,
+                })}
+              />
+            </Col>
+
+            <Col xs='12' md='4'>
+              <KeyValueLi
+                label={I18n.t('containers.poolPairPage.reserve', {
+                  symbol: data.tokenInfo.idTokenB.symbol,
+                })}
+                value={I18n.t('containers.poolPairPage.reserveData', {
+                  value: data.reserveB,
+                  symbol: data.tokenInfo.idTokenB.symbol,
+                })}
+              />
+            </Col>
+
+            <Col xs='12' md='8'>
+              <KeyValueLi
+                label={I18n.t('containers.poolPairPage.ownerAddress')}
+                value={`${data.ownerAddress}`}
+              />
+            </Col>
+
+            <Col xs='12' md='4'>
+              <KeyValueLi
+                label={I18n.t('containers.poolPairPage.tradeEnabled')}
+                value={`${data.tradeEnabled}`}
               />
             </Col>
           </Row>

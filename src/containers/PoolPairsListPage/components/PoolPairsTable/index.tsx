@@ -38,8 +38,6 @@ const PoolPairsTable = (props: PoolPairsTable) => {
   const totalCount = filteredData.length;
 
   const pagesCount = Math.ceil(totalCount / pageSize);
-  const to = totalCount - (currentPage - 1) * pageSize;
-  const from = Math.max(to - pageSize, 0);
 
   const fetchData = (pageNum) => {
     setCurrentPage(pageNum);
@@ -59,12 +57,6 @@ const PoolPairsTable = (props: PoolPairsTable) => {
   }, [data]);
 
   const loadRows = () => {
-    if (isLoading)
-      return (
-        <tr key={'Loading'}>
-          <td>{I18n.t('containers.poolPairsListPage.loading')}</td>
-        </tr>
-      );
     if (isError)
       return (
         <tr key='error'>
@@ -88,15 +80,26 @@ const PoolPairsTable = (props: PoolPairsTable) => {
           <td>
             <div>{parseFloat(item.commission) * 100}%</div>
           </td>
+          <td>
+            <div>{item.totalLiquidity}</div>
+          </td>
+          <td>
+            <div>{`${item.tradeEnabled}`.toUpperCase()}</div>
+          </td>
         </tr>
       ));
-    if (totalCount === 0) {
+    if (!isLoading && totalCount === 0) {
       return (
         <tr key='noDataPresent'>
           <td>{I18n.t('containers.poolPairsListPage.noDataPresent')}</td>
         </tr>
       );
     }
+    return (
+      <tr key={'Loading'}>
+        <td>{I18n.t('containers.poolPairsListPage.loading')}</td>
+      </tr>
+    );
   };
 
   return (
@@ -109,6 +112,10 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                 <tr>
                   <th>{I18n.t('containers.poolPairsListPage.name')}</th>
                   <th>{I18n.t('containers.poolPairsListPage.commission')}</th>
+                  <th>
+                    {I18n.t('containers.poolPairsListPage.totalLiquidity')}
+                  </th>
+                  <th>{I18n.t('containers.poolPairsListPage.tradeEnabled')}</th>
                 </tr>
               </thead>
               <tbody>{loadRows()}</tbody>
@@ -120,9 +127,8 @@ const PoolPairsTable = (props: PoolPairsTable) => {
         {!!tableRows.length && (
           <Pagination
             label={I18n.t('containers.poolPairsListPage.paginationRange', {
-              from: from + 1,
-              total: totalCount,
-              to,
+              to: currentPage,
+              total: pagesCount,
             })}
             currentPage={currentPage}
             pagesCount={pagesCount}

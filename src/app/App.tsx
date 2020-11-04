@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import FooterComponent from '../components/Footer';
+import { NETWORK } from '../constants';
 import NavbarComponent from '../containers/NavBar';
 import routes from '../routes';
 import './App.scss'; // INFO: do not move down, placed on purpose
@@ -20,7 +21,7 @@ const App: React.FunctionComponent<RouteComponentProps> = (
   return (
     <div id='app'>
       <Helmet>
-        <title>DeFi Blockchain Explorer</title>
+        <title>{`${NETWORK}`} - DeFi Blockchain Explorer</title>
       </Helmet>
       <main className='overflow-auto'>
         <NavbarComponent />

@@ -25,8 +25,6 @@ const TokensListPage = (props: TokensListPageProps) => {
   const totalCount = data.length;
 
   const pagesCount = Math.ceil(totalCount / pageSize);
-  const to = totalCount - (currentPage - 1) * pageSize;
-  const from = Math.max(to - pageSize, 0);
 
   const fetchData = (pageNum) => {
     setCurrentPage(pageNum);
@@ -43,12 +41,6 @@ const TokensListPage = (props: TokensListPageProps) => {
   }, [data]);
 
   const loadRows = () => {
-    if (isLoading)
-      return (
-        <tr key={'Loading'}>
-          <td>{I18n.t('containers.tokensPageList.loading')}</td>
-        </tr>
-      );
     if (isError)
       return (
         <tr key='error'>
@@ -72,8 +64,26 @@ const TokensListPage = (props: TokensListPageProps) => {
           <td>
             <div>{item.category}</div>
           </td>
+          <td>
+            <div>{item.mintable ? `${item.minted} ${item.symbol}` : '-'}</div>
+          </td>
+          <td>
+            <div>{`${item.tradeable}`.toUpperCase()}</div>
+          </td>
         </tr>
       ));
+    if (!isLoading && totalCount === 0) {
+      return (
+        <tr key='noDataPresent'>
+          <td>{I18n.t('containers.tokensPageList.noDataPresent')}</td>
+        </tr>
+      );
+    }
+    return (
+      <tr key={'Loading'}>
+        <td>{I18n.t('containers.tokensPageList.loading')}</td>
+      </tr>
+    );
   };
 
   return (
@@ -89,6 +99,8 @@ const TokensListPage = (props: TokensListPageProps) => {
                     <th>{I18n.t('containers.tokensPageList.name')}</th>
                     <th>{I18n.t('containers.tokensPageList.symbol')}</th>
                     <th>{I18n.t('containers.tokensPageList.category')}</th>
+                    <th>{I18n.t('containers.tokensPageList.minted')}</th>
+                    <th>{I18n.t('containers.tokensPageList.tradeable')}</th>
                   </tr>
                 </thead>
                 <tbody>{loadRows()}</tbody>
@@ -100,9 +112,8 @@ const TokensListPage = (props: TokensListPageProps) => {
           {!!tableRows.length && (
             <Pagination
               label={I18n.t('containers.tokensPageList.paginationRange', {
-                from: from + 1,
-                total: totalCount,
-                to,
+                to: currentPage,
+                total: pagesCount,
               })}
               currentPage={currentPage}
               pagesCount={pagesCount}
@@ -115,12 +126,18 @@ const TokensListPage = (props: TokensListPageProps) => {
   );
 };
 
-const mapStateToProps = ({ tokensListPage, app }) => ({
-  isLoading: tokensListPage.isLoading,
-  data: tokensListPage.data,
-  isError: tokensListPage.isError,
-  unit: app.unit,
-});
+const mapStateToProps = (state) => {
+  const {
+    tokensListPage: { isLoading, data, isError },
+    app: { unit },
+  } = state;
+  return {
+    isLoading,
+    data,
+    isError,
+    unit,
+  };
+};
 
 const mapDispatchToProps = {
   fetchTokensListStartedRequest,

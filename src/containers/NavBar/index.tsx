@@ -11,8 +11,8 @@ import {
 import {
   TOKEN_BASE_PATH,
   POOL_BASE_PATH,
-  BLOCK_PAGE_BASE_PATH,
-  TRANSACTION_BASE_PATH,
+  // BLOCK_PAGE_BASE_PATH,
+  // TRANSACTION_BASE_PATH,
 } from '../../constants';
 import { NavLink as RRNavLink, withRouter } from 'react-router-dom';
 import { I18n } from 'react-redux-i18n';

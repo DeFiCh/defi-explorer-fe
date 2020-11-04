@@ -71,6 +71,7 @@
     "react-responsive": "^8.1.0",
     "react-router-dom": "^5.1.2",
     "react-simple-maps": "^2.0.0",
+    "react-user-avatar": "^1.10.0",
     "reactstrap": "^8.4.1",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.1.3",

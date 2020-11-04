@@ -108,7 +108,6 @@ export const getIcon = (symbol: string | null) => {
     return EthIcon;
   } else if (symbol === 'USDT') {
     return USDTIcon;
-  } else {
-    return DefiIcon;
   }
+  return null;
 };

@@ -3,14 +3,11 @@ import ApiRequest from '../../utils/apiRequest';
 import { ITokenPoolPairListParams } from '../../utils/interfaces';
 
 export const getCategory = (item) => {
-  let category = '';
+  let category = 'DCT';
   if (item.isDAT) {
-    category = category + 'DAT' + ' ';
+    category = 'DAT';
   }
-  if (item.isLPS) {
-    category = category + 'LPS';
-  }
-  return category.trim();
+  return category;
 };
 
 export const handleTokenList = async (query: ITokenPoolPairListParams) => {
@@ -20,17 +17,16 @@ export const handleTokenList = async (query: ITokenPoolPairListParams) => {
     baseURL: QUICK_STATS_BASE_ENDPOINT,
     params: query,
   });
-  return Object.keys(data)
-    .map((item) => {
-      const category = getCategory(data[item]);
-      return {
-        tokenId: item,
-        ...data[item],
-        name: data[item].name || data[item].symbol,
-        category,
-      };
-    })
-    .filter((item) => item.tradeable);
+  return Object.keys(data).map((item) => {
+    const category = getCategory(data[item]);
+    return {
+      tokenId: item,
+      ...data[item],
+      name: data[item].name || data[item].symbol,
+      category,
+    };
+  });
+  // .filter((item) => item.tradeable); // TODO: Disable filtering of data based on tradeable
 };
 
 export const handleGetToken = async (query: {

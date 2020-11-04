@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
-import { RouteComponentProps } from 'react-router-dom';
+import { NavLink, RouteComponentProps } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, Col, Row } from 'reactstrap';
 import KeyValueLi from '../../../../components/KeyValueLi';
 import { TOKEN_BASE_PATH } from '../../../../constants';
@@ -42,7 +42,7 @@ const TokenPage = (props: TokenPageProps) => {
       <>
         <div className='mt-4'>
           <Breadcrumb tag='nav' listTag='div'>
-            <BreadcrumbItem tag='a' href={TOKEN_BASE_PATH}>
+            <BreadcrumbItem tag={NavLink} to={TOKEN_BASE_PATH}>
               {I18n.t('containers.tokenPage.tokenListPageBreadCrumb')}
             </BreadcrumbItem>
             {` > `}
@@ -60,7 +60,7 @@ const TokenPage = (props: TokenPageProps) => {
           </h1>
           <Row>
             <Col xs='12'>
-              <Row>
+              {/* <Row>
                 <Col xs='12' md='4'>
                   <KeyValueLi
                     label={I18n.t('containers.tokenPage.name')}
@@ -89,6 +89,107 @@ const TokenPage = (props: TokenPageProps) => {
                   <KeyValueLi
                     label={I18n.t('containers.tokenPage.decimal')}
                     value={`${data.decimal}`}
+                  />
+                </Col>
+              </Row> */}
+              <Row>
+                <Col xs='12' md='4'>
+                  <KeyValueLi
+                    label={I18n.t('containers.tokenPage.name')}
+                    value={`${data.name}`}
+                  />
+                </Col>
+                <Col xs='12' md='4'>
+                  <KeyValueLi
+                    label={I18n.t('containers.tokenPage.symbol')}
+                    value={`${data.symbol}`}
+                  />
+                </Col>
+                <Col xs='12' md='4'>
+                  <KeyValueLi
+                    label={I18n.t('containers.tokenPage.tokenId')}
+                    value={`${data.tokenId}`}
+                  />
+                </Col>
+                <Col xs='12' md='4'>
+                  <KeyValueLi
+                    label={I18n.t('containers.tokenPage.category')}
+                    value={`${data.category}`}
+                  />
+                </Col>
+                <Col xs='12' md='4'>
+                  <KeyValueLi
+                    label={I18n.t('containers.tokenPage.decimal')}
+                    value={`${data.decimal}`}
+                  />
+                </Col>
+                <Col xs='12' md='4'>
+                  <KeyValueLi
+                    label={I18n.t('containers.tokenPage.limit')}
+                    value={`${data.limit}`}
+                  />
+                </Col>
+                <Col xs='12' md='4'>
+                  <KeyValueLi
+                    label={I18n.t('containers.tokenPage.mintable')}
+                    value={`${data.mintable}`}
+                  />
+                </Col>
+                <Col xs='12' md='4'>
+                  <KeyValueLi
+                    label={I18n.t('containers.tokenPage.tradeable')}
+                    value={`${data.tradeable}`}
+                  />
+                </Col>
+                <Col xs='12' md='4'>
+                  <KeyValueLi
+                    label={I18n.t('containers.tokenPage.isLPS')}
+                    value={`${data.isLPS}`}
+                  />
+                </Col>
+                <Col xs='12' md='4'>
+                  <KeyValueLi
+                    label={I18n.t('containers.tokenPage.finalized')}
+                    value={`${data.finalized}`}
+                  />
+                </Col>
+                <Col xs='12' md='4'>
+                  <KeyValueLi
+                    label={I18n.t('containers.tokenPage.minted')}
+                    value={`${data.minted}`}
+                  />
+                </Col>
+
+                <Col xs='12' md='4'>
+                  <KeyValueLi
+                    label={I18n.t('containers.tokenPage.creationHeight')}
+                    value={`${data.creationHeight}`}
+                  />
+                </Col>
+                <Col xs='12' md='4'>
+                  <KeyValueLi
+                    label={I18n.t('containers.tokenPage.destructionHeight')}
+                    value={`${data.destructionHeight}`}
+                  />
+                </Col>
+                <Col xs='12' md='8'>
+                  <KeyValueLi
+                    label={I18n.t('containers.tokenPage.collateralAddress')}
+                    value={`${data.collateralAddress}`}
+                  />
+                </Col>
+                <Col xs='12'>
+                  <KeyValueLi
+                    label={I18n.t('containers.tokenPage.creationTx')}
+                    value={`${data.creationTx}`}
+                    noEllipsis
+                  />
+                </Col>
+                <Col xs='12'>
+                  <KeyValueLi
+                    label={I18n.t('containers.tokenPage.destructionTx')}
+                    value={`${data.destructionTx}`}
+                    noEllipsis
                   />
                 </Col>
               </Row>

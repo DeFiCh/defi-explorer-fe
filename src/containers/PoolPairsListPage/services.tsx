@@ -9,12 +9,11 @@ export const handlePoolPairList = async (query: ITokenPoolPairListParams) => {
     baseURL: QUICK_STATS_BASE_ENDPOINT,
     params: query,
   });
-  return Object.keys(data)
-    .map((item) => ({
-      ...data[item],
-      poolPairId: item,
-    }))
-    .filter((item) => item.tradeEnabled);
+  return Object.keys(data).map((item) => ({
+    ...data[item],
+    poolPairId: item,
+  }));
+  // .filter((item) => item.tradeEnabled); //TODO: Disable filtering based on item.tradeEnabled
 };
 
 export const handleGetPoolPair = async (query: {

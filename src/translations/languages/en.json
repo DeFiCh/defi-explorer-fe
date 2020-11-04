@@ -166,20 +166,24 @@
       "paginationRange": "%{to} – %{from} of %{total}"
     },
     "tokensPageList": {
+      "noDataPresent": "No Tokens present",
       "loading": "Loading",
       "tokensPageListTitle": "Tokens",
       "name": "Name",
       "symbol": "Symbol",
       "category": "Category",
-      "paginationRange": "%{to} – %{from} of %{total}"
+      "minted": "Minted",
+      "tradeable": "Tradeable",
+      "paginationRange": "%{to} of %{total}"
     },
     "poolPairsListPage": {
       "loading": "Loading",
       "poolPairsListPageTitle": "Liquidity Pool Pairs",
       "name": "Name",
-      "totalLiquidity": "Liquidity",
       "commission": "Commission",
-      "paginationRange": "%{to} – %{from} of %{total}",
+      "totalLiquidity": "Liquidity",
+      "tradeEnabled": "Trade Enabled",
+      "paginationRange": "%{to} of %{total}",
       "noDataPresent": "No Pool Pair is present"
     },
     "tokenPage": {
@@ -189,6 +193,17 @@
       "tokenId": "Id",
       "category": "Category",
       "decimal": "Decimal",
+      "limit": "Limit",
+      "mintable": "Mintable",
+      "tradeable": "Tradeable",
+      "isLPS": "IsLPS",
+      "finalized": "Finalized",
+      "minted": "Minted",
+      "creationTx": "Creation Tx",
+      "creationHeight": "Creation Height",
+      "destructionTx": "Destruction Tx",
+      "destructionHeight": "Destruction Height",
+      "collateralAddress": "Collateral Address",
       "pairsHeading": "Pairs",
       "loading": "Loading"
     },
@@ -198,6 +213,10 @@
       "oneCurrencyLabel": "1 %{symbol}",
       "poolPairId": "Id",
       "totalLiquidity": "Total Liquidity",
+      "reserve": "Reserve of %{symbol}",
+      "reserveData": "%{value} %{symbol}",
+      "ownerAddress": "Owner Address",
+      "tradeEnabled": "Trade Enabled",
       "loading": "Loading"
     }
   },
