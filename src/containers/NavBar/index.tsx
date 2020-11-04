@@ -11,14 +11,16 @@ import {
 import {
   TOKEN_BASE_PATH,
   POOL_BASE_PATH,
-  BLOCK_PAGE_BASE_PATH,
-  TRANSACTION_BASE_PATH,
+  // BLOCK_PAGE_BASE_PATH,
+  // TRANSACTION_BASE_PATH,
 } from '../../constants';
 import { NavLink as RRNavLink, withRouter } from 'react-router-dom';
 import { I18n } from 'react-redux-i18n';
 import styles from './NavBar.module.scss';
 import Logo from '../../components/Logo';
+import MobileLogo from '../../assets/svg/defi-icon.svg';
 import NetworkCurrency from './component/NetworkCurrency';
+import { Desktop, Mobile } from '../../components/Responsive';
 
 const NavbarComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,8 +29,13 @@ const NavbarComponent = () => {
 
   return (
     <Navbar className={styles.navigation} light expand='md'>
-      <NavbarBrand className='mr-auto'>
-        <Logo className={styles.logo} />
+      <NavbarBrand tag={RRNavLink} to='/' className='mr-auto'>
+        <Desktop>
+          <Logo className={styles.logo} />
+        </Desktop>
+        <Mobile>
+          <img src={MobileLogo} className={styles.logo} />
+        </Mobile>
         {I18n.t('containers.navBar.explorerTitle')}
       </NavbarBrand>
       <NavbarToggler onClick={toggle} />
