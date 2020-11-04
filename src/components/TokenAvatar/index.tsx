@@ -9,13 +9,6 @@ interface TokenAvatar {
 const TokenAvatar = (props: TokenAvatar) => {
   const { token } = props;
   const data = getIcon(token.symbol);
-  return (
-    <UserAvatar
-      size={30}
-      name={token.symbol}
-      src={data}
-      className={styles.userAvatar}
-    />
-  );
+  return <img height='30px' width='30px' src={data} />;
 };
 export default TokenAvatar;

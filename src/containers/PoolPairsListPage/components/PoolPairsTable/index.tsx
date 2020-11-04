@@ -28,6 +28,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
   } = props;
   const [currentPage, setCurrentPage] = useState(1);
   const [tableRows, setTableRows] = useState<any[]>([]);
+
   let filteredData = data;
   if (!!tokenId) {
     filteredData = filteredData.filter(
@@ -38,6 +39,8 @@ const PoolPairsTable = (props: PoolPairsTable) => {
   const totalCount = filteredData.length;
 
   const pagesCount = Math.ceil(totalCount / pageSize);
+  const to = (currentPage - 1) * pageSize + 1;
+  const from = Math.min(totalCount, to + pageSize - 1);
 
   const fetchData = (pageNum) => {
     setCurrentPage(pageNum);
@@ -127,8 +130,9 @@ const PoolPairsTable = (props: PoolPairsTable) => {
         {!!tableRows.length && (
           <Pagination
             label={I18n.t('containers.poolPairsListPage.paginationRange', {
-              to: currentPage,
-              total: pagesCount,
+              from,
+              total: totalCount,
+              to,
             })}
             currentPage={currentPage}
             pagesCount={pagesCount}

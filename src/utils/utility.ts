@@ -109,5 +109,5 @@ export const getIcon = (symbol: string | null) => {
   } else if (symbol === 'USDT') {
     return USDTIcon;
   }
-  return null;
+  return DefiIcon;
 };

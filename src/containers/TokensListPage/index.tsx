@@ -23,8 +23,9 @@ const TokensListPage = (props: TokensListPageProps) => {
   const [tableRows, setTableRows] = useState<any[]>([]);
   const pageSize = TOKENS_LIST_PAGE_LIMIT;
   const totalCount = data.length;
-
   const pagesCount = Math.ceil(totalCount / pageSize);
+  const to = (currentPage - 1) * pageSize + 1;
+  const from = Math.min(totalCount, to + pageSize - 1);
 
   const fetchData = (pageNum) => {
     setCurrentPage(pageNum);
@@ -112,8 +113,9 @@ const TokensListPage = (props: TokensListPageProps) => {
           {!!tableRows.length && (
             <Pagination
               label={I18n.t('containers.tokensPageList.paginationRange', {
-                to: currentPage,
-                total: pagesCount,
+                to,
+                total: totalCount,
+                from,
               })}
               currentPage={currentPage}
               pagesCount={pagesCount}

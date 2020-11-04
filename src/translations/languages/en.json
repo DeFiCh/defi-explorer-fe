@@ -174,7 +174,7 @@
       "category": "Category",
       "minted": "Minted",
       "tradeable": "Tradeable",
-      "paginationRange": "%{to} of %{total}"
+      "paginationRange": "%{to} – %{from} of %{total}"
     },
     "poolPairsListPage": {
       "loading": "Loading",
@@ -183,7 +183,7 @@
       "commission": "Commission",
       "totalLiquidity": "Liquidity",
       "tradeEnabled": "Trade Enabled",
-      "paginationRange": "%{to} of %{total}",
+      "paginationRange": "%{to} – %{from} of %{total}",
       "noDataPresent": "No Pool Pair is present"
     },
     "tokenPage": {
