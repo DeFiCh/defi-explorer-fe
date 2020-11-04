@@ -19,9 +19,9 @@ import {
 } from '../../constants';
 
 const FooterComponent = () => (
-  <footer className={styles.footer}>
+  <div className={styles.footer}>
     <Row>
-      <Col xs='6' md='4'>
+      <Col xs='12' md='4'>
         <Row>
           <Col xs='12' className='mb-3'>
             <h5>
@@ -70,7 +70,7 @@ const FooterComponent = () => (
           </Col>
         </Row>
       </Col>
-      <Col xs='6' md='2'>
+      <Col xs='12' md='2' className={styles.footerDefichainLink}>
         <Row>
           <Col xs='12' className='mb-3'>
             <h5>
@@ -119,7 +119,7 @@ const FooterComponent = () => (
         {FOOTER_DEFICHAIN_STAMP}
       </Col>
     </Row>
-  </footer>
+  </div>
 );
 
 export default FooterComponent;

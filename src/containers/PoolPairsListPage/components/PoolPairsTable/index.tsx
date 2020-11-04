@@ -117,7 +117,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
         </Card>
       </Col>
       <Col xs='12'>
-        <Col xs='12'>
+        {!!tableRows.length && (
           <Pagination
             label={I18n.t('containers.poolPairsListPage.paginationRange', {
               from: from + 1,
@@ -128,7 +128,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
             pagesCount={pagesCount}
             handlePageClick={fetchData}
           />
-        </Col>
+        )}
       </Col>
     </Row>
   );

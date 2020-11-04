@@ -97,7 +97,7 @@ const TokensListPage = (props: TokensListPageProps) => {
           </Card>
         </Col>
         <Col xs='12'>
-          <Col xs='12'>
+          {!!tableRows.length && (
             <Pagination
               label={I18n.t('containers.tokensPageList.paginationRange', {
                 from: from + 1,
@@ -108,7 +108,7 @@ const TokensListPage = (props: TokensListPageProps) => {
               pagesCount={pagesCount}
               handlePageClick={fetchData}
             />
-          </Col>
+          )}
         </Col>
       </Row>
     </div>

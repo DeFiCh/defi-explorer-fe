@@ -39,7 +39,6 @@ export const handleGetToken = async (query: {
 }) => {
   const { id } = query;
   const apiRequest = new ApiRequest();
-
   const { data } = await apiRequest.get('/v1/gettoken', {
     baseURL: QUICK_STATS_BASE_ENDPOINT,
     params: query,
