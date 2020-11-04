@@ -7,11 +7,11 @@ import {
   DEFICHAIN_IO_SITE,
   GITHUB_LINK,
   WHITE_PAPER_LINK,
-  BLOCK_PAGE_BASE_PATH,
-  RICH_LIST_PATH,
-  TRANSACTION_BASE_PATH,
-  BROADCAST_MESSAGE_PATH,
-  VERIFY_MESSAGE_PATH,
+  // BLOCK_PAGE_BASE_PATH,
+  // RICH_LIST_PATH,
+  // TRANSACTION_BASE_PATH,
+  // BROADCAST_MESSAGE_PATH,
+  // VERIFY_MESSAGE_PATH,
   TOKEN_BASE_PATH,
   POOL_BASE_PATH,
   FOOTER_DEFICHAIN_STAMP,
@@ -28,7 +28,7 @@ const FooterComponent = () => (
               {I18n.t('components.footerComponent.explorer.explorerTitle')}
             </h5>
           </Col>
-          <Col xs='6'>
+          {/* <Col xs='6'>
             <Link to={BLOCK_PAGE_BASE_PATH}>
               {I18n.t('components.footerComponent.explorer.blocks')}
             </Link>
@@ -52,22 +52,22 @@ const FooterComponent = () => (
             <Link to={VERIFY_MESSAGE_PATH}>
               {I18n.t('components.footerComponent.explorer.verifyMessage')}
             </Link>
-          </Col>
-          <Col xs='6'>
+          </Col> */}
+          <Col xs='12'>
             <Link to={TOKEN_BASE_PATH}>
               {I18n.t('components.footerComponent.explorer.tokens')}
             </Link>
           </Col>
-          <Col xs='6'>
+          <Col xs='12'>
             <Link to={POOL_BASE_PATH}>
               {I18n.t('components.footerComponent.explorer.pool')}
             </Link>
           </Col>
-          <Col xs='6'>
+          {/* <Col xs='6'>
             <Link to={ANCHOR_PAGE}>
               {I18n.t('components.footerComponent.explorer.anchoredBlocks')}
             </Link>
-          </Col>
+          </Col> */}
         </Row>
       </Col>
       <Col xs='12' md='2' className={styles.footerDefichainLink}>
