@@ -172,10 +172,10 @@ const TokenPage = (props: TokenPageProps) => {
                     value={`${data.destructionHeight}`}
                   />
                 </Col>
-                <Col xs='12' md='8'>
+                <Col xs='12' md='4'>
                   <KeyValueLi
                     label={I18n.t('containers.tokenPage.collateralAddress')}
-                    value={`${data.collateralAddress}`}
+                    value={`${data.collateralAddress || '-'}`}
                   />
                 </Col>
                 <Col xs='12'>

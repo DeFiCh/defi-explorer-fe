@@ -115,7 +115,7 @@ const TokenPage = (props: TokenPageProps) => {
               />
             </Col>
 
-            <Col xs='12' md='8'>
+            <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.ownerAddress')}
                 value={`${data.ownerAddress}`}
