@@ -15,7 +15,7 @@ const configSlice = createSlice({
   name: 'TokensListPage',
   initialState,
   reducers: {
-    fetchTokensListStartedRequest(state, action) {
+    fetchTokensListStartedRequest(state) {
       state.isLoading = true;
       state.data = [];
       state.isError = '';

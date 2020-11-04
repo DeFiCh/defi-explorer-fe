@@ -70,7 +70,7 @@ export interface AppTx {
 export function toAppTx(tx: ApiTx): AppTx {
   return {
     txid: tx.txid,
-    fee: null, // calculated later, when coins are retrieved
+    fee: 0, // calculated later, when coins are retrieved
     blockheight: tx.blockHeight,
     confirmations: tx.confirmations,
     blockhash: tx.blockHash,

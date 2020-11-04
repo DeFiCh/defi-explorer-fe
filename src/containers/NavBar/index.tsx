@@ -27,9 +27,9 @@ const NavbarComponent = () => {
 
   return (
     <Navbar className={styles.navigation} light expand='md'>
-      <NavbarBrand href='/' className='mr-auto'>
+      <NavbarBrand className='mr-auto'>
         <Logo className={styles.logo} />
-        <span>{I18n.t('containers.navBar.explorerTitle')}</span>
+        {I18n.t('containers.navBar.explorerTitle')}
       </NavbarBrand>
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
