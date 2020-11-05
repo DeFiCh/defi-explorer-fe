@@ -1,6 +1,8 @@
+import capitalize from 'lodash/capitalize';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
+import { I18n } from 'react-redux-i18n';
 import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router-dom';
 import { Container } from 'reactstrap';
@@ -15,13 +17,14 @@ const App: React.FunctionComponent<RouteComponentProps> = (
   props: RouteComponentProps
 ) => {
   const { location } = props;
-  // useEffect(() => {
-  //   const webSocket = new Websocket();
-  // }, []);
   return (
     <div id='app'>
       <Helmet>
-        <title>{`${NETWORK}`} - DeFi Blockchain Explorer</title>
+        <title>
+          {I18n.t('app.title', {
+            network: capitalize(NETWORK),
+          })}
+        </title>
       </Helmet>
       <main className='overflow-auto'>
         <NavbarComponent />

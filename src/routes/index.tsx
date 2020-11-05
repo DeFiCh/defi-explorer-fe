@@ -13,7 +13,7 @@ import {
   TOKEN_BASE_PATH,
   TOKEN_PAGE_PATH,
   POOL_BASE_PATH,
-  PAIR_PAGE_PATH,
+  POOL_PAGE_PATH,
 } from '../constants';
 // import BlockPage from '../containers/BlockPage';
 // import AddressPage from '../containers/AddressPage';
@@ -29,8 +29,8 @@ import PoolPairsListPage from '../containers/PoolPairsListPage';
 
 const routes = (location) => (
   <Switch location={location}>
-    <Redirect from={INDEX_PATH} to={TOKEN_BASE_PATH} />
-    <Redirect exact from='/' to={TOKEN_BASE_PATH} />
+    <Redirect from={INDEX_PATH} to={POOL_BASE_PATH} />
+    <Redirect exact from='/' to={POOL_BASE_PATH} />
     {/* <Route exact path={HOME_PAGE_PATH} component={HomePageComponent} />
     <Route
       exact
@@ -53,7 +53,7 @@ const routes = (location) => (
     <Route exact path={RICH_LIST_PATH} component={RichListPage} /> */}
     <Route exact path={TOKEN_PAGE_PATH} component={TokenPage} />
     <Route exact path={TOKEN_BASE_PATH} component={TokensListPage} />
-    <Route exact path={PAIR_PAGE_PATH} component={PoolPairPage} />
+    <Route exact path={POOL_PAGE_PATH} component={PoolPairPage} />
     <Route exact path={POOL_BASE_PATH} component={PoolPairsListPage} />
   </Switch>
 );

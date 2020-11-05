@@ -1,3 +1,4 @@
+import capitalize from 'lodash/capitalize';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
@@ -69,7 +70,7 @@ const TokensListPage = (props: TokensListPageProps) => {
             <div>{item.mintable ? `${item.minted} ${item.symbol}` : '-'}</div>
           </td>
           <td>
-            <div>{`${item.tradeable}`.toUpperCase()}</div>
+            <div>{capitalize(item.tradeable)}</div>
           </td>
         </tr>
       ));

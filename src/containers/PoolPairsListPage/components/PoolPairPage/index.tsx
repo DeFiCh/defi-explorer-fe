@@ -1,4 +1,5 @@
 import { isEmpty } from 'lodash';
+import capitalize from 'lodash/capitalize';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
@@ -117,15 +118,14 @@ const TokenPage = (props: TokenPageProps) => {
 
             <Col xs='12' md='4'>
               <KeyValueLi
-                label={I18n.t('containers.poolPairPage.ownerAddress')}
-                value={`${data.ownerAddress}`}
+                label={I18n.t('containers.poolPairPage.tradeEnabled')}
+                value={capitalize(data.tradeEnabled)}
               />
             </Col>
-
-            <Col xs='12' md='4'>
+            <Col xs='12' md='8'>
               <KeyValueLi
-                label={I18n.t('containers.poolPairPage.tradeEnabled')}
-                value={`${data.tradeEnabled}`}
+                label={I18n.t('containers.poolPairPage.ownerAddress')}
+                value={`${data.ownerAddress}`}
               />
             </Col>
           </Row>

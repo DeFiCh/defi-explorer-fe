@@ -1,4 +1,5 @@
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import capitalize from 'lodash/capitalize';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
@@ -132,25 +133,25 @@ const TokenPage = (props: TokenPageProps) => {
                 <Col xs='12' md='4'>
                   <KeyValueLi
                     label={I18n.t('containers.tokenPage.mintable')}
-                    value={`${data.mintable}`}
+                    value={capitalize(data.mintable)}
                   />
                 </Col>
                 <Col xs='12' md='4'>
                   <KeyValueLi
                     label={I18n.t('containers.tokenPage.tradeable')}
-                    value={`${data.tradeable}`}
+                    value={capitalize(data.tradeable)}
                   />
                 </Col>
                 <Col xs='12' md='4'>
                   <KeyValueLi
                     label={I18n.t('containers.tokenPage.isLPS')}
-                    value={`${data.isLPS}`}
+                    value={capitalize(data.isLPS)}
                   />
                 </Col>
                 <Col xs='12' md='4'>
                   <KeyValueLi
                     label={I18n.t('containers.tokenPage.finalized')}
-                    value={`${data.finalized}`}
+                    value={capitalize(data.finalized)}
                   />
                 </Col>
                 <Col xs='12' md='4'>
@@ -172,12 +173,14 @@ const TokenPage = (props: TokenPageProps) => {
                     value={`${data.destructionHeight}`}
                   />
                 </Col>
-                <Col xs='12' md='4'>
-                  <KeyValueLi
-                    label={I18n.t('containers.tokenPage.collateralAddress')}
-                    value={`${data.collateralAddress || '-'}`}
-                  />
-                </Col>
+                {data.collateralAddress && (
+                  <Col xs='12' md='8'>
+                    <KeyValueLi
+                      label={I18n.t('containers.tokenPage.collateralAddress')}
+                      value={data.collateralAddress}
+                    />
+                  </Col>
+                )}
                 <Col xs='12'>
                   <KeyValueLi
                     label={I18n.t('containers.tokenPage.creationTx')}
