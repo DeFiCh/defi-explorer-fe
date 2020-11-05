@@ -1,5 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { NETWORK } from '../../constants';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
   fetchTokensListStartedRequest,
   fetchTokensListFailureRequest,
@@ -10,8 +9,15 @@ import {
 } from './reducer';
 import { handleGetToken, handleTokenList } from './services';
 
+function* getNetwork() {
+  const { network } = yield select((state) => state.app);
+  console.log(network);
+  return network;
+}
+
 function* fetchTokensListStarted() {
   try {
+    const network = yield call(getNetwork);
     let cloneTokenList: any[] = [];
     let start = 0;
     let including_start = true;
@@ -19,7 +25,7 @@ function* fetchTokensListStarted() {
       const queryParams = {
         start,
         limit: 500,
-        network: NETWORK,
+        network,
         including_start,
       };
       const data = yield call(handleTokenList, queryParams);
@@ -39,9 +45,10 @@ function* fetchTokensListStarted() {
 
 function* fetchTokenPageStarted(action) {
   const { tokenId } = action.payload;
+  const network = yield call(getNetwork);
   const query = {
     id: tokenId,
-    network: NETWORK,
+    network,
   };
   try {
     const data = yield call(handleGetToken, query);
