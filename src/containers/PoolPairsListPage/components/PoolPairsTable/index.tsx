@@ -86,9 +86,6 @@ const PoolPairsTable = (props: PoolPairsTable) => {
           <td>
             <div>{item.totalLiquidity}</div>
           </td>
-          <td>
-            <div>{`${item.tradeEnabled}`.toUpperCase()}</div>
-          </td>
         </tr>
       ));
     if (!isLoading && totalCount === 0) {
@@ -118,7 +115,6 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                   <th>
                     {I18n.t('containers.poolPairsListPage.totalLiquidity')}
                   </th>
-                  <th>{I18n.t('containers.poolPairsListPage.tradeEnabled')}</th>
                 </tr>
               </thead>
               <tbody>{loadRows()}</tbody>

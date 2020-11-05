@@ -52,13 +52,13 @@ const NavbarComponent = () => {
             </NavLink>
           </NavItem> */}
           <NavItem>
-            <NavLink to={TOKEN_BASE_PATH} tag={RRNavLink}>
-              {I18n.t('containers.navBar.tokens')}
+            <NavLink to={POOL_BASE_PATH} tag={RRNavLink}>
+              {I18n.t('containers.navBar.pool')}
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink to={POOL_BASE_PATH} tag={RRNavLink}>
-              {I18n.t('containers.navBar.pool')}
+            <NavLink to={TOKEN_BASE_PATH} tag={RRNavLink}>
+              {I18n.t('containers.navBar.tokens')}
             </NavLink>
           </NavItem>
         </Nav>

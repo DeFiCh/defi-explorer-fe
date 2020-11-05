@@ -1,4 +1,7 @@
 {
+  "app": {
+    "title": "DeFiChain Liquidity Dashboard - %{network}"
+  },
   "components": {
     "keyValueLi": {
       "copied": "Copied!"
@@ -196,7 +199,7 @@
       "limit": "Limit",
       "mintable": "Mintable",
       "tradeable": "Tradeable",
-      "isLPS": "IsLPS",
+      "isLPS": "Is LPS",
       "finalized": "Finalized",
       "minted": "Minted",
       "creationTx": "Creation Tx",
