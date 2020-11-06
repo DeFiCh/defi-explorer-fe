@@ -4,11 +4,15 @@ import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Row, Col, Card, Table } from 'reactstrap';
-import { TOKENS_LIST_PAGE_LIMIT, TOKEN_BASE_PATH } from '../../constants';
+import {
+  TOKENS_LIST_PAGE_LIMIT,
+  TOKEN_LIST_PAGE_URL_NAME,
+} from '../../constants';
 import { fetchTokensListStartedRequest } from './reducer';
 import TokenAvatar from '../../components/TokenAvatar';
 import Pagination from '../../components/Pagination';
 import styles from './TokensListPage.module.scss';
+import { setRoute } from '../../utils/utility';
 
 interface TokensListPageProps extends RouteComponentProps {
   fetchTokensListStartedRequest: () => void;
@@ -56,7 +60,7 @@ const TokensListPage = (props: TokensListPageProps) => {
             <span>
               <TokenAvatar token={item} />
             </span>{' '}
-            <Link to={`${TOKEN_BASE_PATH}/${item.tokenId}`}>
+            <Link to={setRoute(`${TOKEN_LIST_PAGE_URL_NAME}/${item.tokenId}`)}>
               {item.name || 'Unknown'}
             </Link>
           </td>

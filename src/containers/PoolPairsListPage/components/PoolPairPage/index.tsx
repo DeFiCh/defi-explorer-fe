@@ -6,9 +6,10 @@ import { I18n } from 'react-redux-i18n';
 import { NavLink, RouteComponentProps } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, Row, Col } from 'reactstrap';
 import KeyValueLi from '../../../../components/KeyValueLi';
-import { POOL_BASE_PATH } from '../../../../constants';
+import { POOL_LIST_PAGE_URL_NAME } from '../../../../constants';
 import TokenAvatar from '../../../../components/TokenAvatar';
 import { fetchPoolPairPageStartedRequest } from '../../reducer';
+import { setRoute } from '../../../../utils/utility';
 
 interface RouteInfo {
   poolPairId: string;
@@ -42,7 +43,10 @@ const TokenPage = (props: TokenPageProps) => {
       <>
         <div className='mt-4'>
           <Breadcrumb tag='nav' listTag='div'>
-            <BreadcrumbItem tag={NavLink} to={POOL_BASE_PATH}>
+            <BreadcrumbItem
+              tag={NavLink}
+              to={setRoute(POOL_LIST_PAGE_URL_NAME)}
+            >
               {I18n.t('containers.poolPairPage.poolPairListPageBreadCrumb')}
             </BreadcrumbItem>
             {` > `}

@@ -9,27 +9,41 @@ import {
   Collapse,
 } from 'reactstrap';
 import {
-  TOKEN_BASE_PATH,
-  POOL_BASE_PATH,
+  TOKEN_LIST_PAGE_URL_NAME,
+  POOL_LIST_PAGE_URL_NAME,
   // BLOCK_PAGE_BASE_PATH,
   // TRANSACTION_BASE_PATH,
 } from '../../constants';
-import { NavLink as RRNavLink, withRouter } from 'react-router-dom';
+import {
+  NavLink as RRNavLink,
+  RouteComponentProps,
+  withRouter,
+} from 'react-router-dom';
 import { I18n } from 'react-redux-i18n';
 import styles from './NavBar.module.scss';
 import Logo from '../../components/Logo';
 import MobileLogo from '../../assets/svg/defi-icon.svg';
 import NetworkCurrency from './component/NetworkCurrency';
 import { Desktop, Mobile } from '../../components/Responsive';
+import { connect } from 'react-redux';
+import { setRoute } from '../../utils/utility';
 
-const NavbarComponent = () => {
+interface NavbarComponentProps extends RouteComponentProps {
+  network: string;
+}
+
+const NavbarComponent = (props: NavbarComponentProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
 
   return (
     <Navbar className={styles.navigation} light expand='md'>
-      <NavbarBrand tag={RRNavLink} to='/' className='mr-auto'>
+      <NavbarBrand
+        tag={RRNavLink}
+        to={`/DFI/${props.network}/pool`}
+        className='mr-auto'
+      >
         <Desktop>
           <Logo className={styles.logo} />
         </Desktop>
@@ -52,20 +66,28 @@ const NavbarComponent = () => {
             </NavLink>
           </NavItem> */}
           <NavItem>
-            <NavLink to={POOL_BASE_PATH} tag={RRNavLink}>
+            <NavLink to={setRoute(POOL_LIST_PAGE_URL_NAME)} tag={RRNavLink}>
               {I18n.t('containers.navBar.pool')}
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink to={TOKEN_BASE_PATH} tag={RRNavLink}>
+            <NavLink to={setRoute(TOKEN_LIST_PAGE_URL_NAME)} tag={RRNavLink}>
               {I18n.t('containers.navBar.tokens')}
             </NavLink>
           </NavItem>
         </Nav>
-        <NetworkCurrency />
+        <NetworkCurrency {...props} />
       </Collapse>
     </Navbar>
   );
 };
 
-export default withRouter(NavbarComponent);
+const mapStateToProps = ({ app }) => ({
+  network: app.network,
+});
+
+const mapDispatchToProps = {};
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(NavbarComponent)
+);

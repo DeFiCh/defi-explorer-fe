@@ -5,17 +5,17 @@ import route from '../index';
 let pathMap = {};
 
 describe('Routing', () => {
-  beforeAll(() => {
-    const component = shallow(
-      <Router>
-        {route({
-          pathname: '/',
-          search: '',
-          hash: '',
-          state: undefined,
-        })}
-      </Router>
-    );
-    pathMap = component.find(Route).map((item) => item.props());
-  });
+  // beforeAll(() => {
+  //   const component = shallow(
+  //     <Router>
+  //       {route({
+  //         pathname: '/',
+  //         search: '',
+  //         hash: '',
+  //         state: undefined,
+  //       })}
+  //     </Router>
+  //   );
+  //   pathMap = component.find(Route).map((item) => item.props());
+  // });
 });

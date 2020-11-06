@@ -1,5 +1,5 @@
 import createSagaMiddleware from 'redux-saga';
-import { all, fork } from 'redux-saga/effects';
+import { all, fork, put } from 'redux-saga/effects';
 import websocketSaga from '../containers/Websocket/saga';
 import homePageSaga from '../containers/Home/saga';
 import blockPageSaga from '../containers/BlockPage/saga';
@@ -10,9 +10,24 @@ import transactionsListPageSaga from '../containers/TransactionsListPage/saga';
 import richListPageSaga from '../containers/RichListPage/saga';
 import tokensListPageSaga from '../containers/TokensListPage/saga';
 import poolPairsListPage from '../containers/PoolPairsListPage/saga';
+import { changeNetwork } from '../containers/App/reducer';
+
+function* appStarting() {
+  const NetworkName = window.location.pathname
+    .split('/')
+    .filter((item) => !!item)[1];
+  const networkNameLowercase = NetworkName ? NetworkName.toLowerCase() : '';
+  if (
+    networkNameLowercase === 'mainnet' ||
+    networkNameLowercase === 'testnet'
+  ) {
+    yield put(changeNetwork(networkNameLowercase));
+  }
+}
 
 function* rootSaga() {
   yield all([
+    appStarting(),
     fork(websocketSaga),
     fork(homePageSaga),
     fork(blockPageSaga),

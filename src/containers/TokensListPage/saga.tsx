@@ -11,7 +11,6 @@ import { handleGetToken, handleTokenList } from './services';
 
 function* getNetwork() {
   const { network } = yield select((state) => state.app);
-  console.log(network);
   return network;
 }
 
