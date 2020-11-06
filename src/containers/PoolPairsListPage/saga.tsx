@@ -9,7 +9,14 @@ import {
   fetchPoolPairPageSuccessRequest,
   fetchPoolPairPageFailureRequest,
 } from './reducer';
-import { handleGetPoolPair, handlePoolPairList } from './services';
+import {
+  fetchCoinGeckoCoinsList,
+  handleGetPoolPair,
+  handlePoolPairList,
+} from './services';
+import uniqBy from 'lodash/uniqBy';
+import { getCoinGeckoIdwithSymbol } from '../../utils/utility';
+import { BigNumber } from 'bignumber.js';
 
 function* fetchPoolPairsListStarted() {
   try {
@@ -28,7 +35,7 @@ function* fetchPoolPairsListStarted() {
         data.map((item) => call(fetchPoolPairData, item))
       );
       clonePoolPairsList = clonePoolPairsList.concat(updatedData);
-      yield put(fetchPoolPairsListSuccessRequest(clonePoolPairsList));
+
       if (data.length === 0) {
         break;
       } else {
@@ -36,6 +43,11 @@ function* fetchPoolPairsListStarted() {
         start = clonePoolPairsList[clonePoolPairsList.length - 1].poolPairId;
       }
     }
+    const updatedClonePoolPairsList = yield call(
+      fetchTokenPrice,
+      clonePoolPairsList
+    );
+    yield put(fetchPoolPairsListSuccessRequest(updatedClonePoolPairsList));
   } catch (err) {
     yield put(fetchPoolPairsListFailureRequest(err.message));
   }
@@ -50,7 +62,8 @@ function* fetchPoolPairPageStarted(action) {
   try {
     const data = yield call(handleGetPoolPair, query);
     const updatedData = yield call(fetchPoolPairData, data);
-    yield put(fetchPoolPairPageSuccessRequest(updatedData));
+    const lpPairWithTokenPrice = yield call(fetchTokenPrice, [updatedData]);
+    yield put(fetchPoolPairPageSuccessRequest(lpPairWithTokenPrice[0]));
   } catch (err) {
     yield put(fetchPoolPairPageFailureRequest(err.message));
   }
@@ -62,7 +75,6 @@ function* fetchPoolPairData(item) {
     id: idTokenA,
     network: NETWORK,
   };
-
   const queryParamIdTokenB = {
     id: idTokenB,
     network: NETWORK,
@@ -74,6 +86,51 @@ function* fetchPoolPairData(item) {
     ...item,
     tokenInfo: { idTokenA: dataIdTokenA, idTokenB: dataIdTokenB },
   };
+}
+
+function* fetchTokenPrice(lpPairList: any[]) {
+  const tokenSymbol: any[] = [];
+
+  lpPairList.forEach((item) => {
+    const {
+      tokenInfo: {
+        idTokenA: { symbol: idTokenASymbol },
+        idTokenB: { symbol: idTokenBSymbol },
+      },
+      idTokenA,
+      idTokenB,
+    } = item;
+    tokenSymbol.push({ symbol: idTokenASymbol, tokenId: idTokenA });
+    tokenSymbol.push({ symbol: idTokenBSymbol, tokenId: idTokenB });
+  });
+  const list: any[] = [];
+  uniqBy(tokenSymbol, 'symbol').forEach((item) => {
+    const value = getCoinGeckoIdwithSymbol(item.symbol);
+    if (value) {
+      list.push({
+        label: item.tokenId,
+        value,
+      });
+    }
+  });
+  const coinPrice: any[] = yield call(fetchCoinGeckoCoinsList, list);
+  const coinPriceObj = {};
+  coinPrice.forEach((item) => {
+    coinPriceObj[item.label] = item.value;
+  });
+
+  return lpPairList.map((item) => {
+    const { reserveA, reserveB, idTokenA, idTokenB } = item;
+    return {
+      ...item,
+      liquidityReserveIdTokenA: new BigNumber(reserveA)
+        .times(coinPriceObj[idTokenA])
+        .toNumber(),
+      liquidityReserveIdTokenB: new BigNumber(reserveB)
+        .times(coinPriceObj[idTokenB])
+        .toNumber(),
+    };
+  });
 }
 
 function* mySaga() {

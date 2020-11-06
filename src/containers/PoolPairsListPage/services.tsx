@@ -1,4 +1,8 @@
-import { QUICK_STATS_BASE_ENDPOINT } from '../../constants';
+import {
+  COIN_GECKO_BASE_ENDPOINT,
+  QUICK_STATS_BASE_ENDPOINT,
+  VS_CURRENCIES,
+} from '../../constants';
 import ApiRequest from '../../utils/apiRequest';
 import { ITokenPoolPairListParams } from '../../utils/interfaces';
 
@@ -30,4 +34,25 @@ export const handleGetPoolPair = async (query: {
     ...data[id],
     poolPairId: id,
   };
+};
+
+export const fetchCoinGeckoPrice = async (
+  _: { label: string; value: string },
+  vs_currencies: string = VS_CURRENCIES
+) => {
+  const { label, value: ids } = _;
+  const apiRequest = new ApiRequest();
+  const { data } = await apiRequest.get('simple/price', {
+    baseURL: COIN_GECKO_BASE_ENDPOINT,
+    params: {
+      ids,
+      vs_currencies,
+    },
+  });
+
+  return { value: data[ids][vs_currencies], label };
+};
+
+export const fetchCoinGeckoCoinsList = async (list: any[]) => {
+  return Promise.all(list.map((item) => fetchCoinGeckoPrice(item)));
 };
