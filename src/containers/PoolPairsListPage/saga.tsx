@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest } from 'redux-saga/effects';
+import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 import { NETWORK } from '../../constants';
 import { handleGetToken } from '../TokensListPage/services';
 import {
@@ -18,8 +18,14 @@ import uniqBy from 'lodash/uniqBy';
 import { getCoinGeckoIdwithSymbol } from '../../utils/utility';
 import { BigNumber } from 'bignumber.js';
 
+function* getNetwork() {
+  const { network } = yield select((state) => state.app);
+  return network;
+}
+
 function* fetchPoolPairsListStarted() {
   try {
+    const network = yield call(getNetwork);
     let clonePoolPairsList: any[] = [];
     let start = 0;
     let including_start = true;
@@ -27,7 +33,7 @@ function* fetchPoolPairsListStarted() {
       const queryParams = {
         start,
         limit: 500,
-        network: NETWORK,
+        network,
         including_start,
       };
       const data = yield call(handlePoolPairList, queryParams);
@@ -54,10 +60,12 @@ function* fetchPoolPairsListStarted() {
 }
 
 function* fetchPoolPairPageStarted(action) {
+  const network = yield call(getNetwork);
+
   const { poolPairId } = action.payload;
   const query = {
     id: poolPairId,
-    network: NETWORK,
+    network,
   };
   try {
     const data = yield call(handleGetPoolPair, query);

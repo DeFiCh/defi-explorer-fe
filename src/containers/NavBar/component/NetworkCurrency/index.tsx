@@ -1,11 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
-  Button,
   UncontrolledPopover,
-  PopoverHeader,
   PopoverBody,
-  DropdownItem,
   Input,
   Row,
   Col,
@@ -18,8 +15,9 @@ import { MdKeyboardArrowDown } from 'react-icons/md';
 import { I18n } from 'react-redux-i18n';
 import { UNIT_OPTIONS, NETWORK_OPTIONS } from '../../../../constants';
 import styles from '../../NavBar.module.scss';
+import { Redirect, RouteComponentProps } from 'react-router-dom';
 
-interface NetworkCurrency {
+interface NetworkCurrency extends RouteComponentProps {
   network: string;
   unit: string;
   changeUnit: (unit: string) => void;
@@ -49,7 +47,16 @@ const LoadRadio = ({ label, options, name, value, onClickFunc }) => (
 );
 
 const NetworkCurrency = (props: NetworkCurrency) => {
-  const { network, unit, changeUnit } = props;
+  const { network, unit, changeUnit, history } = props;
+
+  const [changeNetwork, setChangeNetwork] = useState('');
+
+  // if (changeNetwork) return ;
+  if (changeNetwork) {
+    history.go(0);
+    return <Redirect to={`/DFI/${changeNetwork}/`} />;
+  }
+
   return (
     <div className='text-center'>
       <div id='PopoverClick' color='link' className='cursor-pointer'>
@@ -67,13 +74,13 @@ const NetworkCurrency = (props: NetworkCurrency) => {
       >
         <PopoverBody>
           <Form>
-            {/* <LoadRadio
+            <LoadRadio
               options={NETWORK_OPTIONS}
-              onClickFunc={(data) => console.log(data)}
+              onClickFunc={(v) => setChangeNetwork(v.toLowerCase())}
               name='Network'
               value={network}
               label={I18n.t('containers.navBar.menuDropdown.network')}
-            /> */}
+            />
             <LoadRadio
               options={UNIT_OPTIONS}
               onClickFunc={changeUnit}

@@ -14,11 +14,17 @@ const configSlice = createSlice({
     changeUnit(state, action) {
       state.unit = action.payload;
     },
+    changeNetwork(state, action) {
+      state.network = action.payload;
+    },
+    changeChain(state, action) {
+      state.chain = action.payload;
+    },
   },
 });
 
 const { actions, reducer } = configSlice;
 
-export const { changeUnit } = actions;
+export const { changeUnit, changeNetwork, changeChain } = actions;
 
 export default reducer;

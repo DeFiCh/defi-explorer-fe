@@ -1,10 +1,15 @@
 import moment from 'moment';
-import { DEFAULT_UNIT } from '../constants';
+import {
+  DEFAULT_UNIT,
+  MAINNET_BASE_PATH,
+  TESTNET_BASE_PATH,
+} from '../constants';
 import { unitConversion } from './unitConversion';
 import DefiIcon from '../assets/svg/defi-icon.svg';
 import BTCIcon from '../assets/svg/icon-coin-bitcoin-lapis.svg';
 import EthIcon from '../assets/svg/eth-icon.svg';
 import USDTIcon from '../assets/svg/usdt-icon.svg';
+import store from '../app/rootStore';
 
 export const setIntervalSynchronous = (func, delay) => {
   let intervalFunction;
@@ -111,6 +116,16 @@ export const getIcon = (symbol: string | null) => {
   }
   return DefiIcon;
 };
+
+export const setRoute = (route) => {
+  const {
+    app: { network },
+  } = store.getState();
+  if (network === 'mainnet') {
+    return `${MAINNET_BASE_PATH}/${route}`;
+  }
+  return `${TESTNET_BASE_PATH}/${route}`;
+}
 
 export const getCoinGeckoIdwithSymbol = (symbol) => {
   if (symbol === 'BTC') {

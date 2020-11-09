@@ -12,11 +12,12 @@ import {
   // TRANSACTION_BASE_PATH,
   // BROADCAST_MESSAGE_PATH,
   // VERIFY_MESSAGE_PATH,
-  TOKEN_BASE_PATH,
-  POOL_BASE_PATH,
+  POOL_LIST_PAGE_URL_NAME,
+  TOKEN_LIST_PAGE_URL_NAME,
   FOOTER_DEFICHAIN_STAMP,
   ANCHOR_PAGE,
 } from '../../constants';
+import { setRoute } from '../../utils/utility';
 
 const FooterComponent = () => (
   <div className={styles.footer}>
@@ -54,12 +55,12 @@ const FooterComponent = () => (
             </Link>
           </Col> */}
           <Col xs='12'>
-            <Link to={TOKEN_BASE_PATH}>
+            <Link to={setRoute(TOKEN_LIST_PAGE_URL_NAME)}>
               {I18n.t('components.footerComponent.explorer.tokens')}
             </Link>
           </Col>
           <Col xs='12'>
-            <Link to={POOL_BASE_PATH}>
+            <Link to={setRoute(POOL_LIST_PAGE_URL_NAME)}>
               {I18n.t('components.footerComponent.explorer.pool')}
             </Link>
           </Col>

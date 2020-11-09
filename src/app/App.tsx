@@ -7,29 +7,31 @@ import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import FooterComponent from '../components/Footer';
-import { NETWORK } from '../constants';
 import NavbarComponent from '../containers/NavBar';
-import routes from '../routes';
+import BaseRoute from '../routes';
 import './App.scss'; // INFO: do not move down, placed on purpose
 // import Websocket from '../utils/webSocket';
 
-const App: React.FunctionComponent<RouteComponentProps> = (
-  props: RouteComponentProps
-) => {
-  const { location } = props;
+interface AppProps extends RouteComponentProps {
+  network: string;
+}
+
+const App: React.FunctionComponent<AppProps> = (props: AppProps) => {
+  const { network, location } = props;
+
   return (
     <div id='app'>
       <Helmet>
         <title>
           {I18n.t('app.title', {
-            network: capitalize(NETWORK),
+            network: capitalize(network),
           })}
         </title>
       </Helmet>
       <main className='overflow-auto'>
         <NavbarComponent />
         <Container fluid className='mt-5'>
-          {routes(location)}
+          {BaseRoute(location)}
           <FooterComponent />
         </Container>
       </main>
@@ -37,7 +39,9 @@ const App: React.FunctionComponent<RouteComponentProps> = (
   );
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ app }) => ({
+  network: app.network,
+});
 
 const mapDispatchToProps = {};
 
