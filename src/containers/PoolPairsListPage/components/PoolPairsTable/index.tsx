@@ -67,13 +67,15 @@ const PoolPairsTable = (props: PoolPairsTable) => {
   }, [data]);
 
   const sorter = (fieldName) => {
-    const newCloneTableData = cloneDeep(tableData);
-    const flip = sortedField !== fieldName;
-    setTableData(newCloneTableData.sort(tableSorter(flip, fieldName)));
-    if (flip) {
-      setSortedField(fieldName);
-    } else {
-      setSortedField('');
+    if (tableData.length) {
+      const newCloneTableData = cloneDeep(tableData);
+      const flip = sortedField !== fieldName;
+      setTableData(newCloneTableData.sort(tableSorter(flip, fieldName)));
+      if (flip) {
+        setSortedField(fieldName);
+      } else {
+        setSortedField('');
+      }
     }
   };
 
@@ -151,7 +153,6 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                   <th>
                     <Button
                       color='link'
-                      disabled={!tableData.length}
                       className='d-flex'
                       onClick={() => sorter('commission')}
                     >
@@ -162,7 +163,6 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                   <th>
                     <Button
                       color='link'
-                      disabled={!tableData.length}
                       className='d-flex'
                       onClick={() => sorter('totalLiquidity')}
                     >
@@ -173,7 +173,6 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                   <th>
                     <Button
                       color='link'
-                      disabled={!tableData.length}
                       className='d-flex'
                       onClick={() => sorter('apy')}
                     >
