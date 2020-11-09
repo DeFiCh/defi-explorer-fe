@@ -53,3 +53,16 @@ export const fetchCoinGeckoCoinsList = async (list: any[]) => {
   });
   return result;
 };
+
+export const fetchGetGov = async (queryParams: {
+  name: string;
+  network: string;
+}) => {
+  const { name } = queryParams;
+  const apiRequest = new ApiRequest();
+  const { data } = await apiRequest.get('/v1/getgov', {
+    baseURL: QUICK_STATS_BASE_ENDPOINT,
+    params: queryParams,
+  });
+  return data[name];
+};

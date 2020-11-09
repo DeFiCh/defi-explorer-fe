@@ -1,5 +1,5 @@
 export const QUICK_STATS_BASE_ENDPOINT =
-  process.env.QUICK_STATS_API || 'http://localhost';
+  process.env.QUICK_STATS_API || 'http://localhost:8000';
 export const COIN_GECKO_BASE_ENDPOINT = 'https://api.coingecko.com/api/v3/';
 export const QUICK_STATS_ENDPOINT = '/v1/stats';
 export const GET_BLOCK = 'block';

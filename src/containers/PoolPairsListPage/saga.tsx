@@ -1,5 +1,5 @@
 import { all, call, put, select, takeLatest } from 'redux-saga/effects';
-import { NETWORK } from '../../constants';
+import { NETWORK, LP_DAILY_DFI_REWARD } from '../../constants';
 import { handleGetToken } from '../TokensListPage/services';
 import {
   fetchPoolPairsListStartedRequest,
@@ -11,6 +11,7 @@ import {
 } from './reducer';
 import {
   fetchCoinGeckoCoinsList,
+  fetchGetGov,
   handleGetPoolPair,
   handlePoolPairList,
 } from './services';
@@ -98,6 +99,7 @@ function* fetchPoolPairData(item) {
 
 function* fetchTokenPrice(lpPairList: any[]) {
   const tokenSymbol: any[] = [];
+  const network = yield call(getNetwork);
 
   lpPairList.forEach((item) => {
     const {
@@ -111,7 +113,7 @@ function* fetchTokenPrice(lpPairList: any[]) {
     tokenSymbol.push({ symbol: idTokenASymbol, tokenId: idTokenA });
     tokenSymbol.push({ symbol: idTokenBSymbol, tokenId: idTokenB });
   });
-  const list: any[] = [];
+  const list: any[] = [{ symbol: 'DFI', tokenId: '0' }];
   uniqBy(tokenSymbol, 'symbol').forEach((item) => {
     const value = getCoinGeckoIdwithSymbol(item.symbol);
     if (value) {
@@ -122,26 +124,48 @@ function* fetchTokenPrice(lpPairList: any[]) {
     }
   });
   const coinPrice: any[] = yield call(fetchCoinGeckoCoinsList, list);
+  const lpDailyDfiReward = yield call(fetchGetGov, {
+    name: LP_DAILY_DFI_REWARD,
+    network,
+  });
   const coinPriceObj = {};
   coinPrice.forEach((item) => {
     coinPriceObj[item.label] = item.value;
   });
 
   return lpPairList.map((item) => {
-    const { reserveA, reserveB, idTokenA, idTokenB } = item;
+    const { reserveA, reserveB, idTokenA, idTokenB, rewardPct } = item;
+    const yearlyPoolReward = new BigNumber(lpDailyDfiReward)
+      .times(rewardPct)
+      .times(365);
+    const liquidityReserveidTokenA = new BigNumber(reserveA).times(
+      coinPriceObj[idTokenA]
+    );
+    const liquidityReserveidTokenB = new BigNumber(reserveB).times(
+      coinPriceObj[idTokenB]
+    );
     return {
       ...item,
       liquidityReserveOfTokens: {
-        idTokenA: new BigNumber(reserveA)
-          .times(coinPriceObj[idTokenA])
-          .toNumber(),
-        idTokenB: new BigNumber(reserveB)
-          .times(coinPriceObj[idTokenB])
-          .toNumber(),
+        idTokenA: liquidityReserveidTokenA.toNumber(),
+        idTokenB: liquidityReserveidTokenB.toNumber(),
       },
       priceOfTokensInUsd: {
         idTokenA: coinPriceObj[idTokenA],
         idTokenB: coinPriceObj[idTokenB],
+      },
+      yearlyPoolReward: {
+        inUsd: yearlyPoolReward.times(coinPriceObj[0]).toNumber(), // 0 is used because DFI token ID is 0
+        inDfi: yearlyPoolReward.toNumber(),
+      },
+      apy: {
+        inUsd: yearlyPoolReward
+          .div(liquidityReserveidTokenA.plus(liquidityReserveidTokenB))
+          .times(coinPriceObj[0])
+          .toNumber(), // 0 is used because DFI token ID is 0
+        inDfi: yearlyPoolReward
+          .div(liquidityReserveidTokenA.plus(liquidityReserveidTokenB))
+          .toNumber(),
       },
     };
   });

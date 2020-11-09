@@ -95,6 +95,9 @@ const PoolPairsTable = (props: PoolPairsTable) => {
               item.liquidityReserveOfTokens.idTokenB
             ).toFixed(2)}`}</div>
           </td>
+          <td>
+            <div>{`$ ${item.apy.inUsd.toFixed(2)}`}</div>
+          </td>
         </tr>
       ));
     if (!isLoading && totalCount === 0) {
@@ -124,6 +127,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                   <th>
                     {I18n.t('containers.poolPairsListPage.totalLiquidity')}
                   </th>
+                  <th>{I18n.t('containers.poolPairsListPage.apy')}</th>
                 </tr>
               </thead>
               <tbody>{loadRows()}</tbody>
