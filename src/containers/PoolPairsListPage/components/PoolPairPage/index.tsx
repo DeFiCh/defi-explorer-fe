@@ -131,6 +131,7 @@ const TokenPage = (props: TokenPageProps) => {
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.ownerAddress')}
                 value={`${data.ownerAddress}`}
+                noEllipsis
               />
             </Col>
           </Row>
