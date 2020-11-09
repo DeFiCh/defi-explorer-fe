@@ -29,9 +29,12 @@
     }
   }
 }
+
 .primaryLink {
   color: $primary !important;
+  display: contents !important;
 }
+
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .footerDefichainLink {
     margin-top: 1rem;

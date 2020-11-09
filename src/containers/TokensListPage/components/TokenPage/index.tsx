@@ -65,38 +65,6 @@ const TokenPage = (props: TokenPageProps) => {
           </h1>
           <Row>
             <Col xs='12'>
-              {/* <Row>
-                <Col xs='12' md='4'>
-                  <KeyValueLi
-                    label={I18n.t('containers.tokenPage.name')}
-                    value={data.name || 'Unknown'}
-                  />
-                </Col>
-                <Col xs='12' md='4'>
-                  <KeyValueLi
-                    label={I18n.t('containers.tokenPage.symbol')}
-                    value={data.symbol || 'Unknown'}
-                  />
-                </Col>
-                <Col xs='12' md='4'>
-                  <KeyValueLi
-                    label={I18n.t('containers.tokenPage.tokenId')}
-                    value={data.tokenId}
-                  />
-                </Col>
-                <Col xs='12' md='4'>
-                  <KeyValueLi
-                    label={I18n.t('containers.tokenPage.category')}
-                    value={data.category}
-                  />
-                </Col>
-                <Col xs='12' md='4'>
-                  <KeyValueLi
-                    label={I18n.t('containers.tokenPage.decimal')}
-                    value={`${data.decimal}`}
-                  />
-                </Col>
-              </Row> */}
               <Row>
                 <Col xs='12' md='4'>
                   <KeyValueLi

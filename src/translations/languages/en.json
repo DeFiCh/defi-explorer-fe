@@ -39,7 +39,7 @@
       "about": {
         "aboutContent": "DeFi Blockchain’s primary vision is to enable decentralized finance with Bitcoin-grade security, strength and immutability. It's a blockchain dedicated to fast, intelligent and transparent financial services, accessible by everyone.",
         "forMoreInfoNotice": "For more information, please visit our website at",
-        "defiChainLink": "deFichain.io"
+        "defiChainLink": "defichain.com"
       }
     }
   },
@@ -211,7 +211,6 @@
       "loading": "Loading"
     },
     "poolPairPage": {
-      "titlePair": "%{symbol} pair",
       "poolPairListPageBreadCrumb": "Pool",
       "oneCurrencyLabel": "1 %{symbol}",
       "poolPairId": "Id",

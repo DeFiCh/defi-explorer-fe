@@ -71,7 +71,9 @@ const TokensListPage = (props: TokensListPageProps) => {
             <div>{item.category}</div>
           </td>
           <td>
-            <div>{item.mintable ? `${item.minted} ${item.symbol}` : '-'}</div>
+            <div>
+              {item.mintable ? `${parseFloat(item.minted).toFixed(2)}` : '-'}
+            </div>
           </td>
           <td>
             <div>{capitalize(item.tradeable)}</div>
