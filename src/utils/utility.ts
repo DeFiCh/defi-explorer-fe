@@ -111,3 +111,19 @@ export const getIcon = (symbol: string | null) => {
   }
   return DefiIcon;
 };
+
+export const getCoinGeckoIdwithSymbol = (symbol) => {
+  if (symbol === 'BTC') {
+    return 'bitcoin';
+  }
+  if (symbol === 'ETH') {
+    return 'ethereum';
+  }
+  if (symbol === 'USDT') {
+    return 'tether';
+  }
+  if (symbol === 'DFI') {
+    return 'defi';
+  }
+  return '';
+};

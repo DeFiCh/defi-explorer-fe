@@ -20,3 +20,4 @@ export const DESKTOP_VIEW = { minWidth: 768 };
 export const MOBILE_VIEW = { maxWidth: 767 };
 export const VERSION_NUM = version;
 export const FOOTER_DEFICHAIN_STAMP = `DefiChain Explorer v${VERSION_NUM}`;
+export const VS_CURRENCIES = 'usd';

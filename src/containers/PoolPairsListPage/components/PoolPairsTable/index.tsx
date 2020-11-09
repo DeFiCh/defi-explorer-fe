@@ -84,7 +84,10 @@ const PoolPairsTable = (props: PoolPairsTable) => {
             <div>{parseFloat(item.commission) * 100}%</div>
           </td>
           <td>
-            <div>{item.totalLiquidity}</div>
+            <div>{`$ ${(
+              item.liquidityReserveOfTokens.idTokenA +
+              item.liquidityReserveOfTokens.idTokenB
+            ).toFixed(2)}`}</div>
           </td>
         </tr>
       ));
