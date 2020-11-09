@@ -36,23 +36,20 @@ export const handleGetPoolPair = async (query: {
   };
 };
 
-export const fetchCoinGeckoPrice = async (
-  _: { label: string; value: string },
-  vs_currencies: string = VS_CURRENCIES
-) => {
-  const { label, value: ids } = _;
+export const fetchCoinGeckoCoinsList = async (list: any[]) => {
+  const queryParams = {
+    vs_currencies: VS_CURRENCIES,
+    ids: list.map((item) => item.value).join(','),
+  };
   const apiRequest = new ApiRequest();
-  const { data } = await apiRequest.get('simple/price', {
+  const { data } = await apiRequest.get('/simple/price', {
     baseURL: COIN_GECKO_BASE_ENDPOINT,
-    params: {
-      ids,
-      vs_currencies,
-    },
+    params: queryParams,
   });
 
-  return { value: data[ids][vs_currencies], label };
-};
-
-export const fetchCoinGeckoCoinsList = async (list: any[]) => {
-  return Promise.all(list.map((item) => fetchCoinGeckoPrice(item)));
+  const result = list.map((item) => {
+    const fiatCurrencyData = data[item.value] || {};
+    return { value: fiatCurrencyData[VS_CURRENCIES] || 0, label: item.label };
+  });
+  return result;
 };

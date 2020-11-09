@@ -85,7 +85,8 @@ const PoolPairsTable = (props: PoolPairsTable) => {
           </td>
           <td>
             <div>{`$ ${(
-              item.liquidityReserveIdTokenB + item.liquidityReserveIdTokenA
+              item.liquidityReserveOfTokens.idTokenA +
+              item.liquidityReserveOfTokens.idTokenB
             ).toFixed(2)}`}</div>
           </td>
         </tr>

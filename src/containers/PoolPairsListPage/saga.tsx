@@ -123,12 +123,18 @@ function* fetchTokenPrice(lpPairList: any[]) {
     const { reserveA, reserveB, idTokenA, idTokenB } = item;
     return {
       ...item,
-      liquidityReserveIdTokenA: new BigNumber(reserveA)
-        .times(coinPriceObj[idTokenA])
-        .toNumber(),
-      liquidityReserveIdTokenB: new BigNumber(reserveB)
-        .times(coinPriceObj[idTokenB])
-        .toNumber(),
+      liquidityReserveOfTokens: {
+        idTokenA: new BigNumber(reserveA)
+          .times(coinPriceObj[idTokenA])
+          .toNumber(),
+        idTokenB: new BigNumber(reserveB)
+          .times(coinPriceObj[idTokenB])
+          .toNumber(),
+      },
+      priceOfTokensInUsd: {
+        idTokenA: coinPriceObj[idTokenA],
+        idTokenB: coinPriceObj[idTokenB],
+      },
     };
   });
 }

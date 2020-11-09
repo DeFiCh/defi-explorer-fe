@@ -90,7 +90,8 @@ const TokenPage = (props: TokenPageProps) => {
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.totalLiquidity')}
                 value={`$ ${(
-                  data.liquidityReserveIdTokenB + data.liquidityReserveIdTokenA
+                  data.liquidityReserveOfTokens.idTokenA +
+                  data.liquidityReserveOfTokens.idTokenB
                 ).toFixed(2)}`}
               />
             </Col>
