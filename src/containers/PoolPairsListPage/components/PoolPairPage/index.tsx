@@ -91,10 +91,7 @@ const PoolPairPage = (props: PoolPairPageProps) => {
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.totalLiquidity')}
-                value={`$ ${(
-                  data.liquidityReserveOfTokens.idTokenA +
-                  data.liquidityReserveOfTokens.idTokenB
-                ).toFixed(2)}`}
+                value={`$ ${data.totalLiquidity.toFixed(2)}`}
               />
             </Col>
             <Col xs='12' md='4'>
@@ -130,13 +127,13 @@ const PoolPairPage = (props: PoolPairPageProps) => {
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.yearlyPoolRewardUSD')}
-                value={`$ ${data.yearlyPoolReward.inUsd}`}
+                value={`$ ${data.yearlyPoolReward}`}
               />
             </Col>
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.apy')}
-                value={`$ ${data.apy.inUsd}`}
+                value={`$ ${data.apy}`}
               />
             </Col>
 

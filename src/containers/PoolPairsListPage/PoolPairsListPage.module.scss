@@ -23,6 +23,10 @@
     top: 0;
     background-color: $card-bg;
     box-shadow: 0 $table-border-width $table-border-color;
+    button {
+      text-transform: none !important;
+      padding: 0 !important;
+    }
   }
 
   td {

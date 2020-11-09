@@ -16,7 +16,7 @@ import {
   handlePoolPairList,
 } from './services';
 import uniqBy from 'lodash/uniqBy';
-import { getCoinGeckoIdwithSymbol } from '../../utils/utility';
+import { getCoinGeckoIdwithSymbol, tableSorter } from '../../utils/utility';
 import { BigNumber } from 'bignumber.js';
 
 function* getNetwork() {
@@ -54,6 +54,7 @@ function* fetchPoolPairsListStarted() {
       fetchTokenPrice,
       clonePoolPairsList
     );
+    updatedClonePoolPairsList.sort(tableSorter(true, 'totalLiquidity'));
     yield put(fetchPoolPairsListSuccessRequest(updatedClonePoolPairsList));
   } catch (err) {
     yield put(fetchPoolPairsListFailureRequest(err.message));
@@ -144,29 +145,17 @@ function* fetchTokenPrice(lpPairList: any[]) {
     const liquidityReserveidTokenB = new BigNumber(reserveB).times(
       coinPriceObj[idTokenB]
     );
+    const totalLiquidity = liquidityReserveidTokenA.plus(
+      liquidityReserveidTokenB
+    );
     return {
       ...item,
-      liquidityReserveOfTokens: {
-        idTokenA: liquidityReserveidTokenA.toNumber(),
-        idTokenB: liquidityReserveidTokenB.toNumber(),
-      },
-      priceOfTokensInUsd: {
-        idTokenA: coinPriceObj[idTokenA],
-        idTokenB: coinPriceObj[idTokenB],
-      },
-      yearlyPoolReward: {
-        inUsd: yearlyPoolReward.times(coinPriceObj[0]).toNumber(), // 0 is used because DFI token ID is 0
-        inDfi: yearlyPoolReward.toNumber(),
-      },
-      apy: {
-        inUsd: yearlyPoolReward
-          .div(liquidityReserveidTokenA.plus(liquidityReserveidTokenB))
-          .times(coinPriceObj[0])
-          .toNumber(), // 0 is used because DFI token ID is 0
-        inDfi: yearlyPoolReward
-          .div(liquidityReserveidTokenA.plus(liquidityReserveidTokenB))
-          .toNumber(),
-      },
+      totalLiquidity: totalLiquidity.toNumber(),
+      yearlyPoolReward: yearlyPoolReward.times(coinPriceObj[0]).toNumber(),
+      apy: yearlyPoolReward
+        .div(totalLiquidity)
+        .times(coinPriceObj[0])
+        .toNumber(),
     };
   });
 }

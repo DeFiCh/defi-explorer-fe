@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
 import { Link } from 'react-router-dom';
-import { Row, Col, Card, Table } from 'reactstrap';
+import { Row, Col, Card, Table, Button } from 'reactstrap';
 import {
   POOL_LIST_PAGE_URL_NAME,
   TOKENS_LIST_PAGE_LIMIT,
@@ -11,7 +11,9 @@ import { fetchPoolPairsListStartedRequest } from '../../reducer';
 import Pagination from '../../../../components/Pagination';
 import styles from '../../PoolPairsListPage.module.scss';
 import TokenAvatar from '../../../../components/TokenAvatar';
-import { setRoute } from '../../../../utils/utility';
+import { setRoute, tableSorter } from '../../../../utils/utility';
+import { cloneDeep } from 'lodash';
+import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 
 interface PoolPairsTable {
   fetchPoolPairsListStartedRequest: () => void;
@@ -32,15 +34,11 @@ const PoolPairsTable = (props: PoolPairsTable) => {
   } = props;
   const [currentPage, setCurrentPage] = useState(1);
   const [tableRows, setTableRows] = useState<any[]>([]);
+  const [sortedField, setSortedField] = useState<string>('totalLiquidity');
+  const [tableData, setTableData] = useState<any[]>([]);
 
-  let filteredData = data;
-  if (!!tokenId) {
-    filteredData = filteredData.filter(
-      (item) => item.idTokenA === tokenId || item.idTokenB === tokenId
-    );
-  }
   const pageSize = TOKENS_LIST_PAGE_LIMIT;
-  const totalCount = filteredData.length;
+  const totalCount = tableData.length;
 
   const pagesCount = Math.ceil(totalCount / pageSize);
   const to = (currentPage - 1) * pageSize + 1;
@@ -48,10 +46,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
 
   const fetchData = (pageNum) => {
     setCurrentPage(pageNum);
-    const rows = filteredData.slice(
-      (pageNum - 1) * pageSize,
-      pageNum * pageSize
-    );
+    const rows = tableData.slice((pageNum - 1) * pageSize, pageNum * pageSize);
     setTableRows(rows);
   };
 
@@ -60,8 +55,31 @@ const PoolPairsTable = (props: PoolPairsTable) => {
   }, []);
 
   useEffect(() => {
-    fetchData(currentPage);
+    if (!!tokenId) {
+      setTableData(
+        data.filter(
+          (item) => item.idTokenA === tokenId || item.idTokenB === tokenId
+        )
+      );
+    } else {
+      setTableData(data);
+    }
   }, [data]);
+
+  const sorter = (fieldName) => {
+    const newCloneTableData = cloneDeep(tableData);
+    const flip = sortedField !== fieldName;
+    setTableData(newCloneTableData.sort(tableSorter(flip, fieldName)));
+    if (flip) {
+      setSortedField(fieldName);
+    } else {
+      setSortedField('');
+    }
+  };
+
+  useEffect(() => {
+    fetchData(currentPage);
+  }, [tableData]);
 
   const loadRows = () => {
     if (isError)
@@ -70,36 +88,9 @@ const PoolPairsTable = (props: PoolPairsTable) => {
           <td>{isError}</td>
         </tr>
       );
-    if (tableRows.length)
-      return tableRows.map((item) => (
-        <tr key={item.poolPairId}>
-          <td>
-            <span>
-              <TokenAvatar token={item.tokenInfo.idTokenA} />
-            </span>{' '}
-            <span>
-              <TokenAvatar token={item.tokenInfo.idTokenB} />
-            </span>{' '}
-            <Link
-              to={setRoute(`${POOL_LIST_PAGE_URL_NAME}/${item.poolPairId}`)}
-            >
-              {item.symbol}
-            </Link>
-          </td>
-          <td>
-            <div>{parseFloat(item.commission) * 100}%</div>
-          </td>
-          <td>
-            <div>{`$ ${(
-              item.liquidityReserveOfTokens.idTokenA +
-              item.liquidityReserveOfTokens.idTokenB
-            ).toFixed(2)}`}</div>
-          </td>
-          <td>
-            <div>{`$ ${item.apy.inUsd.toFixed(2)}`}</div>
-          </td>
-        </tr>
-      ));
+    if (tableRows.length) {
+      return loadTableRows();
+    }
     if (!isLoading && totalCount === 0) {
       return (
         <tr key='noDataPresent'>
@@ -114,6 +105,40 @@ const PoolPairsTable = (props: PoolPairsTable) => {
     );
   };
 
+  const loadTableRows = useCallback(() => {
+    return tableRows.map((item) => (
+      <tr key={`${item.poolPairId}-${Math.random()}`}>
+        <td>
+          <span>
+            <TokenAvatar token={item.tokenInfo.idTokenA} />
+          </span>
+          <span>
+            <TokenAvatar token={item.tokenInfo.idTokenB} />
+          </span>{' '}
+          <Link to={setRoute(`${POOL_LIST_PAGE_URL_NAME}/${item.poolPairId}`)}>
+            {item.symbol}
+          </Link>
+        </td>
+        <td>
+          <div>{parseFloat(item.commission) * 100}%</div>
+        </td>
+        <td>
+          <div>{`$ ${item.totalLiquidity.toFixed(2)}`}</div>
+        </td>
+        <td>
+          <div>{`$ ${item.apy.toFixed(2)}`}</div>
+        </td>
+      </tr>
+    ));
+  }, [tableRows]);
+
+  const getSortingIcon = (fieldName) => {
+    if (fieldName === sortedField) {
+      return <MdArrowDropUp />;
+    }
+    return <MdArrowDropDown />;
+  };
+
   return (
     <Row>
       <Col xs='12'>
@@ -123,11 +148,39 @@ const PoolPairsTable = (props: PoolPairsTable) => {
               <thead>
                 <tr>
                   <th>{I18n.t('containers.poolPairsListPage.name')}</th>
-                  <th>{I18n.t('containers.poolPairsListPage.commission')}</th>
                   <th>
-                    {I18n.t('containers.poolPairsListPage.totalLiquidity')}
+                    <Button
+                      color='link'
+                      disabled={!tableData.length}
+                      className='d-flex'
+                      onClick={() => sorter('commission')}
+                    >
+                      {I18n.t('containers.poolPairsListPage.commission')}
+                      <span>{getSortingIcon('commission')}</span>
+                    </Button>
                   </th>
-                  <th>{I18n.t('containers.poolPairsListPage.apy')}</th>
+                  <th>
+                    <Button
+                      color='link'
+                      disabled={!tableData.length}
+                      className='d-flex'
+                      onClick={() => sorter('totalLiquidity')}
+                    >
+                      {I18n.t('containers.poolPairsListPage.totalLiquidity')}
+                      <span>{getSortingIcon('totalLiquidity')}</span>
+                    </Button>
+                  </th>
+                  <th>
+                    <Button
+                      color='link'
+                      disabled={!tableData.length}
+                      className='d-flex'
+                      onClick={() => sorter('apy')}
+                    >
+                      {I18n.t('containers.poolPairsListPage.apy')}
+                      <span>{getSortingIcon('apy')}</span>
+                    </Button>
+                  </th>
                 </tr>
               </thead>
               <tbody>{loadRows()}</tbody>
