@@ -63,9 +63,9 @@ const PoolPairsTable = (props: PoolPairsTable) => {
       return data.filter(
         (item) => item.idTokenA === tokenId || item.idTokenB === tokenId
       );
-    } 
+    }
     return data;
-  }
+  };
 
   useEffect(() => {
     setTableData(prepareData());
@@ -74,7 +74,6 @@ const PoolPairsTable = (props: PoolPairsTable) => {
   const sorter = (fieldName) => {
     const { field, mode } = sortedField;
     let flip = true;
-    let updatedField = fieldName;
     let updatedMode = (mode + 1) % 3;
     let updatedTableData = tableData;
     if (tableData.length) {
@@ -95,10 +94,10 @@ const PoolPairsTable = (props: PoolPairsTable) => {
         }
       }
       const newCloneTableData = cloneDeep(updatedTableData);
-      if(updatedMode === 0) {
+      if (updatedMode === 0) {
         setTableData(newCloneTableData);
       } else {
-        setTableData(newCloneTableData.sort(tableSorter(flip, updatedField)));
+        setTableData(newCloneTableData.sort(tableSorter(flip, fieldName)));
       }
       setSortedField({
         field: fieldName,
@@ -191,6 +190,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                       onClick={() => sorter('commission')}
                     >
                       {I18n.t('containers.poolPairsListPage.commission')}
+                      &nbsp;
                       {getSortingIcon('commission')}
                     </Button>
                   </th>
@@ -201,6 +201,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                       onClick={() => sorter('totalLiquidity')}
                     >
                       {I18n.t('containers.poolPairsListPage.totalLiquidity')}
+                      &nbsp;
                       {getSortingIcon('totalLiquidity')}
                     </Button>
                   </th>
@@ -211,6 +212,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                       onClick={() => sorter('apy')}
                     >
                       {I18n.t('containers.poolPairsListPage.apy')}
+                      &nbsp;
                       {getSortingIcon('apy')}
                     </Button>
                   </th>

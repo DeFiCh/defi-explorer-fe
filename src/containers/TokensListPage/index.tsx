@@ -132,7 +132,7 @@ const TokensListPage = (props: TokensListPageProps) => {
     if (tableRows.length)
       return tableRows.map((item) => (
         <tr key={item.tokenId}>
-          <td>
+          <td className={styles.staticCol}>
             <span>
               <TokenAvatar token={item} />
             </span>{' '}
@@ -146,10 +146,8 @@ const TokensListPage = (props: TokensListPageProps) => {
           <td>
             <div>{item.category}</div>
           </td>
-          <td>
-            <div>
-              {item.mintable ? `${parseFloat(item.minted).toFixed(2)}` : '-'}
-            </div>
+          <td className={styles.staticCol}>
+            <div>{item.mintable ? `${item.minted} ${item.symbol}` : '-'}</div>
           </td>
           <td>
             <div>{capitalize(item.tradeable)}</div>
@@ -188,6 +186,7 @@ const TokensListPage = (props: TokensListPageProps) => {
                         onClick={() => sorter('symbol')}
                       >
                         {I18n.t('containers.tokensPageList.symbol')}
+                        &nbsp;
                         {getSortingIcon('symbol')}
                       </Button>
                     </th>
@@ -198,6 +197,7 @@ const TokensListPage = (props: TokensListPageProps) => {
                         onClick={() => sorter('category')}
                       >
                         {I18n.t('containers.tokensPageList.category')}
+                        &nbsp;
                         {getSortingIcon('category')}
                       </Button>
                     </th>
@@ -208,6 +208,7 @@ const TokensListPage = (props: TokensListPageProps) => {
                         onClick={() => sorter('minted')}
                       >
                         {I18n.t('containers.tokensPageList.minted')}
+                        &nbsp;
                         {getSortingIcon('minted')}
                       </Button>
                     </th>
@@ -218,6 +219,7 @@ const TokensListPage = (props: TokensListPageProps) => {
                         onClick={() => sorter('tradeable')}
                       >
                         {I18n.t('containers.tokensPageList.tradeable')}
+                        &nbsp;
                         {getSortingIcon('tradeable')}
                       </Button>
                     </th>
