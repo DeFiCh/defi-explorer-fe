@@ -123,13 +123,15 @@ const PoolPairsTable = (props: PoolPairsTable) => {
     if (!isLoading && totalCount === 0) {
       return (
         <tr key='noDataPresent'>
-          <td>{I18n.t('containers.poolPairsListPage.noDataPresent')}</td>
+          <td colSpan={4}>
+            {I18n.t('containers.poolPairsListPage.noDataPresent')}
+          </td>
         </tr>
       );
     }
     return (
       <tr key={'Loading'}>
-        <td>{I18n.t('containers.poolPairsListPage.loading')}</td>
+        <td colSpan={4}>{I18n.t('containers.poolPairsListPage.loading')}</td>
       </tr>
     );
   };

@@ -15,6 +15,7 @@ import styles from './TokensListPage.module.scss';
 import { setRoute, tableSorter } from '../../utils/utility';
 import { cloneDeep } from 'lodash';
 import { FaSortDown, FaSortUp, FaSort } from 'react-icons/fa';
+import BigNumber from 'bignumber.js';
 
 interface TokensListPageProps extends RouteComponentProps {
   fetchTokensListStartedRequest: () => void;
@@ -147,7 +148,9 @@ const TokensListPage = (props: TokensListPageProps) => {
             <div>{item.category}</div>
           </td>
           <td className={styles.staticCol}>
-            <div>{item.mintable ? `${item.minted} ${item.symbol}` : '-'}</div>
+            <div>
+              {item.mintable ? `${new BigNumber(item.minted).toFixed(2)}` : '-'}
+            </div>
           </td>
           <td>
             <div>{capitalize(item.tradeable)}</div>
@@ -157,13 +160,15 @@ const TokensListPage = (props: TokensListPageProps) => {
     if (!isLoading && totalCount === 0) {
       return (
         <tr key='noDataPresent'>
-          <td>{I18n.t('containers.tokensPageList.noDataPresent')}</td>
+          <td colSpan={5}>
+            {I18n.t('containers.tokensPageList.noDataPresent')}
+          </td>
         </tr>
       );
     }
     return (
       <tr key={'Loading'}>
-        <td>{I18n.t('containers.tokensPageList.loading')}</td>
+        <td colSpan={5}>{I18n.t('containers.tokensPageList.loading')}</td>
       </tr>
     );
   };
