@@ -76,7 +76,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
           <td>
             <span>
               <TokenAvatar token={item.tokenInfo.idTokenA} />
-            </span>
+            </span>{' '}
             <span>
               <TokenAvatar token={item.tokenInfo.idTokenB} />
             </span>{' '}

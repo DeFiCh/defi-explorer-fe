@@ -43,7 +43,8 @@ const KeyValueLi: React.FunctionComponent<KeyValueLiProps> = (
         </Button>
       );
     }
-    if (props.noEllipsis) return props.value;
+    if (props.noEllipsis)
+      return <div className='text-break'>{props.value}</div>;
 
     return <EllipsisText text={props.value} length={'50'} />;
   };

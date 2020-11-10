@@ -59,13 +59,11 @@ const TokenPage = (props: TokenPageProps) => {
           <h1>
             <span>
               <TokenAvatar token={data.tokenInfo.idTokenA} />
-            </span>
+            </span>{' '}
             <span>
               <TokenAvatar token={data.tokenInfo.idTokenB} />
             </span>{' '}
-            {I18n.t('containers.poolPairPage.titlePair', {
-              symbol: data.symbol,
-            })}
+            {data.symbol}
           </h1>
           <Row>
             <Col xs='12' md='4'>
@@ -133,6 +131,7 @@ const TokenPage = (props: TokenPageProps) => {
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.ownerAddress')}
                 value={`${data.ownerAddress}`}
+                noEllipsis
               />
             </Col>
           </Row>
