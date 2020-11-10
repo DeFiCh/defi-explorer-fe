@@ -13,7 +13,7 @@ import styles from '../../PoolPairsListPage.module.scss';
 import TokenAvatar from '../../../../components/TokenAvatar';
 import { setRoute, tableSorter } from '../../../../utils/utility';
 import { cloneDeep } from 'lodash';
-import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
+import { FaSort, FaSortDown, FaSortUp } from 'react-icons/fa';
 
 interface PoolPairsTable {
   fetchPoolPairsListStartedRequest: () => void;
@@ -32,9 +32,13 @@ const PoolPairsTable = (props: PoolPairsTable) => {
     isError,
     tokenId,
   } = props;
+
   const [currentPage, setCurrentPage] = useState(1);
   const [tableRows, setTableRows] = useState<any[]>([]);
-  const [sortedField, setSortedField] = useState<string>('totalLiquidity');
+  const [sortedField, setSortedField] = useState<any>({
+    field: '',
+    mode: 0,
+  });
   const [tableData, setTableData] = useState<any[]>([]);
 
   const pageSize = TOKENS_LIST_PAGE_LIMIT;
@@ -54,28 +58,52 @@ const PoolPairsTable = (props: PoolPairsTable) => {
     fetchPoolPairsListStartedRequest();
   }, []);
 
-  useEffect(() => {
+  const prepareData = () => {
     if (!!tokenId) {
-      setTableData(
-        data.filter(
-          (item) => item.idTokenA === tokenId || item.idTokenB === tokenId
-        )
+      return data.filter(
+        (item) => item.idTokenA === tokenId || item.idTokenB === tokenId
       );
-    } else {
-      setTableData(data);
-    }
+    } 
+    return data;
+  }
+
+  useEffect(() => {
+    setTableData(prepareData());
   }, [data]);
 
   const sorter = (fieldName) => {
+    const { field, mode } = sortedField;
+    let flip = true;
+    let updatedField = fieldName;
+    let updatedMode = (mode + 1) % 3;
+    let updatedTableData = tableData;
     if (tableData.length) {
-      const newCloneTableData = cloneDeep(tableData);
-      const flip = sortedField !== fieldName;
-      setTableData(newCloneTableData.sort(tableSorter(flip, fieldName)));
-      if (flip) {
-        setSortedField(fieldName);
+      if (fieldName !== field) {
+        flip = true;
+        updatedMode = 1;
       } else {
-        setSortedField('');
+        if (updatedMode > 0) {
+          if (updatedMode === 2) {
+            flip = false;
+          }
+
+          if (updatedMode === 1) {
+            flip = true;
+          }
+        } else {
+          updatedTableData = prepareData();
+        }
       }
+      const newCloneTableData = cloneDeep(updatedTableData);
+      if(updatedMode === 0) {
+        setTableData(newCloneTableData);
+      } else {
+        setTableData(newCloneTableData.sort(tableSorter(flip, updatedField)));
+      }
+      setSortedField({
+        field: fieldName,
+        mode: updatedMode,
+      });
     }
   };
 
@@ -108,8 +136,8 @@ const PoolPairsTable = (props: PoolPairsTable) => {
   };
 
   const loadTableRows = useCallback(() => {
-    return tableRows.map((item) => (
-      <tr key={`${item.poolPairId}-${Math.random()}`}>
+    return tableRows.map((item, id) => (
+      <tr key={`${item.poolPairId}-${id}`}>
         <td>
           <span>
             <TokenAvatar token={item.tokenInfo.idTokenA} />
@@ -135,10 +163,16 @@ const PoolPairsTable = (props: PoolPairsTable) => {
   }, [tableRows]);
 
   const getSortingIcon = (fieldName) => {
-    if (fieldName === sortedField) {
-      return <MdArrowDropUp />;
+    const { field, mode } = sortedField;
+    if (fieldName === field) {
+      if (mode === 1) {
+        return <FaSortDown className={styles.sortIcon} />;
+      }
+      if (mode === 2) {
+        return <FaSortUp className={styles.sortIcon} />;
+      }
     }
-    return <MdArrowDropDown />;
+    return <FaSort className={styles.sortIcon} />;
   };
 
   return (
@@ -157,7 +191,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                       onClick={() => sorter('commission')}
                     >
                       {I18n.t('containers.poolPairsListPage.commission')}
-                      <span>{getSortingIcon('commission')}</span>
+                      {getSortingIcon('commission')}
                     </Button>
                   </th>
                   <th>
@@ -167,7 +201,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                       onClick={() => sorter('totalLiquidity')}
                     >
                       {I18n.t('containers.poolPairsListPage.totalLiquidity')}
-                      <span>{getSortingIcon('totalLiquidity')}</span>
+                      {getSortingIcon('totalLiquidity')}
                     </Button>
                   </th>
                   <th>
@@ -177,7 +211,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                       onClick={() => sorter('apy')}
                     >
                       {I18n.t('containers.poolPairsListPage.apy')}
-                      <span>{getSortingIcon('apy')}</span>
+                      {getSortingIcon('apy')}
                     </Button>
                   </th>
                 </tr>

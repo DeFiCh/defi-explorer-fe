@@ -54,7 +54,6 @@ function* fetchPoolPairsListStarted() {
       fetchTokenPrice,
       clonePoolPairsList
     );
-    updatedClonePoolPairsList.sort(tableSorter(true, 'totalLiquidity'));
     yield put(fetchPoolPairsListSuccessRequest(updatedClonePoolPairsList));
   } catch (err) {
     yield put(fetchPoolPairsListFailureRequest(err.message));

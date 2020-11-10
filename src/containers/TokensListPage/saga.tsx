@@ -37,15 +37,6 @@ function* fetchTokensListStarted() {
         start = cloneTokenList[cloneTokenList.length - 1].tokenId;
       }
     }
-    cloneTokenList.sort((a, b) => {
-      if (a.mintable === false) {
-        return 1;
-      }
-      if (b.mintable === false) {
-        return -1;
-      }
-      return tableSorter(true, 'minted')(a, b);
-    });
     yield put(fetchTokensListSuccessRequest(cloneTokenList));
   } catch (err) {
     yield put(fetchTokensListFailureRequest(err.message));

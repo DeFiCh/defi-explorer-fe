@@ -14,7 +14,7 @@ import Pagination from '../../components/Pagination';
 import styles from './TokensListPage.module.scss';
 import { setRoute, tableSorter } from '../../utils/utility';
 import { cloneDeep } from 'lodash';
-import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
+import { FaSortDown, FaSortUp, FaSort } from 'react-icons/fa';
 
 interface TokensListPageProps extends RouteComponentProps {
   fetchTokensListStartedRequest: () => void;
@@ -26,10 +26,14 @@ interface TokensListPageProps extends RouteComponentProps {
 
 const TokensListPage = (props: TokensListPageProps) => {
   const { fetchTokensListStartedRequest, isLoading, data, isError } = props;
+
   const [currentPage, setCurrentPage] = useState(1);
   const [tableRows, setTableRows] = useState<any[]>([]);
   const [tableData, setTableData] = useState<any[]>([]);
-  const [sortedField, setSortedField] = useState<string>('minted');
+  const [sortedField, setSortedField] = useState<any>({
+    field: '',
+    mode: 0,
+  });
   const pageSize = TOKENS_LIST_PAGE_LIMIT;
   const totalCount = tableData.length;
   const pagesCount = Math.ceil(totalCount / pageSize);
@@ -59,35 +63,63 @@ const TokensListPage = (props: TokensListPageProps) => {
   }, [tableData]);
 
   const sorter = (fieldName) => {
+    const { field, mode } = sortedField;
+    let flip = true;
+    let updatedMode = (mode + 1) % 3;
+    let updatedTableData = tableData;
     if (tableData.length) {
-      const newCloneTableData = cloneDeep(tableData);
-      const flip = sortedField !== fieldName;
-      setTableData(
-        newCloneTableData.sort((a, b) => {
-          if (fieldName === 'minted') {
-            if (a.mintable === false) {
-              return 1;
-            }
-            if (b.mintable === false) {
-              return -1;
-            }
-          }
-          return tableSorter(flip, fieldName)(a, b);
-        })
-      );
-      if (flip) {
-        setSortedField(fieldName);
+      if (fieldName !== field) {
+        flip = true;
+        updatedMode = 1;
       } else {
-        setSortedField('');
+        if (updatedMode > 0) {
+          if (updatedMode === 2) {
+            flip = false;
+          }
+
+          if (updatedMode === 1) {
+            flip = true;
+          }
+        } else {
+          updatedTableData = data;
+        }
       }
+      const newCloneTableData = cloneDeep(updatedTableData);
+      if (updatedMode === 0) {
+        setTableData(newCloneTableData);
+      } else {
+        setTableData(
+          newCloneTableData.sort((a, b) => {
+            if (fieldName === 'minted') {
+              if (a.mintable === false) {
+                return 1;
+              }
+              if (b.mintable === false) {
+                return -1;
+              }
+            }
+            return tableSorter(flip, fieldName)(a, b);
+          })
+        );
+      }
+      setSortedField({
+        field: fieldName,
+        mode: updatedMode,
+      });
     }
   };
 
   const getSortingIcon = (fieldName) => {
-    if (fieldName === sortedField) {
-      return <MdArrowDropUp />;
+    const { field, mode } = sortedField;
+    if (fieldName === field) {
+      if (mode === 1) {
+        return <FaSortDown className={styles.sortIcon} />;
+      }
+      if (mode === 2) {
+        return <FaSortUp className={styles.sortIcon} />;
+      }
     }
-    return <MdArrowDropDown />;
+    return <FaSort className={styles.sortIcon} />;
   };
 
   const loadRows = () => {
