@@ -15,7 +15,7 @@ interface RouteInfo {
   poolPairId: string;
 }
 
-interface TokenPageProps extends RouteComponentProps<RouteInfo> {
+interface PoolPairPageProps extends RouteComponentProps<RouteInfo> {
   isLoading: boolean;
   data: any;
   isError: string;
@@ -23,7 +23,7 @@ interface TokenPageProps extends RouteComponentProps<RouteInfo> {
   fetchPoolPairPageStartedRequest: (poolPairId: string | number) => void;
 }
 
-const TokenPage = (props: TokenPageProps) => {
+const PoolPairPage = (props: PoolPairPageProps) => {
   const {
     data,
     isError,
@@ -91,10 +91,7 @@ const TokenPage = (props: TokenPageProps) => {
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.totalLiquidity')}
-                value={`$ ${(
-                  data.liquidityReserveOfTokens.idTokenA +
-                  data.liquidityReserveOfTokens.idTokenB
-                ).toFixed(2)}`}
+                value={`$ ${data.totalLiquidity.toFixed(2)}`}
               />
             </Col>
             <Col xs='12' md='4'>
@@ -127,7 +124,20 @@ const TokenPage = (props: TokenPageProps) => {
                 value={capitalize(data.tradeEnabled)}
               />
             </Col>
-            <Col xs='12' md='8'>
+            <Col xs='12' md='4'>
+              <KeyValueLi
+                label={I18n.t('containers.poolPairPage.yearlyPoolRewardUSD')}
+                value={`$ ${data.yearlyPoolReward}`}
+              />
+            </Col>
+            <Col xs='12' md='4'>
+              <KeyValueLi
+                label={I18n.t('containers.poolPairPage.apy')}
+                value={`$ ${data.apy}`}
+              />
+            </Col>
+
+            <Col xs='12' md='12'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.ownerAddress')}
                 value={`${data.ownerAddress}`}
@@ -160,4 +170,4 @@ const mapDispatchToProps = {
     fetchPoolPairPageStartedRequest({ poolPairId }),
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TokenPage);
+export default connect(mapStateToProps, mapDispatchToProps)(PoolPairPage);

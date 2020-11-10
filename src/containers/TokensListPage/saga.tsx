@@ -1,4 +1,5 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { tableSorter } from '../../utils/utility';
 import {
   fetchTokensListStartedRequest,
   fetchTokensListFailureRequest,
@@ -29,7 +30,6 @@ function* fetchTokensListStarted() {
       };
       const data = yield call(handleTokenList, queryParams);
       cloneTokenList = cloneTokenList.concat(data);
-      yield put(fetchTokensListSuccessRequest(cloneTokenList));
       if (data.length === 0) {
         break;
       } else {
@@ -37,6 +37,7 @@ function* fetchTokensListStarted() {
         start = cloneTokenList[cloneTokenList.length - 1].tokenId;
       }
     }
+    yield put(fetchTokensListSuccessRequest(cloneTokenList));
   } catch (err) {
     yield put(fetchTokensListFailureRequest(err.message));
   }

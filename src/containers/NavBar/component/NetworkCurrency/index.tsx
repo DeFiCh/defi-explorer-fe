@@ -61,7 +61,8 @@ const NetworkCurrency = (props: NetworkCurrency) => {
     <div className='text-center'>
       <div id='PopoverClick' color='link' className='cursor-pointer'>
         <span color='secondary'>
-          {`${network.toUpperCase()}-${unit}`}&nbsp;
+          {/* {`${network.toUpperCase()}-${unit}`}&nbsp; */}
+          {`${network.toUpperCase()}`}&nbsp;
           <MdKeyboardArrowDown className='d-inline-block' />
         </span>
       </div>
@@ -81,13 +82,13 @@ const NetworkCurrency = (props: NetworkCurrency) => {
               value={network}
               label={I18n.t('containers.navBar.menuDropdown.network')}
             />
-            <LoadRadio
+            {/* <LoadRadio // TODO: need in future
               options={UNIT_OPTIONS}
               onClickFunc={changeUnit}
               name='Unit'
               value={unit}
               label={I18n.t('containers.navBar.menuDropdown.units')}
-            />
+            /> */}
           </Form>
         </PopoverBody>
       </UncontrolledPopover>

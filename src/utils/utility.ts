@@ -125,7 +125,7 @@ export const setRoute = (route) => {
     return `${MAINNET_BASE_PATH}/${route}`;
   }
   return `${TESTNET_BASE_PATH}/${route}`;
-}
+};
 
 export const getCoinGeckoIdwithSymbol = (symbol) => {
   if (symbol === 'BTC') {
@@ -141,4 +141,23 @@ export const getCoinGeckoIdwithSymbol = (symbol) => {
     return 'defi';
   }
   return '';
+};
+
+export const tableSorter = (flip, fieldName) => (a, b) => {
+  if (flip) {
+    if (a[fieldName] > b[fieldName]) {
+      return -1;
+    }
+    if (a[fieldName] < b[fieldName]) {
+      return 1;
+    }
+  } else {
+    if (a[fieldName] < b[fieldName]) {
+      return -1;
+    }
+    if (a[fieldName] > b[fieldName]) {
+      return 1;
+    }
+  }
+  return 0;
 };
