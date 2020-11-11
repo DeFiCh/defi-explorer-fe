@@ -145,14 +145,15 @@ const TokenPage = (props: TokenPageProps) => {
                     value={`${data.destructionHeight}`}
                   />
                 </Col>
-                {data.collateralAddress && (
-                  <Col xs='12' md='8'>
-                    <KeyValueLi
-                      label={I18n.t('containers.tokenPage.collateralAddress')}
-                      value={data.collateralAddress}
-                    />
-                  </Col>
-                )}
+                {data.collateralAddress &&
+                  data.collateralAddress !== 'undefined' && (
+                    <Col xs='12' md='8'>
+                      <KeyValueLi
+                        label={I18n.t('containers.tokenPage.collateralAddress')}
+                        value={data.collateralAddress}
+                      />
+                    </Col>
+                  )}
                 <Col xs='12'>
                   <KeyValueLi
                     label={I18n.t('containers.tokenPage.creationTx')}

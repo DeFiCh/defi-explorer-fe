@@ -33,7 +33,7 @@ interface NavbarComponentProps extends RouteComponentProps {
 }
 
 const NavbarComponent = (props: NavbarComponentProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -54,29 +54,21 @@ const NavbarComponent = (props: NavbarComponentProps) => {
       </NavbarBrand>
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
-        <Nav className='m-auto' navbar>
-          {/* <NavItem>
-            <NavLink to={BLOCK_PAGE_BASE_PATH} tag={RRNavLink}>
-              {I18n.t('containers.navBar.blocks')}
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink to={TRANSACTION_BASE_PATH} tag={RRNavLink}>
-              {I18n.t('containers.navBar.transactions')}
-            </NavLink>
-          </NavItem> */}
-          <NavItem>
-            <NavLink to={setRoute(POOL_LIST_PAGE_URL_NAME)} tag={RRNavLink}>
-              {I18n.t('containers.navBar.pool')}
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink to={setRoute(TOKEN_LIST_PAGE_URL_NAME)} tag={RRNavLink}>
-              {I18n.t('containers.navBar.tokens')}
-            </NavLink>
-          </NavItem>
-        </Nav>
-        <NetworkCurrency {...props} />
+        {isOpen && (
+          <Nav className='m-auto' navbar>
+            <NavItem>
+              <NavLink to={setRoute(POOL_LIST_PAGE_URL_NAME)} tag={RRNavLink}>
+                {I18n.t('containers.navBar.pool')}
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink to={setRoute(TOKEN_LIST_PAGE_URL_NAME)} tag={RRNavLink}>
+                {I18n.t('containers.navBar.tokens')}
+              </NavLink>
+            </NavItem>
+          </Nav>
+        )}
+        {isOpen && <NetworkCurrency {...props} />}
       </Collapse>
     </Navbar>
   );

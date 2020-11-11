@@ -13,7 +13,7 @@ import styles from '../../PoolPairsListPage.module.scss';
 import TokenAvatar from '../../../../components/TokenAvatar';
 import { setRoute, tableSorter } from '../../../../utils/utility';
 import { cloneDeep } from 'lodash';
-import { FaSort, FaSortDown, FaSortUp } from 'react-icons/fa';
+import { BsArrowUpDown, BsArrowDown, BsArrowUp } from 'react-icons/bs';
 
 interface PoolPairsTable {
   fetchPoolPairsListStartedRequest: () => void;
@@ -139,7 +139,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
   const loadTableRows = useCallback(() => {
     return tableRows.map((item, id) => (
       <tr key={`${item.poolPairId}-${id}`}>
-        <td>
+        <td className={styles.staticCol}>
           <span>
             <TokenAvatar token={item.tokenInfo.idTokenA} />
           </span>
@@ -167,13 +167,13 @@ const PoolPairsTable = (props: PoolPairsTable) => {
     const { field, mode } = sortedField;
     if (fieldName === field) {
       if (mode === 1) {
-        return <FaSortDown className={styles.sortIcon} />;
+        return <BsArrowDown className={styles.sortIcon} />;
       }
       if (mode === 2) {
-        return <FaSortUp className={styles.sortIcon} />;
+        return <BsArrowUp className={styles.sortIcon} />;
       }
     }
-    return <FaSort className={styles.sortIcon} />;
+    return <BsArrowUpDown className={styles.sortIcon} />;
   };
 
   return (

@@ -14,7 +14,7 @@ import Pagination from '../../components/Pagination';
 import styles from './TokensListPage.module.scss';
 import { setRoute, tableSorter } from '../../utils/utility';
 import { cloneDeep } from 'lodash';
-import { FaSortDown, FaSortUp, FaSort } from 'react-icons/fa';
+import { BsArrowDown, BsArrowUp, BsArrowUpDown } from 'react-icons/bs';
 import BigNumber from 'bignumber.js';
 
 interface TokensListPageProps extends RouteComponentProps {
@@ -114,13 +114,13 @@ const TokensListPage = (props: TokensListPageProps) => {
     const { field, mode } = sortedField;
     if (fieldName === field) {
       if (mode === 1) {
-        return <FaSortDown className={styles.sortIcon} />;
+        return <BsArrowDown className={styles.sortIcon} />;
       }
       if (mode === 2) {
-        return <FaSortUp className={styles.sortIcon} />;
+        return <BsArrowUp className={styles.sortIcon} />;
       }
     }
-    return <FaSort className={styles.sortIcon} />;
+    return <BsArrowUpDown className={styles.sortIcon} />;
   };
 
   const loadRows = () => {

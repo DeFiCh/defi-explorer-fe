@@ -58,7 +58,7 @@ const NetworkCurrency = (props: NetworkCurrency) => {
   }
 
   return (
-    <div className='text-center'>
+    <div>
       <div id='PopoverClick' color='link' className='cursor-pointer'>
         <span color='secondary'>
           {/* {`${network.toUpperCase()}-${unit}`}&nbsp; */}

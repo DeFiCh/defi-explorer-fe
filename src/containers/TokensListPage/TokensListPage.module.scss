@@ -26,6 +26,9 @@
     button {
       text-transform: none !important;
       padding: 0 !important;
+      color: #000 !important;
+      background-color: transparent !important;
+      border-color: transparent !important;
     }
   }
 
@@ -46,7 +49,7 @@
 }
 
 .sortIcon {
-  width: 10px !important;
+  width: 14px !important;
 }
 
 .staticCol {
