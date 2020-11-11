@@ -161,3 +161,13 @@ export const tableSorter = (flip, fieldName) => (a, b) => {
   }
   return 0;
 };
+
+export const getIdFromSymbol = (symbol) => {
+  const mapId = {
+    DFI: 0,
+    BTC: 1,
+    ETH: 2,
+    USDT: 5,
+  }
+  return mapId[symbol];
+};

@@ -223,6 +223,14 @@
       "ownerAddress": "Owner Address",
       "tradeEnabled": "Trade Enabled",
       "loading": "Loading"
+    },
+    "addresstokensListPage": {
+      "noDataPresent": "No Tokens associated with address",
+      "loading": "Loading",
+      "addressTokenListPageTitle": "Balance",
+      "name": "Name",
+      "balance": "Balance",
+      "paginationRange": "%{to} - %{from} of %{total}"
     }
   },
   "alerts": {}

@@ -1,3 +1,5 @@
+import { string } from "prop-types";
+
 export interface ITokenResponse {
   hash: string;
 }
@@ -7,6 +9,11 @@ export interface ITokenPoolPairListParams {
   including_start?: boolean;
   limit?: number;
   network: string;
+}
+
+export interface IAddressTokenListParams extends ITokenPoolPairListParams {
+  owner: string;
+  indexed_amounts?: boolean;
 }
 
 export interface ITxn {

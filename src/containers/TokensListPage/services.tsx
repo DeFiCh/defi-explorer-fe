@@ -1,6 +1,10 @@
 import { QUICK_STATS_BASE_ENDPOINT } from '../../constants';
 import ApiRequest from '../../utils/apiRequest';
-import { ITokenPoolPairListParams } from '../../utils/interfaces';
+import {
+  IAddressTokenListParams,
+  ITokenPoolPairListParams,
+} from '../../utils/interfaces';
+import { getIdFromSymbol } from '../../utils/utility';
 
 export const getCategory = (item) => {
   let category = 'DCT';
@@ -46,4 +50,32 @@ export const handleGetToken = async (query: {
     category: getCategory(data[id]),
     name: data[id].name || data[id].symbol,
   };
+};
+
+export const handleAddressTokenList = async (
+  query: IAddressTokenListParams
+) => {
+  const apiRequest = new ApiRequest();
+
+  const { data } = await apiRequest.get('/v1/getaccount', {
+    baseURL: QUICK_STATS_BASE_ENDPOINT,
+    params: query,
+  });
+  if (Array.isArray(data)) {
+    return data.map((item) => {
+      const balance = item.substring(0, item.indexOf('@'));
+      const lastIndex =
+        item.indexOf('#') === -1 ? item.length : item.indexOf('#');
+      const name = item.substring(item.indexOf('@') + 1, lastIndex);
+      const id =
+        lastIndex < item.length ? item.substring(item.indexOf('#') + 1) : getIdFromSymbol(name);
+      return {
+        balance,
+        name,
+        id,
+        key: item,
+      };
+    });
+  }
+  return [];
 };
