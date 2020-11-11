@@ -64,7 +64,7 @@ const AddressTokenList = (props: AddressTokenListProps) => {
 
   useEffect(() => {
     fetchAddressTokensListStartedRequest(owner);
-  }, []);
+  }, [owner]);
 
   useEffect(() => {
     setTableData(data);
@@ -162,7 +162,9 @@ const AddressTokenList = (props: AddressTokenListProps) => {
 
   return (
     <div>
-      <h1>{I18n.t('containers.addresstokensListPage.addressTokenListPageTitle')}</h1>
+      <h1>
+        {I18n.t('containers.addresstokensListPage.addressTokenListPageTitle')}
+      </h1>
       <Row>
         <Col xs='12'>
           <Card className={styles.card}>

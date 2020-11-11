@@ -50,7 +50,6 @@ const NavbarComponent = (props: NavbarComponentProps) => {
       history.push(
         setRoute(`${ADDRESS_TOKEN_LIST_PAGE_URL_NAME}/${searchValue}`)
       );
-      history.go(0);
       setShowSearchBar(false);
     }
   };
