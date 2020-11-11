@@ -50,6 +50,7 @@ function* fetchPoolPairsListStarted() {
         start = clonePoolPairsList[clonePoolPairsList.length - 1].poolPairId;
       }
     }
+
     const updatedClonePoolPairsList = yield call(
       fetchTokenPrice,
       clonePoolPairsList
@@ -137,7 +138,8 @@ function* fetchTokenPrice(lpPairList: any[]) {
     const { reserveA, reserveB, idTokenA, idTokenB, rewardPct } = item;
     const yearlyPoolReward = new BigNumber(lpDailyDfiReward)
       .times(rewardPct)
-      .times(365);
+      .times(365)
+      .times(coinPriceObj[0]);
     const liquidityReserveidTokenA = new BigNumber(reserveA).times(
       coinPriceObj[idTokenA]
     );
@@ -150,11 +152,8 @@ function* fetchTokenPrice(lpPairList: any[]) {
     return {
       ...item,
       totalLiquidity: totalLiquidity.toNumber(),
-      yearlyPoolReward: yearlyPoolReward.times(coinPriceObj[0]).toNumber(),
-      apy: yearlyPoolReward
-        .div(totalLiquidity)
-        .times(coinPriceObj[0])
-        .toNumber(),
+      yearlyPoolReward: yearlyPoolReward.toNumber(),
+      apy: yearlyPoolReward.div(totalLiquidity).toNumber(),
     };
   });
 }
