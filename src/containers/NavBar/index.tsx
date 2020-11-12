@@ -81,6 +81,7 @@ const NavbarComponent = (props: NavbarComponentProps) => {
         {showSearchBar ? (
           <NavItem>
             <SearchBar
+              placeholder={I18n.t('containers.navBar.searchPlaceholder')}
               searching={{}}
               toggleSearch={searchToggle}
               onChange={handleOnchange}
@@ -122,6 +123,7 @@ const NavbarComponent = (props: NavbarComponentProps) => {
           {showSearchBar ? (
             <Nav className={styles.mobileSearchContainer} navbar>
               <SearchBar
+                placeholder={I18n.t('containers.navBar.searchPlaceholder')}
                 searching={{}}
                 toggleSearch={searchToggle}
                 onChange={handleOnchange}

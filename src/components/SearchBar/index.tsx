@@ -25,7 +25,7 @@ const SearchBar: React.FunctionComponent<SearchBarProps> = (
 ) => {
   return (
     <Form onSubmit={props.onSubmit}>
-      <FormGroup className={props.formGroupClass}>
+      <FormGroup className={`${styles.searchBar} ${props.formGroupClass}`}>
         <InputGroup>
           <Input
             autoFocus
