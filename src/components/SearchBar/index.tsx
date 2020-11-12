@@ -1,7 +1,6 @@
 import React from 'react';
 import { MdClose, MdSearch } from 'react-icons/md';
 import {
-  Col,
   FormGroup,
   Input,
   InputGroup,
@@ -16,7 +15,7 @@ interface SearchBarProps {
   searching: any;
   toggleSearch: any;
   formGroupClass?: string;
-  onChange: (e) => void;
+  onChange: (event) => void;
   placeholder?: string;
   onSubmit: (event) => void;
 }
@@ -25,31 +24,26 @@ const SearchBar: React.FunctionComponent<SearchBarProps> = (
   props: SearchBarProps
 ) => {
   return (
-    <div
-      className={classnames({ 'd-block': props.searching }, styles.searchBar)}
-    >
-      <Form onSubmit={props.onSubmit}>
-        <FormGroup className={`row ${props.formGroupClass || ''} `}>
-          <Col>
-            <InputGroup>
-              <Input
-                type='text'
-                placeholder={props.placeholder}
-                name='searchInput'
-                id='searchInput'
-                onChange={props.onChange}
-              />
-              <MdSearch className={styles.searchIndicator} />
-              <InputGroupAddon addonType='append'>
-                <Button color='outline-primary' onClick={props.toggleSearch}>
-                  <MdClose />
-                </Button>
-              </InputGroupAddon>
-            </InputGroup>
-          </Col>
-        </FormGroup>
-      </Form>
-    </div>
+    <Form onSubmit={props.onSubmit}>
+      <FormGroup className={props.formGroupClass}>
+        <InputGroup>
+          <Input
+            autoFocus
+            type='text'
+            placeholder={props.placeholder}
+            name='searchInput'
+            id='searchInput'
+            onChange={props.onChange}
+          />
+          <MdSearch className={styles.searchIndicator} />
+          <InputGroupAddon addonType='append'>
+            <Button color='outline-primary' onClick={props.toggleSearch}>
+              <MdClose />
+            </Button>
+          </InputGroupAddon>
+        </InputGroup>
+      </FormGroup>
+    </Form>
   );
 };
 

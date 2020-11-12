@@ -56,8 +56,8 @@ const NavbarComponent = (props: NavbarComponentProps) => {
   const handleOnchange = (e) => setSearchValue(e.target.value);
 
   const loadMobileNavItems = () => {
-    if (isOpen) {
-      return (
+    return (
+      <>
         <Nav className='m-auto' navbar>
           <NavItem>
             <NavLink to={setRoute(POOL_LIST_PAGE_URL_NAME)} tag={RRNavLink}>
@@ -70,43 +70,43 @@ const NavbarComponent = (props: NavbarComponentProps) => {
             </NavLink>
           </NavItem>
         </Nav>
-      );
-    }
+        <NetworkCurrency {...props} />
+      </>
+    );
   };
 
   const loadDesktopNavItems = () => {
-    if (showSearchBar) {
-      return (
-        <Nav className='m-auto' navbar>
+    return (
+      <Nav className='m-auto' navbar>
+        {showSearchBar ? (
           <NavItem>
             <SearchBar
               searching={{}}
               toggleSearch={searchToggle}
               onChange={handleOnchange}
-              formGroupClass='m-0'
+              formGroupClass={`${styles.desktopSearchContainer} m-0`}
               onSubmit={handleSubmitFunc}
             />
           </NavItem>
-        </Nav>
-      );
-    }
-    return (
-      <Nav className='m-auto' navbar>
-        <NavItem>
-          <NavLink to={setRoute(POOL_LIST_PAGE_URL_NAME)} tag={RRNavLink}>
-            {I18n.t('containers.navBar.pool')}
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to={setRoute(TOKEN_LIST_PAGE_URL_NAME)} tag={RRNavLink}>
-            {I18n.t('containers.navBar.tokens')}
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <Button tag={NavLink} color='link' onClick={searchToggle}>
-            <MdSearch />
-          </Button>
-        </NavItem>
+        ) : (
+          <>
+            <NavItem>
+              <NavLink to={setRoute(POOL_LIST_PAGE_URL_NAME)} tag={RRNavLink}>
+                {I18n.t('containers.navBar.pool')}
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink to={setRoute(TOKEN_LIST_PAGE_URL_NAME)} tag={RRNavLink}>
+                {I18n.t('containers.navBar.tokens')}
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <Button tag={NavLink} color='link' onClick={searchToggle}>
+                <MdSearch />
+              </Button>
+            </NavItem>
+          </>
+        )}
       </Nav>
     );
   };
@@ -120,13 +120,15 @@ const NavbarComponent = (props: NavbarComponentProps) => {
           expand='md'
         >
           {showSearchBar ? (
-            <SearchBar
-              searching={{}}
-              toggleSearch={searchToggle}
-              onChange={handleOnchange}
-              formGroupClass='m-0'
-              onSubmit={handleSubmitFunc}
-            />
+            <Nav className={styles.mobileSearchContainer} navbar>
+              <SearchBar
+                searching={{}}
+                toggleSearch={searchToggle}
+                onChange={handleOnchange}
+                formGroupClass='m-0'
+                onSubmit={handleSubmitFunc}
+              />
+            </Nav>
           ) : (
             <>
               <NavbarBrand
@@ -147,8 +149,7 @@ const NavbarComponent = (props: NavbarComponentProps) => {
                 <MdSearch />
               </Button>
               <Collapse isOpen={isOpen} navbar>
-                {loadMobileNavItems()}
-                {isOpen && <NetworkCurrency {...props} />}
+                {isOpen && loadMobileNavItems()}
               </Collapse>
             </>
           )}
