@@ -18,8 +18,7 @@ interface SearchBarProps {
   formGroupClass?: string;
   onChange: (e) => void;
   placeholder?: string;
-  mobileView?: boolean;
-  onSubmit: (actions?: boolean) => void;
+  onSubmit: (event) => void;
 }
 
 const SearchBar: React.FunctionComponent<SearchBarProps> = (
@@ -29,12 +28,7 @@ const SearchBar: React.FunctionComponent<SearchBarProps> = (
     <div
       className={classnames({ 'd-block': props.searching }, styles.searchBar)}
     >
-      <Form
-        onSubmit={(event) => {
-          event.preventDefault();
-          props.onSubmit();
-        }}
-      >
+      <Form onSubmit={props.onSubmit}>
         <FormGroup className={`row ${props.formGroupClass || ''} `}>
           <Col>
             <InputGroup>
@@ -45,20 +39,10 @@ const SearchBar: React.FunctionComponent<SearchBarProps> = (
                 id='searchInput'
                 onChange={props.onChange}
               />
-              {!props.mobileView && (
-                <MdSearch className={styles.searchIndicator} />
-              )}
+              <MdSearch className={styles.searchIndicator} />
               <InputGroupAddon addonType='append'>
-                <Button
-                  color='outline-primary'
-                  onClick={(e) => {
-                    if (props.mobileView) {
-                      return props.onSubmit();
-                    }
-                    return props.toggleSearch(e);
-                  }}
-                >
-                  {props.mobileView ? <MdSearch /> : <MdClose />}
+                <Button color='outline-primary' onClick={props.toggleSearch}>
+                  <MdClose />
                 </Button>
               </InputGroupAddon>
             </InputGroup>

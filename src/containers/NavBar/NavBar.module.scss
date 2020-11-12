@@ -28,6 +28,13 @@
   }
 }
 
+.mobileSearchBtn {
+  svg {
+    color: rgba(0, 0, 0, 0.5);
+  }
+  border-color: transparent;
+}
+
 .networkPopover {
   width: 200px;
 }

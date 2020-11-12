@@ -13,8 +13,6 @@ import {
   TOKEN_LIST_PAGE_URL_NAME,
   POOL_LIST_PAGE_URL_NAME,
   ADDRESS_TOKEN_LIST_PAGE_URL_NAME,
-  // BLOCK_PAGE_BASE_PATH,
-  // TRANSACTION_BASE_PATH,
 } from '../../constants';
 import {
   NavLink as RRNavLink,
@@ -38,14 +36,15 @@ interface NavbarComponentProps extends RouteComponentProps {
 
 const NavbarComponent = (props: NavbarComponentProps) => {
   const { history } = props;
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
   const toggle = () => setIsOpen(!isOpen);
   const searchToggle = () => setShowSearchBar(!showSearchBar);
-  const handleSubmitFunc = () => {
+  const handleSubmitFunc = (event) => {
+    event.preventDefault();
     if (searchValue) {
       history.push(
         setRoute(`${ADDRESS_TOKEN_LIST_PAGE_URL_NAME}/${searchValue}`)
@@ -56,23 +55,8 @@ const NavbarComponent = (props: NavbarComponentProps) => {
 
   const handleOnchange = (e) => setSearchValue(e.target.value);
 
-  const loadNavItems = () => {
+  const loadMobileNavItems = () => {
     if (isOpen) {
-      if (showSearchBar) {
-        return (
-          <Nav className='m-auto' navbar>
-            <NavItem>
-              <SearchBar
-                searching={{}}
-                toggleSearch={searchToggle}
-                onChange={handleOnchange}
-                formGroupClass='m-0'
-                onSubmit={handleSubmitFunc}
-              />
-            </NavItem>
-          </Nav>
-        );
-      }
       return (
         <Nav className='m-auto' navbar>
           <NavItem>
@@ -85,49 +69,109 @@ const NavbarComponent = (props: NavbarComponentProps) => {
               {I18n.t('containers.navBar.tokens')}
             </NavLink>
           </NavItem>
-          <NavItem>
-            <Desktop>
-              <Button tag={NavLink} color='link' onClick={searchToggle}>
-                <MdSearch />
-              </Button>
-            </Desktop>
-            <Mobile>
-              <SearchBar
-                searching={{}}
-                toggleSearch={searchToggle}
-                onChange={handleOnchange}
-                formGroupClass='m-0'
-                mobileView
-                onSubmit={handleSubmitFunc}
-              />
-            </Mobile>
-          </NavItem>
         </Nav>
       );
     }
   };
 
+  const loadDesktopNavItems = () => {
+    if (showSearchBar) {
+      return (
+        <Nav className='m-auto' navbar>
+          <NavItem>
+            <SearchBar
+              searching={{}}
+              toggleSearch={searchToggle}
+              onChange={handleOnchange}
+              formGroupClass='m-0'
+              onSubmit={handleSubmitFunc}
+            />
+          </NavItem>
+        </Nav>
+      );
+    }
+    return (
+      <Nav className='m-auto' navbar>
+        <NavItem>
+          <NavLink to={setRoute(POOL_LIST_PAGE_URL_NAME)} tag={RRNavLink}>
+            {I18n.t('containers.navBar.pool')}
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink to={setRoute(TOKEN_LIST_PAGE_URL_NAME)} tag={RRNavLink}>
+            {I18n.t('containers.navBar.tokens')}
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <Button tag={NavLink} color='link' onClick={searchToggle}>
+            <MdSearch />
+          </Button>
+        </NavItem>
+      </Nav>
+    );
+  };
+
   return (
-    <Navbar className={styles.navigation} light expand='md'>
-      <NavbarBrand
-        tag={RRNavLink}
-        to={`/DFI/${props.network}/pool`}
-        className='mr-auto'
-      >
-        <Desktop>
-          <Logo className={styles.logo} />
-        </Desktop>
-        <Mobile>
-          <img src={MobileLogo} className={styles.logo} />
-        </Mobile>
-        {I18n.t('containers.navBar.explorerTitle')}
-      </NavbarBrand>
-      <NavbarToggler onClick={toggle} />
-      <Collapse isOpen={isOpen} navbar>
-        {loadNavItems()}
-        {isOpen && <NetworkCurrency {...props} />}
-      </Collapse>
-    </Navbar>
+    <>
+      <Mobile>
+        <Navbar
+          className={`${styles.navigation} ${showSearchBar ? 'm-0' : ''}`}
+          light
+          expand='md'
+        >
+          {showSearchBar ? (
+            <SearchBar
+              searching={{}}
+              toggleSearch={searchToggle}
+              onChange={handleOnchange}
+              formGroupClass='m-0'
+              onSubmit={handleSubmitFunc}
+            />
+          ) : (
+            <>
+              <NavbarBrand
+                tag={RRNavLink}
+                to={`/DFI/${props.network}/pool`}
+                className='mr-auto'
+              >
+                <img src={MobileLogo} className={styles.logo} />
+                {I18n.t('containers.navBar.explorerTitle')}
+              </NavbarBrand>
+              <NavbarToggler onClick={toggle} />
+              <Button
+                tag={NavLink}
+                className={styles.mobileSearchBtn}
+                color='link'
+                onClick={searchToggle}
+              >
+                <MdSearch />
+              </Button>
+              <Collapse isOpen={isOpen} navbar>
+                {loadMobileNavItems()}
+                {isOpen && <NetworkCurrency {...props} />}
+              </Collapse>
+            </>
+          )}
+        </Navbar>
+      </Mobile>
+      <Desktop>
+        <Navbar className={styles.navigation} light expand='md'>
+          <NavbarBrand
+            tag={RRNavLink}
+            to={`/DFI/${props.network}/pool`}
+            className='mr-auto'
+          >
+            <Logo className={styles.logo} />
+            {I18n.t('containers.navBar.explorerTitle')}
+          </NavbarBrand>
+          <NavbarToggler onClick={toggle} />
+          <Collapse isOpen navbar>
+            {loadDesktopNavItems()}
+            <NetworkCurrency {...props} />
+          </Collapse>
+        </Navbar>
+      </Desktop>
+    </>
   );
 };
 
