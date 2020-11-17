@@ -73,8 +73,8 @@ const TransactionHashRow = (props: TransactionHashRowProps) => {
                 </Col>
                 <Col xs='12' md='5'>
                   {outputs.length > 0 ? (
-                    outputs.map((item) => (
-                      <AddressRow item={item} unit={unit} />
+                    outputs.map((item, index) => (
+                      <AddressRow item={item} unit={unit} key={index} />
                     ))
                   ) : (
                     <div className='text-center'>

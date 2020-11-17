@@ -1,0 +1,21 @@
+// App and Bootstrap variables required
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "../../scss/variables";
+@import "../../scss/bootstrap/variables";
+
+.searchBar {
+  input {
+    padding-left: 48px;
+  }
+}
+
+.searchIndicator {
+  position: absolute;
+  z-index: 3;
+  margin: 12px;
+  color: $gray-400;
+  width: 24px;
+  height: 24px;
+}

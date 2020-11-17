@@ -25,6 +25,8 @@ export const DEFAULT_BASE_PATH = `/${CHAIN}/${NETWORK}`;
 
 export const POOL_LIST_PAGE_URL_NAME = 'pool';
 export const TOKEN_LIST_PAGE_URL_NAME = 'token';
+export const ADDRESS_URL_NAME = 'address';
+export const ADDRESS_TOKEN_LIST_PAGE_URL_NAME = `${ADDRESS_URL_NAME}`;
 export const DEFAULT_PAGE = POOL_LIST_PAGE_URL_NAME;
 export const MAINNET_BASE_PATH = `/${CHAIN}/mainnet`;
 export const TESTNET_BASE_PATH = `/${CHAIN}/testnet`;
@@ -33,6 +35,7 @@ export const POOL_BASE_PATH = `${CHAIN_NETWORK_PATH}/${POOL_LIST_PAGE_URL_NAME}`
 export const TOKEN_BASE_PATH = `${CHAIN_NETWORK_PATH}/${TOKEN_LIST_PAGE_URL_NAME}`;
 export const POOL_PAGE_PATH = `${POOL_BASE_PATH}/:poolPairId`;
 export const TOKEN_PAGE_PATH = `${TOKEN_BASE_PATH}/:tokenId`;
+export const ADDRESS_TOKEN_LIST_PAGE = `${CHAIN_NETWORK_PATH}/${ADDRESS_URL_NAME}/:owner`;
 export const DEFAULT_NETWORK_CHAIN = `/${CHAIN}/${NETWORK}/${DEFAULT_PAGE}`;
 export const MAINNET_DEFAULT_PAGE = `${MAINNET_BASE_PATH}/${DEFAULT_PAGE}`;
 export const TESTNET_DEFAULT_PAGE = `${TESTNET_BASE_PATH}/${DEFAULT_PAGE}`;

@@ -136,24 +136,29 @@ function* fetchTokenPrice(lpPairList: any[]) {
 
   return lpPairList.map((item) => {
     const { reserveA, reserveB, idTokenA, idTokenB, rewardPct } = item;
+
     const yearlyPoolReward = new BigNumber(lpDailyDfiReward)
       .times(rewardPct)
       .times(365)
       .times(coinPriceObj[0]);
+
     const liquidityReserveidTokenA = new BigNumber(reserveA).times(
       coinPriceObj[idTokenA]
     );
+
     const liquidityReserveidTokenB = new BigNumber(reserveB).times(
       coinPriceObj[idTokenB]
     );
+
     const totalLiquidity = liquidityReserveidTokenA.plus(
       liquidityReserveidTokenB
     );
+
     return {
       ...item,
       totalLiquidity: totalLiquidity.toNumber(),
       yearlyPoolReward: yearlyPoolReward.toNumber(),
-      apy: yearlyPoolReward.div(totalLiquidity).toNumber(),
+      apy: yearlyPoolReward.times(100).div(totalLiquidity).toNumber(),
     };
   });
 }

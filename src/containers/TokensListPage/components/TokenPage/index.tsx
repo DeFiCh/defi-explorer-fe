@@ -11,6 +11,7 @@ import { fetchTokenPageStartedRequest } from '../../reducer';
 import PoolPairsTable from '../../../PoolPairsListPage/components/PoolPairsTable';
 import TokenAvatar from '../../../../components/TokenAvatar';
 import { setRoute } from '../../../../utils/utility';
+import styles from '../../TokensListPage.module.scss';
 
 interface RouteInfo {
   tokenId: string;
@@ -61,7 +62,9 @@ const TokenPage = (props: TokenPageProps) => {
             <span>
               <TokenAvatar token={data} />
             </span>{' '}
-            {data.name}
+            <span>
+              <div className={styles.iconTitle}>{data.name}</div>
+            </span>
           </h1>
           <Row>
             <Col xs='12'>

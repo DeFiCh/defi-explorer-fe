@@ -140,26 +140,34 @@ const PoolPairsTable = (props: PoolPairsTable) => {
     return tableRows.map((item, id) => (
       <tr key={`${item.poolPairId}-${id}`}>
         <td className={styles.staticCol}>
-          <span>
-            <TokenAvatar token={item.tokenInfo.idTokenA} />
-          </span>
+          <TokenAvatar token={item.tokenInfo.idTokenA} />
+          &nbsp;
+          <TokenAvatar token={item.tokenInfo.idTokenB} />
           &nbsp;
           <span>
-            <TokenAvatar token={item.tokenInfo.idTokenB} />
-          </span>{' '}
-          <Link to={setRoute(`${POOL_LIST_PAGE_URL_NAME}/${item.poolPairId}`)}>
-            {item.symbol}
-          </Link>
+            <div className={styles.iconTitle}>
+              <Link
+                to={setRoute(`${POOL_LIST_PAGE_URL_NAME}/${item.poolPairId}`)}
+              >
+                {item.symbol}
+              </Link>
+            </div>
+          </span>
         </td>
-        <td>
-          <div>{parseFloat(item.commission) * 100}%</div>
+        <td className='text-right'>{parseFloat(item.commission) * 100}%</td>
+        <td className='text-right'>{`$ ${item.totalLiquidity.toFixed(2)}`}</td>
+        <td className='text-right'>
+          {`${item.reserveA.toFixed(2)} ${item.tokenInfo.idTokenA.symbol}`}
         </td>
-        <td>
-          <div>{`$ ${item.totalLiquidity.toFixed(2)}`}</div>
+        <td className='text-right'>
+          {`${item.reserveB.toFixed(2)} ${item.tokenInfo.idTokenB.symbol}`}
         </td>
-        <td>
-          <div>{`$ ${item.apy.toFixed(2)}`}</div>
+        <td className='text-right'>
+          {`${item['reserveA/reserveB'].toFixed(2)} ${
+            item.tokenInfo.idTokenA.symbol
+          }/${item.tokenInfo.idTokenB.symbol}`}
         </td>
+        <td className='text-right'>{`${item.apy.toFixed(2)} %`}</td>
       </tr>
     ));
   }, [tableRows]);
@@ -189,7 +197,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                   <th>
                     <Button
                       color='link'
-                      className='d-flex'
+                      className='d-flex float-right'
                       onClick={() => sorter('commission')}
                     >
                       {I18n.t('containers.poolPairsListPage.commission')}
@@ -200,7 +208,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                   <th>
                     <Button
                       color='link'
-                      className='d-flex'
+                      className='d-flex float-right'
                       onClick={() => sorter('totalLiquidity')}
                     >
                       {I18n.t('containers.poolPairsListPage.totalLiquidity')}
@@ -208,10 +216,16 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                       {getSortingIcon('totalLiquidity')}
                     </Button>
                   </th>
+                  <th colSpan={2} className='text-center'>
+                    {I18n.t('containers.poolPairsListPage.liquidity')}
+                  </th>
+                  <th className='text-right'>
+                    {I18n.t('containers.poolPairsListPage.priceRatio')}
+                  </th>
                   <th>
                     <Button
                       color='link'
-                      className='d-flex'
+                      className='d-flex float-right'
                       onClick={() => sorter('apy')}
                     >
                       {I18n.t('containers.poolPairsListPage.apy')}

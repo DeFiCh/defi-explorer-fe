@@ -1,31 +1,43 @@
+// import capitalize from 'lodash/capitalize';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Row, Col, Card, Table, Button } from 'reactstrap';
 import {
-  TOKENS_LIST_PAGE_LIMIT,
+  ADDRESS_TOKENS_LIST_PAGE_LIMIT,
   TOKEN_LIST_PAGE_URL_NAME,
-} from '../../constants';
-import { fetchTokensListStartedRequest } from './reducer';
-import TokenAvatar from '../../components/TokenAvatar';
-import Pagination from '../../components/Pagination';
-import styles from './TokensListPage.module.scss';
-import { setRoute, tableSorter } from '../../utils/utility';
+} from '../../../../constants';
+import { fetchAddressTokensListStartedRequest } from '../../reducer';
+// import TokenAvatar from '../../../../components/TokenAvatar';
+import Pagination from '../../../../components/Pagination';
+import styles from '../../TokensListPage.module.scss';
+import { setRoute, tableSorter } from '../../../../utils/utility';
 import { cloneDeep } from 'lodash';
 import { BsArrowDown, BsArrowUp, BsArrowUpDown } from 'react-icons/bs';
-import BigNumber from 'bignumber.js';
 
-interface TokensListPageProps extends RouteComponentProps {
-  fetchTokensListStartedRequest: () => void;
+interface RouteInfo {
+  owner: string;
+}
+
+interface AddressTokenListProps extends RouteComponentProps<RouteInfo> {
+  fetchAddressTokensListStartedRequest: (owner: string) => void;
   isLoading: boolean;
   data: any[];
   isError: string;
   unit: string;
 }
 
-const TokensListPage = (props: TokensListPageProps) => {
-  const { fetchTokensListStartedRequest, isLoading, data, isError } = props;
+const AddressTokenList = (props: AddressTokenListProps) => {
+  const {
+    fetchAddressTokensListStartedRequest,
+    isLoading,
+    data,
+    isError,
+    match: {
+      params: { owner },
+    },
+  } = props;
 
   const [currentPage, setCurrentPage] = useState(1);
   const [tableRows, setTableRows] = useState<any[]>([]);
@@ -34,7 +46,7 @@ const TokensListPage = (props: TokensListPageProps) => {
     field: '',
     mode: 0,
   });
-  const pageSize = TOKENS_LIST_PAGE_LIMIT;
+  const pageSize = ADDRESS_TOKENS_LIST_PAGE_LIMIT;
   const totalCount = tableData.length;
   const pagesCount = Math.ceil(totalCount / pageSize);
   const to = (currentPage - 1) * pageSize + 1;
@@ -51,8 +63,8 @@ const TokensListPage = (props: TokensListPageProps) => {
   };
 
   useEffect(() => {
-    fetchTokensListStartedRequest();
-  }, []);
+    fetchAddressTokensListStartedRequest(owner);
+  }, [owner]);
 
   useEffect(() => {
     setTableData(data);
@@ -88,19 +100,7 @@ const TokensListPage = (props: TokensListPageProps) => {
       if (updatedMode === 0) {
         setTableData(newCloneTableData);
       } else {
-        setTableData(
-          newCloneTableData.sort((a, b) => {
-            if (fieldName === 'minted') {
-              if (a.mintable === false) {
-                return 1;
-              }
-              if (b.mintable === false) {
-                return -1;
-              }
-            }
-            return tableSorter(flip, fieldName)(a, b);
-          })
-        );
+        setTableData(newCloneTableData.sort(tableSorter(flip, fieldName)));
       }
       setSortedField({
         field: fieldName,
@@ -130,48 +130,39 @@ const TokensListPage = (props: TokensListPageProps) => {
         </tr>
       );
     if (tableRows.length)
-      return tableRows.map((item) => (
-        <tr key={item.tokenId}>
-          <td className={styles.staticCol}>
-            <TokenAvatar token={item} />
-            &nbsp;
-            <span>
-              <div className={styles.iconTitle}>
-                <Link
-                  to={setRoute(`${TOKEN_LIST_PAGE_URL_NAME}/${item.tokenId}`)}
-                >
-                  {item.name || 'Unknown'}
-                </Link>
-              </div>
-            </span>
+      return tableRows.map((item, index) => (
+        <tr key={`${item.name}-${index}`}>
+          <td>
+            <Link to={setRoute(`${TOKEN_LIST_PAGE_URL_NAME}/${item.id}`)}>
+              {item.name}
+            </Link>
           </td>
-          <td className={styles.staticCol}>
-            <div>{item.symbol}</div>
-          </td>
-          <td className={`${styles.staticCol} text-right`}>
-            {item.mintable ? `${new BigNumber(item.minted).toFixed(2)}` : '-'}
-          </td>
+          <td className='text-right'>{item.balance}</td>
         </tr>
       ));
     if (!isLoading && totalCount === 0) {
       return (
         <tr key='noDataPresent'>
           <td colSpan={5}>
-            {I18n.t('containers.tokensPageList.noDataPresent')}
+            {I18n.t('containers.addresstokensListPage.noDataPresent')}
           </td>
         </tr>
       );
     }
     return (
       <tr key={'Loading'}>
-        <td colSpan={5}>{I18n.t('containers.tokensPageList.loading')}</td>
+        <td colSpan={5}>
+          {I18n.t('containers.addresstokensListPage.loading')}
+        </td>
       </tr>
     );
   };
 
   return (
     <div>
-      <h1>{I18n.t('containers.tokensPageList.tokensPageListTitle')}</h1>
+      <h1>
+        {I18n.t('containers.addresstokensListPage.addressTokenListPageTitle')}
+      </h1>
       <Row>
         <Col xs='12'>
           <Card className={styles.card}>
@@ -179,27 +170,16 @@ const TokensListPage = (props: TokensListPageProps) => {
               <Table className={styles.table}>
                 <thead>
                   <tr>
-                    <th>{I18n.t('containers.tokensPageList.name')}</th>
-                    <th>
-                      <Button
-                        color='link'
-                        className='d-flex'
-                        onClick={() => sorter('symbol')}
-                      >
-                        {I18n.t('containers.tokensPageList.symbol')}
-                        &nbsp;
-                        {getSortingIcon('symbol')}
-                      </Button>
-                    </th>
+                    <th>{I18n.t('containers.addresstokensListPage.name')}</th>
                     <th>
                       <Button
                         color='link'
                         className='d-flex float-right'
-                        onClick={() => sorter('minted')}
+                        onClick={() => sorter('balance')}
                       >
-                        {I18n.t('containers.tokensPageList.minted')}
+                        {I18n.t('containers.addresstokensListPage.balance')}
                         &nbsp;
-                        {getSortingIcon('minted')}
+                        {getSortingIcon('balance')}
                       </Button>
                     </th>
                   </tr>
@@ -212,11 +192,14 @@ const TokensListPage = (props: TokensListPageProps) => {
         <Col xs='12'>
           {!!tableRows.length && (
             <Pagination
-              label={I18n.t('containers.tokensPageList.paginationRange', {
-                to,
-                total: totalCount,
-                from,
-              })}
+              label={I18n.t(
+                'containers.addresstokensListPage.paginationRange',
+                {
+                  to,
+                  total: totalCount,
+                  from,
+                }
+              )}
               currentPage={currentPage}
               pagesCount={pagesCount}
               handlePageClick={fetchData}
@@ -230,7 +213,9 @@ const TokensListPage = (props: TokensListPageProps) => {
 
 const mapStateToProps = (state) => {
   const {
-    tokensListPage: { isLoading, data, isError },
+    tokensListPage: {
+      addressTokenList: { isLoading, data, isError },
+    },
     app: { unit },
   } = state;
   return {
@@ -242,7 +227,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  fetchTokensListStartedRequest,
+  fetchAddressTokensListStartedRequest: (owner: string) =>
+    fetchAddressTokensListStartedRequest({ owner }),
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TokensListPage);
+export default connect(mapStateToProps, mapDispatchToProps)(AddressTokenList);

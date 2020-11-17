@@ -10,6 +10,7 @@ export const NETWORK = process.env.NETWORK || 'mainnet';
 export const LATEST_BLOCKS_LIMIT = 10;
 export const BLOCKS_LIST_PAGE_LIMIT = 10;
 export const TOKENS_LIST_PAGE_LIMIT = 10;
+export const ADDRESS_TOKENS_LIST_PAGE_LIMIT = 10;
 export const LATEST_TRANSACTIONS_LIMIT = 5;
 export const BLOCK_PAGE_TRANSACTIONS_LIMIT = 10;
 export const TRANSACTIONS_LIST_PAGE_LIMIT = 10;

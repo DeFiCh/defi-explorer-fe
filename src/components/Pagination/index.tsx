@@ -30,8 +30,11 @@ const PaginationComponent: React.FunctionComponent<IPaginationComponentProps> = 
         </PaginationLink>
       </PaginationItem>
     ) : (
-      fetchPageNumbers(currentPage, pagesCount, 1).map((pageNumber) => (
-        <PaginationItem key={pageNumber} active={pageNumber === currentPage}>
+      fetchPageNumbers(currentPage, pagesCount, 1).map((pageNumber, index) => (
+        <PaginationItem
+          key={`${pageNumber}-${index}`}
+          active={pageNumber === currentPage}
+        >
           <PaginationLink onClick={(e) => props.handlePageClick(pageNumber)}>
             {pageNumber}
           </PaginationLink>

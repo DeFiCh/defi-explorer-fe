@@ -1,4 +1,3 @@
-import { filter } from 'lodash';
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import {
@@ -11,11 +10,13 @@ import {
   DEFAULT_NETWORK_CHAIN,
   TESTNET_BASE_PATH,
   MAINNET_BASE_PATH,
+  ADDRESS_TOKEN_LIST_PAGE,
 } from '../constants';
 import PoolPairsListPage from '../containers/PoolPairsListPage';
 import PoolPairPage from '../containers/PoolPairsListPage/components/PoolPairPage';
 import TokensListPage from '../containers/TokensListPage';
 import TokenPage from '../containers/TokensListPage/components/TokenPage';
+import AddressTokenListPage from '../containers/TokensListPage/components/AddressTokenListPage';
 
 const Routes = (location) => {
   const network = location.pathname.split('/').filter((item) => !!item)[1];
@@ -37,6 +38,12 @@ const Routes = (location) => {
           to={TESTNET_DEFAULT_PAGE}
         />
         <Route exact path={TOKEN_PAGE_PATH} component={TokenPage} />
+        <Route
+          exact
+          path={ADDRESS_TOKEN_LIST_PAGE}
+          component={AddressTokenListPage}
+        />
+
         <Route exact path={TOKEN_BASE_PATH} component={TokensListPage} />
         <Route exact path={POOL_PAGE_PATH} component={PoolPairPage} />
         <Route exact path={POOL_BASE_PATH} component={PoolPairsListPage} />

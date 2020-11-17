@@ -9,6 +9,11 @@ export const initialState = {
     data: {},
     isError: '',
   },
+  addressTokenList: {
+    isLoading: false,
+    data: [],
+    isError: '',
+  },
 };
 
 const configSlice = createSlice({
@@ -45,6 +50,21 @@ const configSlice = createSlice({
       state.tokenPage.data = action.payload;
       state.tokenPage.isError = '';
     },
+    fetchAddressTokensListStartedRequest(state, action) {
+      state.addressTokenList.data = [];
+      state.addressTokenList.isLoading = true;
+      state.addressTokenList.isError = '';
+    },
+    fetchAddressTokensListFailureRequest(state, action) {
+      state.addressTokenList.isLoading = false;
+      state.addressTokenList.isError = action.payload;
+      state.addressTokenList.data = [];
+    },
+    fetchAddressTokensListSuccessRequest(state, action) {
+      state.addressTokenList.isLoading = false;
+      state.addressTokenList.data = action.payload;
+      state.addressTokenList.isError = '';
+    },
   },
 });
 
@@ -57,6 +77,9 @@ export const {
   fetchTokenPageStartedRequest,
   fetchTokenPageFailureRequest,
   fetchTokenPageSuccessRequest,
+  fetchAddressTokensListStartedRequest,
+  fetchAddressTokensListFailureRequest,
+  fetchAddressTokensListSuccessRequest,
 } = actions;
 
 export default reducer;

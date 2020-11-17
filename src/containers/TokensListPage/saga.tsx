@@ -1,5 +1,4 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { tableSorter } from '../../utils/utility';
 import {
   fetchTokensListStartedRequest,
   fetchTokensListFailureRequest,
@@ -7,8 +6,15 @@ import {
   fetchTokenPageStartedRequest,
   fetchTokenPageSuccessRequest,
   fetchTokenPageFailureRequest,
+  fetchAddressTokensListStartedRequest,
+  fetchAddressTokensListFailureRequest,
+  fetchAddressTokensListSuccessRequest,
 } from './reducer';
-import { handleGetToken, handleTokenList } from './services';
+import {
+  handleAddressTokenList,
+  handleGetToken,
+  handleTokenList,
+} from './services';
 
 function* getNetwork() {
   const { network } = yield select((state) => state.app);
@@ -59,9 +65,52 @@ function* fetchTokenPageStarted(action) {
   }
 }
 
+function* fetchAddressTokensListStarted(action) {
+  try {
+    const { owner } = action.payload;
+    const network = yield call(getNetwork);
+    let cloneAddressTokenList: any[] = [];
+    let start = 0;
+    let including_start = true;
+    while (true) {
+      const queryParams = {
+        start,
+        limit: 500,
+        network,
+        including_start,
+        owner,
+      };
+      const data = yield call(handleAddressTokenList, queryParams);
+      cloneAddressTokenList = cloneAddressTokenList.concat(data);
+      if (data.length === 0) {
+        break;
+      } else {
+        including_start = false;
+        const query = {
+          id: cloneAddressTokenList[cloneAddressTokenList.length - 1].id,
+          network,
+        };
+        const { tokenId } = yield call(handleGetToken, query);
+        if (typeof tokenId === 'undefined' || tokenId === null) {
+          break;
+        }
+        start = tokenId;
+      }
+    }
+    yield put(fetchAddressTokensListSuccessRequest(cloneAddressTokenList));
+  } catch (err) {
+    console.error(err);
+    yield put(fetchAddressTokensListFailureRequest(err.message));
+  }
+}
+
 function* mySaga() {
   yield takeLatest(fetchTokensListStartedRequest.type, fetchTokensListStarted);
   yield takeLatest(fetchTokenPageStartedRequest.type, fetchTokenPageStarted);
+  yield takeLatest(
+    fetchAddressTokensListStartedRequest.type,
+    fetchAddressTokensListStarted
+  );
 }
 
 export default mySaga;

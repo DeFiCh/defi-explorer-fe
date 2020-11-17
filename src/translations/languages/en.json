@@ -77,6 +77,7 @@
       }
     },
     "navBar": {
+      "searchPlaceholder": "Search address",
       "menuDropdown": {
         "network": "Network",
         "units": "Units"
@@ -184,7 +185,9 @@
       "poolPairsListPageTitle": "Liquidity Pool Pairs",
       "name": "Name",
       "commission": "Commission",
-      "totalLiquidity": "Liquidity",
+      "totalLiquidity": "Total Liquidity",
+      "liquidity": "Liquidity",
+      "priceRatio": "Price Ratio",
       "apy": "APY",
       "tradeEnabled": "Trade Enabled",
       "paginationRange": "%{to} – %{from} of %{total}",
@@ -223,6 +226,14 @@
       "ownerAddress": "Owner Address",
       "tradeEnabled": "Trade Enabled",
       "loading": "Loading"
+    },
+    "addresstokensListPage": {
+      "noDataPresent": "No Tokens associated with address",
+      "loading": "Loading",
+      "addressTokenListPageTitle": "Balance",
+      "name": "Name",
+      "balance": "Balance",
+      "paginationRange": "%{to} - %{from} of %{total}"
     }
   },
   "alerts": {}

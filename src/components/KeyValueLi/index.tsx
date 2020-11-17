@@ -39,14 +39,14 @@ const KeyValueLi: React.FunctionComponent<KeyValueLiProps> = (
           color='link'
           className={styles.href}
         >
-          <EllipsisText text={props.value} length={'50'} />
+          <EllipsisText text={props.value} length={50} />
         </Button>
       );
     }
     if (props.noEllipsis)
       return <div className='text-break'>{props.value}</div>;
 
-    return <EllipsisText text={props.value} length={'50'} />;
+    return <EllipsisText text={props.value} length={50} />;
   };
   return (
     <div className={styles.keyValueLi}>
