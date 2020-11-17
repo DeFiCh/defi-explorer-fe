@@ -130,8 +130,8 @@ const AddressTokenList = (props: AddressTokenListProps) => {
         </tr>
       );
     if (tableRows.length)
-      return tableRows.map((item) => (
-        <tr key={item.tokenId}>
+      return tableRows.map((item, index) => (
+        <tr key={`${item.name}-${index}`}>
           <td>
             <Link to={setRoute(`${TOKEN_LIST_PAGE_URL_NAME}/${item.id}`)}>
               {item.name}

@@ -8,7 +8,7 @@ import { getIdFromSymbol } from '../../utils/utility';
 
 export const getCategory = (item) => {
   let category = 'DCT';
-  if (item.isDAT) {
+  if (item && item.isDAT) {
     category = 'DAT';
   }
   return category;
@@ -43,13 +43,17 @@ export const handleGetToken = async (query: {
     baseURL: QUICK_STATS_BASE_ENDPOINT,
     params: query,
   });
-
-  return {
-    ...data[id],
-    tokenId: id,
-    category: getCategory(data[id]),
-    name: data[id].name || data[id].symbol,
-  };
+  const newIds = Object.keys(data);
+  if (newIds.length) {
+    const newId = newIds[0];
+    return {
+      ...data[newId],
+      tokenId: newId,
+      category: getCategory(data[newId]),
+      name: data[newId].name || data[newId].symbol,
+    };
+  }
+  return {};
 };
 
 export const handleAddressTokenList = async (
@@ -68,7 +72,9 @@ export const handleAddressTokenList = async (
         item.indexOf('#') === -1 ? item.length : item.indexOf('#');
       const name = item.substring(item.indexOf('@') + 1, lastIndex);
       const id =
-        lastIndex < item.length ? item.substring(item.indexOf('#') + 1) : getIdFromSymbol(name);
+        lastIndex < item.length
+          ? item.substring(item.indexOf('#') + 1)
+          : getIdFromSymbol(name);
       return {
         balance,
         name,

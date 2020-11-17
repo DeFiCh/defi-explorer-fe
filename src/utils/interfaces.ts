@@ -1,4 +1,4 @@
-import { string } from "prop-types";
+import { string } from 'prop-types';
 
 export interface ITokenResponse {
   hash: string;
@@ -67,7 +67,7 @@ export interface AppBlock {
   btcTxHash: string | undefined;
   isAnchor: boolean;
   tx: {
-    length: number;
+    length: number | string;
   };
   poolInfo: {
     poolName: string;

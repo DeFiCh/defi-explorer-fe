@@ -86,7 +86,15 @@ function* fetchAddressTokensListStarted(action) {
         break;
       } else {
         including_start = false;
-        start = cloneAddressTokenList[cloneAddressTokenList.length - 1].id;
+        const query = {
+          id: cloneAddressTokenList[cloneAddressTokenList.length - 1].id,
+          network,
+        };
+        const { tokenId } = yield call(handleGetToken, query);
+        if (typeof tokenId === 'undefined' || tokenId === null) {
+          break;
+        }
+        start = tokenId;
       }
     }
     yield put(fetchAddressTokensListSuccessRequest(cloneAddressTokenList));

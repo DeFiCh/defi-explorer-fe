@@ -168,6 +168,6 @@ export const getIdFromSymbol = (symbol) => {
     BTC: 1,
     ETH: 2,
     USDT: 5,
-  }
-  return mapId[symbol];
+  };
+  return mapId[symbol] || symbol;
 };

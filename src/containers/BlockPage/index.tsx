@@ -81,7 +81,7 @@ const BlockPage: React.FunctionComponent<BlockPageProps> = (
       return (
         <>
           {transactions.data.map((item, id) => (
-            <TransactionHashRow id={id} tx={item} />
+            <TransactionHashRow id={id} tx={item} key={id} />
           ))}
         </>
       );
