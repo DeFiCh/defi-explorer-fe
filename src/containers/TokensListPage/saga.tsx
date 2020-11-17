@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 import {
   fetchTokensListStartedRequest,
   fetchTokensListFailureRequest,
@@ -97,9 +97,20 @@ function* fetchAddressTokensListStarted(action) {
         start = tokenId;
       }
     }
-    yield put(fetchAddressTokensListSuccessRequest(cloneAddressTokenList));
+    const updatedAddressTokenList: any[] = [];
+    for (const item of cloneAddressTokenList) {
+      const query = {
+        id: item.id || item.name,
+        network,
+      };
+      const tokenInfo = yield call(handleGetToken, query);
+      updatedAddressTokenList.push({
+        tokenInfo,
+        ...item,
+      });
+    }
+    yield put(fetchAddressTokensListSuccessRequest(updatedAddressTokenList));
   } catch (err) {
-    console.error(err);
     yield put(fetchAddressTokensListFailureRequest(err.message));
   }
 }

@@ -15,6 +15,7 @@ import styles from '../../TokensListPage.module.scss';
 import { setRoute, tableSorter } from '../../../../utils/utility';
 import { cloneDeep } from 'lodash';
 import { BsArrowDown, BsArrowUp, BsArrowUpDown } from 'react-icons/bs';
+import TokenAvatar from '../../../../components/TokenAvatar';
 
 interface RouteInfo {
   owner: string;
@@ -133,9 +134,15 @@ const AddressTokenList = (props: AddressTokenListProps) => {
       return tableRows.map((item, index) => (
         <tr key={`${item.name}-${index}`}>
           <td>
-            <Link to={setRoute(`${TOKEN_LIST_PAGE_URL_NAME}/${item.id}`)}>
-              {item.name}
-            </Link>
+            <TokenAvatar token={item.tokenInfo} />
+            &nbsp;
+            <span>
+              <div className={styles.iconTitle}>
+                <Link to={setRoute(`${TOKEN_LIST_PAGE_URL_NAME}/${item.id}`)}>
+                  {item.name}
+                </Link>
+              </div>
+            </span>
           </td>
           <td className='text-right'>{item.balance}</td>
         </tr>
