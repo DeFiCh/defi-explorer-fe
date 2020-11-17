@@ -5,7 +5,7 @@ import { I18n } from 'react-redux-i18n';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Row, Col, Card, Table, Button } from 'reactstrap';
 import {
-  TOKENS_LIST_PAGE_LIMIT,
+  ADDRESS_TOKENS_LIST_PAGE_LIMIT,
   TOKEN_LIST_PAGE_URL_NAME,
 } from '../../../../constants';
 import { fetchAddressTokensListStartedRequest } from '../../reducer';
@@ -46,7 +46,7 @@ const AddressTokenList = (props: AddressTokenListProps) => {
     field: '',
     mode: 0,
   });
-  const pageSize = TOKENS_LIST_PAGE_LIMIT;
+  const pageSize = ADDRESS_TOKENS_LIST_PAGE_LIMIT;
   const totalCount = tableData.length;
   const pagesCount = Math.ceil(totalCount / pageSize);
   const to = (currentPage - 1) * pageSize + 1;
@@ -137,9 +137,7 @@ const AddressTokenList = (props: AddressTokenListProps) => {
               {item.name}
             </Link>
           </td>
-          <td>
-            <div>{item.balance}</div>
-          </td>
+          <td className='text-right'>{item.balance}</td>
         </tr>
       ));
     if (!isLoading && totalCount === 0) {
@@ -176,7 +174,7 @@ const AddressTokenList = (props: AddressTokenListProps) => {
                     <th>
                       <Button
                         color='link'
-                        className='d-flex'
+                        className='d-flex float-right'
                         onClick={() => sorter('balance')}
                       >
                         {I18n.t('containers.addresstokensListPage.balance')}

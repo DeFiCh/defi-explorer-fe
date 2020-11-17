@@ -10,6 +10,7 @@ import { POOL_LIST_PAGE_URL_NAME } from '../../../../constants';
 import TokenAvatar from '../../../../components/TokenAvatar';
 import { fetchPoolPairPageStartedRequest } from '../../reducer';
 import { setRoute } from '../../../../utils/utility';
+import styles from '../../PoolPairsListPage.module.scss';
 
 interface RouteInfo {
   poolPairId: string;
@@ -57,13 +58,13 @@ const PoolPairPage = (props: PoolPairPageProps) => {
         </div>
         <div className='mt-4'>
           <h1>
+            <TokenAvatar token={data.tokenInfo.idTokenA} />
+            &nbsp;
+            <TokenAvatar token={data.tokenInfo.idTokenB} />
+            &nbsp;
             <span>
-              <TokenAvatar token={data.tokenInfo.idTokenA} />
-            </span>{' '}
-            <span>
-              <TokenAvatar token={data.tokenInfo.idTokenB} />
-            </span>{' '}
-            {data.symbol}
+              <div className={styles.iconTitle}>{data.symbol}</div>
+            </span>
           </h1>
           <Row>
             <Col xs='12' md='4'>
@@ -133,7 +134,7 @@ const PoolPairPage = (props: PoolPairPageProps) => {
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.apy')}
-                value={`$ ${data.apy}`}
+                value={`${data.apy.toFixed(2)} %`}
               />
             </Col>
 

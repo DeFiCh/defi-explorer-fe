@@ -1,4 +1,3 @@
-import capitalize from 'lodash/capitalize';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
@@ -134,26 +133,23 @@ const TokensListPage = (props: TokensListPageProps) => {
       return tableRows.map((item) => (
         <tr key={item.tokenId}>
           <td className={styles.staticCol}>
+            <TokenAvatar token={item} />
+            &nbsp;
             <span>
-              <TokenAvatar token={item} />
-            </span>{' '}
-            <Link to={setRoute(`${TOKEN_LIST_PAGE_URL_NAME}/${item.tokenId}`)}>
-              {item.name || 'Unknown'}
-            </Link>
-          </td>
-          <td>
-            <div>{item.symbol}</div>
-          </td>
-          <td>
-            <div>{item.category}</div>
+              <div className={styles.iconTitle}>
+                <Link
+                  to={setRoute(`${TOKEN_LIST_PAGE_URL_NAME}/${item.tokenId}`)}
+                >
+                  {item.name || 'Unknown'}
+                </Link>
+              </div>
+            </span>
           </td>
           <td className={styles.staticCol}>
-            <div>
-              {item.mintable ? `${new BigNumber(item.minted).toFixed(2)}` : '-'}
-            </div>
+            <div>{item.symbol}</div>
           </td>
-          <td>
-            <div>{capitalize(item.tradeable)}</div>
+          <td className={`${styles.staticCol} text-right`}>
+            {item.mintable ? `${new BigNumber(item.minted).toFixed(2)}` : '-'}
           </td>
         </tr>
       ));
@@ -198,34 +194,12 @@ const TokensListPage = (props: TokensListPageProps) => {
                     <th>
                       <Button
                         color='link'
-                        className='d-flex'
-                        onClick={() => sorter('category')}
-                      >
-                        {I18n.t('containers.tokensPageList.category')}
-                        &nbsp;
-                        {getSortingIcon('category')}
-                      </Button>
-                    </th>
-                    <th>
-                      <Button
-                        color='link'
-                        className='d-flex'
+                        className='d-flex float-right'
                         onClick={() => sorter('minted')}
                       >
                         {I18n.t('containers.tokensPageList.minted')}
                         &nbsp;
                         {getSortingIcon('minted')}
-                      </Button>
-                    </th>
-                    <th>
-                      <Button
-                        color='link'
-                        className='d-flex'
-                        onClick={() => sorter('tradeable')}
-                      >
-                        {I18n.t('containers.tokensPageList.tradeable')}
-                        &nbsp;
-                        {getSortingIcon('tradeable')}
                       </Button>
                     </th>
                   </tr>
