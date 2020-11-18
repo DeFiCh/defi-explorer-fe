@@ -134,7 +134,9 @@ const AddressTokenList = (props: AddressTokenListProps) => {
       return tableRows.map((item, index) => (
         <tr key={`${item.name}-${index}`}>
           <td>
-            <TokenAvatar token={item.tokenInfo} />
+            <span className='pr-2'>
+              <TokenAvatar token={item.tokenInfo} />
+            </span>
             &nbsp;
             <span>
               <div className={styles.iconTitle}>

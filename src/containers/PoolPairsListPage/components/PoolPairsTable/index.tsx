@@ -140,9 +140,11 @@ const PoolPairsTable = (props: PoolPairsTable) => {
     return tableRows.map((item, id) => (
       <tr key={`${item.poolPairId}-${id}`}>
         <td className={styles.staticCol}>
-          <TokenAvatar token={item.tokenInfo.idTokenA} />
-          &nbsp;
-          <TokenAvatar token={item.tokenInfo.idTokenB} />
+          <span className='pr-2'>
+            <TokenAvatar token={item.tokenInfo.idTokenA} />
+            &nbsp;
+            <TokenAvatar token={item.tokenInfo.idTokenB} />
+          </span>
           &nbsp;
           <span>
             <div className={styles.iconTitle}>
@@ -168,6 +170,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
           }/${item.tokenInfo.idTokenB.symbol}`}
         </td>
         <td className='text-right'>{`${item.apy.toFixed(2)} %`}</td>
+        <td className='text-right'>{parseFloat(item.rewardPct) * 100}%</td>
       </tr>
     ));
   }, [tableRows]);
@@ -231,6 +234,17 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                       {I18n.t('containers.poolPairsListPage.apy')}
                       &nbsp;
                       {getSortingIcon('apy')}
+                    </Button>
+                  </th>
+                  <th>
+                    <Button
+                      color='link'
+                      className='d-flex float-right'
+                      onClick={() => sorter('rewardPct')}
+                    >
+                      {I18n.t('containers.poolPairsListPage.rewardPct')}
+                      &nbsp;
+                      {getSortingIcon('rewardPct')}
                     </Button>
                   </th>
                 </tr>

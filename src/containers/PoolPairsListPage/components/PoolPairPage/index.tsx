@@ -58,9 +58,11 @@ const PoolPairPage = (props: PoolPairPageProps) => {
         </div>
         <div className='mt-4'>
           <h1>
-            <TokenAvatar token={data.tokenInfo.idTokenA} />
-            &nbsp;
-            <TokenAvatar token={data.tokenInfo.idTokenB} />
+            <span className='pr-2'>
+              <TokenAvatar token={data.tokenInfo.idTokenA} />
+              &nbsp;
+              <TokenAvatar token={data.tokenInfo.idTokenB} />
+            </span>
             &nbsp;
             <span>
               <div className={styles.iconTitle}>{data.symbol}</div>
