@@ -1,4 +1,7 @@
-import { all, call, put, select, takeLatest } from 'redux-saga/effects';
+import BigNumber from 'bignumber.js';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { mDFI } from '../../constants';
+import { getAmountInSelectedUnit } from '../../utils/utility';
 import {
   fetchTokensListStartedRequest,
   fetchTokensListFailureRequest,
@@ -14,6 +17,7 @@ import {
   handleAddressTokenList,
   handleGetToken,
   handleTokenList,
+  handleUtxoBalance,
 } from './services';
 
 function* getNetwork() {
@@ -68,7 +72,14 @@ function* fetchTokenPageStarted(action) {
 function* fetchAddressTokensListStarted(action) {
   try {
     const { owner } = action.payload;
+    const { unit } = yield select((state) => state.app);
     const network = yield call(getNetwork);
+    const defaultDfi = {
+      balance: '0',
+      id: 'DFI',
+      key: '0@DFI',
+      name: 'DFI',
+    };
     let cloneAddressTokenList: any[] = [];
     let start = 0;
     let including_start = true;
@@ -97,12 +108,29 @@ function* fetchAddressTokensListStarted(action) {
         start = tokenId;
       }
     }
+    const findDfi = cloneAddressTokenList.find(
+      (item) => item.id === defaultDfi.id || item.name === defaultDfi.name
+    );
+
+    if (!findDfi) {
+      cloneAddressTokenList.push(defaultDfi);
+    }
+
     const updatedAddressTokenList: any[] = [];
     for (const item of cloneAddressTokenList) {
       const query = {
         id: item.id || item.name,
         network,
       };
+
+      if (item.id === 'DFI' || item.name === 'DFI') {
+        const utxoBalance = yield call(handleUtxoBalance, owner);
+        const unitConversion = getAmountInSelectedUnit(utxoBalance, unit, mDFI);
+        item.balance = new BigNumber(unitConversion)
+          .plus(item.balance)
+          .toNumber();
+      }
+
       const tokenInfo = yield call(handleGetToken, query);
       updatedAddressTokenList.push({
         tokenInfo,

@@ -139,7 +139,7 @@ const AddressTokenList = (props: AddressTokenListProps) => {
             <span>
               <div className={styles.iconTitle}>
                 <Link to={setRoute(`${TOKEN_LIST_PAGE_URL_NAME}/${item.id}`)}>
-                  {item.name}
+                  {item.tokenInfo.symbolKey}
                 </Link>
               </div>
             </span>
