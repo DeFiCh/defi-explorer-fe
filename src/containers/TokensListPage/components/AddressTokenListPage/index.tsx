@@ -170,7 +170,9 @@ const AddressTokenList = (props: AddressTokenListProps) => {
   return (
     <div>
       <h1>
-        {I18n.t('containers.addresstokensListPage.addressTokenListPageTitle')}
+        {I18n.t('containers.addresstokensListPage.addressTokenListPageTitle', {
+          address: owner,
+        })}
       </h1>
       <Row>
         <Col xs='12'>
