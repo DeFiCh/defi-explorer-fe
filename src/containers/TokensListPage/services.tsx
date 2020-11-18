@@ -85,3 +85,11 @@ export const handleAddressTokenList = async (
   }
   return [];
 };
+
+export const handleUtxoBalance = async (address: string) => {
+  const apiRequest = new ApiRequest();
+  const {
+    data: { balance },
+  } = await apiRequest.get(`/address/${address}/balance`);
+  return balance;
+};
