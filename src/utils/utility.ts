@@ -137,7 +137,7 @@ export const getCoinGeckoIdwithSymbol = (symbol) => {
     return 'tether';
   }
   if (symbol === 'DFI') {
-    return 'defi';
+    return 'defichain';
   }
   return '';
 };
