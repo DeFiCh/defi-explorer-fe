@@ -189,7 +189,7 @@
       "liquidity": "Liquidity",
       "priceRatio": "Price Ratio",
       "apy": "APY",
-      "tradeEnabled": "Trade Enabled",
+      "rewardPct": "Rewards Share",
       "paginationRange": "%{to} – %{from} of %{total}",
       "noDataPresent": "No Pool Pair is present"
     },
