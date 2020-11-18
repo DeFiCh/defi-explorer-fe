@@ -140,7 +140,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
     return tableRows.map((item, id) => (
       <tr key={`${item.poolPairId}-${id}`}>
         <td className={styles.staticCol}>
-          <span className='pr-3'>
+          <span className='pr-2'>
             <TokenAvatar token={item.tokenInfo.idTokenA} />
             &nbsp;
             <TokenAvatar token={item.tokenInfo.idTokenB} />

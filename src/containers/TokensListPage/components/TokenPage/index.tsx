@@ -59,9 +59,10 @@ const TokenPage = (props: TokenPageProps) => {
         </div>
         <div className='mt-4'>
           <h1>
-            <span>
+            <span className='pr-2'>
               <TokenAvatar token={data} />
-            </span>{' '}
+            </span>
+            &nbsp;
             <span>
               <div className={styles.iconTitle}>{data.name}</div>
             </span>

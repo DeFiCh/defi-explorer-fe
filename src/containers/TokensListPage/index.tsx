@@ -133,7 +133,7 @@ const TokensListPage = (props: TokensListPageProps) => {
       return tableRows.map((item) => (
         <tr key={item.tokenId}>
           <td className={styles.staticCol}>
-            <span className='pr-3'>
+            <span className='pr-2'>
               <TokenAvatar token={item} />
             </span>
             &nbsp;
