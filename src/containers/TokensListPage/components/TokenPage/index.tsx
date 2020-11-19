@@ -53,7 +53,7 @@ const TokenPage = (props: TokenPageProps) => {
             </BreadcrumbItem>
             {` > `}
             <BreadcrumbItem active tag='span'>
-              {data.name}
+              {data.symbolKey}
             </BreadcrumbItem>
           </Breadcrumb>
         </div>
@@ -64,7 +64,7 @@ const TokenPage = (props: TokenPageProps) => {
             </span>
             &nbsp;
             <span>
-              <div className={styles.iconTitle}>{data.name}</div>
+              <div className={styles.iconTitle}>{data.symbolKey}</div>
             </span>
           </h1>
           <Row>
