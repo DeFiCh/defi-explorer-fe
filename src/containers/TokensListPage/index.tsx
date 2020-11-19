@@ -142,7 +142,7 @@ const TokensListPage = (props: TokensListPageProps) => {
                 <Link
                   to={setRoute(`${TOKEN_LIST_PAGE_URL_NAME}/${item.tokenId}`)}
                 >
-                  {item.name || 'Unknown'}
+                  {item.symbolKey}
                 </Link>
               </div>
             </span>

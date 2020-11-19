@@ -230,7 +230,7 @@
     "addresstokensListPage": {
       "noDataPresent": "No Tokens associated with address",
       "loading": "Loading",
-      "addressTokenListPageTitle": "Balance: %{address}",
+      "addressTokenListPageTitle": "Balance",
       "name": "Name",
       "balance": "Balance",
       "paginationRange": "%{to} - %{from} of %{total}"
