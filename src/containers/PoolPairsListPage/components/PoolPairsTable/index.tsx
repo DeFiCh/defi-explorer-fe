@@ -16,7 +16,7 @@ import { cloneDeep } from 'lodash';
 import { BsArrowUpDown, BsArrowDown, BsArrowUp } from 'react-icons/bs';
 
 interface PoolPairsTable {
-  fetchPoolPairsListStartedRequest: () => void;
+  fetchPoolPairsListStartedRequest: (tokenId?: string | number) => void;
   isLoading: boolean;
   data: any[];
   isError: string;
@@ -55,20 +55,11 @@ const PoolPairsTable = (props: PoolPairsTable) => {
   };
 
   useEffect(() => {
-    fetchPoolPairsListStartedRequest();
+    fetchPoolPairsListStartedRequest(tokenId);
   }, []);
 
-  const prepareData = () => {
-    if (!!tokenId) {
-      return data.filter(
-        (item) => item.idTokenA === tokenId || item.idTokenB === tokenId
-      );
-    }
-    return data;
-  };
-
   useEffect(() => {
-    setTableData(prepareData());
+    setTableData(data);
   }, [data]);
 
   const sorter = (fieldName) => {
@@ -90,7 +81,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
             flip = true;
           }
         } else {
-          updatedTableData = prepareData();
+          updatedTableData = data;
         }
       }
       const newCloneTableData = cloneDeep(updatedTableData);
@@ -159,15 +150,15 @@ const PoolPairsTable = (props: PoolPairsTable) => {
         <td className='text-right'>{parseFloat(item.commission) * 100}%</td>
         <td className='text-right'>{`$ ${item.totalLiquidity.toFixed(2)}`}</td>
         <td className='text-right'>
-          {`${item.reserveA.toFixed(2)} ${item.tokenInfo.idTokenA.symbol}`}
+          {`${item.reserveA.toFixed(2)} ${item.tokenInfo.idTokenA.symbolKey}`}
         </td>
         <td className='text-right'>
-          {`${item.reserveB.toFixed(2)} ${item.tokenInfo.idTokenB.symbol}`}
+          {`${item.reserveB.toFixed(2)} ${item.tokenInfo.idTokenB.symbolKey}`}
         </td>
         <td className='text-right'>
           {`${item['reserveA/reserveB'].toFixed(2)} ${
-            item.tokenInfo.idTokenA.symbol
-          }/${item.tokenInfo.idTokenB.symbol}`}
+            item.tokenInfo.idTokenA.symbolKey
+          }/${item.tokenInfo.idTokenB.symbolKey}`}
         </td>
         <td className='text-right'>{`${item.apy.toFixed(2)} %`}</td>
         <td className='text-right'>{parseFloat(item.rewardPct) * 100}%</td>
@@ -280,7 +271,8 @@ const mapStateToProps = ({ poolPairsListPage, app }) => ({
 });
 
 const mapDispatchToProps = {
-  fetchPoolPairsListStartedRequest,
+  fetchPoolPairsListStartedRequest: (tokenId?: string | number) =>
+    fetchPoolPairsListStartedRequest({ tokenId }),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PoolPairsTable);

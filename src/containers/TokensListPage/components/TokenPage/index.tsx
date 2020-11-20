@@ -79,7 +79,7 @@ const TokenPage = (props: TokenPageProps) => {
                 <Col xs='12' md='4'>
                   <KeyValueLi
                     label={I18n.t('containers.tokenPage.symbol')}
-                    value={`${data.symbol}`}
+                    value={`${data.symbolKey}`}
                   />
                 </Col>
                 <Col xs='12' md='4'>

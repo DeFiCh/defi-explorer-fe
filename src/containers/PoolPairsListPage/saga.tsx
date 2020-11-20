@@ -16,7 +16,7 @@ import {
   handlePoolPairList,
 } from './services';
 import uniqBy from 'lodash/uniqBy';
-import { getCoinGeckoIdwithSymbol, tableSorter } from '../../utils/utility';
+import { getCoinGeckoIdwithSymbol } from '../../utils/utility';
 import { BigNumber } from 'bignumber.js';
 
 function* getNetwork() {
@@ -24,9 +24,10 @@ function* getNetwork() {
   return network;
 }
 
-function* fetchPoolPairsListStarted() {
+function* fetchPoolPairsListStarted(action) {
   try {
     const network = yield call(getNetwork);
+    const { tokenId } = action.payload;
     let clonePoolPairsList: any[] = [];
     let start = 0;
     let including_start = true;
@@ -38,10 +39,7 @@ function* fetchPoolPairsListStarted() {
         including_start,
       };
       const data = yield call(handlePoolPairList, queryParams);
-      const updatedData = yield all(
-        data.map((item) => call(fetchPoolPairData, item))
-      );
-      clonePoolPairsList = clonePoolPairsList.concat(updatedData);
+      clonePoolPairsList = clonePoolPairsList.concat(data);
 
       if (data.length === 0) {
         break;
@@ -50,11 +48,17 @@ function* fetchPoolPairsListStarted() {
         start = clonePoolPairsList[clonePoolPairsList.length - 1].poolPairId;
       }
     }
-
-    const updatedClonePoolPairsList = yield call(
-      fetchTokenPrice,
+    const updatedData = yield all(
       clonePoolPairsList
+        .filter((item) =>
+          !tokenId
+            ? !tokenId // tokenId not present then filter will get all the values
+            : item.idTokenA === tokenId || item.idTokenB === tokenId
+        )
+        .map((item) => call(fetchPoolPairData, item))
     );
+
+    const updatedClonePoolPairsList = yield call(fetchTokenPrice, updatedData);
     yield put(fetchPoolPairsListSuccessRequest(updatedClonePoolPairsList));
   } catch (err) {
     yield put(fetchPoolPairsListFailureRequest(err.message));
