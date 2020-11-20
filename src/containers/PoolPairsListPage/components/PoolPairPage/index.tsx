@@ -74,7 +74,7 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                 label={I18n.t('containers.poolPairPage.oneCurrencyLabel', {
                   symbol: data.tokenInfo.idTokenA.symbolKey,
                 })}
-                value={`${data['reserveB/reserveA']}`}
+                value={`${data['reserveB/reserveA']} ${data.tokenInfo.idTokenB.symbolKey}`}
               />
             </Col>
             <Col xs='12' md='4'>
@@ -82,7 +82,7 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                 label={I18n.t('containers.poolPairPage.oneCurrencyLabel', {
                   symbol: data.tokenInfo.idTokenB.symbolKey,
                 })}
-                value={`${data['reserveA/reserveB']}`}
+                value={`${data['reserveA/reserveB']} ${data.tokenInfo.idTokenA.symbolKey}`}
               />
             </Col>
             <Col xs='12' md='4'>

@@ -15,7 +15,7 @@ const configSlice = createSlice({
   name: 'poolPairsListPage',
   initialState,
   reducers: {
-    fetchPoolPairsListStartedRequest(state) {
+    fetchPoolPairsListStartedRequest(state, action) {
       state.isLoading = true;
       state.data = [];
       state.isError = '';
