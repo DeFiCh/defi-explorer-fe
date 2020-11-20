@@ -11,7 +11,7 @@ import { fetchTokensListStartedRequest } from './reducer';
 import TokenAvatar from '../../components/TokenAvatar';
 import Pagination from '../../components/Pagination';
 import styles from './TokensListPage.module.scss';
-import { setRoute, tableSorter } from '../../utils/utility';
+import { numberWithCommas, setRoute, tableSorter } from '../../utils/utility';
 import { cloneDeep } from 'lodash';
 import { BsArrowDown, BsArrowUp, BsArrowUpDown } from 'react-icons/bs';
 import BigNumber from 'bignumber.js';
@@ -151,7 +151,9 @@ const TokensListPage = (props: TokensListPageProps) => {
             <div>{item.symbolKey}</div>
           </td>
           <td className={`${styles.staticCol} text-right`}>
-            {item.mintable ? `${new BigNumber(item.minted).toFixed(2)}` : '-'}
+            {item.mintable
+              ? `${numberWithCommas(new BigNumber(item.minted).toFixed(2))}`
+              : '-'}
           </td>
         </tr>
       ));

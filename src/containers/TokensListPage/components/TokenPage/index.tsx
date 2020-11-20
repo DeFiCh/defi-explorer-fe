@@ -10,7 +10,7 @@ import { TOKEN_LIST_PAGE_URL_NAME } from '../../../../constants';
 import { fetchTokenPageStartedRequest } from '../../reducer';
 import PoolPairsTable from '../../../PoolPairsListPage/components/PoolPairsTable';
 import TokenAvatar from '../../../../components/TokenAvatar';
-import { setRoute } from '../../../../utils/utility';
+import { numberWithCommas, setRoute } from '../../../../utils/utility';
 import styles from '../../TokensListPage.module.scss';
 
 interface RouteInfo {
@@ -133,7 +133,7 @@ const TokenPage = (props: TokenPageProps) => {
                 <Col xs='12' md='4'>
                   <KeyValueLi
                     label={I18n.t('containers.tokenPage.minted')}
-                    value={`${data.minted}`}
+                    value={`${numberWithCommas(data.minted)}`}
                   />
                 </Col>
 

@@ -11,9 +11,14 @@ import { fetchPoolPairsListStartedRequest } from '../../reducer';
 import Pagination from '../../../../components/Pagination';
 import styles from '../../PoolPairsListPage.module.scss';
 import TokenAvatar from '../../../../components/TokenAvatar';
-import { setRoute, tableSorter } from '../../../../utils/utility';
+import {
+  numberWithCommas,
+  setRoute,
+  tableSorter,
+} from '../../../../utils/utility';
 import { cloneDeep } from 'lodash';
 import { BsArrowUpDown, BsArrowDown, BsArrowUp } from 'react-icons/bs';
+import { RiAddLine } from 'react-icons/ri';
 
 interface PoolPairsTable {
   fetchPoolPairsListStartedRequest: (tokenId?: string | number) => void;
@@ -147,21 +152,37 @@ const PoolPairsTable = (props: PoolPairsTable) => {
             </div>
           </span>
         </td>
-        <td className='text-right'>{parseFloat(item.commission) * 100}%</td>
-        <td className='text-right'>{`$ ${item.totalLiquidity.toFixed(2)}`}</td>
-        <td className='text-right'>
-          {`${item.reserveA.toFixed(2)} ${item.tokenInfo.idTokenA.symbolKey}`}
+        <td className='text-right'>{`${numberWithCommas(
+          item.totalLiquidity.toFixed(2)
+        )}`}</td>
+        <td colSpan={2} className='text-right'>
+          <Row>
+            <Col xs='5' className='text-right'>
+              {`${numberWithCommas(item.reserveA.toFixed(2))} ${
+                item.tokenInfo.idTokenA.symbol
+              }`}
+            </Col>
+            <Col xs='2'>
+              <RiAddLine />
+            </Col>
+            <Col xs='5' className='text-right'>
+              {`${numberWithCommas(item.reserveB.toFixed(2))} ${
+                item.tokenInfo.idTokenB.symbol
+              }`}
+            </Col>
+          </Row>
         </td>
         <td className='text-right'>
-          {`${item.reserveB.toFixed(2)} ${item.tokenInfo.idTokenB.symbolKey}`}
+          {`${numberWithCommas(item['reserveA/reserveB'].toFixed(2))} ${
+            item.tokenInfo.idTokenA.symbol
+          }/${item.tokenInfo.idTokenB.symbol}`}
         </td>
+        <td className='text-right'>{`${numberWithCommas(
+          item.apy.toFixed(2)
+        )} %`}</td>
         <td className='text-right'>
-          {`${item['reserveA/reserveB'].toFixed(2)} ${
-            item.tokenInfo.idTokenA.symbolKey
-          }/${item.tokenInfo.idTokenB.symbolKey}`}
+          {numberWithCommas(`${parseFloat(item.rewardPct) * 100}`)} %
         </td>
-        <td className='text-right'>{`${item.apy.toFixed(2)} %`}</td>
-        <td className='text-right'>{parseFloat(item.rewardPct) * 100}%</td>
       </tr>
     ));
   }, [tableRows]);
@@ -188,17 +209,6 @@ const PoolPairsTable = (props: PoolPairsTable) => {
               <thead>
                 <tr>
                   <th>{I18n.t('containers.poolPairsListPage.name')}</th>
-                  <th>
-                    <Button
-                      color='link'
-                      className='d-flex float-right'
-                      onClick={() => sorter('commission')}
-                    >
-                      {I18n.t('containers.poolPairsListPage.commission')}
-                      &nbsp;
-                      {getSortingIcon('commission')}
-                    </Button>
-                  </th>
                   <th>
                     <Button
                       color='link'

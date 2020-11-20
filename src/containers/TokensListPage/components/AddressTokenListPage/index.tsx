@@ -1,4 +1,3 @@
-// import capitalize from 'lodash/capitalize';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
@@ -9,10 +8,13 @@ import {
   TOKEN_LIST_PAGE_URL_NAME,
 } from '../../../../constants';
 import { fetchAddressTokensListStartedRequest } from '../../reducer';
-// import TokenAvatar from '../../../../components/TokenAvatar';
 import Pagination from '../../../../components/Pagination';
 import styles from '../../TokensListPage.module.scss';
-import { setRoute, tableSorter } from '../../../../utils/utility';
+import {
+  numberWithCommas,
+  setRoute,
+  tableSorter,
+} from '../../../../utils/utility';
 import { cloneDeep } from 'lodash';
 import { BsArrowDown, BsArrowUp, BsArrowUpDown } from 'react-icons/bs';
 import TokenAvatar from '../../../../components/TokenAvatar';
@@ -146,7 +148,7 @@ const AddressTokenList = (props: AddressTokenListProps) => {
               </div>
             </span>
           </td>
-          <td className='text-right'>{item.balance}</td>
+          <td className='text-right'>{numberWithCommas(item.balance)}</td>
         </tr>
       ));
     if (!isLoading && totalCount === 0) {
