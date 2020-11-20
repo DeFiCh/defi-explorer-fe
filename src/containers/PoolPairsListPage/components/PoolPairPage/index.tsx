@@ -11,6 +11,7 @@ import TokenAvatar from '../../../../components/TokenAvatar';
 import { fetchPoolPairPageStartedRequest } from '../../reducer';
 import { numberWithCommas, setRoute } from '../../../../utils/utility';
 import styles from '../../PoolPairsListPage.module.scss';
+import { PoolPairIcon } from '../PoolPairIcon';
 
 interface RouteInfo {
   poolPairId: string;
@@ -58,11 +59,7 @@ const PoolPairPage = (props: PoolPairPageProps) => {
         </div>
         <div className='mt-4'>
           <h1>
-            <span className='pr-2'>
-              <TokenAvatar token={data.tokenInfo.idTokenA} />
-              &nbsp;
-              <TokenAvatar token={data.tokenInfo.idTokenB} />
-            </span>
+            <PoolPairIcon data={data} />
             &nbsp;
             <span>
               <div className={styles.iconTitle}>{data.symbol}</div>

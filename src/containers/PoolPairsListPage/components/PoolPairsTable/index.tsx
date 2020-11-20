@@ -19,6 +19,7 @@ import {
 import { cloneDeep } from 'lodash';
 import { BsArrowUpDown, BsArrowDown, BsArrowUp } from 'react-icons/bs';
 import { RiAddLine } from 'react-icons/ri';
+import { PoolPairIcon } from '../PoolPairIcon';
 
 interface PoolPairsTable {
   fetchPoolPairsListStartedRequest: (tokenId?: string | number) => void;
@@ -136,11 +137,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
     return tableRows.map((item, id) => (
       <tr key={`${item.poolPairId}-${id}`}>
         <td className={styles.staticCol}>
-          <span className='pr-2'>
-            <TokenAvatar token={item.tokenInfo.idTokenA} />
-            &nbsp;
-            <TokenAvatar token={item.tokenInfo.idTokenB} />
-          </span>
+          <PoolPairIcon data={item} />
           &nbsp;
           <span>
             <div className={styles.iconTitle}>
