@@ -26,7 +26,7 @@ export const handleTokenList = async (query: ITokenPoolPairListParams) => {
     return {
       tokenId: item,
       ...data[item],
-      name: data[item].name || data[item].symbol,
+      name: data[item].name || data[item].symbolKey,
       category,
     };
   });
@@ -50,7 +50,7 @@ export const handleGetToken = async (query: {
       ...data[newId],
       tokenId: newId,
       category: getCategory(data[newId]),
-      name: data[newId].name || data[newId].symbol,
+      name: data[newId].name || data[newId].symbolKey,
     };
   }
   return {};

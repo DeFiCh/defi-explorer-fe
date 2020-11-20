@@ -159,15 +159,15 @@ const PoolPairsTable = (props: PoolPairsTable) => {
         <td className='text-right'>{parseFloat(item.commission) * 100}%</td>
         <td className='text-right'>{`$ ${item.totalLiquidity.toFixed(2)}`}</td>
         <td className='text-right'>
-          {`${item.reserveA.toFixed(2)} ${item.tokenInfo.idTokenA.symbol}`}
+          {`${item.reserveA.toFixed(2)} ${item.tokenInfo.idTokenA.symbolKey}`}
         </td>
         <td className='text-right'>
-          {`${item.reserveB.toFixed(2)} ${item.tokenInfo.idTokenB.symbol}`}
+          {`${item.reserveB.toFixed(2)} ${item.tokenInfo.idTokenB.symbolKey}`}
         </td>
         <td className='text-right'>
           {`${item['reserveA/reserveB'].toFixed(2)} ${
-            item.tokenInfo.idTokenA.symbol
-          }/${item.tokenInfo.idTokenB.symbol}`}
+            item.tokenInfo.idTokenA.symbolKey
+          }/${item.tokenInfo.idTokenB.symbolKey}`}
         </td>
         <td className='text-right'>{`${item.apy.toFixed(2)} %`}</td>
         <td className='text-right'>{parseFloat(item.rewardPct) * 100}%</td>

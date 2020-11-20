@@ -148,7 +148,7 @@ const TokensListPage = (props: TokensListPageProps) => {
             </span>
           </td>
           <td className={styles.staticCol}>
-            <div>{item.symbol}</div>
+            <div>{item.symbolKey}</div>
           </td>
           <td className={`${styles.staticCol} text-right`}>
             {item.mintable ? `${new BigNumber(item.minted).toFixed(2)}` : '-'}
@@ -190,7 +190,7 @@ const TokensListPage = (props: TokensListPageProps) => {
                       >
                         {I18n.t('containers.tokensPageList.symbol')}
                         &nbsp;
-                        {getSortingIcon('symbol')}
+                        {getSortingIcon('symbolKey')}
                       </Button>
                     </th>
                     <th>

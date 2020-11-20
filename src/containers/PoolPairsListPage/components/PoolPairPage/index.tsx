@@ -72,7 +72,7 @@ const PoolPairPage = (props: PoolPairPageProps) => {
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.oneCurrencyLabel', {
-                  symbol: data.tokenInfo.idTokenA.symbol,
+                  symbol: data.tokenInfo.idTokenA.symbolKey,
                 })}
                 value={`${data['reserveB/reserveA']}`}
               />
@@ -80,7 +80,7 @@ const PoolPairPage = (props: PoolPairPageProps) => {
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.oneCurrencyLabel', {
-                  symbol: data.tokenInfo.idTokenB.symbol,
+                  symbol: data.tokenInfo.idTokenB.symbolKey,
                 })}
                 value={`${data['reserveA/reserveB']}`}
               />
@@ -100,11 +100,11 @@ const PoolPairPage = (props: PoolPairPageProps) => {
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.reserve', {
-                  symbol: data.tokenInfo.idTokenA.symbol,
+                  symbol: data.tokenInfo.idTokenA.symbolKey,
                 })}
                 value={I18n.t('containers.poolPairPage.reserveData', {
                   value: data.reserveA,
-                  symbol: data.tokenInfo.idTokenA.symbol,
+                  symbol: data.tokenInfo.idTokenA.symbolKey,
                 })}
               />
             </Col>
@@ -112,11 +112,11 @@ const PoolPairPage = (props: PoolPairPageProps) => {
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.reserve', {
-                  symbol: data.tokenInfo.idTokenB.symbol,
+                  symbol: data.tokenInfo.idTokenB.symbolKey,
                 })}
                 value={I18n.t('containers.poolPairPage.reserveData', {
                   value: data.reserveB,
-                  symbol: data.tokenInfo.idTokenB.symbol,
+                  symbol: data.tokenInfo.idTokenB.symbolKey,
                 })}
               />
             </Col>
