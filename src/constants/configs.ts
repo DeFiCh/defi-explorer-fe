@@ -1,10 +1,14 @@
 import { version } from '../../package.json';
 export const BACKEND_BASE_URL = '127.0.0.1';
 export const BACKEND_BASE_PORT = 3000;
-export const API_PREFIX =
-  process.env.API_PREFIX || 'https://mainnet-api.defichain.io/api';
-export const WS_PREFIX =
-  process.env.WS_PREFIX || 'https://mainnet-api.defichain.io/';
+export const MAINNET_API_PREFIX =
+  process.env.MAINNET_API_PREFIX || 'https://mainnet-api.defichain.io/api';
+export const TESTNET_API_PREFIX =
+  process.env.TESTNET_API_PREFIX || 'https://testnet-api.defichain.io/api';
+export const MAINNET_WS_PREFIX =
+  process.env.MAINNET_WS_PREFIX || 'https://mainnet-api.defichain.io/';
+export const TESTNET_WS_PREFIX =
+  process.env.TESTNET_WS_PREFIX || 'https://testnet-api.defichain.io/';
 export const CHAIN = process.env.CHAIN || 'DFI';
 export const NETWORK = process.env.NETWORK || 'mainnet';
 export const LATEST_BLOCKS_LIMIT = 10;

@@ -1,4 +1,4 @@
-import { WS_PREFIX } from '../constants';
+import { MAINNET_WS_PREFIX, TESTNET_WS_PREFIX } from '../constants';
 import io from 'socket.io-client';
 import store from '../app/rootStore';
 import {
@@ -25,6 +25,8 @@ class Websocket {
   }
 
   connect = () => {
+    const WS_PREFIX =
+      this.network === 'mainnet' ? MAINNET_WS_PREFIX : TESTNET_WS_PREFIX;
     this.socket = io(WS_PREFIX, {
       transports: ['websocket'],
     });
