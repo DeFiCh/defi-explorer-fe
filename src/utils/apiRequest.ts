@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { API_PREFIX } from '../constants';
+import { MAINNET_API_PREFIX, TESTNET_API_PREFIX } from '../constants';
 import store from '../app/rootStore';
 
 export default class ApiRequest {
@@ -8,6 +8,8 @@ export default class ApiRequest {
     const {
       app: { chain, network },
     } = store.getState();
+    const API_PREFIX =
+      network === 'mainnet' ? MAINNET_API_PREFIX : TESTNET_API_PREFIX;
     this.client = axios.create({
       baseURL: `${API_PREFIX}/${chain}/${network}`,
       headers: {
