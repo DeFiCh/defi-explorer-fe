@@ -1,4 +1,4 @@
-import { MAINNET_WS_PREFIX, TESTNET_WS_PREFIX, WS_PREFIX } from '../constants';
+import { MAINNET_WS_PREFIX, TESTNET_WS_PREFIX } from '../constants';
 import io from 'socket.io-client';
 import store from '../app/rootStore';
 import {
