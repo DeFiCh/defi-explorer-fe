@@ -171,7 +171,7 @@ const AddressTokenList = (props: AddressTokenListProps) => {
 
   return (
     <div>
-      <h1>{owner}</h1>
+      <h1 className='text-break'>{owner}</h1>
       <h5>
         {I18n.t('containers.addresstokensListPage.addressTokenListPageTitle')}
       </h5>
