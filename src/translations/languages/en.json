@@ -224,7 +224,7 @@
       "reserveData": "%{value} %{symbol}",
       "yearlyPoolRewardUSD": "Yearly Pool Reward (USD)",
       "apy": "APY",
-      "rewardPct": "Rewards Share",
+      "rewardPct": "DeFi Incentive Dist Share",
       "ownerAddress": "Owner Address",
       "tradeEnabled": "Trade Enabled",
       "loading": "Loading"
