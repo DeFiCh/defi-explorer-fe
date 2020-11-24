@@ -15,7 +15,7 @@ import { changeNetwork } from '../containers/App/reducer';
 function* appStarting() {
   const NetworkName = window.location.pathname
     .split('/')
-    .filter((item) => !!item)[1];
+    .filter((item) => !!item)[0];
   const networkNameLowercase = NetworkName ? NetworkName.toLowerCase() : '';
   if (
     networkNameLowercase === 'mainnet' ||

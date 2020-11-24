@@ -17,9 +17,10 @@ import PoolPairPage from '../containers/PoolPairsListPage/components/PoolPairPag
 import TokensListPage from '../containers/TokensListPage';
 import TokenPage from '../containers/TokensListPage/components/TokenPage';
 import AddressTokenListPage from '../containers/TokensListPage/components/AddressTokenListPage';
+import { getNetworkNameFromLocation } from '../utils/utility';
 
 const Routes = (location) => {
-  const network = location.pathname.split('/').filter((item) => !!item)[1];
+  const network = getNetworkNameFromLocation(location.pathname);
   if (!network || (network !== 'mainnet' && network !== 'testnet')) {
     return <Redirect to={DEFAULT_NETWORK_CHAIN} />;
   }
