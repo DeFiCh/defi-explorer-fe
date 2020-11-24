@@ -60,3 +60,9 @@
   display: inline-block;
   vertical-align: middle;
 }
+.info-text {
+  svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+}

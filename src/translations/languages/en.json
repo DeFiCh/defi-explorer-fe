@@ -189,7 +189,8 @@
       "liquidity": "Liquidity",
       "priceRatio": "Price Ratio",
       "apy": "APY",
-      "rewardPct": "Rewards Share",
+      "apyTooltipMessage": "APY indicated here only includes DFI incentives, without commission. Actual APY with commission is thus, more",
+      "rewardPct": "DeFi Incentive Dist Share",
       "paginationRange": "%{to} – %{from} of %{total}",
       "noDataPresent": "No Pool Pair is present"
     },
