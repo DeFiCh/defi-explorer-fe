@@ -13,9 +13,15 @@ import {
 import { changeUnit } from '../../../App/reducer';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { I18n } from 'react-redux-i18n';
-import { UNIT_OPTIONS, NETWORK_OPTIONS } from '../../../../constants';
+import {
+  UNIT_OPTIONS,
+  NETWORK_OPTIONS,
+  DEFAULT_BASE_PATH,
+  DEFAULT_PAGE,
+} from '../../../../constants';
 import styles from '../../NavBar.module.scss';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
+import { setRoute } from '../../../../utils/utility';
 
 interface NetworkCurrency extends RouteComponentProps {
   network: string;
@@ -54,7 +60,7 @@ const NetworkCurrency = (props: NetworkCurrency) => {
   // if (changeNetwork) return ;
   if (changeNetwork) {
     history.go(0);
-    return <Redirect to={`/DFI/${changeNetwork}/`} />;
+    return <Redirect to={`/${changeNetwork}`} />;
   }
 
   return (

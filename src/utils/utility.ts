@@ -182,3 +182,6 @@ export const numberWithCommas = (nStr) => {
   }
   return x1 + x2;
 };
+
+export const getNetworkNameFromLocation = (pathname) =>
+  pathname.split('/').filter((item) => !!item)[0];

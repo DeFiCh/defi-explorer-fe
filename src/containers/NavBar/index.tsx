@@ -13,6 +13,7 @@ import {
   TOKEN_LIST_PAGE_URL_NAME,
   POOL_LIST_PAGE_URL_NAME,
   ADDRESS_TOKEN_LIST_PAGE_URL_NAME,
+  DEFAULT_PAGE,
 } from '../../constants';
 import {
   NavLink as RRNavLink,
@@ -135,7 +136,7 @@ const NavbarComponent = (props: NavbarComponentProps) => {
             <>
               <NavbarBrand
                 tag={RRNavLink}
-                to={`/DFI/${props.network}/pool`}
+                to={setRoute(DEFAULT_PAGE)}
                 className='mr-auto'
               >
                 <img src={MobileLogo} className={styles.logo} />
@@ -161,7 +162,7 @@ const NavbarComponent = (props: NavbarComponentProps) => {
         <Navbar className={styles.navigation} light expand='md'>
           <NavbarBrand
             tag={RRNavLink}
-            to={`/DFI/${props.network}/pool`}
+            to={setRoute(DEFAULT_PAGE)}
             className='mr-auto'
           >
             <Logo className={styles.logo} />
