@@ -2,7 +2,15 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
 import { Link } from 'react-router-dom';
-import { Row, Col, Card, Table, Button } from 'reactstrap';
+import {
+  Row,
+  Col,
+  Card,
+  Table,
+  Button,
+  UncontrolledTooltip,
+  PopoverBody,
+} from 'reactstrap';
 import {
   POOL_LIST_PAGE_URL_NAME,
   TOKENS_LIST_PAGE_LIMIT,
@@ -20,6 +28,7 @@ import { cloneDeep } from 'lodash';
 import { BsArrowUpDown, BsArrowDown, BsArrowUp } from 'react-icons/bs';
 import { RiAddLine } from 'react-icons/ri';
 import { PoolPairIcon } from '../PoolPairIcon';
+import { MdInfoOutline } from 'react-icons/md';
 
 interface PoolPairsTable {
   fetchPoolPairsListStartedRequest: (tokenId?: string | number) => void;
@@ -232,6 +241,21 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                       {I18n.t('containers.poolPairsListPage.apy')}
                       &nbsp;
                       {getSortingIcon('apy')}
+                      <span id='info-text' className={styles['info-text']}>
+                        <MdInfoOutline />
+                      </span>
+                      <UncontrolledTooltip
+                        target='info-text'
+                        innerClassName='bg-white text-break w-50 h-50 border'
+                      >
+                        <PopoverBody>
+                          <small>
+                            {I18n.t(
+                              'containers.poolPairsListPage.apyTooltipMessage'
+                            )}
+                          </small>
+                        </PopoverBody>
+                      </UncontrolledTooltip>
                     </Button>
                   </th>
                   <th>
