@@ -17,7 +17,6 @@ function* appStarting() {
     .split('/')
     .filter((item) => !!item)[0];
   const networkNameLowercase = NetworkName ? NetworkName.toLowerCase() : '';
-
   if (
     networkNameLowercase === 'mainnet' ||
     networkNameLowercase === 'testnet'
