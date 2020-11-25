@@ -158,7 +158,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
             </div>
           </span>
         </td>
-        <td className='text-right'>{`${numberWithCommas(
+        <td className='text-right'>{`$ ${numberWithCommas(
           item.totalLiquidity.toFixed(2)
         )}`}</td>
         <td colSpan={2} className='text-right'>

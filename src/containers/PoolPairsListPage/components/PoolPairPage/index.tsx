@@ -91,7 +91,7 @@ const PoolPairPage = (props: PoolPairPageProps) => {
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.totalLiquidity')}
-                value={`${numberWithCommas(data.totalLiquidity.toFixed(2))}`}
+                value={`$ ${numberWithCommas(data.totalLiquidity.toFixed(2))}`}
               />
             </Col>
             <Col xs='12' md='4'>
