@@ -67,6 +67,7 @@ function* fetchPoolPairsListStarted(action) {
 
 function* fetchPoolPairPageStarted(action) {
   const network = yield call(getNetwork);
+
   const { poolPairId } = action.payload;
   const query = {
     id: poolPairId,
@@ -83,15 +84,14 @@ function* fetchPoolPairPageStarted(action) {
 }
 
 function* fetchPoolPairData(item) {
-  const network = yield call(getNetwork);
   const { idTokenA, idTokenB } = item;
   const queryParamIdTokenA = {
     id: idTokenA,
-    network,
+    network: NETWORK,
   };
   const queryParamIdTokenB = {
     id: idTokenB,
-    network,
+    network: NETWORK,
   };
 
   const dataIdTokenA = yield call(handleGetToken, queryParamIdTokenA);
@@ -115,7 +115,6 @@ function* fetchTokenPrice(lpPairList: any[]) {
       idTokenA,
       idTokenB,
     } = item;
-
     tokenSymbol.push({ symbol: idTokenASymbol, tokenId: idTokenA });
     tokenSymbol.push({ symbol: idTokenBSymbol, tokenId: idTokenB });
   });
