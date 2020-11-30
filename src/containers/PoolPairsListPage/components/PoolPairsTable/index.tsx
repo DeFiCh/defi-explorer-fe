@@ -142,6 +142,17 @@ const PoolPairsTable = (props: PoolPairsTable) => {
     );
   };
 
+  const getTokensPriceRatio = (item) => {
+    if (item['reserveB/reserveA'] > item['reserveA/reserveB']) {
+      return `${numberWithCommas(item['reserveB/reserveA'])} ${
+        item.tokenInfo.idTokenB.symbol
+      }/${item.tokenInfo.idTokenA.symbol}`;
+    }
+    return `${numberWithCommas(item['reserveA/reserveB'])} ${
+      item.tokenInfo.idTokenA.symbol
+    }/${item.tokenInfo.idTokenB.symbol}`;
+  };
+
   const loadTableRows = useCallback(() => {
     return tableRows.map((item, id) => (
       <tr key={`${item.poolPairId}-${id}`}>
@@ -178,11 +189,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
             </Col>
           </Row>
         </td>
-        <td className='text-right'>
-          {`${numberWithCommas(item['reserveA/reserveB'].toFixed(2))} ${
-            item.tokenInfo.idTokenA.symbol
-          }/${item.tokenInfo.idTokenB.symbol}`}
-        </td>
+        <td className='text-right'>{getTokensPriceRatio(item)}</td>
         <td className='text-right'>{`${numberWithCommas(
           item.apy.toFixed(2)
         )} %`}</td>
