@@ -73,7 +73,7 @@ const TokenPage = (props: TokenPageProps) => {
                 <Col xs='12' md='4'>
                   <KeyValueLi
                     label={I18n.t('containers.tokenPage.name')}
-                    value={`${data.name}`}
+                    value={`${data.isLPS ? `Liquidity token for ${data.symbolKey}` : data.name}`}
                   />
                 </Col>
                 <Col xs='12' md='4'>
