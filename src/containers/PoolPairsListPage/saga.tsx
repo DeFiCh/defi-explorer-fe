@@ -98,6 +98,8 @@ function* fetchPoolPairData(item) {
   const dataIdTokenB = yield call(handleGetToken, queryParamIdTokenB);
   return {
     ...item,
+    'reserveA/reserveB': new BigNumber(item['reserveA/reserveB']).toNumber(),
+    'reserveB/reserveA': new BigNumber(item['reserveB/reserveA']).toNumber(),
     tokenInfo: { idTokenA: dataIdTokenA, idTokenB: dataIdTokenB },
   };
 }
@@ -147,11 +149,11 @@ function* fetchTokenPrice(lpPairList: any[]) {
       .times(coinPriceObj[0]);
 
     const liquidityReserveidTokenA = new BigNumber(reserveA).times(
-      coinPriceObj[idTokenA]
+      coinPriceObj[idTokenA] || 0
     );
 
     const liquidityReserveidTokenB = new BigNumber(reserveB).times(
-      coinPriceObj[idTokenB]
+      coinPriceObj[idTokenB] || 0
     );
 
     const totalLiquidity = liquidityReserveidTokenA.plus(
@@ -162,7 +164,9 @@ function* fetchTokenPrice(lpPairList: any[]) {
       ...item,
       totalLiquidity: totalLiquidity.toNumber(),
       yearlyPoolReward: yearlyPoolReward.toNumber(),
-      apy: yearlyPoolReward.times(100).div(totalLiquidity).toNumber(),
+      apy: totalLiquidity.gt(0)
+        ? yearlyPoolReward.times(100).div(totalLiquidity).toNumber()
+        : 0,
     };
   });
 }

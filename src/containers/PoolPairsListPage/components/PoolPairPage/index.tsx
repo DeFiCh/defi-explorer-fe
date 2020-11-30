@@ -7,7 +7,6 @@ import { NavLink, RouteComponentProps } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, Row, Col } from 'reactstrap';
 import KeyValueLi from '../../../../components/KeyValueLi';
 import { POOL_LIST_PAGE_URL_NAME } from '../../../../constants';
-import TokenAvatar from '../../../../components/TokenAvatar';
 import { fetchPoolPairPageStartedRequest } from '../../reducer';
 import { numberWithCommas, setRoute } from '../../../../utils/utility';
 import styles from '../../PoolPairsListPage.module.scss';
