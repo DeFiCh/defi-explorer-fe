@@ -85,13 +85,15 @@ function* fetchPoolPairPageStarted(action) {
 
 function* fetchPoolPairData(item) {
   const { idTokenA, idTokenB } = item;
+  const network = yield call(getNetwork);
+
   const queryParamIdTokenA = {
     id: idTokenA,
-    network: NETWORK,
+    network,
   };
   const queryParamIdTokenB = {
     id: idTokenB,
-    network: NETWORK,
+    network,
   };
 
   const dataIdTokenA = yield call(handleGetToken, queryParamIdTokenA);
