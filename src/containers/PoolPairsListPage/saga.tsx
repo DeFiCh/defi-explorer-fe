@@ -102,6 +102,8 @@ function* fetchPoolPairData(item) {
     ...item,
     'reserveA/reserveB': new BigNumber(item['reserveA/reserveB']).toNumber(),
     'reserveB/reserveA': new BigNumber(item['reserveB/reserveA']).toNumber(),
+    reserveA: new BigNumber(item['reserveA']).toNumber(),
+    reserveB: new BigNumber(item['reserveB']).toNumber(),
     tokenInfo: { idTokenA: dataIdTokenA, idTokenB: dataIdTokenB },
   };
 }

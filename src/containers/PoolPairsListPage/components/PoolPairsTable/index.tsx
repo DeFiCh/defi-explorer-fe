@@ -116,6 +116,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
     fetchData(currentPage);
   }, [tableData]);
 
+
   const loadRows = () => {
     if (isError)
       return (
