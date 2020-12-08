@@ -18,18 +18,15 @@ import {
 import { fetchPoolPairsListStartedRequest } from '../../reducer';
 import Pagination from '../../../../components/Pagination';
 import styles from '../../PoolPairsListPage.module.scss';
-import TokenAvatar from '../../../../components/TokenAvatar';
 import {
   numberWithCommas,
   setRoute,
   tableSorter,
 } from '../../../../utils/utility';
 import { cloneDeep } from 'lodash';
-import { BsArrowUpDown, BsArrowDown, BsArrowUp } from 'react-icons/bs';
 import { RiAddLine } from 'react-icons/ri';
 import { PoolPairIcon } from '../PoolPairIcon';
-import { MdInfoOutline } from 'react-icons/md';
-
+import { MdInfoOutline, MdArrowDownward, MdArrowUpward } from 'react-icons/md';
 interface PoolPairsTable {
   fetchPoolPairsListStartedRequest: (tokenId?: string | number) => void;
   isLoading: boolean;
@@ -116,7 +113,6 @@ const PoolPairsTable = (props: PoolPairsTable) => {
     fetchData(currentPage);
   }, [tableData]);
 
-
   const loadRows = () => {
     if (isError)
       return (
@@ -174,29 +170,26 @@ const PoolPairsTable = (props: PoolPairsTable) => {
           item.totalLiquidity.toFixed(2)
         )}`}</td>
         <td colSpan={2} className='text-right'>
-          <Row>
-            <Col xs='5' className='text-right'>
+          <div className='d-flex justify-content-end align-items-center'>
+            <div className='text-right'>
               {`${numberWithCommas(item.reserveA.toFixed(2))} ${
                 item.tokenInfo.idTokenA.symbol
               }`}
-            </Col>
-            <Col xs='2'>
+            </div>
+            <div className='px-1'>
               <RiAddLine />
-            </Col>
-            <Col xs='5' className='text-right'>
+            </div>
+            <div className='text-right'>
               {`${numberWithCommas(item.reserveB.toFixed(2))} ${
                 item.tokenInfo.idTokenB.symbol
               }`}
-            </Col>
-          </Row>
+            </div>
+          </div>
         </td>
         <td className='text-right'>{getTokensPriceRatio(item)}</td>
         <td className='text-right'>{`${numberWithCommas(
           item.apy.toFixed(2)
         )} %`}</td>
-        <td className='text-right'>
-          {numberWithCommas(`${parseFloat(item.rewardPct) * 100}`)} %
-        </td>
       </tr>
     ));
   }, [tableRows]);
@@ -205,13 +198,13 @@ const PoolPairsTable = (props: PoolPairsTable) => {
     const { field, mode } = sortedField;
     if (fieldName === field) {
       if (mode === 1) {
-        return <BsArrowDown className={styles.sortIcon} />;
+        return <MdArrowDownward className={styles.sortIcon} />;
       }
       if (mode === 2) {
-        return <BsArrowUp className={styles.sortIcon} />;
+        return <MdArrowUpward className={styles.sortIcon} />;
       }
     }
-    return <BsArrowUpDown className={styles.sortIcon} />;
+    return '';
   };
 
   return (
@@ -234,7 +227,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                       {getSortingIcon('totalLiquidity')}
                     </Button>
                   </th>
-                  <th colSpan={2} className='text-center'>
+                  <th colSpan={2} className='text-right'>
                     {I18n.t('containers.poolPairsListPage.liquidity')}
                   </th>
                   <th className='text-right'>
@@ -249,11 +242,11 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                       {I18n.t('containers.poolPairsListPage.apy')}
                       &nbsp;
                       {getSortingIcon('apy')}
-                      <span id='info-text' className={styles['info-text']}>
-                        <MdInfoOutline />
+                      <span id='infoText' className={styles.infoText}>
+                        <MdInfoOutline className={styles.infoIcon} />
                       </span>
                       <UncontrolledTooltip
-                        target='info-text'
+                        target='infoText'
                         innerClassName='bg-white text-break w-50 h-50 border'
                       >
                         <PopoverBody>
@@ -264,17 +257,6 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                           </small>
                         </PopoverBody>
                       </UncontrolledTooltip>
-                    </Button>
-                  </th>
-                  <th>
-                    <Button
-                      color='link'
-                      className='d-flex float-right'
-                      onClick={() => sorter('rewardPct')}
-                    >
-                      {I18n.t('containers.poolPairsListPage.rewardPct')}
-                      &nbsp;
-                      {getSortingIcon('rewardPct')}
                     </Button>
                   </th>
                 </tr>

@@ -4,7 +4,6 @@
 @import '~bootstrap/scss/mixins';
 @import '../../scss/variables';
 @import '../../scss/bootstrap/variables';
-
 .card {
   overflow: hidden;
 }
@@ -17,7 +16,6 @@
 
 .table {
   margin-bottom: 0;
-
   thead th {
     position: sticky;
     top: 0;
@@ -31,11 +29,9 @@
       border-color: transparent !important;
     }
   }
-
   td {
     vertical-align: middle;
   }
-
   tr:first-child td,
   tr:first-child th {
     border-top: none;
@@ -60,9 +56,14 @@
   display: inline-block;
   vertical-align: middle;
 }
-.info-text {
+
+.infoText {
   svg {
     width: 16px !important;
     height: 16px !important;
   }
+}
+
+.infoIcon {
+  margin-top: 4px;
 }

@@ -13,7 +13,7 @@ import Pagination from '../../components/Pagination';
 import styles from './TokensListPage.module.scss';
 import { numberWithCommas, setRoute, tableSorter } from '../../utils/utility';
 import { cloneDeep } from 'lodash';
-import { BsArrowDown, BsArrowUp, BsArrowUpDown } from 'react-icons/bs';
+import { MdArrowDownward, MdArrowUpward } from 'react-icons/md';
 import BigNumber from 'bignumber.js';
 
 interface TokensListPageProps extends RouteComponentProps {
@@ -113,13 +113,13 @@ const TokensListPage = (props: TokensListPageProps) => {
     const { field, mode } = sortedField;
     if (fieldName === field) {
       if (mode === 1) {
-        return <BsArrowDown className={styles.sortIcon} />;
+        return <MdArrowDownward className={styles.sortIcon} />;
       }
       if (mode === 2) {
-        return <BsArrowUp className={styles.sortIcon} />;
+        return <MdArrowUpward className={styles.sortIcon} />;
       }
     }
-    return <BsArrowUpDown className={styles.sortIcon} />;
+    return '';
   };
 
   const loadRows = () => {
@@ -188,7 +188,7 @@ const TokensListPage = (props: TokensListPageProps) => {
                       <Button
                         color='link'
                         className='d-flex'
-                        onClick={() => sorter('symbol')}
+                        onClick={() => sorter('symbolKey')}
                       >
                         {I18n.t('containers.tokensPageList.symbol')}
                         &nbsp;

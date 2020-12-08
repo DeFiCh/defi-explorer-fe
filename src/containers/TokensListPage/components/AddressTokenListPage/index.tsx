@@ -16,7 +16,7 @@ import {
   tableSorter,
 } from '../../../../utils/utility';
 import { cloneDeep } from 'lodash';
-import { BsArrowDown, BsArrowUp, BsArrowUpDown } from 'react-icons/bs';
+import { MdArrowDownward, MdArrowUpward, MdSwapVert } from 'react-icons/md';
 import TokenAvatar from '../../../../components/TokenAvatar';
 
 interface RouteInfo {
@@ -116,13 +116,13 @@ const AddressTokenList = (props: AddressTokenListProps) => {
     const { field, mode } = sortedField;
     if (fieldName === field) {
       if (mode === 1) {
-        return <BsArrowDown className={styles.sortIcon} />;
+        return <MdArrowDownward className={styles.sortIcon} />;
       }
       if (mode === 2) {
-        return <BsArrowUp className={styles.sortIcon} />;
+        return <MdArrowUpward className={styles.sortIcon} />;
       }
     }
-    return <BsArrowUpDown className={styles.sortIcon} />;
+    return '';
   };
 
   const loadRows = () => {
