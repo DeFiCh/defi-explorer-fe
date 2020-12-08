@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Defi Explorer Frontend",
   "author": {
-    "name": "Cake",
-    "email": "cake@cakedefi.com",
-    "url": "http://cakedefi.com/"
+    "name": "DeFiChain Foundation",
+    "email": "engineering@defichain.com",
+    "url": "http://defichain.com/"
   },
   "homepage": "./",
   "publicPath": "./",
