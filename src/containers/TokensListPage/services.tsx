@@ -4,7 +4,6 @@ import {
   IAddressTokenListParams,
   ITokenPoolPairListParams,
 } from '../../utils/interfaces';
-import { getIdFromSymbol } from '../../utils/utility';
 
 export const getCategory = (item) => {
   let category = 'DCT';
@@ -72,9 +71,7 @@ export const handleAddressTokenList = async (
         item.indexOf('#') === -1 ? item.length : item.indexOf('#');
       const name = item.substring(item.indexOf('@') + 1, lastIndex);
       const id =
-        lastIndex < item.length
-          ? item.substring(item.indexOf('#') + 1)
-          : getIdFromSymbol(name);
+        lastIndex < item.length ? item.substring(item.indexOf('#') + 1) : name;
       return {
         balance,
         name,
