@@ -163,13 +163,17 @@ function* fetchTokenPrice(lpPairList: any[]) {
     const totalLiquidity = liquidityReserveidTokenA.plus(
       liquidityReserveidTokenB
     );
-
+    // NOTE: APY calculation to use 37 second block time
+    const multiplicationFactor = 100 * (30 / 37);
     return {
       ...item,
       totalLiquidity: totalLiquidity.toNumber(),
       yearlyPoolReward: yearlyPoolReward.toNumber(),
       apy: totalLiquidity.gt(0)
-        ? yearlyPoolReward.times(100).div(totalLiquidity).toNumber()
+        ? yearlyPoolReward
+            .times(multiplicationFactor)
+            .div(totalLiquidity)
+            .toNumber()
         : 0,
     };
   });
