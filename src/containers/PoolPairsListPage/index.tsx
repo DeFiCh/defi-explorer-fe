@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
 import { fetchPoolPairsListStartedRequest } from './reducer';
 import PoolPairsTable from './components/PoolPairsTable';
+import TotalValueLocked from './components/TotalValueLocked';
 
 const poolPairsListPage = () => {
   return (
     <div>
       <h1>{I18n.t('containers.poolPairsListPage.poolPairsListPageTitle')}</h1>
+      <TotalValueLocked />
       <PoolPairsTable />
     </div>
   );
