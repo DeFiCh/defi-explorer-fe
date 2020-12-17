@@ -167,7 +167,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
           </span>
         </td>
         <td className='text-right'>{`${numberWithCommas(
-          item.totalLiquidity.toFixed(2)
+          item.totalLiquidityUsd.toFixed(2)
         )}`}</td>
         <td colSpan={2} className='text-right'>
           <div className='d-flex justify-content-end align-items-center'>
@@ -220,11 +220,11 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                     <Button
                       color='link'
                       className='d-flex float-right'
-                      onClick={() => sorter('totalLiquidity')}
+                      onClick={() => sorter('totalLiquidityUsd')}
                     >
                       {I18n.t('containers.poolPairsListPage.totalLiquidity')}
                       &nbsp;
-                      {getSortingIcon('totalLiquidity')}
+                      {getSortingIcon('totalLiquidityUsd')}
                     </Button>
                   </th>
                   <th colSpan={2} className='text-right'>

@@ -192,7 +192,9 @@
       "apyTooltipMessage": "APY indicated here only includes DFI incentives, without commission. Actual APY with commission is thus, more",
       "rewardPct": "DeFi Incentive Dist Share",
       "paginationRange": "%{to} – %{from} of %{total}",
-      "noDataPresent": "No Pool Pair is present"
+      "noDataPresent": "No Pool Pair is present",
+      "totalValueLocked": "Total Value Locked",
+      "totalValueLockedCurrency": "USD"
     },
     "tokenPage": {
       "tokenListPageBreadCrumb": "Tokens",
@@ -219,7 +221,8 @@
       "poolPairListPageBreadCrumb": "Pool",
       "oneCurrencyLabel": "1 %{symbol}",
       "poolPairId": "Id",
-      "totalLiquidity": "Total Liquidity (USD)",
+      "totalLiquidity": "Total Liquidity (LP Token)",
+      "totalLiquidityUsd": "Total Liquidity (USD)",
       "reserve": "Reserve of %{symbol}",
       "reserveData": "%{value} %{symbol}",
       "yearlyPoolRewardUSD": "Yearly Pool Reward (USD)",

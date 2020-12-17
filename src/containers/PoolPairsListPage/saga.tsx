@@ -8,6 +8,7 @@ import {
   fetchPoolPairPageStartedRequest,
   fetchPoolPairPageSuccessRequest,
   fetchPoolPairPageFailureRequest,
+  updateTotalValueLocked,
 } from './reducer';
 import {
   fetchCoinGeckoCoinsList,
@@ -30,6 +31,7 @@ function* fetchPoolPairsListStarted(action) {
     const { tokenId } = action.payload;
     let clonePoolPairsList: any[] = [];
     let start = 0;
+    // tslint:disable-next-line:variable-name
     let including_start = true;
     while (true) {
       const queryParams = {
@@ -59,8 +61,17 @@ function* fetchPoolPairsListStarted(action) {
     );
 
     const updatedClonePoolPairsList = yield call(fetchTokenPrice, updatedData);
+    const total = updatedClonePoolPairsList.reduce((current, total) => {
+      return {
+        totalLiquidityUsd: new BigNumber(current.totalLiquidityUsd || 0)
+          .plus(total.totalLiquidityUsd)
+          .toNumber(),
+      };
+    });
+    yield put(updateTotalValueLocked(total.totalLiquidityUsd));
     yield put(fetchPoolPairsListSuccessRequest(updatedClonePoolPairsList));
   } catch (err) {
+    yield put(updateTotalValueLocked(0));
     yield put(fetchPoolPairsListFailureRequest(err.message));
   }
 }
@@ -102,7 +113,9 @@ function* fetchPoolPairData(item) {
     ...item,
     'reserveA/reserveB': new BigNumber(item['reserveA/reserveB']).toNumber(),
     'reserveB/reserveA': new BigNumber(item['reserveB/reserveA']).toNumber(),
+    // tslint:disable-next-line:no-string-literal
     reserveA: new BigNumber(item['reserveA']).toNumber(),
+    // tslint:disable-next-line:no-string-literal
     reserveB: new BigNumber(item['reserveB']).toNumber(),
     tokenInfo: { idTokenA: dataIdTokenA, idTokenB: dataIdTokenB },
   };
@@ -146,7 +159,6 @@ function* fetchTokenPrice(lpPairList: any[]) {
 
   return lpPairList.map((item) => {
     const { reserveA, reserveB, idTokenA, idTokenB, rewardPct } = item;
-
     const yearlyPoolReward = new BigNumber(lpDailyDfiReward)
       .times(rewardPct)
       .times(365)
@@ -160,19 +172,19 @@ function* fetchTokenPrice(lpPairList: any[]) {
       coinPriceObj[idTokenB] || 0
     );
 
-    const totalLiquidity = liquidityReserveidTokenA.plus(
+    const totalLiquidityUsd = liquidityReserveidTokenA.plus(
       liquidityReserveidTokenB
     );
     // NOTE: APY calculation to use 37 second block time
     const multiplicationFactor = 100 * (30 / 37);
     return {
       ...item,
-      totalLiquidity: totalLiquidity.toNumber(),
+      totalLiquidityUsd: totalLiquidityUsd.toNumber(),
       yearlyPoolReward: yearlyPoolReward.toNumber(),
-      apy: totalLiquidity.gt(0)
+      apy: totalLiquidityUsd.gt(0)
         ? yearlyPoolReward
             .times(multiplicationFactor)
-            .div(totalLiquidity)
+            .div(totalLiquidityUsd)
             .toNumber()
         : 0,
     };

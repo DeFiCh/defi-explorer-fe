@@ -4,6 +4,7 @@ export const initialState = {
   isLoading: false,
   data: [],
   isError: '',
+  totalValueLocked: 0,
   poolPairPage: {
     isLoading: false,
     data: {},
@@ -19,6 +20,7 @@ const configSlice = createSlice({
       state.isLoading = true;
       state.data = [];
       state.isError = '';
+      state.totalValueLocked = 0;
     },
     fetchPoolPairsListFailureRequest(state, action) {
       state.isLoading = false;
@@ -29,6 +31,9 @@ const configSlice = createSlice({
       state.isLoading = false;
       state.data = action.payload;
       state.isError = '';
+    },
+    updateTotalValueLocked(state, action) {
+      state.totalValueLocked = action.payload;
     },
     fetchPoolPairPageStartedRequest(state, action) {
       state.poolPairPage.isLoading = true;
@@ -54,6 +59,7 @@ export const {
   fetchPoolPairsListStartedRequest,
   fetchPoolPairsListFailureRequest,
   fetchPoolPairsListSuccessRequest,
+  updateTotalValueLocked,
   fetchPoolPairPageStartedRequest,
   fetchPoolPairPageFailureRequest,
   fetchPoolPairPageSuccessRequest,

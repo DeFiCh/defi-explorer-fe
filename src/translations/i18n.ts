@@ -42,15 +42,16 @@ export const setupI18n = (store) => {
 };
 
 export const getLocales = (lang: string) => {
-  switch (lang) {
-    case 'en':
-    case 'en-GB':
-      return ENGLISH;
-    case 'de':
-      return GERMAN;
-    case 'fr':
-      return FRENCH;
-    default:
-      return ENGLISH;
-  }
+  return ENGLISH;
+  // switch (lang) {
+  //   case 'en':
+  //   case 'en-GB':
+  //     return ENGLISH;
+  //   case 'de':
+  //     return GERMAN;
+  //   case 'fr':
+  //     return FRENCH;
+  //   default:
+  //     return ENGLISH;
+  // }
 };
