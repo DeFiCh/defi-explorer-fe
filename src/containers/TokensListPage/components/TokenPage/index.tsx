@@ -12,6 +12,7 @@ import PoolPairsTable from '../../../PoolPairsListPage/components/PoolPairsTable
 import TokenAvatar from '../../../../components/TokenAvatar';
 import { numberWithCommas, setRoute } from '../../../../utils/utility';
 import styles from '../../TokensListPage.module.scss';
+import TokenRichListPage from '../TokenRichListPage';
 
 interface RouteInfo {
   tokenId: string;
@@ -179,6 +180,8 @@ const TokenPage = (props: TokenPageProps) => {
               <PoolPairsTable tokenId={data.tokenId} />
             </Col>
           </Row>
+
+          {tokenId && <TokenRichListPage tokenId ={tokenId} unit={data.symbolKey}/>}
         </div>
       </>
     );

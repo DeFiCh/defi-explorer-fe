@@ -167,7 +167,7 @@
       "RichListPageTitle": "Rich List",
       "address": "Address",
       "balance": "Balance",
-      "paginationRange": "%{to} – %{from} of %{total}"
+      "paginationRange": "%{from} – %{to} of %{total}"
     },
     "tokensPageList": {
       "noDataPresent": "No Tokens present",
@@ -215,7 +215,11 @@
       "destructionHeight": "Destruction Height",
       "collateralAddress": "Collateral Address",
       "pairsHeading": "Pairs",
-      "loading": "Loading"
+      "loading": "Loading",
+      "address": "Address",
+      "balance": "Balance",
+      "paginationRange": "%{from} - %{to} of %{total}",
+      "RichListTitle": "Token Rich List"
     },
     "poolPairPage": {
       "poolPairListPageBreadCrumb": "Pool",

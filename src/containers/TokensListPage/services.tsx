@@ -90,3 +90,16 @@ export const handleUtxoBalance = async (address: string) => {
   } = await apiRequest.get(`/address/${address}/balance`);
   return balance;
 };
+
+export const handleTokenRichList = async (query: {
+  network: string;
+  id: string | number;
+}) => {
+  const apiRequest = new ApiRequest();
+  const { data } = await apiRequest.get('/v1/gettokenrichlist', {
+    baseURL: QUICK_STATS_BASE_ENDPOINT,
+    params: query,
+  });
+  return data;
+};
+

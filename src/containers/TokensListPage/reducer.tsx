@@ -9,6 +9,11 @@ export const initialState = {
     data: {},
     isError: '',
   },
+  richList:  {
+    isLoading: false,
+    data: [],
+    isError: '',
+  },
   addressTokenList: {
     isLoading: false,
     data: [],
@@ -65,6 +70,21 @@ const configSlice = createSlice({
       state.addressTokenList.data = action.payload;
       state.addressTokenList.isError = '';
     },
+    fetchTokenRichListStarted(state, action) {
+      state.richList.isLoading = true;
+      state.richList.data = [];
+      state.richList.isError = '';
+    },
+    fetchTokenRichListFailure(state, action) {
+      state.richList.isLoading = false;
+      state.richList.data = [];
+      state.richList.isError = action.payload;
+    },
+    fetchTokenRichListSuccess(state, action) {
+      state.richList.isLoading = false;
+      state.richList.data = action.payload;
+      state.richList.isError = '';
+    },
   },
 });
 
@@ -80,6 +100,9 @@ export const {
   fetchAddressTokensListStartedRequest,
   fetchAddressTokensListFailureRequest,
   fetchAddressTokensListSuccessRequest,
+  fetchTokenRichListStarted,
+  fetchTokenRichListFailure,
+  fetchTokenRichListSuccess
 } = actions;
 
 export default reducer;

@@ -12,11 +12,15 @@ import {
   fetchAddressTokensListStartedRequest,
   fetchAddressTokensListFailureRequest,
   fetchAddressTokensListSuccessRequest,
+  fetchTokenRichListStarted,
+  fetchTokenRichListSuccess,
+  fetchTokenRichListFailure
 } from './reducer';
 import {
   handleAddressTokenList,
   handleGetToken,
   handleTokenList,
+  handleTokenRichList,
   handleUtxoBalance,
 } from './services';
 
@@ -143,6 +147,22 @@ function* fetchAddressTokensListStarted(action) {
   }
 }
 
+function* fetchTokenRichList(action) {
+  const { tokenId } = action.payload;
+  console.log(action.payload)
+  const network = yield call(getNetwork);
+  const query = {
+    id: tokenId,
+    network,
+  };
+  try {
+    const data = yield call(handleTokenRichList, query);
+    yield put(fetchTokenRichListSuccess(data));
+  } catch (err) {
+    yield put(fetchTokenRichListFailure(err.message));
+  }
+}
+
 function* mySaga() {
   yield takeLatest(fetchTokensListStartedRequest.type, fetchTokensListStarted);
   yield takeLatest(fetchTokenPageStartedRequest.type, fetchTokenPageStarted);
@@ -150,6 +170,7 @@ function* mySaga() {
     fetchAddressTokensListStartedRequest.type,
     fetchAddressTokensListStarted
   );
+  yield takeLatest(fetchTokenRichListStarted.type, fetchTokenRichList);
 }
 
 export default mySaga;
