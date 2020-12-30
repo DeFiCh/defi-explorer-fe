@@ -66,16 +66,11 @@ export const handleAddressTokenList = async (
   });
   if (Array.isArray(data)) {
     return data.map((item) => {
-      const balance = item.substring(0, item.indexOf('@'));
-      const lastIndex =
-        item.indexOf('#') === -1 ? item.length : item.indexOf('#');
-      const name = item.substring(item.indexOf('@') + 1, lastIndex);
-      const id =
-        lastIndex < item.length ? item.substring(item.indexOf('#') + 1) : name;
+      const [balance, name] = item.split('@');
       return {
         balance,
         name,
-        id,
+        id: name,
         key: item,
       };
     });
@@ -89,4 +84,16 @@ export const handleUtxoBalance = async (address: string) => {
     data: { balance },
   } = await apiRequest.get(`/address/${address}/balance`);
   return balance;
+};
+
+export const handleTokenRichList = async (query: {
+  network: string;
+  id: string | number;
+}) => {
+  const apiRequest = new ApiRequest();
+  const { data } = await apiRequest.get('/v1/gettokenrichlist', {
+    baseURL: QUICK_STATS_BASE_ENDPOINT,
+    params: query,
+  });
+  return data;
 };
