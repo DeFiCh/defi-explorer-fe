@@ -132,7 +132,7 @@ function* fetchAddressTokensListStarted(action) {
         const unitConversion = getAmountInSelectedUnit(utxoBalance, unit, mDFI);
         item.balance = new BigNumber(unitConversion)
           .plus(item.balance)
-          .toFixed(8);
+          .toNumber();
       }
 
       const tokenInfo = yield call(handleGetToken, query);
