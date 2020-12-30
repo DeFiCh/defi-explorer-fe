@@ -66,16 +66,11 @@ export const handleAddressTokenList = async (
   });
   if (Array.isArray(data)) {
     return data.map((item) => {
-      const balance = item.substring(0, item.indexOf('@'));
-      const lastIndex =
-        item.indexOf('#') === -1 ? item.length : item.indexOf('#');
-      const name = item.substring(item.indexOf('@') + 1, lastIndex);
-      const id =
-        lastIndex < item.length ? item.substring(item.indexOf('#') + 1) : name;
+      const [balance, name] = item.split('@');
       return {
         balance,
         name,
-        id,
+        id: name,
         key: item,
       };
     });
@@ -102,4 +97,3 @@ export const handleTokenRichList = async (query: {
   });
   return data;
 };
-

@@ -86,7 +86,7 @@ const TokenRichListPage = (props: TokenRichListPageProps) => {
 
   return (
     <>
-      <h1>{I18n.t('containers.tokenPage.RichListTitle')}</h1>
+      <h1>{I18n.t('containers.tokenPage.tokenRichList')}</h1>
       <Row>
         <Col xs='12'>
           <Card className={styles.card}>

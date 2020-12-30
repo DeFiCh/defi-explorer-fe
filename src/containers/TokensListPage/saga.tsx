@@ -14,7 +14,7 @@ import {
   fetchAddressTokensListSuccessRequest,
   fetchTokenRichListStarted,
   fetchTokenRichListSuccess,
-  fetchTokenRichListFailure
+  fetchTokenRichListFailure,
 } from './reducer';
 import {
   handleAddressTokenList,
@@ -97,7 +97,7 @@ function* fetchAddressTokensListStarted(action) {
       };
       const data = yield call(handleAddressTokenList, queryParams);
       cloneAddressTokenList = cloneAddressTokenList.concat(data);
-      if (data.length === 0) {
+      if (!data.length) {
         break;
       } else {
         including_start = false;
@@ -136,6 +136,9 @@ function* fetchAddressTokensListStarted(action) {
       }
 
       const tokenInfo = yield call(handleGetToken, query);
+      if (tokenInfo) {
+        item.id = tokenInfo.tokenId;
+      }
       updatedAddressTokenList.push({
         tokenInfo,
         ...item,
@@ -149,7 +152,6 @@ function* fetchAddressTokensListStarted(action) {
 
 function* fetchTokenRichList(action) {
   const { tokenId } = action.payload;
-  console.log(action.payload)
   const network = yield call(getNetwork);
   const query = {
     id: tokenId,

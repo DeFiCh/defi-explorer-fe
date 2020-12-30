@@ -219,7 +219,8 @@
       "address": "Address",
       "balance": "Balance",
       "paginationRange": "%{from} - %{to} of %{total}",
-      "RichListTitle": "Token Rich List"
+      "pairs": "Pairs",
+      "tokenRichList": "Token Rich List"
     },
     "poolPairPage": {
       "poolPairListPageBreadCrumb": "Pool",

@@ -67,7 +67,7 @@ function* fetchPoolPairsListStarted(action) {
           .plus(total.totalLiquidityUsd)
           .toNumber(),
       };
-    });
+    }, new BigNumber(0));
     yield put(updateTotalValueLocked(total.totalLiquidityUsd));
     yield put(fetchPoolPairsListSuccessRequest(updatedClonePoolPairsList));
   } catch (err) {
