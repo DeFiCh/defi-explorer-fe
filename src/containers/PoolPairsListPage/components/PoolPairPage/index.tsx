@@ -11,6 +11,7 @@ import { fetchPoolPairPageStartedRequest } from '../../reducer';
 import { numberWithCommas, setRoute } from '../../../../utils/utility';
 import styles from '../../PoolPairsListPage.module.scss';
 import { PoolPairIcon } from '../PoolPairIcon';
+import BigNumber from 'bignumber.js';
 
 interface RouteInfo {
   poolPairId: string;
@@ -90,13 +91,17 @@ const PoolPairPage = (props: PoolPairPageProps) => {
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.totalLiquidityUsd')}
-                value={`${numberWithCommas(data.totalLiquidityUsd.toFixed(2))}`}
+                value={`${numberWithCommas(
+                  new BigNumber(data.totalLiquidityUsd).toFixed(2)
+                )}`}
               />
             </Col>
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.totalLiquidity')}
-                value={`${numberWithCommas(data.totalLiquidity.toFixed(2))}`}
+                value={`${numberWithCommas(
+                  new BigNumber(data.totalLiquidity).toFixed(2)
+                )}`}
               />
             </Col>
             <Col xs='12' md='4'>
@@ -138,7 +143,9 @@ const PoolPairPage = (props: PoolPairPageProps) => {
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.apy')}
-                value={`${numberWithCommas(data.apy.toFixed(2))} %`}
+                value={`${numberWithCommas(
+                  new BigNumber(data.apy).toFixed(2)
+                )} %`}
               />
             </Col>
 

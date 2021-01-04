@@ -27,6 +27,7 @@ import { cloneDeep } from 'lodash';
 import { RiAddLine } from 'react-icons/ri';
 import { PoolPairIcon } from '../PoolPairIcon';
 import { MdInfoOutline, MdArrowDownward, MdArrowUpward } from 'react-icons/md';
+import BigNumber from 'bignumber.js';
 interface PoolPairsTable {
   fetchPoolPairsListStartedRequest: (tokenId?: string | number) => void;
   isLoading: boolean;
@@ -167,12 +168,12 @@ const PoolPairsTable = (props: PoolPairsTable) => {
           </span>
         </td>
         <td className='text-right'>{`${numberWithCommas(
-          item.totalLiquidityUsd.toFixed(2)
+          new BigNumber(item.totalLiquidityUsd).toFixed(2)
         )}`}</td>
         <td colSpan={2} className='text-right'>
           <div className='d-flex justify-content-end align-items-center'>
             <div className='text-right'>
-              {`${numberWithCommas(item.reserveA.toFixed(2))} ${
+              {`${numberWithCommas(new BigNumber(item.reserveA).toFixed(2))} ${
                 item.tokenInfo.idTokenA.symbol
               }`}
             </div>
@@ -180,7 +181,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
               <RiAddLine />
             </div>
             <div className='text-right'>
-              {`${numberWithCommas(item.reserveB.toFixed(2))} ${
+              {`${numberWithCommas(new BigNumber(item.reserveB).toFixed(2))} ${
                 item.tokenInfo.idTokenB.symbol
               }`}
             </div>
@@ -188,7 +189,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
         </td>
         <td className='text-right'>{getTokensPriceRatio(item)}</td>
         <td className='text-right'>{`${numberWithCommas(
-          item.apy.toFixed(2)
+          new BigNumber(item.apy).toFixed(2)
         )} %`}</td>
       </tr>
     ));
