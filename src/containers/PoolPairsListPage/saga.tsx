@@ -199,7 +199,7 @@ function* fetchSwapTransaction(action) {
   const network = yield call(getNetwork);
   const {
     poolPairId,
-    pageNumber = 0,
+    pageNumber = 1,
     pageSize = 10,
     sort = null,
   } = action.payload;
