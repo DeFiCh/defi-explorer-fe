@@ -1,5 +1,5 @@
 import { all, call, put, select, takeLatest } from 'redux-saga/effects';
-import { NETWORK, LP_DAILY_DFI_REWARD } from '../../constants';
+import { LP_DAILY_DFI_REWARD } from '../../constants';
 import { handleGetToken } from '../TokensListPage/services';
 import {
   fetchPoolPairsListStartedRequest,
@@ -197,13 +197,18 @@ function* fetchTokenPrice(lpPairList: any[]) {
 
 function* fetchSwapTransaction(action) {
   const network = yield call(getNetwork);
-  const { poolPairId, pageNumber = 0, sort = null } = action.payload;
+  const {
+    poolPairId,
+    pageNumber = 0,
+    pageSize = 10,
+    sort = null,
+  } = action.payload;
   try {
     const { data } = yield call(getSwapTransaction, {
       id: poolPairId,
       network,
-      skip: (pageNumber - 1) * 10,
-      limit: 10,
+      skip: (pageNumber - 1) * pageSize,
+      limit: pageSize,
       sort,
     });
     yield put(fetchSwapTransactionSuccessRequest(data));

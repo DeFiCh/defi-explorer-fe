@@ -39,12 +39,14 @@ const CustomTable = (props: CustomTable) => {
     pageSize,
     handlePageClick,
     handleSorting,
-    currentPage,
+    currentPage = 1,
   } = props;
 
   const perPage = pageSize || 10;
 
   const pagesCount = total ? Math.ceil(total / perPage) : 0;
+  const to = perPage * (currentPage - 1) + 1;
+  const from = Math.min(perPage * currentPage, total);
 
   const loadRows = () => {
     if (isError) {
@@ -153,9 +155,9 @@ const CustomTable = (props: CustomTable) => {
           {!!total && (
             <Pagination
               label={I18n.t('containers.poolPairsListPage.paginationRange', {
-                from: 'from',
+                from,
                 total,
-                to: 'to',
+                to,
               })}
               currentPage={currentPage || 1}
               pagesCount={pagesCount}

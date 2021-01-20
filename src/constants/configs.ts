@@ -14,6 +14,7 @@ export const TESTNET_WS_PREFIX =
 export const CHAIN = process.env.CHAIN || 'DFI';
 export const NETWORK = process.env.NETWORK || 'mainnet';
 export const LATEST_BLOCKS_LIMIT = 10;
+export const SWAP_LIST_TABLE_LIMIT = 10;
 export const BLOCKS_LIST_PAGE_LIMIT = 10;
 export const TOKENS_LIST_PAGE_LIMIT = 10;
 export const ADDRESS_TOKENS_LIST_PAGE_LIMIT = 10;

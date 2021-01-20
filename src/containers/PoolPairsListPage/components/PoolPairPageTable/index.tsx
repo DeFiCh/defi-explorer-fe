@@ -5,7 +5,11 @@ import moment from 'moment';
 import { fetchSwapTransactionStartedRequest } from '../../reducer';
 import CustomTable from '../../../../components/CustomTable';
 import { numberWithCommas } from '../../../../utils/utility';
-import { MAINNET_EXPLORER, TESTNET_EXPLORER } from '../../../../constants';
+import {
+  MAINNET_EXPLORER,
+  TESTNET_EXPLORER,
+  SWAP_LIST_TABLE_LIMIT,
+} from '../../../../constants';
 import { Button } from 'reactstrap';
 import { getBlockDetailService } from '../../services';
 
@@ -16,11 +20,12 @@ interface PoolPairPageTable {
   total: number;
   isError: string;
   network: string;
-  fetchSwapTransactionStartedRequestData: (
-    poolPairId: string | number,
-    pageNumber: number,
-    sortObj?: any
-  ) => void;
+  fetchSwapTransactionStartedRequestData: (obj: {
+    poolPairId: string | number;
+    pageNumber: number;
+    pageSize?: number;
+    sortObj?: any;
+  }) => void;
 }
 
 const PoolPairPageTable = (props: PoolPairPageTable) => {
@@ -37,18 +42,28 @@ const PoolPairPageTable = (props: PoolPairPageTable) => {
   const [sort, setSorting] = useState({});
   const API_PREFIX =
     network === 'mainnet' ? MAINNET_EXPLORER : TESTNET_EXPLORER;
+  const pageSize = SWAP_LIST_TABLE_LIMIT;
 
   useEffect(() => {
-    fetchSwapTransactionStartedRequestData(poolPairId, currentPage);
+    fetchSwapTransactionStartedRequestData({
+      poolPairId,
+      pageSize,
+      pageNumber: currentPage,
+    });
   }, []);
 
-  const fetchSwapData = (pageNum, sortObj) => {
-    setCurrentPage(pageNum);
-    fetchSwapTransactionStartedRequestData(poolPairId, pageNum, sortObj);
+  const fetchSwapData = (pageNumber, sortObj) => {
+    setCurrentPage(pageNumber);
+    fetchSwapTransactionStartedRequestData({
+      poolPairId,
+      pageSize,
+      pageNumber,
+      sortObj,
+    });
   };
 
-  const handlePageClick = (pageNum) => {
-    fetchSwapData(pageNum, sort);
+  const handlePageClick = (pageNumber) => {
+    fetchSwapData(pageNumber, sort);
   };
 
   const handleSorting = (filed) => {
@@ -152,6 +167,7 @@ const PoolPairPageTable = (props: PoolPairPageTable) => {
         column={getColumn()}
         data={data || []}
         sort={sort}
+        pageSize={pageSize}
         total={total || 0}
         pagination={true}
         handlePageClick={handlePageClick}
@@ -179,8 +195,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  fetchSwapTransactionStartedRequestData: (poolPairId, pageNumber, sort) =>
-    fetchSwapTransactionStartedRequest({ poolPairId, pageNumber, sort }),
+  fetchSwapTransactionStartedRequestData: (obj) =>
+    fetchSwapTransactionStartedRequest(obj),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PoolPairPageTable);
