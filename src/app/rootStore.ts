@@ -7,7 +7,7 @@ import { setupI18n } from '../translations/i18n';
 const middleware = [...getDefaultMiddleware(), sagaMiddleware];
 const isProduction = process.env.NODE_ENV === 'production';
 if (!isProduction) {
-  // middleware.push(logger)
+  middleware.push(logger)
 }
 
 const store = configureStore({

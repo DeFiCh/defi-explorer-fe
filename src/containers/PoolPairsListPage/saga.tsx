@@ -1,5 +1,5 @@
 import { all, call, put, select, takeLatest } from 'redux-saga/effects';
-import { NETWORK, LP_DAILY_DFI_REWARD } from '../../constants';
+import { LP_DAILY_DFI_REWARD } from '../../constants';
 import { handleGetToken } from '../TokensListPage/services';
 import {
   fetchPoolPairsListStartedRequest,
@@ -9,12 +9,16 @@ import {
   fetchPoolPairPageSuccessRequest,
   fetchPoolPairPageFailureRequest,
   updateTotalValueLocked,
+  fetchSwapTransactionStartedRequest,
+  fetchSwapTransactionFailureRequest,
+  fetchSwapTransactionSuccessRequest,
 } from './reducer';
 import {
   fetchCoinGeckoCoinsList,
   fetchGetGov,
   handleGetPoolPair,
   handlePoolPairList,
+  getSwapTransaction,
 } from './services';
 import uniqBy from 'lodash/uniqBy';
 import { getCoinGeckoIdwithSymbol } from '../../utils/utility';
@@ -191,6 +195,28 @@ function* fetchTokenPrice(lpPairList: any[]) {
   });
 }
 
+function* fetchSwapTransaction(action) {
+  const network = yield call(getNetwork);
+  const {
+    poolPairId,
+    pageNumber = 1,
+    pageSize = 10,
+    sort = null,
+  } = action.payload;
+  try {
+    const { data } = yield call(getSwapTransaction, {
+      id: poolPairId,
+      network,
+      skip: (pageNumber - 1) * pageSize,
+      limit: pageSize,
+      sort,
+    });
+    yield put(fetchSwapTransactionSuccessRequest(data));
+  } catch (err) {
+    yield put(fetchSwapTransactionFailureRequest(err.message));
+  }
+}
+
 function* mySaga() {
   yield takeLatest(
     fetchPoolPairsListStartedRequest.type,
@@ -199,6 +225,10 @@ function* mySaga() {
   yield takeLatest(
     fetchPoolPairPageStartedRequest.type,
     fetchPoolPairPageStarted
+  );
+  yield takeLatest(
+    fetchSwapTransactionStartedRequest.type,
+    fetchSwapTransaction
   );
 }
 
