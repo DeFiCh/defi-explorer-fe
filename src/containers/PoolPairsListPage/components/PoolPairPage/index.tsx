@@ -12,6 +12,7 @@ import { numberWithCommas, setRoute } from '../../../../utils/utility';
 import styles from '../../PoolPairsListPage.module.scss';
 import { PoolPairIcon } from '../PoolPairIcon';
 import BigNumber from 'bignumber.js';
+import PoolPairPageTable from '../PoolPairPageTable';
 
 interface RouteInfo {
   poolPairId: string;
@@ -115,7 +116,6 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                 })}
               />
             </Col>
-
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.reserve', {
@@ -127,7 +127,6 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                 })}
               />
             </Col>
-
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.tradeEnabled')}
@@ -148,7 +147,6 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                 )} %`}
               />
             </Col>
-
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.rewardPct')}
@@ -157,7 +155,6 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                 )} %`}
               />
             </Col>
-
             <Col xs='12' md='8'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.ownerAddress')}
@@ -166,6 +163,7 @@ const PoolPairPage = (props: PoolPairPageProps) => {
               />
             </Col>
           </Row>
+          {poolPairId && <PoolPairPageTable poolPairId={poolPairId} />}
         </div>
       </>
     );

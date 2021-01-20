@@ -1,4 +1,5 @@
 import {
+  BLOCK_PAGE_BASE_PATH,
   COIN_GECKO_BASE_ENDPOINT,
   QUICK_STATS_BASE_ENDPOINT,
   VS_CURRENCIES,
@@ -65,4 +66,27 @@ export const fetchGetGov = async (queryParams: {
     params: queryParams,
   });
   return data[name];
+};
+
+export const getSwapTransaction = async (queryParams: {
+  id: string;
+  network: string;
+  limit: number;
+  skip: number;
+  sort: any;
+}) => {
+  const apiRequest = new ApiRequest();
+  const data = await apiRequest.get('v1/getswaptransaction', {
+    baseURL: QUICK_STATS_BASE_ENDPOINT,
+    params: queryParams,
+  });
+  return data;
+};
+
+export const getBlockDetailService = async (blockHeight: string) => {
+  const apiRequest = new ApiRequest();
+  const { data } = await apiRequest.get(
+    `${BLOCK_PAGE_BASE_PATH}/${blockHeight}`
+  );
+  return data;
 };

@@ -4,15 +4,10 @@
 @import '~bootstrap/scss/mixins';
 @import '../../scss/variables';
 @import '../../scss/bootstrap/variables';
-.card {
-  overflow: hidden;
-}
 
-// .tableResponsive {
-//   height: calc(100vh - 186px);
-//   min-height: 400px;
-//   overflow: auto;
-// }
+.card {
+  overflow: auto;
+}
 
 .table {
   margin-bottom: 0;
@@ -44,10 +39,6 @@
   color: $secondary;
 }
 
-.sortIcon {
-  width: 14px !important;
-}
-
 .staticCol {
   width: 250px !important;
 }
@@ -66,13 +57,12 @@
 
 .infoIcon {
   margin-top: 4px;
-  color: $secondary;
-}
-
-.subHeader {
-  color: $secondary;
 }
 
 .currency {
   color: rgba(0, 0, 0, 0.6);
+}
+
+.sortIcon {
+  width: 14px !important;
 }

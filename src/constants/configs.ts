@@ -3,6 +3,8 @@ export const BACKEND_BASE_URL = '127.0.0.1';
 export const BACKEND_BASE_PORT = 3000;
 export const MAINNET_API_PREFIX =
   process.env.MAINNET_API_PREFIX || 'https://mainnet-api.defichain.io/api';
+export const MAINNET_EXPLORER =  process.env.MAINNET_EXPLORER ||'https://mainnet.defichain.io/#/DFI/mainnet/'
+export const TESTNET_EXPLORER =  process.env.TESTNET_EXPLORER ||'https://testnet.defichain.io/#/DFI/testnet/'
 export const TESTNET_API_PREFIX =
   process.env.TESTNET_API_PREFIX || 'https://testnet-api.defichain.io/api';
 export const MAINNET_WS_PREFIX =

@@ -26,7 +26,7 @@ import {
 import { cloneDeep } from 'lodash';
 import { RiAddLine } from 'react-icons/ri';
 import { PoolPairIcon } from '../PoolPairIcon';
-import { MdInfoOutline, MdArrowDownward, MdArrowUpward } from 'react-icons/md';
+import { MdInfo, MdArrowDownward, MdArrowUpward } from 'react-icons/md';
 import BigNumber from 'bignumber.js';
 interface PoolPairsTable {
   fetchPoolPairsListStartedRequest: (tokenId?: string | number) => void;
@@ -225,6 +225,10 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                     >
                       {I18n.t('containers.poolPairsListPage.totalLiquidity')}
                       &nbsp;
+                      <span className={styles.subHeader}>
+                        {I18n.t('containers.poolPairsListPage.usd')}
+                      </span>
+                      &nbsp;
                       {getSortingIcon('totalLiquidityUsd')}
                     </Button>
                   </th>
@@ -244,7 +248,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                       &nbsp;
                       {getSortingIcon('apy')}
                       <span id='infoText' className={styles.infoText}>
-                        <MdInfoOutline className={styles.infoIcon} />
+                        <MdInfo className={styles.infoIcon} />
                       </span>
                       <UncontrolledTooltip
                         target='infoText'

@@ -185,7 +185,8 @@
       "poolPairsListPageTitle": "Liquidity Pool Pairs",
       "name": "Name",
       "commission": "Commission",
-      "totalLiquidity": "Total Liquidity (USD)",
+      "totalLiquidity": "Total Liquidity",
+      "usd": "USD",
       "liquidity": "Liquidity",
       "priceRatio": "Price Ratio",
       "apy": "APY",
@@ -195,6 +196,15 @@
       "noDataPresent": "No Pool Pair is present",
       "totalValueLocked": "Total Value Locked",
       "totalValueLockedCurrency": "USD"
+    },
+    "poolPairsSwapListPage":{
+      "loading": "Loading",
+      "title": "Swaps",
+      "blockHeight": "Block Height",
+      "blockTime": "Block Time",
+      "txn": "Transaction Id",
+      "baseToken": "Base Token Amount",
+      "quoteToken": "Quote Token Amount"
     },
     "tokenPage": {
       "tokenListPageBreadCrumb": "Tokens",
