@@ -32,7 +32,7 @@ export const handleGetPoolPair = async (query: {
     params: query,
   });
   return {
-    ...data[id],
+    ...data,
     poolPairId: id,
   };
 };

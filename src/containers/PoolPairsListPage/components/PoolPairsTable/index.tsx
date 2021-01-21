@@ -12,6 +12,7 @@ import {
   PopoverBody,
 } from 'reactstrap';
 import {
+  DEFAULT_DECIMAL_PLACE,
   POOL_LIST_PAGE_URL_NAME,
   TOKENS_LIST_PAGE_LIMIT,
 } from '../../../../constants';
@@ -27,7 +28,6 @@ import { cloneDeep } from 'lodash';
 import { RiAddLine } from 'react-icons/ri';
 import { PoolPairIcon } from '../PoolPairIcon';
 import { MdInfo, MdArrowDownward, MdArrowUpward } from 'react-icons/md';
-import BigNumber from 'bignumber.js';
 interface PoolPairsTable {
   fetchPoolPairsListStartedRequest: (tokenId?: string | number) => void;
   isLoading: boolean;
@@ -142,13 +142,15 @@ const PoolPairsTable = (props: PoolPairsTable) => {
 
   const getTokensPriceRatio = (item) => {
     if (item['reserveB/reserveA'] > item['reserveA/reserveB']) {
-      return `${numberWithCommas(item['reserveB/reserveA'])} ${
-        item.tokenInfo.idTokenB.symbol
-      }/${item.tokenInfo.idTokenA.symbol}`;
+      return `${numberWithCommas(
+        item['reserveB/reserveA'],
+        DEFAULT_DECIMAL_PLACE
+      )} ${item.tokenInfo.idTokenB.symbol}/${item.tokenInfo.idTokenA.symbol}`;
     }
-    return `${numberWithCommas(item['reserveA/reserveB'])} ${
-      item.tokenInfo.idTokenA.symbol
-    }/${item.tokenInfo.idTokenB.symbol}`;
+    return `${numberWithCommas(
+      item['reserveA/reserveB'],
+      DEFAULT_DECIMAL_PLACE
+    )} ${item.tokenInfo.idTokenA.symbol}/${item.tokenInfo.idTokenB.symbol}`;
   };
 
   const loadTableRows = useCallback(() => {
@@ -167,13 +169,13 @@ const PoolPairsTable = (props: PoolPairsTable) => {
             </div>
           </span>
         </td>
-        <td className='text-right'>{`${numberWithCommas(
-          new BigNumber(item.totalLiquidityUsd).toFixed(2)
-        )}`}</td>
+        <td className='text-right'>
+          {`${numberWithCommas(item.totalLiquidityUsd, DEFAULT_DECIMAL_PLACE)}`}
+        </td>
         <td colSpan={2} className='text-right'>
           <div className='d-flex justify-content-end align-items-center'>
             <div className='text-right'>
-              {`${numberWithCommas(new BigNumber(item.reserveA).toFixed(2))} ${
+              {`${numberWithCommas(item.reserveA, DEFAULT_DECIMAL_PLACE)} ${
                 item.tokenInfo.idTokenA.symbol
               }`}
             </div>
@@ -181,7 +183,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
               <RiAddLine />
             </div>
             <div className='text-right'>
-              {`${numberWithCommas(new BigNumber(item.reserveB).toFixed(2))} ${
+              {`${numberWithCommas(item.reserveB, DEFAULT_DECIMAL_PLACE)} ${
                 item.tokenInfo.idTokenB.symbol
               }`}
             </div>
@@ -189,7 +191,8 @@ const PoolPairsTable = (props: PoolPairsTable) => {
         </td>
         <td className='text-right'>{getTokensPriceRatio(item)}</td>
         <td className='text-right'>{`${numberWithCommas(
-          new BigNumber(item.apy).toFixed(2)
+          item.apy,
+          DEFAULT_DECIMAL_PLACE
         )} %`}</td>
       </tr>
     ));

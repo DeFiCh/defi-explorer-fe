@@ -13,7 +13,7 @@ interface KeyValueLiProps {
   value?: string;
   popsQR?: any;
   uid?: any;
-  label?: string;
+  label?: any;
   href?: string | boolean;
   noEllipsis?: boolean;
 }

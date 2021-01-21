@@ -10,6 +10,7 @@ import BTCIcon from '../assets/svg/icon-coin-bitcoin-lapis.svg';
 import EthIcon from '../assets/svg/eth-icon.svg';
 import USDTIcon from '../assets/svg/usdt-icon.svg';
 import store from '../app/rootStore';
+import BigNumber from 'bignumber.js';
 
 export const setIntervalSynchronous = (func, delay) => {
   let intervalFunction;
@@ -171,7 +172,10 @@ export const getIdFromSymbol = (symbol) => {
   return mapId[symbol] || symbol;
 };
 
-export const numberWithCommas = (nStr) => {
+export const numberWithCommas = (nStr, tofixed?) => {
+  if (tofixed) {
+    nStr= new BigNumber(nStr).toFixed(tofixed);
+  }
   nStr += '';
   const x = nStr.split('.');
   let x1 = x[0];

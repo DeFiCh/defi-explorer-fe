@@ -62,15 +62,13 @@ const CustomTable = (props: CustomTable) => {
     if (!isLoading && total === 0) {
       return (
         <tr key='noDataPresent'>
-          <td colSpan={4}>
-            {I18n.t('containers.poolPairsListPage.noDataPresent')}
-          </td>
+          <td colSpan={4}>{I18n.t('containers.customTable.noDataPresent')}</td>
         </tr>
       );
     }
     return (
       <tr key='Loading'>
-        <td colSpan={4}>{I18n.t('containers.poolPairsListPage.loading')}</td>
+        <td colSpan={4}>{I18n.t('containers.customTable.loading')}</td>
       </tr>
     );
   };
@@ -108,7 +106,7 @@ const CustomTable = (props: CustomTable) => {
         <th key={item.name}>
           <Button
             color='link'
-            className='d-flex'
+            className={`d-flex ${item.type === 'number' && 'float-right'}`}
             onClick={() => (handleSorting ? handleSorting(item.field) : '')}
           >
             {I18n.t(item.name)}

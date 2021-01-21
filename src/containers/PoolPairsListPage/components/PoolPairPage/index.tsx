@@ -6,13 +6,16 @@ import { I18n } from 'react-redux-i18n';
 import { NavLink, RouteComponentProps } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, Row, Col } from 'reactstrap';
 import KeyValueLi from '../../../../components/KeyValueLi';
-import { POOL_LIST_PAGE_URL_NAME } from '../../../../constants';
+import {
+  DEFAULT_DECIMAL_PLACE,
+  POOL_LIST_PAGE_URL_NAME,
+} from '../../../../constants';
 import { fetchPoolPairPageStartedRequest } from '../../reducer';
 import { numberWithCommas, setRoute } from '../../../../utils/utility';
 import styles from '../../PoolPairsListPage.module.scss';
 import { PoolPairIcon } from '../PoolPairIcon';
-import BigNumber from 'bignumber.js';
 import PoolPairPageTable from '../PoolPairPageTable';
+import BigNumber from 'bignumber.js';
 
 interface RouteInfo {
   poolPairId: string;
@@ -72,7 +75,10 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                 label={I18n.t('containers.poolPairPage.oneCurrencyLabel', {
                   symbol: data.tokenInfo.idTokenA.symbolKey,
                 })}
-                value={`${numberWithCommas(data['reserveB/reserveA'])}`}
+                value={`${numberWithCommas(
+                  data['reserveB/reserveA'],
+                  DEFAULT_DECIMAL_PLACE
+                )}`}
               />
             </Col>
             <Col xs='12' md='4'>
@@ -80,7 +86,10 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                 label={I18n.t('containers.poolPairPage.oneCurrencyLabel', {
                   symbol: data.tokenInfo.idTokenB.symbolKey,
                 })}
-                value={`${numberWithCommas(data['reserveA/reserveB'])}`}
+                value={`${numberWithCommas(
+                  data['reserveA/reserveB'],
+                  DEFAULT_DECIMAL_PLACE
+                )}`}
               />
             </Col>
             <Col xs='12' md='4'>
@@ -91,17 +100,35 @@ const PoolPairPage = (props: PoolPairPageProps) => {
             </Col>
             <Col xs='12' md='4'>
               <KeyValueLi
-                label={I18n.t('containers.poolPairPage.totalLiquidityUsd')}
+                label={
+                  <>
+                    {I18n.t('containers.poolPairPage.totalLiquidityUsd')}
+                    &nbsp;
+                    <span className={styles.subHeader}>
+                      {I18n.t('containers.poolPairPage.usd')}
+                    </span>
+                  </>
+                }
                 value={`${numberWithCommas(
-                  new BigNumber(data.totalLiquidityUsd).toFixed(2)
+                  data.totalLiquidityUsd,
+                  DEFAULT_DECIMAL_PLACE
                 )}`}
               />
             </Col>
             <Col xs='12' md='4'>
               <KeyValueLi
-                label={I18n.t('containers.poolPairPage.totalLiquidity')}
+                label={
+                  <>
+                    {I18n.t('containers.poolPairPage.totalLiquidity')}
+                    &nbsp;
+                    <span className={styles.subHeader}>
+                      {I18n.t('containers.poolPairPage.lpToken')}
+                    </span>
+                  </>
+                }
                 value={`${numberWithCommas(
-                  new BigNumber(data.totalLiquidity).toFixed(2)
+                  data.totalLiquidity,
+                  DEFAULT_DECIMAL_PLACE
                 )}`}
               />
             </Col>
@@ -111,8 +138,8 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                   symbol: data.tokenInfo.idTokenA.symbolKey,
                 })}
                 value={I18n.t('containers.poolPairPage.reserveData', {
-                  value: numberWithCommas(data.reserveA),
-                  symbol: data.tokenInfo.idTokenA.symbol,
+                  value: numberWithCommas(data.reserveA, DEFAULT_DECIMAL_PLACE),
+                  symbol: data.tokenInfo.idTokenA.symbolKey,
                 })}
               />
             </Col>
@@ -122,8 +149,8 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                   symbol: data.tokenInfo.idTokenB.symbolKey,
                 })}
                 value={I18n.t('containers.poolPairPage.reserveData', {
-                  value: numberWithCommas(data.reserveB),
-                  symbol: data.tokenInfo.idTokenB.symbol,
+                  value: numberWithCommas(data.reserveB, DEFAULT_DECIMAL_PLACE),
+                  symbol: data.tokenInfo.idTokenB.symbolKey,
                 })}
               />
             </Col>
@@ -135,23 +162,92 @@ const PoolPairPage = (props: PoolPairPageProps) => {
             </Col>
             <Col xs='12' md='4'>
               <KeyValueLi
-                label={I18n.t('containers.poolPairPage.yearlyPoolRewardUSD')}
-                value={`${numberWithCommas(data.yearlyPoolReward)}`}
+                label={
+                  <>
+                    {I18n.t('containers.poolPairPage.yearlyPoolRewardUSD')}
+                    &nbsp;
+                    <span className={styles.subHeader}>
+                      {I18n.t('containers.poolPairPage.usd')}
+                    </span>
+                  </>
+                }
+                value={`${numberWithCommas(
+                  data.yearlyPoolReward,
+                  DEFAULT_DECIMAL_PLACE
+                )}`}
+              />
+            </Col>
+
+            <Col xs='12' md='4'>
+              <KeyValueLi
+                label={
+                  <>
+                    {I18n.t('containers.poolPairPage.volume', {
+                      symbol: data.tokenInfo.idTokenA.symbolKey,
+                    })}
+                    &nbsp;
+                    <span className={styles.subHeader}>
+                      {I18n.t('containers.poolPairPage.24hr')}
+                    </span>
+                  </>
+                }
+                value={numberWithCommas(
+                  data.volumeTokenA,
+                  DEFAULT_DECIMAL_PLACE
+                )}
               />
             </Col>
             <Col xs='12' md='4'>
               <KeyValueLi
+                label={
+                  <>
+                    {I18n.t('containers.poolPairPage.volume', {
+                      symbol: data.tokenInfo.idTokenB.symbolKey,
+                    })}
+                    &nbsp;
+                    <span className={styles.subHeader}>
+                      {I18n.t('containers.poolPairPage.24hr')}
+                    </span>
+                  </>
+                }
+                value={numberWithCommas(
+                  data.volumeTokenB,
+                  DEFAULT_DECIMAL_PLACE
+                )}
+              />
+            </Col>
+            <Col xs='12' md='4'>
+              <KeyValueLi
+                label={
+                  <>
+                    {I18n.t('containers.poolPairPage.totalVolume', {
+                      symbol: data.tokenInfo.idTokenA.symbolKey,
+                    })}
+                    &nbsp;
+                    <span className={styles.subHeader}>
+                      {I18n.t('containers.poolPairPage.24hr')}
+                    </span>
+                  </>
+                }
+                value={numberWithCommas(
+                  new BigNumber(data.volumeTokenA).plus(data.volumeTokenB),
+                  DEFAULT_DECIMAL_PLACE
+                )}
+              />
+            </Col>
+
+            <Col xs='12' md='4'>
+              <KeyValueLi
                 label={I18n.t('containers.poolPairPage.apy')}
-                value={`${numberWithCommas(
-                  new BigNumber(data.apy).toFixed(2)
-                )} %`}
+                value={`${numberWithCommas(data.apy, DEFAULT_DECIMAL_PLACE)} %`}
               />
             </Col>
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.rewardPct')}
                 value={`${numberWithCommas(
-                  parseFloat(data.rewardPct) * 100
+                  parseFloat(data.rewardPct) * 100,
+                  2
                 )} %`}
               />
             </Col>

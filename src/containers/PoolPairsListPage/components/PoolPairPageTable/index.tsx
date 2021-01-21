@@ -9,9 +9,10 @@ import {
   MAINNET_EXPLORER,
   TESTNET_EXPLORER,
   SWAP_LIST_TABLE_LIMIT,
+  DEFAULT_DECIMAL_PLACE,
 } from '../../../../constants';
-import { Button } from 'reactstrap';
 import { getBlockDetailService } from '../../services';
+import ValueLi from '../../../../components/ValueLi';
 
 interface PoolPairPageTable {
   poolPairId: string | number;
@@ -99,22 +100,12 @@ const PoolPairPageTable = (props: PoolPairPageTable) => {
         field: 'blockHeight',
         cell: (obj) => {
           return (
-            <Button
-              color='link'
-              className='p-0'
-              onClick={() => handelBlockClick(obj.blockHeight)}
-            >
-              {obj.blockHeight}
-            </Button>
+            <ValueLi
+              clickble
+              value={`${obj.blockHeight}`}
+              onclick={() => handelBlockClick(obj.blockHeight)}
+            />
           );
-        },
-        sortable: true,
-      },
-      {
-        name: I18n.t('containers.poolPairsSwapListPage.blockTime'),
-        field: 'blockTime',
-        cell: (obj) => {
-          return moment(obj.blockTime).format('lll');
         },
         sortable: true,
       },
@@ -123,23 +114,25 @@ const PoolPairPageTable = (props: PoolPairPageTable) => {
         field: 'txid',
         cell: (obj) => {
           return (
-            <Button
-              color='link'
-              className='p-0'
-              onClick={() => handelTxClick(obj.txid)}
-            >
-              {obj.txid}
-            </Button>
+            <ValueLi
+              copyable
+              clickble
+              textLimit='40'
+              value={obj.txid}
+              onclick={() => handelTxClick(obj.txid)}
+            />
           );
         },
       },
       {
         name: I18n.t('containers.poolPairsSwapListPage.baseToken'),
         field: 'baseTokenAmount',
+        type: 'number',
         cell: (obj) => {
           return (
             <div className='float-right'>
-              {numberWithCommas(obj.baseTokenAmount)} {obj.baseTokenSymbol}
+              {numberWithCommas(obj.baseTokenAmount, DEFAULT_DECIMAL_PLACE)}{' '}
+              {obj.baseTokenSymbol}
             </div>
           );
         },
@@ -148,10 +141,12 @@ const PoolPairPageTable = (props: PoolPairPageTable) => {
       {
         name: I18n.t('containers.poolPairsSwapListPage.quoteToken'),
         field: 'quoteTokenAmount',
+        type: 'number',
         cell: (obj) => {
           return (
             <div className='float-right'>
-              {numberWithCommas(obj.quoteTokenAmount)} {obj.quoteTokenSymbol}
+              {numberWithCommas(obj.quoteTokenAmount, DEFAULT_DECIMAL_PLACE)}{' '}
+              {obj.quoteTokenSymbol}
             </div>
           );
         },

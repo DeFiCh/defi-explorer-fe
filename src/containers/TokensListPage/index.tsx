@@ -151,9 +151,7 @@ const TokensListPage = (props: TokensListPageProps) => {
             <div>{item.symbolKey}</div>
           </td>
           <td className={`${styles.staticCol} text-right`}>
-            {item.mintable
-              ? `${numberWithCommas(new BigNumber(item.minted).toFixed(2))}`
-              : '-'}
+            {item.mintable ? `${numberWithCommas(item.minted, 2)}` : '-'}
           </td>
         </tr>
       ));
