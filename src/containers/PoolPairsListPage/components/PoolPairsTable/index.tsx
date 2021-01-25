@@ -281,6 +281,10 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                         {I18n.t('containers.poolPairsListPage.usd')}
                       </span>
                       &nbsp;
+                      <span className={styles.subHeader}>
+                        {I18n.t('containers.poolPairsListPage.24hr')}
+                      </span>
+                      &nbsp;
                       {getSortingIcon('totalVolume')}
                     </Button>
                   </th>
