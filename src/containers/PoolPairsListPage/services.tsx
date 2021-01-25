@@ -5,20 +5,15 @@ import {
   VS_CURRENCIES,
 } from '../../constants';
 import ApiRequest from '../../utils/apiRequest';
-import { ITokenPoolPairListParams } from '../../utils/interfaces';
 
-export const handlePoolPairList = async (query: ITokenPoolPairListParams) => {
+export const handlePoolPairList = async (query: { network: string }) => {
   const apiRequest = new ApiRequest();
 
-  const { data } = await apiRequest.get('/v1/listpoolpairs', {
+  const { data } = await apiRequest.get('/v1/listyieldfarming', {
     baseURL: QUICK_STATS_BASE_ENDPOINT,
     params: query,
   });
-  return Object.keys(data).map((item) => ({
-    ...data[item],
-    poolPairId: item,
-  }));
-  // .filter((item) => item.tradeEnabled); //TODO: Disable filtering based on item.tradeEnabled
+  return data;
 };
 
 export const handleGetPoolPair = async (query: {
@@ -32,7 +27,7 @@ export const handleGetPoolPair = async (query: {
     params: query,
   });
   return {
-    ...data[id],
+    ...data,
     poolPairId: id,
   };
 };

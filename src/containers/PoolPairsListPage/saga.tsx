@@ -1,4 +1,4 @@
-import { all, call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { LP_DAILY_DFI_REWARD } from '../../constants';
 import { handleGetToken } from '../TokensListPage/services';
 import {
@@ -33,47 +33,32 @@ function* fetchPoolPairsListStarted(action) {
   try {
     const network = yield call(getNetwork);
     const { tokenId } = action.payload;
-    let clonePoolPairsList: any[] = [];
-    let start = 0;
-    // tslint:disable-next-line:variable-name
-    let including_start = true;
-    while (true) {
-      const queryParams = {
-        start,
-        limit: 500,
-        network,
-        including_start,
-      };
-      const data = yield call(handlePoolPairList, queryParams);
-      clonePoolPairsList = clonePoolPairsList.concat(data);
+    const query = {
+      network,
+    };
+    const { pools, tvl } = yield call(handlePoolPairList, query);
 
-      if (data.length === 0) {
-        break;
-      } else {
-        including_start = false;
-        start = clonePoolPairsList[clonePoolPairsList.length - 1].poolPairId;
-      }
-    }
-    const updatedData = yield all(
-      clonePoolPairsList
-        .filter((item) =>
-          !tokenId
-            ? !tokenId // tokenId not present then filter will get all the values
-            : item.idTokenA === tokenId || item.idTokenB === tokenId
-        )
-        .map((item) => call(fetchPoolPairData, item))
-    );
-
-    const updatedClonePoolPairsList = yield call(fetchTokenPrice, updatedData);
-    const total = updatedClonePoolPairsList.reduce((current, total) => {
+    const poolData = tokenId
+      ? pools.filter((item) => {
+          return item.idTokenA === tokenId || item.idTokenB === tokenId;
+        })
+      : pools;
+    const data = poolData.map((item) => {
+      const totalVolume = new BigNumber(item.volumeA).plus(item.volumeB);
+      const commission = totalVolume
+        .multipliedBy(0.2)
+        .multipliedBy(365)
+        .dividedBy(item.totalStaked);
+      const totalApy = commission.plus(item.apy).toNumber();
       return {
-        totalLiquidityUsd: new BigNumber(current.totalLiquidityUsd || 0)
-          .plus(total.totalLiquidityUsd)
-          .toNumber(),
+        ...item,
+        totalApy,
+        totalVolume: totalVolume.toNumber(),
+        commission: commission.toNumber(),
       };
-    }, new BigNumber(0));
-    yield put(updateTotalValueLocked(total.totalLiquidityUsd));
-    yield put(fetchPoolPairsListSuccessRequest(updatedClonePoolPairsList));
+    });
+    yield put(updateTotalValueLocked(tvl));
+    yield put(fetchPoolPairsListSuccessRequest(data));
   } catch (err) {
     yield put(updateTotalValueLocked(0));
     yield put(fetchPoolPairsListFailureRequest(err.message));

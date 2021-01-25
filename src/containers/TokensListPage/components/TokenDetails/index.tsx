@@ -1,7 +1,6 @@
 import React from 'react';
 import capitalize from 'lodash/capitalize';
 import { I18n } from 'react-redux-i18n';
-import { RouteComponentProps } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import KeyValueLi from '../../../../components/KeyValueLi';
 import { numberWithCommas } from '../../../../utils/utility';

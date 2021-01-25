@@ -12,6 +12,7 @@ import {
   PopoverBody,
 } from 'reactstrap';
 import {
+  DEFAULT_DECIMAL_PLACE,
   POOL_LIST_PAGE_URL_NAME,
   TOKENS_LIST_PAGE_LIMIT,
 } from '../../../../constants';
@@ -24,10 +25,10 @@ import {
   tableSorter,
 } from '../../../../utils/utility';
 import { cloneDeep } from 'lodash';
+import BigNumber from 'bignumber.js';
 import { RiAddLine } from 'react-icons/ri';
 import { PoolPairIcon } from '../PoolPairIcon';
-import { MdInfo, MdArrowDownward, MdArrowUpward } from 'react-icons/md';
-import BigNumber from 'bignumber.js';
+import { MdArrowDownward, MdArrowUpward } from 'react-icons/md';
 interface PoolPairsTable {
   fetchPoolPairsListStartedRequest: (tokenId?: string | number) => void;
   isLoading: boolean;
@@ -141,56 +142,92 @@ const PoolPairsTable = (props: PoolPairsTable) => {
   };
 
   const getTokensPriceRatio = (item) => {
-    if (item['reserveB/reserveA'] > item['reserveA/reserveB']) {
-      return `${numberWithCommas(item['reserveB/reserveA'])} ${
-        item.tokenInfo.idTokenB.symbol
-      }/${item.tokenInfo.idTokenA.symbol}`;
+    const itemA = new BigNumber(item['reserveA']);
+    const itemB = new BigNumber(item['reserveB']);
+    if (itemB.dividedBy(itemA) > itemA.dividedBy(itemB)) {
+      return (
+        <span>
+          {numberWithCommas(itemB.dividedBy(itemA), DEFAULT_DECIMAL_PLACE)}
+          &nbsp;{item.tokenBSymbol}/{item.tokenASymbol}
+        </span>
+      );
     }
-    return `${numberWithCommas(item['reserveA/reserveB'])} ${
-      item.tokenInfo.idTokenA.symbol
-    }/${item.tokenInfo.idTokenB.symbol}`;
+    return (
+      <span>
+        {numberWithCommas(itemA.dividedBy(itemB), DEFAULT_DECIMAL_PLACE)}&nbsp;
+        {item.tokenASymbol}/{item.tokenBSymbol}
+      </span>
+    );
   };
 
   const loadTableRows = useCallback(() => {
     return tableRows.map((item, id) => (
       <tr key={`${item.poolPairId}-${id}`}>
         <td className={styles.staticCol}>
-          <PoolPairIcon data={item} />
+          <PoolPairIcon
+            symbolA={item.tokenASymbol}
+            symbolB={item.tokenBSymbol}
+          />
           &nbsp;
           <span>
             <div className={styles.iconTitle}>
               <Link
                 to={setRoute(`${POOL_LIST_PAGE_URL_NAME}/${item.poolPairId}`)}
               >
-                {item.symbol}
+                {item.pair}
               </Link>
             </div>
           </span>
         </td>
-        <td className='text-right'>{`${numberWithCommas(
-          new BigNumber(item.totalLiquidityUsd).toFixed(2)
-        )}`}</td>
+        <td className='text-right'>
+          {numberWithCommas(item.totalStaked, DEFAULT_DECIMAL_PLACE)}
+        </td>
+        <td className='text-right'>
+          {numberWithCommas(item.totalVolume, DEFAULT_DECIMAL_PLACE)}
+        </td>
         <td colSpan={2} className='text-right'>
           <div className='d-flex justify-content-end align-items-center'>
             <div className='text-right'>
-              {`${numberWithCommas(new BigNumber(item.reserveA).toFixed(2))} ${
-                item.tokenInfo.idTokenA.symbol
-              }`}
+              {numberWithCommas(item.reserveA, DEFAULT_DECIMAL_PLACE)}&nbsp;
+              {item.tokenASymbol}
             </div>
             <div className='px-1'>
               <RiAddLine />
             </div>
             <div className='text-right'>
-              {`${numberWithCommas(new BigNumber(item.reserveB).toFixed(2))} ${
-                item.tokenInfo.idTokenB.symbol
-              }`}
+              {numberWithCommas(item.reserveB, DEFAULT_DECIMAL_PLACE)}&nbsp;
+              {item.tokenBSymbol}
             </div>
           </div>
         </td>
         <td className='text-right'>{getTokensPriceRatio(item)}</td>
-        <td className='text-right'>{`${numberWithCommas(
-          new BigNumber(item.apy).toFixed(2)
-        )} %`}</td>
+        <td className={`text-right ${styles.pointer}`}>
+          <span id={`infoText${id}`}>
+            {numberWithCommas(item.totalApy, DEFAULT_DECIMAL_PLACE)}&nbsp;%
+          </span>
+          <UncontrolledTooltip
+            target={`infoText${id}`}
+            innerClassName='bg-white text-break w-90 h-50 border'
+          >
+            <PopoverBody>
+              <div>
+                {`${I18n.t(
+                  'containers.poolPairsListPage.apy'
+                )} : ${numberWithCommas(item.apy, DEFAULT_DECIMAL_PLACE)}`}
+                &nbsp;%
+              </div>
+              <div>
+                {`${I18n.t(
+                  'containers.poolPairsListPage.commission'
+                )} : ${numberWithCommas(
+                  item.commission,
+                  DEFAULT_DECIMAL_PLACE
+                )}`}
+                &nbsp;%
+              </div>
+            </PopoverBody>
+          </UncontrolledTooltip>
+        </td>
       </tr>
     ));
   }, [tableRows]);
@@ -221,7 +258,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                     <Button
                       color='link'
                       className='d-flex float-right'
-                      onClick={() => sorter('totalLiquidityUsd')}
+                      onClick={() => sorter('totalStaked')}
                     >
                       {I18n.t('containers.poolPairsListPage.totalLiquidity')}
                       &nbsp;
@@ -229,7 +266,22 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                         {I18n.t('containers.poolPairsListPage.usd')}
                       </span>
                       &nbsp;
-                      {getSortingIcon('totalLiquidityUsd')}
+                      {getSortingIcon('totalStaked')}
+                    </Button>
+                  </th>
+                  <th>
+                    <Button
+                      color='link'
+                      className='d-flex float-right'
+                      onClick={() => sorter('totalVolume')}
+                    >
+                      {I18n.t('containers.poolPairsListPage.totalVolume')}
+                      &nbsp;
+                      <span className={styles.subHeader}>
+                        {I18n.t('containers.poolPairsListPage.usd')}
+                      </span>
+                      &nbsp;
+                      {getSortingIcon('totalVolume')}
                     </Button>
                   </th>
                   <th colSpan={2} className='text-right'>
@@ -242,26 +294,11 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                     <Button
                       color='link'
                       className='d-flex float-right'
-                      onClick={() => sorter('apy')}
+                      onClick={() => sorter('totalApy')}
                     >
                       {I18n.t('containers.poolPairsListPage.apy')}
                       &nbsp;
-                      {getSortingIcon('apy')}
-                      <span id='infoText' className={styles.infoText}>
-                        <MdInfo className={styles.infoIcon} />
-                      </span>
-                      <UncontrolledTooltip
-                        target='infoText'
-                        innerClassName='bg-white text-break w-50 h-50 border'
-                      >
-                        <PopoverBody>
-                          <small>
-                            {I18n.t(
-                              'containers.poolPairsListPage.apyTooltipMessage'
-                            )}
-                          </small>
-                        </PopoverBody>
-                      </UncontrolledTooltip>
+                      {getSortingIcon('totalApy')}
                     </Button>
                   </th>
                 </tr>

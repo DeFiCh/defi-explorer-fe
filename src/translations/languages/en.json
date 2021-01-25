@@ -180,12 +180,17 @@
       "tradeable": "Tradeable",
       "paginationRange": "%{to} – %{from} of %{total}"
     },
+    "customTable":{
+      "loading": "Loading",
+      "noDataPresent": "No data available"
+    },
     "poolPairsListPage": {
       "loading": "Loading",
       "poolPairsListPageTitle": "Liquidity Pool Pairs",
       "name": "Name",
       "commission": "Commission",
       "totalLiquidity": "Total Liquidity",
+      "totalVolume": "Total Volume",
       "usd": "USD",
       "liquidity": "Liquidity",
       "priceRatio": "Price Ratio",
@@ -203,8 +208,8 @@
       "blockHeight": "Block Height",
       "blockTime": "Block Time",
       "txn": "Transaction Id",
-      "baseToken": "Base Token Amount",
-      "quoteToken": "Quote Token Amount"
+      "baseToken": "Converting From",
+      "quoteToken": "Converting To"
     },
     "tokenPage": {
       "tokenListPageBreadCrumb": "Tokens",
@@ -236,12 +241,17 @@
       "poolPairListPageBreadCrumb": "Pool",
       "oneCurrencyLabel": "1 %{symbol}",
       "poolPairId": "Id",
-      "totalLiquidity": "Total Liquidity (LP Token)",
-      "totalLiquidityUsd": "Total Liquidity (USD)",
+      "totalLiquidity": "Total Liquidity",
+      "lpToken": "LP Token",
+      "totalLiquidityUsd": "Total Liquidity",
+      "usd": "USD",
       "reserve": "Reserve of %{symbol}",
       "reserveData": "%{value} %{symbol}",
-      "yearlyPoolRewardUSD": "Yearly Pool Reward (USD)",
+      "yearlyPoolRewardUSD": "Yearly Pool Reward",
       "apy": "APY",
+      "volume": "%{symbol} Volume",
+      "totalVolume": "Total Volume",
+      "24hr": "USD 24H",
       "rewardPct": "DeFi Incentive Dist Share",
       "ownerAddress": "Owner Address",
       "tradeEnabled": "Trade Enabled",
