@@ -134,7 +134,7 @@ const TokensListPage = (props: TokensListPageProps) => {
         <tr key={item.tokenId}>
           <td className={styles.staticCol}>
             <span className='pr-2'>
-              <TokenAvatar token={item} />
+              <TokenAvatar symbol={item.symbolKey} />
             </span>
             &nbsp;
             <span>

@@ -137,7 +137,7 @@ const AddressTokenList = (props: AddressTokenListProps) => {
         <tr key={`${item.name}-${index}`}>
           <td>
             <span className='pr-2'>
-              <TokenAvatar token={item.tokenInfo} />
+              <TokenAvatar symbol={item.tokenInfo.symbolKey} />
             </span>
             &nbsp;
             <span>

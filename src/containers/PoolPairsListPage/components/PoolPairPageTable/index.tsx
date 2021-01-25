@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
-import moment from 'moment';
 import { fetchSwapTransactionStartedRequest } from '../../reducer';
 import CustomTable from '../../../../components/CustomTable';
 import { numberWithCommas } from '../../../../utils/utility';
@@ -13,6 +12,7 @@ import {
 } from '../../../../constants';
 import { getBlockDetailService } from '../../services';
 import ValueLi from '../../../../components/ValueLi';
+import styles from '../../PoolPairsListPage.module.scss';
 
 interface PoolPairPageTable {
   poolPairId: string | number;
@@ -25,7 +25,7 @@ interface PoolPairPageTable {
     poolPairId: string | number;
     pageNumber: number;
     pageSize?: number;
-    sortObj?: any;
+    sort?: any;
   }) => void;
 }
 
@@ -53,13 +53,13 @@ const PoolPairPageTable = (props: PoolPairPageTable) => {
     });
   }, []);
 
-  const fetchSwapData = (pageNumber, sortObj) => {
+  const fetchSwapData = (pageNumber, sort) => {
     setCurrentPage(pageNumber);
     fetchSwapTransactionStartedRequestData({
       poolPairId,
       pageSize,
       pageNumber,
-      sortObj,
+      sort,
     });
   };
 
@@ -130,7 +130,10 @@ const PoolPairPageTable = (props: PoolPairPageTable) => {
         type: 'number',
         cell: (obj) => {
           return (
-            <div className='float-right'>
+            <div
+              className={`float-right ${styles.pointer}`}
+              title={`${obj.baseTokenAmount} ${obj.baseTokenSymbol}`}
+            >
               {numberWithCommas(obj.baseTokenAmount, DEFAULT_DECIMAL_PLACE)}{' '}
               {obj.baseTokenSymbol}
             </div>
@@ -144,7 +147,10 @@ const PoolPairPageTable = (props: PoolPairPageTable) => {
         type: 'number',
         cell: (obj) => {
           return (
-            <div className='float-right'>
+            <div
+              className={`float-right ${styles.pointer}`}
+              title={`${obj.quoteTokenAmount} ${obj.quoteTokenSymbol}`}
+            >
               {numberWithCommas(obj.quoteTokenAmount, DEFAULT_DECIMAL_PLACE)}{' '}
               {obj.quoteTokenSymbol}
             </div>

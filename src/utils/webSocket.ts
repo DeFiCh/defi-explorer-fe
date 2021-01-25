@@ -32,13 +32,13 @@ class Websocket {
     });
     this.socket.on('connect', () => {
       if (this.socket) {
-        console.log('COnnected');
+        console.log('Socket Connected');
         store.dispatch(connected());
         this.socket.emit('room', `/${this.chain}/${this.network}/inv`);
       }
     });
 
-    this.socket.on('disconnect', () => {
+    this.socket.on('Socket Disconnect', () => {
       store.dispatch(disconnected());
     });
 

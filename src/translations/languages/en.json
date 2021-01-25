@@ -190,6 +190,7 @@
       "name": "Name",
       "commission": "Commission",
       "totalLiquidity": "Total Liquidity",
+      "totalVolume": "Total Volume",
       "usd": "USD",
       "liquidity": "Liquidity",
       "priceRatio": "Price Ratio",
