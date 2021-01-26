@@ -4,7 +4,14 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
 import { NavLink, RouteComponentProps } from 'react-router-dom';
-import { Breadcrumb, BreadcrumbItem, Row, Col } from 'reactstrap';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  Row,
+  Col,
+  UncontrolledTooltip,
+  PopoverBody,
+} from 'reactstrap';
 import KeyValueLi from '../../../../components/KeyValueLi';
 import {
   DEFAULT_DECIMAL_PLACE,
@@ -194,10 +201,7 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                     </span>
                   </>
                 }
-                value={numberWithCommas(
-                  data.volumeTokenA,
-                  DEFAULT_DECIMAL_PLACE
-                )}
+                value={numberWithCommas(data.volumeA, DEFAULT_DECIMAL_PLACE)}
               />
             </Col>
             <Col xs='12' md='4'>
@@ -213,19 +217,14 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                     </span>
                   </>
                 }
-                value={numberWithCommas(
-                  data.volumeTokenB,
-                  DEFAULT_DECIMAL_PLACE
-                )}
+                value={numberWithCommas(data.volumeB, DEFAULT_DECIMAL_PLACE)}
               />
             </Col>
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={
                   <>
-                    {I18n.t('containers.poolPairPage.totalVolume', {
-                      symbol: data?.tokenInfo?.idTokenA?.symbolKey,
-                    })}
+                    {I18n.t('containers.poolPairPage.totalVolume')}
                     &nbsp;
                     <span className={styles.subHeader}>
                       {I18n.t('containers.poolPairPage.24hr')}
@@ -233,7 +232,7 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                   </>
                 }
                 value={numberWithCommas(
-                  new BigNumber(data.volumeTokenA).plus(data.volumeTokenB),
+                  data.totalVolume,
                   DEFAULT_DECIMAL_PLACE
                 )}
               />
@@ -242,7 +241,39 @@ const PoolPairPage = (props: PoolPairPageProps) => {
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.apy')}
-                value={`${numberWithCommas(data.apy, DEFAULT_DECIMAL_PLACE)} %`}
+                value={
+                  <>
+                    <span className={styles.pointer} id={`apyinfo`}>
+                      {numberWithCommas(data.totalApy, DEFAULT_DECIMAL_PLACE)} %
+                    </span>
+                    <UncontrolledTooltip
+                      target={`apyinfo`}
+                      innerClassName='bg-white text-break w-90 h-50 border'
+                    >
+                      <PopoverBody>
+                        <div>
+                          {`${I18n.t(
+                            'containers.poolPairsListPage.apy'
+                          )} : ${numberWithCommas(
+                            data.apy,
+                            DEFAULT_DECIMAL_PLACE
+                          )}`}
+                          &nbsp;%
+                        </div>
+                        <div>
+                          {`${I18n.t(
+                            'containers.poolPairsListPage.commission'
+                          )} : ${numberWithCommas(
+                            data.commission,
+                            DEFAULT_DECIMAL_PLACE
+                          )}`}
+                          &nbsp;%
+                        </div>
+                      </PopoverBody>
+                    </UncontrolledTooltip>
+                  </>
+                }
+                noEllipsis
               />
             </Col>
             <Col xs='12' md='4'>

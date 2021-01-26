@@ -10,7 +10,7 @@ import { NavLink } from 'react-router-dom';
 
 interface KeyValueLiProps {
   copyable?: boolean | string;
-  value?: string;
+  value?: any;
   popsQR?: any;
   uid?: any;
   label?: any;

@@ -137,17 +137,27 @@ function* fetchTokenPrice(lpPairList: any[]) {
     }
   });
   const coinPrice: any[] = yield call(fetchCoinGeckoCoinsList, list);
-  const lpDailyDfiReward = yield call(fetchGetGov, {
-    name: LP_DAILY_DFI_REWARD,
-    network,
-  });
+  // const lpDailyDfiReward = yield call(fetchGetGov, {
+  //   name: LP_DAILY_DFI_REWARD,
+  //   network,
+  // });
+  const lpDailyDfiReward = 288000;
   const coinPriceObj = {};
   coinPrice.forEach((item) => {
     coinPriceObj[item.label] = item.value;
   });
 
   return lpPairList.map((item) => {
-    const { reserveA, reserveB, idTokenA, idTokenB, rewardPct } = item;
+    const {
+      reserveA,
+      reserveB,
+      idTokenA,
+      idTokenB,
+      rewardPct,
+      volumeA,
+      volumeB,
+    } = item;
+
     const yearlyPoolReward = new BigNumber(lpDailyDfiReward)
       .times(rewardPct)
       .times(365)
@@ -160,22 +170,35 @@ function* fetchTokenPrice(lpPairList: any[]) {
     const liquidityReserveidTokenB = new BigNumber(reserveB).times(
       coinPriceObj[idTokenB] || 0
     );
+    // NOTE: APY calculation to use 37 second block time
+    const multiplicationFactor = 100 * (30 / 37);
 
     const totalLiquidityUsd = liquidityReserveidTokenA.plus(
       liquidityReserveidTokenB
     );
-    // NOTE: APY calculation to use 37 second block time
-    const multiplicationFactor = 100 * (30 / 37);
+    const totalVolume = new BigNumber(volumeA).plus(volumeB);
+
+    const commission = totalVolume
+      .multipliedBy(0.2)
+      .multipliedBy(365)
+      .dividedBy(totalLiquidityUsd.toNumber());
+
+    const apy = totalLiquidityUsd.gt(0)
+      ? yearlyPoolReward
+          .times(multiplicationFactor)
+          .div(totalLiquidityUsd)
+          .toNumber()
+      : 0;
+    const totalApy = commission.plus(apy).toNumber();
+
     return {
       ...item,
+      totalApy,
+      commission: commission.toNumber(),
+      totalVolume: totalVolume.toNumber(),
       totalLiquidityUsd: totalLiquidityUsd.toNumber(),
       yearlyPoolReward: yearlyPoolReward.toNumber(),
-      apy: totalLiquidityUsd.gt(0)
-        ? yearlyPoolReward
-            .times(multiplicationFactor)
-            .div(totalLiquidityUsd)
-            .toNumber()
-        : 0,
+      apy,
     };
   });
 }
