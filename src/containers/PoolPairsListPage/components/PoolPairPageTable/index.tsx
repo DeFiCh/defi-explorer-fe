@@ -13,6 +13,7 @@ import {
 import { getBlockDetailService } from '../../services';
 import ValueLi from '../../../../components/ValueLi';
 import styles from '../../PoolPairsListPage.module.scss';
+import isEmpty from 'lodash/isEmpty';
 
 interface PoolPairPageTable {
   poolPairId: string | number;
@@ -55,6 +56,9 @@ const PoolPairPageTable = (props: PoolPairPageTable) => {
 
   const fetchSwapData = (pageNumber, sort) => {
     setCurrentPage(pageNumber);
+    if (isEmpty(sort)) {
+      sort = null;
+    }
     fetchSwapTransactionStartedRequestData({
       poolPairId,
       pageSize,
