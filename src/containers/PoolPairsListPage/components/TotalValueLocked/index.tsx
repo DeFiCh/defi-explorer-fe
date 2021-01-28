@@ -14,7 +14,7 @@ const TotalValueLocked = (props: TotalValueLocked) => {
   const { totalValueLocked } = props;
 
   return (
-    <Row className='mb-4'>
+    <Row>
       <Col md='12'>
         {I18n.t('containers.poolPairsListPage.totalValueLocked')}{' '}
         <span className={styles.currency}>

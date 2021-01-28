@@ -22,7 +22,6 @@ import { numberWithCommas, setRoute } from '../../../../utils/utility';
 import styles from '../../PoolPairsListPage.module.scss';
 import { PoolPairIcon } from '../PoolPairIcon';
 import PoolPairPageTable from '../PoolPairPageTable';
-import BigNumber from 'bignumber.js';
 
 interface RouteInfo {
   poolPairId: string;

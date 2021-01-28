@@ -80,3 +80,25 @@
 .pointer {
   cursor: pointer;
 }
+
+.lpDownloadImg {
+  height: 117px;
+  max-width: 100%;
+}
+
+.lpDownloadDescriptionWrapper {
+  @include media-breakpoint-down(sm) {
+    .downloadDescription {
+      margin-top: 1rem;
+    }
+    padding-bottom: 1.5rem;
+  }
+}
+
+.lpBackgroundImg {
+  display: flex;
+  justify-content: center;
+  background-image: url(../../assets/img/pool-bg.png);
+  background-size: 100% 100%;
+  background-position: top center;
+}
