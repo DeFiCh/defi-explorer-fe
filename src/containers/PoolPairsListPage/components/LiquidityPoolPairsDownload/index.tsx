@@ -17,7 +17,11 @@ const LiquidityPoolPairsDownload = () => {
           <Col md={6} sm={12} className={styles.lpBackgroundImg}>
             <img src={addliqCards} className={styles.lpDownloadImg} />
           </Col>
-          <Col md={6} sm={12} className={styles.lpDownloadDescriptionWrapper}>
+          <Col
+            md={6}
+            sm={12}
+            className={`mb-2 ${styles.lpDownloadDescriptionWrapper}`}
+          >
             <div className={`mb-2 ${styles.downloadDescription}`}>
               {I18n.t('containers.poolPairPage.liquidityPoolPairsDownload')}
             </div>

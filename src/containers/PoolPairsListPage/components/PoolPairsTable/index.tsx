@@ -144,17 +144,19 @@ const PoolPairsTable = (props: PoolPairsTable) => {
   const getTokensPriceRatio = (item) => {
     const itemA = new BigNumber(item['reserveA']);
     const itemB = new BigNumber(item['reserveB']);
-    if (itemB.dividedBy(itemA) > itemA.dividedBy(itemB)) {
+    const ratioA = itemA.gt(0) ? itemB.dividedBy(itemA) : 0;
+    const ratioB = itemB.gt(0) ? itemA.dividedBy(itemB) : 0;
+    if (ratioA > ratioB) {
       return (
         <span>
-          {numberWithCommas(itemB.dividedBy(itemA), DEFAULT_DECIMAL_PLACE)}
+          {numberWithCommas(ratioA, DEFAULT_DECIMAL_PLACE)}
           &nbsp;{item.tokenBSymbol}/{item.tokenASymbol}
         </span>
       );
     }
     return (
       <span>
-        {numberWithCommas(itemA.dividedBy(itemB), DEFAULT_DECIMAL_PLACE)}&nbsp;
+        {numberWithCommas(ratioB, DEFAULT_DECIMAL_PLACE)}&nbsp;
         {item.tokenASymbol}/{item.tokenBSymbol}
       </span>
     );

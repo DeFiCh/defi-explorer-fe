@@ -8,6 +8,7 @@ import { unitConversion } from './unitConversion';
 import DefiIcon from '../assets/svg/defi-icon.svg';
 import BTCIcon from '../assets/svg/icon-coin-bitcoin-lapis.svg';
 import EthIcon from '../assets/svg/eth-icon.svg';
+import DogeIcon from '../assets/svg/doge-icon.svg';
 import USDTIcon from '../assets/svg/usdt-icon.svg';
 import store from '../app/rootStore';
 import BigNumber from 'bignumber.js';
@@ -113,6 +114,7 @@ export const getIcon = (symbol: string) => {
     ETH: EthIcon,
     DFI: DefiIcon,
     USDT: USDTIcon,
+    DOGE: DogeIcon
   };
   return dataObj[symbol];
 };
@@ -139,6 +141,9 @@ export const getCoinGeckoIdwithSymbol = (symbol) => {
   }
   if (symbol === 'DFI') {
     return 'defichain';
+  }
+  if(symbol === 'DOGE'){
+    return 'dogecoin';
   }
   return '';
 };

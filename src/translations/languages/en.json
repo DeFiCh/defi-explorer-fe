@@ -256,7 +256,7 @@
       "ownerAddress": "Owner Address",
       "tradeEnabled": "Trade Enabled",
       "loading": "Loading",
-      "liquidityPoolPairsDownload": "You can now liquidity mine for potentially high yields. Download and install the DeFi desktop app to supply and mine liquidity now.",
+      "liquidityPoolPairsDownload": "You can now liquidity mine for potentially high yields. Download and install the DeFi desktop app to supply and liquidity mine now.",
       "downloadNow": "Download Now"
     },
     "addresstokensListPage": {

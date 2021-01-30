@@ -45,10 +45,13 @@ function* fetchPoolPairsListStarted(action) {
       : pools;
     const data = poolData.map((item) => {
       const totalVolume = new BigNumber(item.volumeA).plus(item.volumeB);
-      const commission = totalVolume
-        .multipliedBy(0.2)
-        .multipliedBy(365)
-        .dividedBy(item.totalStaked);
+      const staked = new BigNumber(item.totalStaked);
+      const commission = staked.gt(0)
+        ? totalVolume
+            .multipliedBy(0.2)
+            .multipliedBy(365)
+            .dividedBy(item.totalStaked)
+        : new BigNumber(0);
       const totalApy = commission.plus(item.apy).toNumber();
       return {
         ...item,
@@ -178,10 +181,12 @@ function* fetchTokenPrice(lpPairList: any[]) {
     );
     const totalVolume = new BigNumber(volumeA).plus(volumeB);
 
-    const commission = totalVolume
-      .multipliedBy(0.2)
-      .multipliedBy(365)
-      .dividedBy(totalLiquidityUsd.toNumber());
+    const commission = totalLiquidityUsd.gt(0)
+      ? totalVolume
+          .multipliedBy(0.2)
+          .multipliedBy(365)
+          .dividedBy(totalLiquidityUsd.toNumber())
+      : new BigNumber(0);
 
     const apy = totalLiquidityUsd.gt(0)
       ? yearlyPoolReward
