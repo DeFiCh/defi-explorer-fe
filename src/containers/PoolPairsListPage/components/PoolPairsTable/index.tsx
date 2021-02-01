@@ -164,7 +164,10 @@ const PoolPairsTable = (props: PoolPairsTable) => {
 
   const loadTableRows = useCallback(() => {
     return tableRows.map((item, id) => (
-      <tr key={`${item.poolPairId}-${id}`}>
+      <tr
+        key={`${item.poolPairId}-${id}`}
+        className={item.poolPairId === '8' ? styles.doge : ''}
+      >
         <td className={styles.staticCol}>
           <PoolPairIcon
             symbolA={item.tokenASymbol}
