@@ -79,133 +79,31 @@ function* fetchPoolPairPageStarted(action) {
   try {
     const data = yield call(handleGetPoolPair, query);
     const updatedData = yield call(fetchPoolPairData, data);
-    const lpPairWithTokenPrice = yield call(fetchTokenPrice, [updatedData]);
-    yield put(fetchPoolPairPageSuccessRequest(lpPairWithTokenPrice[0]));
+    yield put(fetchPoolPairPageSuccessRequest(updatedData));
   } catch (err) {
     yield put(fetchPoolPairPageFailureRequest(err.message));
   }
 }
 
 function* fetchPoolPairData(item) {
-  const { idTokenA, idTokenB } = item;
-  const network = yield call(getNetwork);
+  const { totalLiquidity } = item;
+  const totalVolume = new BigNumber(item.volumeA).plus(item.volumeB);
 
-  const queryParamIdTokenA = {
-    id: idTokenA,
-    network,
-  };
-  const queryParamIdTokenB = {
-    id: idTokenB,
-    network,
-  };
+  const commission = totalLiquidity
+    ? totalVolume.multipliedBy(0.2).multipliedBy(365).dividedBy(totalLiquidity)
+    : new BigNumber(0);
+  const totalApy = commission.plus(item.apy).toNumber();
 
-  const dataIdTokenA = yield call(handleGetToken, queryParamIdTokenA);
-  const dataIdTokenB = yield call(handleGetToken, queryParamIdTokenB);
   return {
     ...item,
+    totalVolume,
+    totalApy,
+    commission: commission.toNumber(),
     'reserveA/reserveB': new BigNumber(item['reserveA/reserveB']).toNumber(),
     'reserveB/reserveA': new BigNumber(item['reserveB/reserveA']).toNumber(),
-    // tslint:disable-next-line:no-string-literal
     reserveA: new BigNumber(item['reserveA']).toNumber(),
-    // tslint:disable-next-line:no-string-literal
     reserveB: new BigNumber(item['reserveB']).toNumber(),
-    tokenInfo: { idTokenA: dataIdTokenA, idTokenB: dataIdTokenB },
   };
-}
-
-function* fetchTokenPrice(lpPairList: any[]) {
-  const tokenSymbol: any[] = [];
-  const network = yield call(getNetwork);
-
-  lpPairList.forEach((item) => {
-    const {
-      tokenInfo: {
-        idTokenA: { symbol: idTokenASymbol },
-        idTokenB: { symbol: idTokenBSymbol },
-      },
-      idTokenA,
-      idTokenB,
-    } = item;
-    tokenSymbol.push({ symbol: idTokenASymbol, tokenId: idTokenA });
-    tokenSymbol.push({ symbol: idTokenBSymbol, tokenId: idTokenB });
-  });
-  const list: any[] = [{ symbol: 'DFI', tokenId: '0' }];
-  uniqBy(tokenSymbol, 'symbol').forEach((item) => {
-    const value = getCoinGeckoIdwithSymbol(item.symbol);
-    if (value) {
-      list.push({
-        label: item.tokenId,
-        value,
-      });
-    }
-  });
-  const coinPrice: any[] = yield call(fetchCoinGeckoCoinsList, list);
-  // const lpDailyDfiReward = yield call(fetchGetGov, {
-  //   name: LP_DAILY_DFI_REWARD,
-  //   network,
-  // });
-  const lpDailyDfiReward = 288000;
-  const coinPriceObj = {};
-  coinPrice.forEach((item) => {
-    coinPriceObj[item.label] = item.value;
-  });
-
-  return lpPairList.map((item) => {
-    const {
-      reserveA,
-      reserveB,
-      idTokenA,
-      idTokenB,
-      rewardPct,
-      volumeA,
-      volumeB,
-    } = item;
-
-    const yearlyPoolReward = new BigNumber(lpDailyDfiReward)
-      .times(rewardPct)
-      .times(365)
-      .times(coinPriceObj[0]);
-
-    const liquidityReserveidTokenA = new BigNumber(reserveA).times(
-      coinPriceObj[idTokenA] || 0
-    );
-
-    const liquidityReserveidTokenB = new BigNumber(reserveB).times(
-      coinPriceObj[idTokenB] || 0
-    );
-    // NOTE: APY calculation to use 37 second block time
-    const multiplicationFactor = 100 * (30 / 37);
-
-    const totalLiquidityUsd = liquidityReserveidTokenA.plus(
-      liquidityReserveidTokenB
-    );
-    const totalVolume = new BigNumber(volumeA).plus(volumeB);
-
-    const commission = totalLiquidityUsd.gt(0)
-      ? totalVolume
-          .multipliedBy(0.2)
-          .multipliedBy(365)
-          .dividedBy(totalLiquidityUsd.toNumber())
-      : new BigNumber(0);
-
-    const apy = totalLiquidityUsd.gt(0)
-      ? yearlyPoolReward
-          .times(multiplicationFactor)
-          .div(totalLiquidityUsd)
-          .toNumber()
-      : 0;
-    const totalApy = commission.plus(apy).toNumber();
-
-    return {
-      ...item,
-      totalApy,
-      commission: commission.toNumber(),
-      totalVolume: totalVolume.toNumber(),
-      totalLiquidityUsd: totalLiquidityUsd.toNumber(),
-      yearlyPoolReward: yearlyPoolReward.toNumber(),
-      apy,
-    };
-  });
 }
 
 function* fetchSwapTransaction(action) {

@@ -70,8 +70,8 @@ const PoolPairPage = (props: PoolPairPageProps) => {
         <div className='mt-4'>
           <h1>
             <PoolPairIcon
-              symbolA={data?.tokenInfo?.idTokenA?.symbolKey}
-              symbolB={data?.tokenInfo?.idTokenB?.symbolKey}
+              symbolA={data.tokenASymbol}
+              symbolB={data.tokenBSymbol}
             />
             &nbsp;
             <span>
@@ -82,23 +82,17 @@ const PoolPairPage = (props: PoolPairPageProps) => {
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.oneCurrencyLabel', {
-                  symbol: data?.tokenInfo?.idTokenA?.symbolKey,
+                  symbol: data.tokenASymbol,
                 })}
-                value={`${numberWithCommas(
-                  data['reserveB/reserveA'],
-                  DEFAULT_DECIMAL_PLACE
-                )}`}
+                value={`${numberWithCommas(data['reserveB/reserveA'])}`}
               />
             </Col>
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.oneCurrencyLabel', {
-                  symbol: data?.tokenInfo?.idTokenB?.symbolKey,
+                  symbol: data.tokenBSymbol,
                 })}
-                value={`${numberWithCommas(
-                  data['reserveA/reserveB'],
-                  DEFAULT_DECIMAL_PLACE
-                )}`}
+                value={`${numberWithCommas(data['reserveA/reserveB'])}`}
               />
             </Col>
             <Col xs='12' md='4'>
@@ -119,7 +113,7 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                   </>
                 }
                 value={`${numberWithCommas(
-                  data.totalLiquidityUsd,
+                  data.totalLiquidity,
                   DEFAULT_DECIMAL_PLACE
                 )}`}
               />
@@ -136,7 +130,7 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                   </>
                 }
                 value={`${numberWithCommas(
-                  data.totalLiquidity,
+                  data.totalLiquidityLpToken,
                   DEFAULT_DECIMAL_PLACE
                 )}`}
               />
@@ -144,22 +138,22 @@ const PoolPairPage = (props: PoolPairPageProps) => {
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.reserve', {
-                  symbol: data?.tokenInfo?.idTokenA?.symbolKey,
+                  symbol: data.tokenASymbol,
                 })}
                 value={I18n.t('containers.poolPairPage.reserveData', {
                   value: numberWithCommas(data.reserveA, DEFAULT_DECIMAL_PLACE),
-                  symbol: data?.tokenInfo?.idTokenA?.symbolKey,
+                  symbol: data.tokenASymbol,
                 })}
               />
             </Col>
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.reserve', {
-                  symbol: data?.tokenInfo?.idTokenB?.symbolKey,
+                  symbol: data.tokenBSymbol,
                 })}
                 value={I18n.t('containers.poolPairPage.reserveData', {
                   value: numberWithCommas(data.reserveB, DEFAULT_DECIMAL_PLACE),
-                  symbol: data?.tokenInfo?.idTokenB?.symbolKey,
+                  symbol: data.tokenBSymbol,
                 })}
               />
             </Col>
@@ -192,7 +186,7 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                 label={
                   <>
                     {I18n.t('containers.poolPairPage.volume', {
-                      symbol: data?.tokenInfo?.idTokenA?.symbolKey,
+                      symbol: data.tokenASymbol,
                     })}
                     &nbsp;
                     <span className={styles.subHeader}>
@@ -208,7 +202,7 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                 label={
                   <>
                     {I18n.t('containers.poolPairPage.volume', {
-                      symbol: data?.tokenInfo?.idTokenB?.symbolKey,
+                      symbol: data.tokenBSymbol,
                     })}
                     &nbsp;
                     <span className={styles.subHeader}>
