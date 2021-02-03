@@ -31,3 +31,4 @@ export const FOOTER_DEFICHAIN_STAMP = `DefiChain Explorer v${VERSION_NUM}`;
 export const VS_CURRENCIES = 'usd';
 export const LP_DAILY_DFI_REWARD = 'LP_DAILY_DFI_REWARD';
 export const DEFAULT_DECIMAL_PLACE = 2;
+export const BURN_ADDRESS = '8defichainDSTBurnAddressXXXXaCAuTq';
