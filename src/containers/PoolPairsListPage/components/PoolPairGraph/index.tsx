@@ -99,28 +99,28 @@ const PoolPairGraph = (props: PoolPairsGraphProps) => {
                     color='link'
                     onClick={() => toggleSearch('year')}
                   >
-                    {I18n.t('containers.poolPairGraph.year')}
+                    {I18n.t('containers.poolPairGraph.y')}
                   </Button>
                   <Button
                     className={graphType === 'month' ? styles.buttonActive : ''}
                     color='link'
                     onClick={() => toggleSearch('month')}
                   >
-                    {I18n.t('containers.poolPairGraph.month')}
+                    {I18n.t('containers.poolPairGraph.m')}
                   </Button>
                   <Button
                     className={graphType === 'week' ? styles.buttonActive : ''}
                     color='link'
                     onClick={() => toggleSearch('week')}
                   >
-                    {I18n.t('containers.poolPairGraph.week')}
+                    {I18n.t('containers.poolPairGraph.w')}
                   </Button>
                   <Button
                     className={graphType === 'day' ? styles.buttonActive : ''}
                     color='link'
                     onClick={() => toggleSearch('day')}
                   >
-                    {I18n.t('containers.poolPairGraph.day')}
+                    {I18n.t('containers.poolPairGraph.d')}
                   </Button>
                 </ButtonGroup>
               </Col>

@@ -8,6 +8,7 @@ import {
   DEFAULT_THOUSANDS,
 } from '../../constants';
 import ApiRequest from '../../utils/apiRequest';
+import { I18n } from 'react-redux-i18n';
 import moment from 'moment';
 
 export const handlePoolPairList = async (query: { network: string }) => {
@@ -105,21 +106,40 @@ export const getBlockDetailService = async (blockHeight: string) => {
   return data;
 };
 
+export const getMonthById = (monthId) => {
+  const months = [
+    'Jan',
+    'Feb',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  return months[monthId - 1];
+};
+
 export const getLabelsForPoolPairGraph = (graphData: any, type: string) => {
   switch (type) {
     case 'year':
       return Object.values(graphData).map((val: any) => val.year);
     case 'month':
       return Object.values(graphData).map(
-        (val: any) => `${val.month}, (${val.year})`
+        (val: any) => `${getMonthById(val.monthId)}, (${val.year})`
       );
     case 'week':
       return Object.values(graphData).map(
-        (val: any) => `Week ${val.week}, ${val.year}`
+        (val: any) =>
+          `${I18n.t('containers.poolPairGraph.week')} ${val.week}, ${val.year}`
       );
     case 'day':
       return Object.values(graphData).map(
-        (val: any) => `${val.day}/${val.month}/${val.year}`
+        (val: any) => `${val.day}/${getMonthById(val.monthId)}/${val.year}`
       );
     default:
       return null;
@@ -132,19 +152,40 @@ export const getDateRangeForPoolPairGraph = (
   index: number
 ) => {
   const eachGraphData = Object.values(graphData)[index];
+  const { year }: any = eachGraphData;
   if (eachGraphData) {
     if (type === 'year') {
-      const { year }: any = eachGraphData;
-      const date = moment.utc([year]).clone();
-      const start = date.startOf('year').format();
-      const end = date.endOf('year').format();
-      return { start, end, nextType: 'month' };
+      return {
+        start: moment.utc([year]).clone().startOf('year').format(),
+        end: moment.utc([year]).clone().endOf('year').format(),
+        nextType: 'month',
+      };
     } else if (type === 'month') {
-      const { year, monthId }: any = eachGraphData;
-      const date = moment.utc([year, monthId - 1]).clone();
-      const start = date.startOf('month').format();
-      const end = date.endOf('month').format();
-      return { start, end, nextType: 'day' };
+      const { monthId }: any = eachGraphData;
+      return {
+        start: moment
+          .utc([year, monthId - 1])
+          .clone()
+          .startOf('month')
+          .format(),
+        end: moment
+          .utc([year, monthId - 1])
+          .clone()
+          .endOf('month')
+          .format(),
+        nextType: 'day',
+      };
+    } else if (type === 'week') {
+      const { week }: any = eachGraphData;
+      return {
+        start: moment
+          .utc(`${year}`)
+          .add(week, 'weeks')
+          .startOf('week')
+          .format(),
+        end: moment.utc(`${year}`).add(week, 'weeks').endOf('week').format(),
+        nextType: 'day',
+      };
     }
   }
   return { start: null, end: null, nextType: type };

@@ -273,10 +273,11 @@
     "poolPairGraph": {
       "loading": "Loading",
       "liquidity": "Liquidity",
-      "year": "Y",
-      "month": "M",
-      "week": "W",
-      "day": "D"
+      "y": "Y",
+      "m": "M",
+      "w": "W",
+      "d": "D",
+      "week": "Week"
     }
   },
   "alerts": {}
