@@ -1,6 +1,4 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { LP_DAILY_DFI_REWARD } from '../../constants';
-import { handleGetToken } from '../TokensListPage/services';
 import {
   fetchPoolPairsListStartedRequest,
   fetchPoolPairsListFailureRequest,
@@ -12,16 +10,16 @@ import {
   fetchSwapTransactionStartedRequest,
   fetchSwapTransactionFailureRequest,
   fetchSwapTransactionSuccessRequest,
+  fetchPoolPairGraphStartedRequest,
+  fetchPoolPairGraphFailureRequest,
+  fetchPoolPairGraphSuccessRequest,
 } from './reducer';
 import {
-  fetchCoinGeckoCoinsList,
-  fetchGetGov,
   handleGetPoolPair,
   handlePoolPairList,
   getSwapTransaction,
+  getPoolPairGraph,
 } from './services';
-import uniqBy from 'lodash/uniqBy';
-import { getCoinGeckoIdwithSymbol } from '../../utils/utility';
 import { BigNumber } from 'bignumber.js';
 
 function* getNetwork() {
@@ -128,6 +126,23 @@ function* fetchSwapTransaction(action) {
   }
 }
 
+function* fetchPoolPairGraph(action) {
+  const network = yield call(getNetwork);
+  const { poolPairId, type, start = null, end = null } = action.payload;
+  try {
+    const { data } = yield call(getPoolPairGraph, {
+      id: poolPairId,
+      network,
+      type,
+      start,
+      end,
+    });
+    yield put(fetchPoolPairGraphSuccessRequest(data));
+  } catch (err) {
+    yield put(fetchPoolPairGraphFailureRequest(err.message));
+  }
+}
+
 function* mySaga() {
   yield takeLatest(
     fetchPoolPairsListStartedRequest.type,
@@ -141,6 +156,7 @@ function* mySaga() {
     fetchSwapTransactionStartedRequest.type,
     fetchSwapTransaction
   );
+  yield takeLatest(fetchPoolPairGraphStartedRequest.type, fetchPoolPairGraph);
 }
 
 export default mySaga;

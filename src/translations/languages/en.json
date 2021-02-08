@@ -269,6 +269,14 @@
       "name": "Name",
       "balance": "Balance",
       "paginationRange": "%{to} - %{from} of %{total}"
+    },
+    "poolPairGraph": {
+      "loading": "Loading",
+      "liquidity": "Liquidity",
+      "year": "Y",
+      "month": "M",
+      "week": "W",
+      "day": "D"
     }
   },
   "alerts": {}

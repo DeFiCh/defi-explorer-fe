@@ -9,3 +9,6 @@ export const DFI_UNIT_MAP = {
   [DFI]: '1',
   [mDFI]: '0.00000001',
 };
+export const DEFAULT_BILLION = 1000000000;
+export const DEFAULT_MILLION = 1000000;
+export const DEFAULT_THOUSANDS = 1000;

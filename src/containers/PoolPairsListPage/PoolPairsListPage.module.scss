@@ -4,6 +4,7 @@
 @import '~bootstrap/scss/mixins';
 @import '../../scss/variables';
 @import '../../scss/bootstrap/variables';
+
 .card {
   overflow: hidden;
 }
@@ -104,4 +105,16 @@
 
 .doge {
   font-family: 'Comic Sans MS', 'Comic Sans', 'IBM Plex Sans', sans-serif;
+}
+.buttonGroup {
+  float: right;
+}
+
+.totalValueLocked {
+  padding-left: 22px;
+  padding-top: 18px;
+}
+
+.buttonActive {
+  color: rgba(0, 0, 0, 0.6) !important;
 }

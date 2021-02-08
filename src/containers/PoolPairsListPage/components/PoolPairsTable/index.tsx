@@ -29,6 +29,7 @@ import BigNumber from 'bignumber.js';
 import { RiAddLine } from 'react-icons/ri';
 import { PoolPairIcon } from '../PoolPairIcon';
 import { MdArrowDownward, MdArrowUpward } from 'react-icons/md';
+
 interface PoolPairsTable {
   fetchPoolPairsListStartedRequest: (tokenId?: string | number) => void;
   isLoading: boolean;
@@ -251,7 +252,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
   };
 
   return (
-    <Row>
+    <Row className='mt-5'>
       <Col xs='12'>
         <Card className={styles.card}>
           <div className={`${styles.tableResponsive} table-responsive-xl`}>
