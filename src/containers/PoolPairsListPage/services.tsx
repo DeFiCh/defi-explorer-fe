@@ -162,6 +162,8 @@ export const getFormatedNumber = (num) => {
 };
 
 export const getDatasetForGraph = (isLoading, graphData, type) => {
+  const style = getComputedStyle(document.body);
+  const primary = style.getPropertyValue('--primary');
   return {
     labels: isLoading
       ? ['', 'Loading', '']
@@ -170,19 +172,19 @@ export const getDatasetForGraph = (isLoading, graphData, type) => {
       {
         fill: false,
         lineTension: 0.2,
-        backgroundColor: '#ff00af',
-        borderColor: '#ff00af',
+        backgroundColor: primary,
+        borderColor: primary,
         borderCapStyle: 'butt',
         borderDash: [],
         borderDashOffset: 0.0,
         borderJoinStyle: 'miter',
         borderWidth: '2',
-        pointBorderColor: '#ff00af',
-        pointBackgroundColor: '#ff00af',
+        pointBorderColor: primary,
+        pointBackgroundColor: primary,
         pointBorderWidth: 1,
         pointHoverRadius: 5,
-        pointHoverBackgroundColor: '#ff00af',
-        pointHoverBorderColor: '#ff00af',
+        pointHoverBackgroundColor: primary,
+        pointHoverBorderColor: primary,
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
