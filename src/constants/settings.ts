@@ -40,6 +40,7 @@ export const BLOCKCHAIN_INFO_CHAIN_TEST = 'test';
 export const PAIRS = 'pairs';
 export const TOKEN_RICH_LIST = 'tokenRichList';
 export const DEFICHAIN_IO_SITE = 'https://defichain.io';
+export const DEFICHAIN_DOWNLOAD_SITE = 'https://defichain.com/downloads/';
 export const GITHUB_LINK = 'https://github.com/defich/ain/';
 export const RELEASE_LINK = 'https://github.com/defich/ain/releases';
 export const WHITE_PAPER_LINK = 'https://defichain.io/white-paper/';

@@ -1,7 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { mDFI } from '../../constants';
-import { getAmountInSelectedUnit } from '../../utils/utility';
+import { BURN_ADDRESS } from '../../constants';
 import {
   fetchTokensListStartedRequest,
   fetchTokensListFailureRequest,
@@ -17,11 +16,10 @@ import {
   fetchTokenRichListFailure,
 } from './reducer';
 import {
-  handleAddressTokenList,
+  fetchBalancesByAddress,
   handleGetToken,
   handleTokenList,
   handleTokenRichList,
-  handleUtxoBalance,
 } from './services';
 
 function* getNetwork() {
@@ -60,13 +58,31 @@ function* fetchTokensListStarted() {
 function* fetchTokenPageStarted(action) {
   const { tokenId } = action.payload;
   const network = yield call(getNetwork);
+  const { unit } = yield select((state) => state.app);
   const query = {
     id: tokenId,
     network,
   };
   try {
     const data = yield call(handleGetToken, query);
-
+    const burnedAddressBalance = yield call(
+      fetchBalancesByAddress,
+      BURN_ADDRESS,
+      unit,
+      network
+    );
+    const currentTokenBurnedData = burnedAddressBalance.find(
+      (d: { id: any }) => d.id === tokenId
+    );
+    if (currentTokenBurnedData && currentTokenBurnedData.balance) {
+      data.burnAddress = BURN_ADDRESS;
+      data.burned = currentTokenBurnedData.balance;
+      data.netSupply = new BigNumber(data.minted)
+        .minus(currentTokenBurnedData.balance)
+        .toNumber();
+    } else {
+      data.netSupply = data.minted;
+    }
     yield put(fetchTokenPageSuccessRequest(data));
   } catch (err) {
     yield put(fetchTokenPageFailureRequest(err.message));
@@ -78,73 +94,8 @@ function* fetchAddressTokensListStarted(action) {
     const { owner } = action.payload;
     const { unit } = yield select((state) => state.app);
     const network = yield call(getNetwork);
-    const defaultDfi = {
-      balance: '0',
-      id: 'DFI',
-      key: '0@DFI',
-      name: 'DFI',
-    };
-    let cloneAddressTokenList: any[] = [];
-    let start = 0;
-    let including_start = true;
-    while (true) {
-      const queryParams = {
-        start,
-        limit: 500,
-        network,
-        including_start,
-        owner,
-      };
-      const data = yield call(handleAddressTokenList, queryParams);
-      cloneAddressTokenList = cloneAddressTokenList.concat(data);
-      if (!data.length) {
-        break;
-      } else {
-        including_start = false;
-        const query = {
-          id: cloneAddressTokenList[cloneAddressTokenList.length - 1].id,
-          network,
-        };
-        const { tokenId } = yield call(handleGetToken, query);
-        if (typeof tokenId === 'undefined' || tokenId === null) {
-          break;
-        }
-        start = tokenId;
-      }
-    }
-    const findDfi = cloneAddressTokenList.find(
-      (item) => item.id === defaultDfi.id || item.name === defaultDfi.name
-    );
-
-    if (!findDfi) {
-      cloneAddressTokenList.push(defaultDfi);
-    }
-
-    const updatedAddressTokenList: any[] = [];
-    for (const item of cloneAddressTokenList) {
-      const query = {
-        id: item.id || item.name,
-        network,
-      };
-
-      if (item.id === 'DFI' || item.name === 'DFI') {
-        const utxoBalance = yield call(handleUtxoBalance, owner);
-        const unitConversion = getAmountInSelectedUnit(utxoBalance, unit, mDFI);
-        item.balance = new BigNumber(unitConversion)
-          .plus(item.balance)
-          .toNumber();
-      }
-
-      const tokenInfo = yield call(handleGetToken, query);
-      if (tokenInfo) {
-        item.id = tokenInfo.tokenId;
-      }
-      updatedAddressTokenList.push({
-        tokenInfo,
-        ...item,
-      });
-    }
-    yield put(fetchAddressTokensListSuccessRequest(updatedAddressTokenList));
+    const data = yield call(fetchBalancesByAddress, owner, unit, network);
+    yield put(fetchAddressTokensListSuccessRequest(data));
   } catch (err) {
     yield put(fetchAddressTokensListFailureRequest(err.message));
   }

@@ -16,6 +16,11 @@ export const initialState = {
     total: 0,
     isError: '',
   },
+  poolPairGraph: {
+    isLoading: false,
+    data: [],
+    isError: '',
+  },
 };
 
 const configSlice = createSlice({
@@ -72,6 +77,20 @@ const configSlice = createSlice({
       state.swapTransaction.total = action.payload.total;
       state.swapTransaction.isError = '';
     },
+    fetchPoolPairGraphStartedRequest(state, action) {
+      state.poolPairGraph.isLoading = true;
+      state.poolPairGraph.isError = '';
+    },
+    fetchPoolPairGraphFailureRequest(state, action) {
+      state.poolPairGraph.isLoading = false;
+      state.poolPairGraph.isError = action.payload;
+      state.poolPairGraph.data = [];
+    },
+    fetchPoolPairGraphSuccessRequest(state, action) {
+      state.poolPairGraph.isLoading = false;
+      state.poolPairGraph.data = action.payload;
+      state.poolPairGraph.isError = '';
+    },
   },
 });
 
@@ -88,6 +107,9 @@ export const {
   fetchSwapTransactionStartedRequest,
   fetchSwapTransactionFailureRequest,
   fetchSwapTransactionSuccessRequest,
+  fetchPoolPairGraphStartedRequest,
+  fetchPoolPairGraphFailureRequest,
+  fetchPoolPairGraphSuccessRequest,
 } = actions;
 
 export default reducer;

@@ -4,6 +4,7 @@
 @import '~bootstrap/scss/mixins';
 @import '../../scss/variables';
 @import '../../scss/bootstrap/variables';
+
 .card {
   overflow: hidden;
 }
@@ -79,4 +80,41 @@
 
 .pointer {
   cursor: pointer;
+}
+
+.lpDownloadImg {
+  height: 117px;
+  max-width: 100%;
+}
+
+.lpDownloadDescriptionWrapper {
+  @include media-breakpoint-down(sm) {
+    .downloadDescription {
+      margin-top: 1rem;
+    }
+  }
+}
+
+.lpBackgroundImg {
+  display: flex;
+  justify-content: center;
+  background-image: url(../../assets/img/pool-bg.png);
+  background-size: 100% 100%;
+  background-position: top center;
+}
+
+.doge {
+  font-family: 'Comic Sans MS', 'Comic Sans', 'IBM Plex Sans', sans-serif;
+}
+.buttonGroup {
+  float: right;
+}
+
+.totalValueLocked {
+  padding-left: 22px;
+  padding-top: 18px;
+}
+
+.buttonActive {
+  color: rgba(0, 0, 0, 0.6) !important;
 }

@@ -1,9 +1,12 @@
+import BigNumber from 'bignumber.js';
 import { QUICK_STATS_BASE_ENDPOINT } from '../../constants';
 import ApiRequest from '../../utils/apiRequest';
 import {
   IAddressTokenListParams,
   ITokenPoolPairListParams,
 } from '../../utils/interfaces';
+import { mDFI } from '../../constants';
+import { getAmountInSelectedUnit } from '../../utils/utility';
 
 export const getCategory = (item) => {
   let category = 'DCT';
@@ -96,4 +99,78 @@ export const handleTokenRichList = async (query: {
     params: query,
   });
   return data;
+};
+
+export const fetchBalancesByAddress = async (
+  owner: string,
+  unit: string,
+  network: any
+) => {
+  const defaultDfi = {
+    balance: '0',
+    id: 'DFI',
+    key: '0@DFI',
+    name: 'DFI',
+  };
+  let cloneAddressTokenList: any[] = [];
+  let start = 0;
+  let including_start = true;
+  while (true) {
+    const queryParams = {
+      start,
+      limit: 500,
+      network,
+      including_start,
+      owner,
+    };
+    const data = await handleAddressTokenList(queryParams);
+    cloneAddressTokenList = cloneAddressTokenList.concat(data);
+    if (!data.length) {
+      break;
+    } else {
+      including_start = false;
+      const query = {
+        id: cloneAddressTokenList[cloneAddressTokenList.length - 1].id,
+        network,
+      };
+      const { tokenId } = await handleGetToken(query);
+      if (typeof tokenId === 'undefined' || tokenId === null) {
+        break;
+      }
+      start = tokenId;
+    }
+  }
+  const findDfi = cloneAddressTokenList.find(
+    (item) => item.id === defaultDfi.id || item.name === defaultDfi.name
+  );
+
+  if (!findDfi) {
+    cloneAddressTokenList.push(defaultDfi);
+  }
+
+  const updatedAddressTokenList: any[] = [];
+  for (const item of cloneAddressTokenList) {
+    const query = {
+      id: item.id || item.name,
+      network,
+    };
+
+    if (item.id === 'DFI' || item.name === 'DFI') {
+      const utxoBalance = await handleUtxoBalance(owner);
+      const unitConversion = getAmountInSelectedUnit(utxoBalance, unit, mDFI);
+      item.balance = new BigNumber(unitConversion)
+        .plus(item.balance)
+        .toNumber();
+    }
+
+    const tokenInfo = await handleGetToken(query);
+    if (tokenInfo) {
+      item.id = tokenInfo.tokenId;
+    }
+    updatedAddressTokenList.push({
+      tokenInfo,
+      ...item,
+    });
+  }
+  return updatedAddressTokenList;
 };

@@ -4,6 +4,7 @@ import { I18n } from 'react-redux-i18n';
 import { Col, Row } from 'reactstrap';
 import KeyValueLi from '../../../../components/KeyValueLi';
 import { numberWithCommas } from '../../../../utils/utility';
+import { DEFAULT_DECIMAL_PLACE } from '../../../../constants';
 
 interface TokenPageProps {
   data: any;
@@ -72,19 +73,49 @@ const TokenDetails = (props: TokenPageProps) => {
               value={capitalize(data.isLPS)}
             />
           </Col>
+
+          <Col xs='12' md='4'>
+            <KeyValueLi
+              label={I18n.t('containers.tokenPage.minted')}
+              value={`${numberWithCommas(data.minted, DEFAULT_DECIMAL_PLACE)}`}
+            />
+          </Col>
+          {!!data.burned && (
+            <Col xs='12' md='4'>
+              <KeyValueLi
+                label={I18n.t('containers.tokenPage.burned')}
+                value={`${numberWithCommas(
+                  data.burned,
+                  DEFAULT_DECIMAL_PLACE
+                )}`}
+              />
+            </Col>
+          )}
+          <Col xs='12' md='4'>
+            <KeyValueLi
+              label={I18n.t('containers.tokenPage.netSupply')}
+              value={`${numberWithCommas(
+                data.netSupply,
+                DEFAULT_DECIMAL_PLACE
+              )}`}
+            />
+          </Col>
+
+          {!!data.burnAddress && (
+            <Col xs='12' md='4'>
+              <KeyValueLi
+                label={I18n.t('containers.tokenPage.burnAddress')}
+                value={data.burnAddress}
+              />
+            </Col>
+          )}
+
           <Col xs='12' md='4'>
             <KeyValueLi
               label={I18n.t('containers.tokenPage.finalized')}
               value={capitalize(data.finalized)}
             />
           </Col>
-          <Col xs='12' md='4'>
-            <KeyValueLi
-              label={I18n.t('containers.tokenPage.minted')}
-              value={`${numberWithCommas(data.minted)}`}
-            />
-          </Col>
-
           <Col xs='12' md='4'>
             <KeyValueLi
               label={I18n.t('containers.tokenPage.creationHeight')}

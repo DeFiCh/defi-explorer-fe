@@ -180,7 +180,7 @@
       "tradeable": "Tradeable",
       "paginationRange": "%{to} – %{from} of %{total}"
     },
-    "customTable":{
+    "customTable": {
       "loading": "Loading",
       "noDataPresent": "No data available"
     },
@@ -202,7 +202,7 @@
       "totalValueLocked": "Total Value Locked",
       "totalValueLockedCurrency": "USD"
     },
-    "poolPairsSwapListPage":{
+    "poolPairsSwapListPage": {
       "loading": "Loading",
       "title": "Swaps",
       "blockHeight": "Block Height",
@@ -229,6 +229,9 @@
       "destructionTx": "Destruction Tx",
       "destructionHeight": "Destruction Height",
       "collateralAddress": "Collateral Address",
+      "burnAddress": "Burn Address",
+      "burned": "Burned",
+      "netSupply": "Net Supply",
       "pairsHeading": "Pairs",
       "loading": "Loading",
       "address": "Address",
@@ -255,7 +258,9 @@
       "rewardPct": "DeFi Incentive Dist Share",
       "ownerAddress": "Owner Address",
       "tradeEnabled": "Trade Enabled",
-      "loading": "Loading"
+      "loading": "Loading",
+      "liquidityPoolPairsDownload": "You can now liquidity mine for potentially high yields. Download and install the DeFi desktop app to supply and liquidity mine now.",
+      "downloadNow": "Download Now"
     },
     "addresstokensListPage": {
       "noDataPresent": "No Tokens associated with address",
@@ -264,6 +269,15 @@
       "name": "Name",
       "balance": "Balance",
       "paginationRange": "%{to} - %{from} of %{total}"
+    },
+    "poolPairGraph": {
+      "loading": "Loading",
+      "liquidity": "Liquidity",
+      "y": "Y",
+      "m": "M",
+      "w": "W",
+      "d": "D",
+      "week": "Week"
     }
   },
   "alerts": {}
