@@ -43,19 +43,11 @@ function* fetchPoolPairsListStarted(action) {
       : pools;
     const data = poolData.map((item) => {
       const totalVolume = new BigNumber(item.volumeA).plus(item.volumeB);
-      const staked = new BigNumber(item.totalStaked);
-      const commission = staked.gt(0)
-        ? totalVolume
-            .multipliedBy(0.2)
-            .multipliedBy(365)
-            .dividedBy(item.totalStaked)
-        : new BigNumber(0);
-      const totalApy = commission.plus(item.apy).toNumber();
+      const totalApy = new BigNumber(item.commission).plus(item.apy).toNumber();
       return {
         ...item,
         totalApy,
         totalVolume: totalVolume.toNumber(),
-        commission: commission.toNumber(),
       };
     });
     yield put(updateTotalValueLocked(tvl));
