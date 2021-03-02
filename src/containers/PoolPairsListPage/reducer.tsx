@@ -18,7 +18,7 @@ export const initialState = {
   },
   poolPairGraph: {
     isLoading: false,
-    data: [],
+    data: {},
     isError: '',
   },
 };
@@ -84,7 +84,7 @@ const configSlice = createSlice({
     fetchPoolPairGraphFailureRequest(state, action) {
       state.poolPairGraph.isLoading = false;
       state.poolPairGraph.isError = action.payload;
-      state.poolPairGraph.data = [];
+      state.poolPairGraph.data = {};
     },
     fetchPoolPairGraphSuccessRequest(state, action) {
       state.poolPairGraph.isLoading = false;

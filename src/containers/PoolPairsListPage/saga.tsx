@@ -122,14 +122,37 @@ function* fetchPoolPairGraph(action) {
   const network = yield call(getNetwork);
   const { poolPairId, type, start = null, end = null } = action.payload;
   try {
-    const { data } = yield call(getPoolPairGraph, {
+    const {
+      data,
+    }: {
+      data: any[];
+    } = yield call(getPoolPairGraph, {
       id: poolPairId,
       network,
       type,
       start,
       end,
     });
-    yield put(fetchPoolPairGraphSuccessRequest(data));
+    const labels: any[] = [];
+    const values: any[] = [];
+    data.forEach((item) => {
+      const { year, week, day, monthId } = item;
+      labels.push({ year, week, day, monthId });
+      values.push(
+        new BigNumber(item.cumTokenAAmount || 0)
+          .times(item.priceA || 0)
+          .plus(
+            new BigNumber(item.cumTokenBAmount || 0).times(item.priceB || 0)
+          )
+          .toNumber()
+      );
+    });
+    yield put(
+      fetchPoolPairGraphSuccessRequest({
+        labels,
+        values,
+      })
+    );
   } catch (err) {
     yield put(fetchPoolPairGraphFailureRequest(err.message));
   }

@@ -116,7 +116,7 @@ export const getIcon = (symbol: string) => {
     DFI: DefiIcon,
     USDT: USDTIcon,
     DOGE: DogeIcon,
-    LTC: LtcIcon
+    LTC: LtcIcon,
   };
   return dataObj[symbol];
 };
@@ -184,7 +184,7 @@ export const getIdFromSymbol = (symbol) => {
 
 export const numberWithCommas = (nStr, tofixed?) => {
   if (tofixed) {
-    nStr= new BigNumber(nStr).toFixed(tofixed);
+    nStr = new BigNumber(nStr).toFixed(tofixed);
   }
   nStr += '';
   const x = nStr.split('.');

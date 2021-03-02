@@ -18,11 +18,11 @@ interface PoolPairsGraphProps {
   fetchPoolPairGraphStarted: (
     poolPairId?: string | number,
     type?: string,
-    start?: Date | String,
-    end?: Date | String
+    start?: Date | string,
+    end?: Date | string
   ) => void;
   isLoading: boolean;
-  data: any[];
+  data: any;
   isError: string;
   poolPairId?: string | number;
 }
@@ -35,24 +35,18 @@ const PoolPairGraph = (props: PoolPairsGraphProps) => {
     isError,
     poolPairId,
   } = props;
-
-  const [graphData, setGraphData] = useState<any[]>([]);
   const [graphType, setGraphType] = useState<string>('year');
 
   useEffect(() => {
     fetchPoolPairGraphStarted(poolPairId, graphType);
   }, []);
 
-  useEffect(() => {
-    setGraphData(data);
-  }, [data]);
-
   const toggleSearch = (type) => {
     setGraphType(type);
     fetchPoolPairGraphStarted(poolPairId, type);
   };
 
-  const lineData = getDatasetForGraph(isLoading, graphData, graphType);
+  const lineData = getDatasetForGraph(data, graphType);
 
   const { zoom, scales, legend, pan } = getOptionsForGraph(isLoading);
 
@@ -60,7 +54,7 @@ const PoolPairGraph = (props: PoolPairsGraphProps) => {
     onClick(e) {
       const xLabel = this.scales['x-axis-0'].getValueForPixel(e.x);
       const { start, end, nextType } = getDateRangeForPoolPairGraph(
-        graphData,
+        data,
         graphType,
         xLabel
       );
@@ -126,7 +120,7 @@ const PoolPairGraph = (props: PoolPairsGraphProps) => {
               </Col>
             </Row>
             <Row className='mt-4'>
-              <Line data={lineData} height={50} options={options} />
+              <Line height={50} data={lineData} options={options} />
             </Row>
             {isError && <>{isError}</>}
           </CardBody>
@@ -138,12 +132,14 @@ const PoolPairGraph = (props: PoolPairsGraphProps) => {
 
 const mapStateToProps = (state) => {
   const {
-    poolPairsListPage: { poolPairGraph },
+    poolPairsListPage: {
+      poolPairGraph: { isLoading, isError, data },
+    },
   } = state;
   return {
-    isLoading: poolPairGraph.isLoading,
-    data: poolPairGraph.data,
-    isError: poolPairGraph.isError,
+    isLoading,
+    isError,
+    data,
   };
 };
 

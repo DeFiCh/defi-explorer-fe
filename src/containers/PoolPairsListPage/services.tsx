@@ -91,7 +91,7 @@ export const getPoolPairGraph = async (queryParams: {
   end: string;
 }) => {
   const apiRequest = new ApiRequest();
-  const data = await apiRequest.get('v1/gettotalvolumestats', {
+  const data = await apiRequest.get('v1/getliquiditytotalvolumedata', {
     baseURL: QUICK_STATS_BASE_ENDPOINT,
     params: queryParams,
   });
@@ -124,21 +124,24 @@ export const getMonthById = (monthId) => {
   return months[monthId - 1];
 };
 
-export const getLabelsForPoolPairGraph = (graphData: any, type: string) => {
+export const getLabelsForPoolPairGraph = (
+  graphData: string[],
+  type: string
+) => {
   switch (type) {
     case 'year':
-      return Object.values(graphData).map((val: any) => val.year);
+      return graphData.map((val: any) => val.year);
     case 'month':
-      return Object.values(graphData).map(
+      return graphData.map(
         (val: any) => `${getMonthById(val.monthId)}, (${val.year})`
       );
     case 'week':
-      return Object.values(graphData).map(
+      return graphData.map(
         (val: any) =>
           `${I18n.t('containers.poolPairGraph.week')} ${val.week}, ${val.year}`
       );
     case 'day':
-      return Object.values(graphData).map(
+      return graphData.map(
         (val: any) => `${val.day}/${getMonthById(val.monthId)}/${val.year}`
       );
     default:
@@ -151,7 +154,7 @@ export const getDateRangeForPoolPairGraph = (
   type: string,
   index: number
 ) => {
-  const eachGraphData = Object.values(graphData)[index];
+  const eachGraphData = graphData.labels[index];
   const { year }: any = eachGraphData;
   if (eachGraphData) {
     if (type === 'year') {
@@ -202,13 +205,11 @@ export const getFormatedNumber = (num) => {
   return num;
 };
 
-export const getDatasetForGraph = (isLoading, graphData, type) => {
+export const getDatasetForGraph = (data, type) => {
   const style = getComputedStyle(document.body);
   const primary = style.getPropertyValue('--primary');
   return {
-    labels: isLoading
-      ? ['', 'Loading', '']
-      : getLabelsForPoolPairGraph(graphData, type),
+    labels: getLabelsForPoolPairGraph(data.labels || [], type),
     datasets: [
       {
         fill: false,
@@ -229,11 +230,7 @@ export const getDatasetForGraph = (isLoading, graphData, type) => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: isLoading
-          ? []
-          : Object.values(
-              Object.values(graphData).map((val: any) => val.totalVolume)
-            ),
+        data: data.values || [],
       },
     ],
   };
