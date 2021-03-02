@@ -135,6 +135,12 @@ function* fetchPoolPairGraph(action) {
     });
     const labels: any[] = [];
     const values: any[] = [];
+    const isValid = data.reduce((acc, curr) => {
+      return !!curr.priceA && !!curr.priceB;
+    }, true);
+    if (!isValid) {
+      throw new Error('No Records Found');
+    }
     data.forEach((item) => {
       const { year, week, day, monthId } = item;
       labels.push({ year, week, day, monthId });
@@ -154,6 +160,7 @@ function* fetchPoolPairGraph(action) {
       })
     );
   } catch (err) {
+    console.log(err);
     yield put(fetchPoolPairGraphFailureRequest(err.message));
   }
 }

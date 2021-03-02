@@ -209,7 +209,7 @@ export const getDatasetForGraph = (data, type) => {
   const style = getComputedStyle(document.body);
   const primary = style.getPropertyValue('--primary');
   return {
-    labels: getLabelsForPoolPairGraph(data.labels || [], type),
+    labels: getLabelsForPoolPairGraph(data.labels, type),
     datasets: [
       {
         fill: false,
@@ -230,7 +230,7 @@ export const getDatasetForGraph = (data, type) => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: data.values || [],
+        data: data.values,
       },
     ],
   };

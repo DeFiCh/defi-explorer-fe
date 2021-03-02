@@ -36,17 +36,32 @@ const PoolPairGraph = (props: PoolPairsGraphProps) => {
     poolPairId,
   } = props;
   const [graphType, setGraphType] = useState<string>('year');
+  const [graphData, setGraphData] = useState({
+    labels: [],
+    values: [],
+  });
 
   useEffect(() => {
     fetchPoolPairGraphStarted(poolPairId, graphType);
   }, []);
+
+  useEffect(() => {
+    if (!isLoading && !!data.labels && !!data.values) {
+      setGraphData(data);
+    } else {
+      setGraphData({
+        labels: [],
+        values: [],
+      });
+    }
+  }, [isLoading, data]);
 
   const toggleSearch = (type) => {
     setGraphType(type);
     fetchPoolPairGraphStarted(poolPairId, type);
   };
 
-  const lineData = getDatasetForGraph(data, graphType);
+  const lineData = getDatasetForGraph(graphData, graphType);
 
   const { zoom, scales, legend, pan } = getOptionsForGraph(isLoading);
 
@@ -54,7 +69,7 @@ const PoolPairGraph = (props: PoolPairsGraphProps) => {
     onClick(e) {
       const xLabel = this.scales['x-axis-0'].getValueForPixel(e.x);
       const { start, end, nextType } = getDateRangeForPoolPairGraph(
-        data,
+        graphData,
         graphType,
         xLabel
       );
