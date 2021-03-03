@@ -142,8 +142,8 @@ function* fetchPoolPairGraph(action) {
       throw new Error('No Records Found');
     }
     data.forEach((item) => {
-      const { year, week, day, monthId } = item;
-      labels.push({ year, week, day, monthId });
+      const { year, week, day, monthId, hour, minute } = item;
+      labels.push({ year, week, day, monthId, hour, minute });
       values.push(
         new BigNumber(item.cumTokenAAmount || 0)
           .times(item.priceA || 0)

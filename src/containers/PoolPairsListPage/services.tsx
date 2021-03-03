@@ -1,3 +1,5 @@
+import { I18n } from 'react-redux-i18n';
+import moment from 'moment';
 import {
   BLOCK_PAGE_BASE_PATH,
   COIN_GECKO_BASE_ENDPOINT,
@@ -6,10 +8,12 @@ import {
   DEFAULT_BILLION,
   DEFAULT_MILLION,
   DEFAULT_THOUSANDS,
+  GRANULARITY_DAY,
+  GRANULARITY_MONTH,
+  GRANULARITY_WEEK,
+  GRANULARITY_YTD,
 } from '../../constants';
 import ApiRequest from '../../utils/apiRequest';
-import { I18n } from 'react-redux-i18n';
-import moment from 'moment';
 
 export const handlePoolPairList = async (query: { network: string }) => {
   const apiRequest = new ApiRequest();
@@ -129,20 +133,24 @@ export const getLabelsForPoolPairGraph = (
   type: string
 ) => {
   switch (type) {
-    case 'year':
-      return graphData.map((val: any) => val.year);
-    case 'month':
-      return graphData.map(
-        (val: any) => `${getMonthById(val.monthId)}, (${val.year})`
-      );
-    case 'week':
-      return graphData.map(
-        (val: any) =>
-          `${I18n.t('containers.poolPairGraph.week')} ${val.week}, ${val.year}`
-      );
-    case 'day':
+    case GRANULARITY_YTD:
       return graphData.map(
         (val: any) => `${val.day}/${getMonthById(val.monthId)}/${val.year}`
+      );
+    case GRANULARITY_MONTH:
+    case GRANULARITY_WEEK:
+      return graphData.map(
+        (val: any) =>
+          `${new Date(
+            val.year,
+            val.monthId,
+            val.day,
+            val.hour
+          ).toLocaleTimeString()}, ${val.day}/${getMonthById(val.monthId)}`
+      );
+    case GRANULARITY_DAY:
+      return graphData.map((val: any) =>
+        new Date(val.year, val.monthId, val.day, val.hour).toLocaleTimeString()
       );
     default:
       return null;
@@ -155,39 +163,53 @@ export const getDateRangeForPoolPairGraph = (
   index: number
 ) => {
   const eachGraphData = graphData.labels[index];
-  const { year }: any = eachGraphData;
+  const { year, monthId, day }: any = eachGraphData;
   if (eachGraphData) {
-    if (type === 'year') {
-      return {
-        start: moment.utc([year]).clone().startOf('year').format(),
-        end: moment.utc([year]).clone().endOf('year').format(),
-        nextType: 'month',
-      };
-    } else if (type === 'month') {
-      const { monthId }: any = eachGraphData;
+    if (type === GRANULARITY_YTD) {
       return {
         start: moment
-          .utc([year, monthId - 1])
+          .utc([year, monthId - 1, day])
           .clone()
-          .startOf('month')
+          .startOf('day')
           .format(),
         end: moment
-          .utc([year, monthId - 1])
+          .utc([year, monthId - 1, day])
           .clone()
-          .endOf('month')
+          .endOf('day')
           .format(),
-        nextType: 'day',
+        nextType: GRANULARITY_MONTH,
       };
-    } else if (type === 'week') {
-      const { week }: any = eachGraphData;
+    }
+    if (type === GRANULARITY_MONTH) {
+      const { hour } = eachGraphData;
       return {
         start: moment
-          .utc(`${year}`)
-          .add(week, 'weeks')
-          .startOf('week')
+          .utc([year, monthId - 1, day, hour])
+          .clone()
+          .startOf('hour')
           .format(),
-        end: moment.utc(`${year}`).add(week, 'weeks').endOf('week').format(),
-        nextType: 'day',
+        end: moment
+          .utc([year, monthId - 1, day, hour])
+          .clone()
+          .endOf('hour')
+          .format(),
+        nextType: GRANULARITY_DAY,
+      };
+    }
+    if (type === GRANULARITY_WEEK) {
+      const { hour } = eachGraphData;
+      return {
+        start: moment
+          .utc([year, monthId - 1, day, hour])
+          .clone()
+          .startOf('hour')
+          .format(),
+        end: moment
+          .utc([year, monthId - 1, day, hour])
+          .clone()
+          .endOf('hour')
+          .format(),
+        nextType: GRANULARITY_DAY,
       };
     }
   }
@@ -197,9 +219,11 @@ export const getDateRangeForPoolPairGraph = (
 export const getFormatedNumber = (num) => {
   if (num >= DEFAULT_BILLION) {
     return `${num / DEFAULT_BILLION} b`;
-  } else if (num >= DEFAULT_MILLION) {
+  }
+  if (num >= DEFAULT_MILLION) {
     return `${num / DEFAULT_MILLION} m`;
-  } else if (num >= DEFAULT_THOUSANDS) {
+  }
+  if (num >= DEFAULT_THOUSANDS) {
     return `${num / DEFAULT_THOUSANDS} k`;
   }
   return num;
@@ -236,34 +260,30 @@ export const getDatasetForGraph = (data, type) => {
   };
 };
 
-export const getScalesForGraph = (isLoading) => {
-  return {
-    xAxes: [{ gridLines: { display: false } }],
-    yAxes: [
-      {
-        position: 'right',
-        ticks: {
-          display: !isLoading,
-          callback: (value) => getFormatedNumber(value),
-        },
+export const getScalesForGraph = (isLoading) => ({
+  xAxes: [{ gridLines: { display: false } }],
+  yAxes: [
+    {
+      position: 'right',
+      ticks: {
+        display: !isLoading,
+        callback: (value) => getFormatedNumber(value),
       },
-    ],
-  };
-};
+    },
+  ],
+});
 
-export const getOptionsForGraph = (isLoading) => {
-  return {
-    scales: getScalesForGraph(isLoading),
-    legend: {
-      display: false,
-    },
-    zoom: {
-      enabled: true,
-      mode: 'x',
-    },
-    pan: {
-      enabled: true,
-      mode: 'x',
-    },
-  };
-};
+export const getOptionsForGraph = (isLoading) => ({
+  scales: getScalesForGraph(isLoading),
+  legend: {
+    display: false,
+  },
+  zoom: {
+    enabled: true,
+    mode: 'x',
+  },
+  pan: {
+    enabled: true,
+    mode: 'x',
+  },
+});

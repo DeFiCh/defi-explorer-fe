@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable jsx-quotes */
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
@@ -11,7 +13,13 @@ import {
   getOptionsForGraph,
 } from '../../services';
 import { numberWithCommas } from '../../../../utils/utility';
-import { DEFAULT_DECIMAL_PLACE } from '../../../../constants';
+import {
+  DEFAULT_DECIMAL_PLACE,
+  GRANULARITY_DAY,
+  GRANULARITY_MONTH,
+  GRANULARITY_WEEK,
+  GRANULARITY_YTD,
+} from '../../../../constants';
 import 'chartjs-plugin-zoom';
 
 interface PoolPairsGraphProps {
@@ -35,7 +43,7 @@ const PoolPairGraph = (props: PoolPairsGraphProps) => {
     isError,
     poolPairId,
   } = props;
-  const [graphType, setGraphType] = useState<string>('year');
+  const [graphType, setGraphType] = useState<string>(GRANULARITY_YTD);
   const [graphData, setGraphData] = useState({
     labels: [],
     values: [],
@@ -104,30 +112,38 @@ const PoolPairGraph = (props: PoolPairsGraphProps) => {
               <Col xs='6'>
                 <ButtonGroup className={styles.buttonGroup}>
                   <Button
-                    className={graphType === 'year' ? styles.buttonActive : ''}
+                    className={
+                      graphType === GRANULARITY_YTD ? styles.buttonActive : ''
+                    }
                     color='link'
-                    onClick={() => toggleSearch('year')}
+                    onClick={() => toggleSearch(GRANULARITY_YTD)}
                   >
                     {I18n.t('containers.poolPairGraph.y')}
                   </Button>
                   <Button
-                    className={graphType === 'month' ? styles.buttonActive : ''}
+                    className={
+                      graphType === GRANULARITY_MONTH ? styles.buttonActive : ''
+                    }
                     color='link'
-                    onClick={() => toggleSearch('month')}
+                    onClick={() => toggleSearch(GRANULARITY_MONTH)}
                   >
                     {I18n.t('containers.poolPairGraph.m')}
                   </Button>
                   <Button
-                    className={graphType === 'week' ? styles.buttonActive : ''}
+                    className={
+                      graphType === GRANULARITY_WEEK ? styles.buttonActive : ''
+                    }
                     color='link'
-                    onClick={() => toggleSearch('week')}
+                    onClick={() => toggleSearch(GRANULARITY_WEEK)}
                   >
                     {I18n.t('containers.poolPairGraph.w')}
                   </Button>
                   <Button
-                    className={graphType === 'day' ? styles.buttonActive : ''}
+                    className={
+                      graphType === GRANULARITY_DAY ? styles.buttonActive : ''
+                    }
                     color='link'
-                    onClick={() => toggleSearch('day')}
+                    onClick={() => toggleSearch(GRANULARITY_DAY)}
                   >
                     {I18n.t('containers.poolPairGraph.d')}
                   </Button>
@@ -164,7 +180,13 @@ const mapDispatchToProps = {
     type?: string,
     start?: any,
     end?: any
-  ) => fetchPoolPairGraphStartedRequest({ poolPairId, type, start, end }),
+  ) =>
+    fetchPoolPairGraphStartedRequest({
+      poolPairId,
+      type,
+      start,
+      end,
+    }),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PoolPairGraph);
