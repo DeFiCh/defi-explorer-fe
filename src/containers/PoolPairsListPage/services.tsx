@@ -139,19 +139,23 @@ export const getLabelsForPoolPairGraph = (
       );
     case GRANULARITY_MONTH:
     case GRANULARITY_WEEK:
-      return graphData.map(
-        (val: any) =>
-          `${new Date(
-            val.year,
-            val.monthId,
-            val.day,
-            val.hour
-          ).toLocaleTimeString()}, ${val.day}/${getMonthById(val.monthId)}`
-      );
+      return graphData.map((val: any) => {
+        const date = new Date(val.year, val.monthId, val.day, val.hour);
+        return `${date.getHours()}:00, ${val.day}/${getMonthById(val.monthId)}`;
+      });
     case GRANULARITY_DAY:
-      return graphData.map((val: any) =>
-        new Date(val.year, val.monthId, val.day, val.hour).toLocaleTimeString()
-      );
+      return graphData.map((val: any) => {
+        const date = new Date(
+          val.year,
+          val.monthId,
+          val.day,
+          val.hour,
+          val.minute
+        );
+        return `${date.getHours()}:${date.getMinutes()}, ${
+          val.day
+        }/${getMonthById(val.monthId)}`;
+      });
     default:
       return null;
   }

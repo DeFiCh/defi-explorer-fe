@@ -42,12 +42,14 @@ function* fetchPoolPairsListStarted(action) {
         })
       : pools;
     const data = poolData.map((item) => {
-      const totalVolume = new BigNumber(item.volumeA).plus(item.volumeB);
+      const totalVolume = new BigNumber(item.volumeA)
+        .plus(item.volumeB)
+        .toNumber();
       const totalApy = new BigNumber(item.commission).plus(item.apy).toNumber();
       return {
         ...item,
         totalApy,
-        totalVolume: totalVolume.toNumber(),
+        totalVolume,
       };
     });
     yield put(updateTotalValueLocked(tvl));
@@ -86,7 +88,7 @@ function* fetchPoolPairData(item) {
 
   return {
     ...item,
-    totalVolume,
+    totalVolume: totalVolume.toNumber(),
     totalApy,
     commission: commission.toNumber(),
     'reserveA/reserveB': new BigNumber(item['reserveA/reserveB']).toNumber(),
@@ -138,20 +140,18 @@ function* fetchPoolPairGraph(action) {
     const isValid = data.reduce((acc, curr) => {
       return !!curr.priceA && !!curr.priceB;
     }, true);
-    if (!isValid) {
+    if (!isValid || !data.length) {
       throw new Error('No Records Found');
     }
     data.forEach((item) => {
       const { year, week, day, monthId, hour, minute } = item;
       labels.push({ year, week, day, monthId, hour, minute });
-      values.push(
-        new BigNumber(item.cumTokenAAmount || 0)
-          .times(item.priceA || 0)
-          .plus(
-            new BigNumber(item.cumTokenBAmount || 0).times(item.priceB || 0)
-          )
-          .toNumber()
-      );
+      const val = new BigNumber(item.cumTokenAAmount || 0)
+        .times(item.priceA || 0)
+        .plus(new BigNumber(item.cumTokenBAmount || 0).times(item.priceB || 0))
+        .toNumber();
+
+      values.push(val);
     });
     yield put(
       fetchPoolPairGraphSuccessRequest({
@@ -160,7 +160,6 @@ function* fetchPoolPairGraph(action) {
       })
     );
   } catch (err) {
-    console.log(err);
     yield put(fetchPoolPairGraphFailureRequest(err.message));
   }
 }
