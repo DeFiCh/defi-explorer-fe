@@ -1,4 +1,5 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { BigNumber } from 'bignumber.js';
 import {
   fetchPoolPairsListStartedRequest,
   fetchPoolPairsListFailureRequest,
@@ -13,14 +14,17 @@ import {
   fetchPoolPairGraphStartedRequest,
   fetchPoolPairGraphFailureRequest,
   fetchPoolPairGraphSuccessRequest,
+  fetchPoolPairAddRemoveLPSuccessRequest,
+  fetchPoolPairAddRemoveLPErrorRequest,
+  fetchPoolPairAddRemoveLiquidityStartedRequest,
 } from './reducer';
 import {
   handleGetPoolPair,
   handlePoolPairList,
   getSwapTransaction,
   getPoolPairGraph,
+  getPoolPairAddRemoveLP,
 } from './services';
-import { BigNumber } from 'bignumber.js';
 
 function* getNetwork() {
   const { network } = yield select((state) => state.app);
@@ -37,9 +41,9 @@ function* fetchPoolPairsListStarted(action) {
     const { pools, tvl } = yield call(handlePoolPairList, query);
 
     const poolData = tokenId
-      ? pools.filter((item) => {
-          return item.idTokenA === tokenId || item.idTokenB === tokenId;
-        })
+      ? pools.filter(
+          (item) => item.idTokenA === tokenId || item.idTokenB === tokenId
+        )
       : pools;
     const data = poolData.map((item) => {
       const totalVolume = new BigNumber(item.volumeA)
@@ -77,7 +81,7 @@ function* fetchPoolPairPageStarted(action) {
   }
 }
 
-function* fetchPoolPairData(item) {
+function fetchPoolPairData(item) {
   const { totalLiquidity } = item;
   const totalVolume = new BigNumber(item.volumeA).plus(item.volumeB);
 
@@ -93,8 +97,8 @@ function* fetchPoolPairData(item) {
     commission: commission.toNumber(),
     'reserveA/reserveB': new BigNumber(item['reserveA/reserveB']).toNumber(),
     'reserveB/reserveA': new BigNumber(item['reserveB/reserveA']).toNumber(),
-    reserveA: new BigNumber(item['reserveA']).toNumber(),
-    reserveB: new BigNumber(item['reserveB']).toNumber(),
+    reserveA: new BigNumber(item.reserveA).toNumber(),
+    reserveB: new BigNumber(item.reserveB).toNumber(),
   };
 }
 
@@ -137,15 +141,24 @@ function* fetchPoolPairGraph(action) {
     });
     const labels: any[] = [];
     const values: any[] = [];
-    const isValid = data.reduce((acc, curr) => {
-      return !!curr.priceA && !!curr.priceB;
-    }, true);
+    const isValid = data.reduce(
+      (acc, curr) => !!curr.priceA && !!curr.priceB,
+      true
+    );
     if (!isValid || !data.length) {
       throw new Error('No Records Found');
     }
+
     data.forEach((item) => {
       const { year, week, day, monthId, hour, minute } = item;
-      labels.push({ year, week, day, monthId, hour, minute });
+      labels.push({
+        year,
+        week,
+        day,
+        monthId,
+        hour,
+        minute,
+      });
       const val = new BigNumber(item.cumTokenAAmount || 0)
         .times(item.priceA || 0)
         .plus(new BigNumber(item.cumTokenBAmount || 0).times(item.priceB || 0))
@@ -164,6 +177,29 @@ function* fetchPoolPairGraph(action) {
   }
 }
 
+function* fetchPoolPairAddRemoveLiquidity(action) {
+  try {
+    const network = yield call(getNetwork);
+    const {
+      payload: { poolPairId, pageSize, pageNumber, sort },
+    } = action;
+    const {
+      data,
+    }: {
+      data: any[];
+    } = yield call(getPoolPairAddRemoveLP, {
+      id: poolPairId,
+      skip: (pageNumber - 1) * pageSize,
+      limit: pageSize,
+      network,
+      sort,
+    });
+    yield put(fetchPoolPairAddRemoveLPSuccessRequest(data));
+  } catch (err) {
+    yield put(fetchPoolPairAddRemoveLPErrorRequest(err));
+  }
+}
+
 function* mySaga() {
   yield takeLatest(
     fetchPoolPairsListStartedRequest.type,
@@ -178,6 +214,10 @@ function* mySaga() {
     fetchSwapTransaction
   );
   yield takeLatest(fetchPoolPairGraphStartedRequest.type, fetchPoolPairGraph);
+  yield takeLatest(
+    fetchPoolPairAddRemoveLiquidityStartedRequest.type,
+    fetchPoolPairAddRemoveLiquidity
+  );
 }
 
 export default mySaga;

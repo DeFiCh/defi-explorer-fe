@@ -211,6 +211,16 @@
       "baseToken": "Converting From",
       "quoteToken": "Converting To"
     },
+    "poolPairsAddRemoveLPListPage": {
+      "loading": "Loading",
+      "title": "Liquidity Pool",
+      "blockHeight": "Block Height",
+      "blockTime": "Block Time",
+      "txn": "Transaction Id",
+      "tokenA": "Token A",
+      "tokenB": "Token B",
+      "poolPair": "Poolpair"
+    },
     "tokenPage": {
       "tokenListPageBreadCrumb": "Tokens",
       "name": "Name",

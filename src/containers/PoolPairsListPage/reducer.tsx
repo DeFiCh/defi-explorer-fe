@@ -21,6 +21,11 @@ export const initialState = {
     data: {},
     isError: '',
   },
+  poolPairAddRemoveLp: {
+    isLoading: false,
+    data: {},
+    isError: '',
+  },
 };
 
 const configSlice = createSlice({
@@ -91,6 +96,21 @@ const configSlice = createSlice({
       state.poolPairGraph.data = action.payload;
       state.poolPairGraph.isError = '';
     },
+    fetchPoolPairAddRemoveLPSuccessRequest(state, action) {
+      state.poolPairAddRemoveLp.isLoading = false;
+      state.poolPairAddRemoveLp.data = action.payload;
+      state.poolPairAddRemoveLp.isError = '';
+    },
+    fetchPoolPairAddRemoveLPErrorRequest(state, action) {
+      state.poolPairAddRemoveLp.isLoading = false;
+      state.poolPairAddRemoveLp.isError = action.payload;
+      state.poolPairAddRemoveLp.data = {};
+    },
+    fetchPoolPairAddRemoveLiquidityStartedRequest(state, action) {
+      state.poolPairAddRemoveLp.isLoading = true;
+      state.poolPairAddRemoveLp.isError = false;
+      state.poolPairAddRemoveLp.data = {};
+    },
   },
 });
 
@@ -110,6 +130,9 @@ export const {
   fetchPoolPairGraphStartedRequest,
   fetchPoolPairGraphFailureRequest,
   fetchPoolPairGraphSuccessRequest,
+  fetchPoolPairAddRemoveLPSuccessRequest,
+  fetchPoolPairAddRemoveLPErrorRequest,
+  fetchPoolPairAddRemoveLiquidityStartedRequest,
 } = actions;
 
 export default reducer;

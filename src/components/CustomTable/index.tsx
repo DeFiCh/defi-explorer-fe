@@ -13,7 +13,7 @@ import { MdInfoOutline, MdArrowDownward, MdArrowUpward } from 'react-icons/md';
 import Pagination from '../Pagination';
 import styles from './CustomTable.module.scss';
 
-interface CustomTable {
+interface CustomTableProps {
   column: any;
   data: any;
   total: number;
@@ -27,7 +27,7 @@ interface CustomTable {
   currentPage?: number;
 }
 
-const CustomTable = (props: CustomTable) => {
+const CustomTable = (props: CustomTableProps) => {
   const {
     column,
     data,

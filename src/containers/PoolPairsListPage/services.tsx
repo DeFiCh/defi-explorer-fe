@@ -102,6 +102,21 @@ export const getPoolPairGraph = async (queryParams: {
   return data;
 };
 
+export const getPoolPairAddRemoveLP = async (queryParams: {
+  id: string;
+  network: string;
+  skip?: number;
+  limit?: number;
+  sort?: any;
+}) => {
+  const apiRequest = new ApiRequest();
+  const data = await apiRequest.get('v1/getPoolPairLpList', {
+    baseURL: QUICK_STATS_BASE_ENDPOINT,
+    params: queryParams,
+  });
+  return data;
+};
+
 export const getBlockDetailService = async (blockHeight: string) => {
   const apiRequest = new ApiRequest();
   const { data } = await apiRequest.get(
