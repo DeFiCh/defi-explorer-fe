@@ -2,6 +2,7 @@ import moment from 'moment';
 import {
   DEFAULT_UNIT,
   MAINNET_BASE_PATH,
+  SYMBOL_MAPPINGS,
   TESTNET_BASE_PATH,
 } from '../constants';
 import { unitConversion } from './unitConversion';
@@ -116,7 +117,7 @@ export const getIcon = (symbol: string) => {
     DFI: DefiIcon,
     USDT: USDTIcon,
     DOGE: DogeIcon,
-    LTC: LtcIcon
+    LTC: LtcIcon,
   };
   return dataObj[symbol];
 };
@@ -131,27 +132,8 @@ export const setRoute = (route) => {
   return `${TESTNET_BASE_PATH}/${route}`;
 };
 
-export const getCoinGeckoIdwithSymbol = (symbol) => {
-  if (symbol === 'BTC') {
-    return 'bitcoin';
-  }
-  if (symbol === 'ETH') {
-    return 'ethereum';
-  }
-  if (symbol === 'USDT') {
-    return 'tether';
-  }
-  if (symbol === 'DFI') {
-    return 'defichain';
-  }
-  if (symbol === 'DOGE') {
-    return 'dogecoin';
-  }
-  if (symbol === 'LTC') {
-    return 'litecoin';
-  }
-  return '';
-};
+export const getCoinGeckoIdwithSymbol = (symbol) =>
+  SYMBOL_MAPPINGS[symbol] ?? '';
 
 export const tableSorter = (flip, fieldName) => (a, b) => {
   if (flip) {
@@ -184,7 +166,7 @@ export const getIdFromSymbol = (symbol) => {
 
 export const numberWithCommas = (nStr, tofixed?) => {
   if (tofixed) {
-    nStr= new BigNumber(nStr).toFixed(tofixed);
+    nStr = new BigNumber(nStr).toFixed(tofixed);
   }
   nStr += '';
   const x = nStr.split('.');
