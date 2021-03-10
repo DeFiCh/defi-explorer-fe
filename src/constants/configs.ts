@@ -3,8 +3,10 @@ export const BACKEND_BASE_URL = '127.0.0.1';
 export const BACKEND_BASE_PORT = 3000;
 export const MAINNET_API_PREFIX =
   process.env.MAINNET_API_PREFIX || 'https://mainnet-api.defichain.io/api';
-export const MAINNET_EXPLORER =  process.env.MAINNET_EXPLORER ||'https://mainnet.defichain.io/#/DFI/mainnet/'
-export const TESTNET_EXPLORER =  process.env.TESTNET_EXPLORER ||'https://testnet.defichain.io/#/DFI/testnet/'
+export const MAINNET_EXPLORER =
+  process.env.MAINNET_EXPLORER || 'https://mainnet.defichain.io/#/DFI/mainnet/';
+export const TESTNET_EXPLORER =
+  process.env.TESTNET_EXPLORER || 'https://testnet.defichain.io/#/DFI/testnet/';
 export const TESTNET_API_PREFIX =
   process.env.TESTNET_API_PREFIX || 'https://testnet-api.defichain.io/api';
 export const MAINNET_WS_PREFIX =
@@ -32,3 +34,12 @@ export const VS_CURRENCIES = 'usd';
 export const LP_DAILY_DFI_REWARD = 'LP_DAILY_DFI_REWARD';
 export const DEFAULT_DECIMAL_PLACE = 2;
 export const BURN_ADDRESS = '8defichainDSTBurnAddressXXXXaCAuTq';
+export const SYMBOL_MAPPINGS = {
+  BTC: 'bitcoin',
+  ETH: 'ethereum',
+  USDT: 'tether',
+  DFI: 'defichain',
+  DOGE: 'dogecoin',
+  LTC: 'litecoin',
+  BCH: 'bitcoin-cash',
+};
