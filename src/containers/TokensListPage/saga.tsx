@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { BURN_ADDRESS } from '../../constants';
+import { BURN_ADDRESS, MAINNET } from '../../constants';
 import {
   fetchTokensListStartedRequest,
   fetchTokensListFailureRequest,
@@ -65,12 +65,10 @@ function* fetchTokenPageStarted(action) {
   };
   try {
     const data = yield call(handleGetToken, query);
-    const burnedAddressBalance = yield call(
-      fetchBalancesByAddress,
-      BURN_ADDRESS,
-      unit,
-      network
-    );
+    const burnedAddressBalance =
+      network === MAINNET
+        ? yield call(fetchBalancesByAddress, BURN_ADDRESS, unit, network)
+        : [];
     const currentTokenBurnedData = burnedAddressBalance.find(
       (d: { id: any }) => d.id === tokenId
     );
