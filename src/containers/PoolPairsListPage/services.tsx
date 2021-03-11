@@ -110,7 +110,7 @@ export const getPoolPairAddRemoveLP = async (queryParams: {
   sort?: any;
 }) => {
   const apiRequest = new ApiRequest();
-  const data = await apiRequest.get('v1/getPoolPairLpList', {
+  const data = await apiRequest.get('v1/getpoolpairlplist', {
     baseURL: QUICK_STATS_BASE_ENDPOINT,
     params: queryParams,
   });
