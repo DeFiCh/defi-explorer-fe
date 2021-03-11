@@ -7,6 +7,7 @@ import {
 } from '../constants';
 import { unitConversion } from './unitConversion';
 import DefiIcon from '../assets/svg/defi-icon.svg';
+import BCHIcon from '../assets/svg/bch-icon.svg';
 import BTCIcon from '../assets/svg/icon-coin-bitcoin-lapis.svg';
 import EthIcon from '../assets/svg/eth-icon.svg';
 import DogeIcon from '../assets/svg/doge-icon.svg';
@@ -118,6 +119,7 @@ export const getIcon = (symbol: string) => {
     USDT: USDTIcon,
     DOGE: DogeIcon,
     LTC: LtcIcon,
+    BCH: BCHIcon,
   };
   return dataObj[symbol];
 };
@@ -132,9 +134,8 @@ export const setRoute = (route) => {
   return `${TESTNET_BASE_PATH}/${route}`;
 };
 
-export const getCoinGeckoIdwithSymbol = (symbol) => {
-  return SYMBOL_MAPPINGS[symbol] ?? '';
-};
+export const getCoinGeckoIdwithSymbol = (symbol) =>
+  SYMBOL_MAPPINGS[symbol] ?? '';
 
 export const tableSorter = (flip, fieldName) => (a, b) => {
   if (flip) {

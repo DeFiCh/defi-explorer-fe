@@ -39,6 +39,7 @@ export const GRANULARITY_YTD = 'YTD';
 export const GRANULARITY_MONTH = 'M';
 export const GRANULARITY_WEEK = 'W';
 export const GRANULARITY_DAY = 'D';
+
 export const SYMBOL_MAPPINGS = {
   BTC: 'bitcoin',
   ETH: 'ethereum',
