@@ -146,11 +146,7 @@ function* fetchPoolPairGraph(action) {
     });
     const labels: any[] = [];
     const values: any[] = [];
-    const isValid = data.reduce(
-      (acc, curr) => acc && !!curr.priceA && !!curr.priceB,
-      true
-    );
-    if (!isValid || !data.length) {
+    if (!data.length) {
       throw new Error('No Records Found');
     }
 
@@ -164,9 +160,9 @@ function* fetchPoolPairGraph(action) {
         hour,
         minute,
       });
-      const val = new BigNumber(item.cumTokenAAmount || 0)
-        .times(item.priceA || 0)
-        .plus(new BigNumber(item.cumTokenBAmount || 0).times(item.priceB || 0))
+      const val = new BigNumber(item.cumTokenAAmount ?? 0)
+        .times(item.priceA ?? 1)
+        .plus(new BigNumber(item.cumTokenBAmount ?? 0).times(item.priceB ?? 1))
         .toNumber();
 
       values.push(val);

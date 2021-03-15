@@ -291,7 +291,7 @@
     },
     "poolPairVolumeGraph": {
       "volume": "Volume",
-      "y": "YTD",
+      "y": "Y",
       "m": "M",
       "w": "W",
       "d": "D"
