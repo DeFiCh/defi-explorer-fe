@@ -105,7 +105,10 @@ const PoolPairGraph = (props: PoolPairsGraphProps) => {
           <CardBody>
             <Row>
               <Col xs='6'>
-                <Button color='primary'>
+                <Button
+                  color='primary'
+                  onClick={() => toggleSearch(GRANULARITY_YTD)}
+                >
                   {I18n.t('containers.poolPairGraph.liquidity')}
                 </Button>
               </Col>
