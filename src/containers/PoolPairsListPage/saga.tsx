@@ -17,6 +17,10 @@ import {
   fetchPoolPairAddRemoveLPSuccessRequest,
   fetchPoolPairAddRemoveLPErrorRequest,
   fetchPoolPairAddRemoveLiquidityStartedRequest,
+  fetchPoolPairVolumeGraphStartedRequest,
+  fetchPoolPairVolumeGraphSuccessRequest,
+  fetchPoolPairVolumeGraphFailureRequest,
+  fetchPoolSwapVolumeSymbols,
 } from './reducer';
 import {
   handleGetPoolPair,
@@ -24,6 +28,7 @@ import {
   getSwapTransaction,
   getPoolPairGraph,
   getPoolPairAddRemoveLP,
+  getPoolPairVolumeGraph,
 } from './services';
 
 function* getNetwork() {
@@ -141,11 +146,7 @@ function* fetchPoolPairGraph(action) {
     });
     const labels: any[] = [];
     const values: any[] = [];
-    const isValid = data.reduce(
-      (acc, curr) => !!curr.priceA && !!curr.priceB,
-      true
-    );
-    if (!isValid || !data.length) {
+    if (!data.length) {
       throw new Error('No Records Found');
     }
 
@@ -159,9 +160,9 @@ function* fetchPoolPairGraph(action) {
         hour,
         minute,
       });
-      const val = new BigNumber(item.cumTokenAAmount || 0)
-        .times(item.priceA || 0)
-        .plus(new BigNumber(item.cumTokenBAmount || 0).times(item.priceB || 0))
+      const val = new BigNumber(item.cumTokenAAmount ?? 0)
+        .times(item.priceA ?? 1)
+        .plus(new BigNumber(item.cumTokenBAmount ?? 0).times(item.priceB ?? 1))
         .toNumber();
 
       values.push(val);
@@ -174,6 +175,70 @@ function* fetchPoolPairGraph(action) {
     );
   } catch (err) {
     yield put(fetchPoolPairGraphFailureRequest(err.message));
+  }
+}
+
+function* fetchPoolPairVolumeGraph(action) {
+  const network = yield call(getNetwork);
+  const { poolPairId, type, start = null, end = null } = action.payload;
+  try {
+    const {
+      data,
+    }: {
+      data: any[];
+    } = yield call(getPoolPairVolumeGraph, {
+      id: poolPairId,
+      network,
+      type,
+      start,
+      end,
+    });
+    const labels: any[] = [];
+    const values: any[] = [];
+    const values2: any[] = [];
+    const totalVolumes: any[] = [];
+    const isValid = data.reduce(
+      (acc, curr) => acc && !!curr.baseTokenAmount && !!curr.quoteTokenAmount,
+      true
+    );
+
+    if (!isValid || !data.length) {
+      throw new Error('No Records Found');
+    }
+
+    const { baseTokenSymbol: sym1, quoteTokenSymbol: sym2 } = data[0];
+    data.forEach((item) => {
+      const { year, week, day, monthId, hour, minute } = item;
+      labels.push({
+        year,
+        week,
+        day,
+        monthId,
+        hour,
+        minute,
+      });
+      if (sym1 === item.baseTokenSymbol) {
+        values.push(new BigNumber(item.baseTokenAmount).toNumber());
+        values2.push(new BigNumber(item.quoteTokenAmount).toNumber());
+      }
+
+      if (sym2 === item.baseTokenSymbol) {
+        values2.push(new BigNumber(item.baseTokenAmount).toNumber());
+        values.push(new BigNumber(item.quoteTokenAmount).toNumber());
+      }
+      totalVolumes.push(item.totalVolume);
+    });
+    yield put(
+      fetchPoolPairVolumeGraphSuccessRequest({
+        labels,
+        values2,
+        values,
+        totalVolumes,
+      })
+    );
+    yield put(fetchPoolSwapVolumeSymbols({ sym1, sym2 }));
+  } catch (err) {
+    yield put(fetchPoolPairVolumeGraphFailureRequest(err.message));
   }
 }
 
@@ -214,6 +279,10 @@ function* mySaga() {
     fetchSwapTransaction
   );
   yield takeLatest(fetchPoolPairGraphStartedRequest.type, fetchPoolPairGraph);
+  yield takeLatest(
+    fetchPoolPairVolumeGraphStartedRequest.type,
+    fetchPoolPairVolumeGraph
+  );
   yield takeLatest(
     fetchPoolPairAddRemoveLiquidityStartedRequest.type,
     fetchPoolPairAddRemoveLiquidity

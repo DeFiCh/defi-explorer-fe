@@ -26,6 +26,13 @@ export const initialState = {
     data: {},
     isError: '',
   },
+  poolPairVolumeGraph: {
+    isLoading: false,
+    data: {},
+    isError: '',
+    sym1: '',
+    sym2: '',
+  },
 };
 
 const configSlice = createSlice({
@@ -108,8 +115,28 @@ const configSlice = createSlice({
     },
     fetchPoolPairAddRemoveLiquidityStartedRequest(state, action) {
       state.poolPairAddRemoveLp.isLoading = true;
-      state.poolPairAddRemoveLp.isError = false;
+      state.poolPairAddRemoveLp.isError = '';
       state.poolPairAddRemoveLp.data = {};
+    },
+    fetchPoolPairVolumeGraphStartedRequest(state, action) {
+      state.poolPairVolumeGraph.isLoading = true;
+      state.poolPairVolumeGraph.isError = '';
+    },
+    fetchPoolPairVolumeGraphFailureRequest(state, action) {
+      state.poolPairVolumeGraph.isLoading = false;
+      state.poolPairVolumeGraph.isError = action.payload;
+      state.poolPairVolumeGraph.data = {};
+      state.poolPairVolumeGraph.sym1 = '';
+      state.poolPairVolumeGraph.sym2 = '';
+    },
+    fetchPoolPairVolumeGraphSuccessRequest(state, action) {
+      state.poolPairVolumeGraph.isLoading = false;
+      state.poolPairVolumeGraph.data = action.payload;
+      state.poolPairVolumeGraph.isError = '';
+    },
+    fetchPoolSwapVolumeSymbols(state, action) {
+      state.poolPairVolumeGraph.sym1 = action.payload.sym1;
+      state.poolPairVolumeGraph.sym2 = action.payload.sym2;
     },
   },
 });
@@ -133,6 +160,10 @@ export const {
   fetchPoolPairAddRemoveLPSuccessRequest,
   fetchPoolPairAddRemoveLPErrorRequest,
   fetchPoolPairAddRemoveLiquidityStartedRequest,
+  fetchPoolPairVolumeGraphStartedRequest,
+  fetchPoolPairVolumeGraphFailureRequest,
+  fetchPoolPairVolumeGraphSuccessRequest,
+  fetchPoolSwapVolumeSymbols,
 } = actions;
 
 export default reducer;
