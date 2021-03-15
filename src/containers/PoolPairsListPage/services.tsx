@@ -102,6 +102,21 @@ export const getPoolPairGraph = async (queryParams: {
   return data;
 };
 
+export const getPoolPairVolumeGraph = async (queryParams: {
+  id: string;
+  network: string;
+  type: string;
+  start: string;
+  end: string;
+}) => {
+  const apiRequest = new ApiRequest();
+  const data = await apiRequest.get('v1/gettotalvolumestats', {
+    baseURL: QUICK_STATS_BASE_ENDPOINT,
+    params: queryParams,
+  });
+  return data;
+};
+
 export const getPoolPairAddRemoveLP = async (queryParams: {
   id: string;
   network: string;
@@ -248,34 +263,92 @@ export const getFormatedNumber = (num) => {
   return num;
 };
 
-export const getDatasetForGraph = (data, type) => {
+export const getDatasetForGraph = (
+  data,
+  type,
+  sym1 = '',
+  sym2 = '',
+  isVolumeGraph = false
+) => {
   const style = getComputedStyle(document.body);
   const primary = style.getPropertyValue('--primary');
+  const secondary = style.getPropertyValue('--secondary');
+  const info = style.getPropertyValue('--info');
+
+  const datasets = [
+    {
+      label: `${sym1}`,
+      fill: false,
+      lineTension: 0.2,
+      backgroundColor: primary,
+      borderColor: primary,
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      borderWidth: '2',
+      pointBorderColor: primary,
+      pointBackgroundColor: primary,
+      pointBorderWidth: 1,
+      pointHoverRadius: 5,
+      pointHoverBackgroundColor: primary,
+      pointHoverBorderColor: primary,
+      pointHoverBorderWidth: 2,
+      pointRadius: 1,
+      pointHitRadius: 10,
+      data: data.values,
+    },
+  ];
+  if (isVolumeGraph) {
+    datasets.push({
+      fill: false,
+      label: `${sym2}`,
+      lineTension: 0.2,
+      backgroundColor: secondary,
+      borderColor: secondary,
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      borderWidth: '2',
+      pointBorderColor: secondary,
+      pointBackgroundColor: secondary,
+      pointBorderWidth: 1,
+      pointHoverRadius: 5,
+      pointHoverBackgroundColor: secondary,
+      pointHoverBorderColor: secondary,
+      pointHoverBorderWidth: 2,
+      pointRadius: 1,
+      pointHitRadius: 10,
+      data: data.values2,
+    });
+
+    datasets.push({
+      fill: false,
+      label: `Total Volume`,
+      lineTension: 0.2,
+      backgroundColor: info,
+      borderColor: info,
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      borderWidth: '2',
+      pointBorderColor: info,
+      pointBackgroundColor: info,
+      pointBorderWidth: 1,
+      pointHoverRadius: 5,
+      pointHoverBackgroundColor: info,
+      pointHoverBorderColor: info,
+      pointHoverBorderWidth: 2,
+      pointRadius: 1,
+      pointHitRadius: 10,
+      data: data.totalVolumes,
+    });
+  }
   return {
     labels: getLabelsForPoolPairGraph(data.labels, type),
-    datasets: [
-      {
-        fill: false,
-        lineTension: 0.2,
-        backgroundColor: primary,
-        borderColor: primary,
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        borderWidth: '2',
-        pointBorderColor: primary,
-        pointBackgroundColor: primary,
-        pointBorderWidth: 1,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: primary,
-        pointHoverBorderColor: primary,
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
-        data: data.values,
-      },
-    ],
+    datasets,
   };
 };
 
@@ -292,10 +365,10 @@ export const getScalesForGraph = (isLoading) => ({
   ],
 });
 
-export const getOptionsForGraph = (isLoading) => ({
+export const getOptionsForGraph = (isLoading, legend = false) => ({
   scales: getScalesForGraph(isLoading),
   legend: {
-    display: false,
+    display: legend,
   },
   zoom: {
     enabled: true,

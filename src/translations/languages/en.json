@@ -288,6 +288,13 @@
       "w": "W",
       "d": "D",
       "week": "Week"
+    },
+    "poolPairVolumeGraph": {
+      "volume": "Volume",
+      "y": "YTD",
+      "m": "M",
+      "w": "W",
+      "d": "D"
     }
   },
   "alerts": {}
