@@ -290,8 +290,8 @@ const PoolPairPage = (props: PoolPairPageProps) => {
               />
             </Col>
           </Row>
-          {poolPairId && <PoolPairGraph poolPairId={poolPairId} />}
-          {poolPairId && <PoolPairVolumeGraph poolPairId={poolPairId} />}
+          {/* {poolPairId && <PoolPairGraph poolPairId={poolPairId} />}
+          {poolPairId && <PoolPairVolumeGraph poolPairId={poolPairId} />} */}
           {poolPairId && <PoolPairPageTable poolPairId={poolPairId} />}
           {poolPairId && (
             <PoolPairAddRemoveLpPageTable poolPairId={poolPairId} />
