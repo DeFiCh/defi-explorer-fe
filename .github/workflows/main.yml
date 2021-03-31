@@ -36,7 +36,7 @@ jobs:
         uses: 'finnp/create-file-action@master'
         env:
           FILE_NAME: '.env'
-          FILE_DATA: "CHAIN=DFI\nNETWORK=mainnet\nMAINNET_API_PREFIX=https://mainnet-api.defichain.io/api\nTESTNET_API_PREFIX=https://testnet-api.defichain.io/api\nMAINNET_WS_PREFIX=https://mainnet-api.defichain.io\nTESTNET_WS_PREFIX=https://testnet-api.defichain.io\nQUICK_STATS_API=https://api.defichain.io/api/\n"
+          FILE_BASE64: 'Q0hBSU49REZJCk5FVFdPUks9bWFpbm5ldApNQUlOTkVUX0FQSV9QUkVGSVg9aHR0cHM6Ly9tYWlubmV0LWFwaS5kZWZpY2hhaW4uaW8vYXBpClRFU1RORVRfQVBJX1BSRUZJWD1odHRwczovL3Rlc3RuZXQtYXBpLmRlZmljaGFpbi5pby9hcGkKTUFJTk5FVF9XU19QUkVGSVg9aHR0cHM6Ly9tYWlubmV0LWFwaS5kZWZpY2hhaW4uaW8KVEVTVE5FVF9XU19QUkVGSVg9aHR0cHM6Ly90ZXN0bmV0LWFwaS5kZWZpY2hhaW4uaW8KUVVJQ0tfU1RBVFNfQVBJPWh0dHBzOi8vYXBpLmRlZmljaGFpbi5pby9hcGkvCg=='
       - name: build
         run: npm run build
 
