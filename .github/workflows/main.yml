@@ -39,14 +39,6 @@ jobs:
           FILE_DATA: "\nCHAIN=DFI\nNETWORK=mainnet\nMAINNET_API_PREFIX=https://mainnet-api.defichain.io/api\nTESTNET_API_PREFIX=https://testnet-api.defichain.io/api\nMAINNET_WS_PREFIX=https://mainnet-api.defichain.io\nTESTNET_WS_PREFIX=https://testnet-api.defichain.io\nQUICK_STATS_API=https://api.defichain.io/api/\n"
       - name: build
         run: npm run build
-        env:
-          CHAIN: DFI
-          NETWORK: mainnet
-          MAINNET_API_PREFIX: https://mainnet-api.defichain.io/api
-          TESTNET_API_PREFIX: https://testnet-api.defichain.io/api
-          MAINNET_WS_PREFIX: https://mainnet-api.defichain.io
-          TESTNET_WS_PREFIX: https://testnet-api.defichain.io
-          QUICK_STATS_API: https://api.defichain.io/api/
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master

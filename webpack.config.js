@@ -7,9 +7,13 @@ const path = require('path');
 const addEnvPlugin = (webpackConfig) => {
   const currentPath = path.join(__dirname);
 
+
   const envPath = currentPath + '/.env';
+  console.log({ envPath });
 
   const finalPath = fs.existsSync(envPath);
+
+  console.log({ finalPath: !!finalPath })
 
   if (finalPath) {
     const fileEnv = dotenv.config({ path: envPath }).parsed;
