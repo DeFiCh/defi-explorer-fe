@@ -32,6 +32,11 @@ jobs:
 
       - name: install dependencies
         run: npm install
+      - name: create env
+      - uses: "finnp/create-file-action@master"
+        env:
+          FILE_NAME: ".env"
+          FILE_DATA: "\nCHAIN=DFI\nNETWORK=mainnet\nMAINNET_API_PREFIX=https://mainnet-api.defichain.io/api\nTESTNET_API_PREFIX=https://testnet-api.defichain.io/api\nMAINNET_WS_PREFIX=https://mainnet-api.defichain.io\nTESTNET_WS_PREFIX=https://testnet-api.defichain.io\nQUICK_STATS_API=https://api.defichain.io/api/\n"
       - name: build
         run: npm run build
         env:
