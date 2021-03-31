@@ -1,9 +1,34 @@
-// Whilst the configuration object can be modified here, the recommended way of making
-// changes is via the presets' options or Neutrino's API in `.neutrinorc.js` instead.
-// Neutrino's inspect feature can be used to view/export the generated configuration.
+const webpack = require('webpack');
 const neutrino = require('neutrino');
+const dotenv = require('dotenv');
+const fs = require('fs');
+const path = require('path');
 
-module.exports = (storybookConfig = {}) => {
+const addEnvPlugin = (webpackConfig) => {
+  const currentPath = path.join(__dirname);
+
+  const envPath = currentPath + '/.env';
+
+  const finalPath = fs.existsSync(envPath);
+
+  if (finalPath) {
+    const fileEnv = dotenv.config({ path: envPath }).parsed;
+
+    const envKeys = Object.keys(fileEnv).reduce((prev, next) => {
+      prev[`process.env.${next}`] = JSON.stringify(fileEnv[next]);
+      return prev;
+    }, {});
+    if (webpackConfig.plugins && Array.isArray(webpackConfig.plugins)) {
+      webpackConfig.plugins.push(new webpack.DefinePlugin(envKeys));
+    } else {
+      webpackConfig.plugins = [new webpack.DefinePlugin(envKeys)];
+    }
+  }
+  return webpackConfig;
+};
+
+module.exports = () => {
   const neutrinoConfig = neutrino().webpack();
-  return { ...neutrinoConfig, ...storybookConfig.config };
-}
+  const updatedneutrinoConfig = addEnvPlugin(neutrinoConfig);
+  return updatedneutrinoConfig;
+};

@@ -1,0 +1,15 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "../../../../scss/variables";
+@import "../../../../scss/bootstrap/variables";
+
+.columnEllipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  width: 450px;
+  a {
+    text-overflow: ellipsis;
+    text-transform: none;
+  }
+}
