@@ -45,3 +45,10 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ap-southeast-1
           SOURCE_DIR: "build"
+          CHAIN: DFI
+          NETWORK: mainnet
+          MAINNET_API_PREFIX: https://mainnet-api.defichain.io/api
+          TESTNET_API_PREFIX: https://testnet-api.defichain.io/api
+          MAINNET_WS_PREFIX: https://mainnet-api.defichain.io
+          TESTNET_WS_PREFIX: https://testnet-api.defichain.io
+          QUICK_STATS_API: https://api.defichain.io/api/
