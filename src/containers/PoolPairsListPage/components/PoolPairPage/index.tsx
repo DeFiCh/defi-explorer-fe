@@ -22,6 +22,9 @@ import { numberWithCommas, setRoute } from '../../../../utils/utility';
 import styles from '../../PoolPairsListPage.module.scss';
 import { PoolPairIcon } from '../PoolPairIcon';
 import PoolPairPageTable from '../PoolPairPageTable';
+import PoolPairGraph from '../PoolPairGraph';
+import PoolPairAddRemoveLpPageTable from '../PoolPairAddRemoveLpPageTable';
+import PoolPairVolumeGraph from '../PoolPairVolumeGraph';
 // import PoolPairGraph from '../PoolPairGraph';
 
 interface RouteInfo {
@@ -287,8 +290,12 @@ const PoolPairPage = (props: PoolPairPageProps) => {
               />
             </Col>
           </Row>
-          {/* <PoolPairGraph poolPairId={poolPairId} /> */}
+          {/* {poolPairId && <PoolPairGraph poolPairId={poolPairId} />}
+          {poolPairId && <PoolPairVolumeGraph poolPairId={poolPairId} />} */}
           {poolPairId && <PoolPairPageTable poolPairId={poolPairId} />}
+          {poolPairId && (
+            <PoolPairAddRemoveLpPageTable poolPairId={poolPairId} />
+          )}
         </div>
       </>
     );

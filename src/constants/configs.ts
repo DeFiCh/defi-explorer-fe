@@ -34,6 +34,12 @@ export const VS_CURRENCIES = 'usd';
 export const LP_DAILY_DFI_REWARD = 'LP_DAILY_DFI_REWARD';
 export const DEFAULT_DECIMAL_PLACE = 2;
 export const BURN_ADDRESS = '8defichainDSTBurnAddressXXXXaCAuTq';
+export const GRANULARITY_ALLDAY = 'ALLDAY';
+export const GRANULARITY_YTD = 'YTD';
+export const GRANULARITY_MONTH = 'M';
+export const GRANULARITY_WEEK = 'W';
+export const GRANULARITY_DAY = 'D';
+
 export const SYMBOL_MAPPINGS = {
   BTC: 'bitcoin',
   ETH: 'ethereum',
