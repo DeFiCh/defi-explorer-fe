@@ -2,7 +2,7 @@
 # Test Build
 name: Production Build Front
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the develop branch
   push:
@@ -15,7 +15,7 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
         node-version: [12.x]
@@ -29,12 +29,20 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Git checkout
         uses: actions/checkout@v2
-      
+
       - name: install dependencies
         run: npm install
       - name: build
         run: npm run build
-        
+        env:
+          CHAIN: DFI
+          NETWORK: mainnet
+          MAINNET_API_PREFIX: https://mainnet-api.defichain.io/api
+          TESTNET_API_PREFIX: https://testnet-api.defichain.io/api
+          MAINNET_WS_PREFIX: https://mainnet-api.defichain.io
+          TESTNET_WS_PREFIX: https://testnet-api.defichain.io
+          QUICK_STATS_API: https://api.defichain.io/api/
+
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:
@@ -44,11 +52,4 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ap-southeast-1
-          SOURCE_DIR: "build"
-          CHAIN: DFI
-          NETWORK: mainnet
-          MAINNET_API_PREFIX: https://mainnet-api.defichain.io/api
-          TESTNET_API_PREFIX: https://testnet-api.defichain.io/api
-          MAINNET_WS_PREFIX: https://mainnet-api.defichain.io
-          TESTNET_WS_PREFIX: https://testnet-api.defichain.io
-          QUICK_STATS_API: https://api.defichain.io/api/
+          SOURCE_DIR: 'build'
