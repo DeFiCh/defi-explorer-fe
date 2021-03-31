@@ -31,6 +31,7 @@ jobs:
 
       - name: install dependencies
         run: npm install
+      # Create .env file so that it can be read by .env
       - name: create env
         uses: 'finnp/create-file-action@master'
         env:
