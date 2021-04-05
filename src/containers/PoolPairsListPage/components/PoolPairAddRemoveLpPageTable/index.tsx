@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
 import { fetchPoolPairAddRemoveLiquidityStartedRequest } from '../../reducer';
 import CustomTable from '../../../../components/CustomTable';
-import { numberWithCommas } from '../../../../utils/utility';
+import {
+  camelCaseToNormalCase,
+  numberWithCommas,
+} from '../../../../utils/utility';
 import {
   MAINNET_EXPLORER,
   TESTNET_EXPLORER,
@@ -111,6 +114,18 @@ const PoolPairAddRemoveLpPageTable = (
               value={`${obj.blockHeight}`}
               onclick={() => handelBlockClick(obj.blockHeight)}
             />
+          );
+        },
+        sortable: true,
+      },
+      {
+        name: I18n.t('containers.poolPairsAddRemoveLPListPage.txType'),
+        field: 'txType',
+        cell: (obj) => {
+          return (
+            <div title={`${obj.txType}-${obj.blockHeight}`}>
+              {camelCaseToNormalCase(obj?.txType || '')}
+            </div>
           );
         },
         sortable: true,

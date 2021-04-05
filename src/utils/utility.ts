@@ -183,3 +183,8 @@ export const numberWithCommas = (nStr, tofixed?) => {
 
 export const getNetworkNameFromLocation = (pathname) =>
   pathname.split('/').filter((item) => !!item)[0];
+
+export const camelCaseToNormalCase = (text: string) => {
+  const result = text.replace(/([A-Z])/g, ' $1');
+  return result.charAt(0).toUpperCase() + result.slice(1);
+};

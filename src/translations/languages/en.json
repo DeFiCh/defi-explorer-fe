@@ -200,6 +200,7 @@
       "paginationRange": "%{to} – %{from} of %{total}",
       "noDataPresent": "No Pool Pair is present",
       "totalValueLocked": "Total Value Locked",
+      "totalBlockCount": "Total Block Count",
       "totalValueLockedCurrency": "USD"
     },
     "poolPairsSwapListPage": {
@@ -219,7 +220,8 @@
       "txn": "Transaction Id",
       "tokenA": "Token A",
       "tokenB": "Token B",
-      "poolPair": "Poolpair"
+      "poolPair": "Poolpair",
+      "txType": "Type"
     },
     "tokenPage": {
       "tokenListPageBreadCrumb": "Tokens",
@@ -267,6 +269,8 @@
       "24hr": "USD 24H",
       "rewardPct": "DeFi Incentive Dist Share",
       "ownerAddress": "Owner Address",
+      "swapTable": "Swaps",
+      "liquidityPool": "Liquidity Pool",
       "tradeEnabled": "Trade Enabled",
       "loading": "Loading",
       "liquidityPoolPairsDownload": "You can now liquidity mine for potentially high yields. Download and install the DeFi desktop app to supply and liquidity mine now.",

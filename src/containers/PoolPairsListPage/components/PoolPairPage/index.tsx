@@ -15,16 +15,19 @@ import {
 import KeyValueLi from '../../../../components/KeyValueLi';
 import {
   DEFAULT_DECIMAL_PLACE,
+  LP_TABLE,
   POOL_LIST_PAGE_URL_NAME,
+  SWAP_TABLE,
 } from '../../../../constants';
 import { fetchPoolPairPageStartedRequest } from '../../reducer';
 import { numberWithCommas, setRoute } from '../../../../utils/utility';
 import styles from '../../PoolPairsListPage.module.scss';
 import { PoolPairIcon } from '../PoolPairIcon';
 import PoolPairPageTable from '../PoolPairPageTable';
-import PoolPairGraph from '../PoolPairGraph';
+// import PoolPairGraph from '../PoolPairGraph';
 import PoolPairAddRemoveLpPageTable from '../PoolPairAddRemoveLpPageTable';
-import PoolPairVolumeGraph from '../PoolPairVolumeGraph';
+// import PoolPairVolumeGraph from '../PoolPairVolumeGraph';
+import ListTabs from '../../../../components/ListTab';
 // import PoolPairGraph from '../PoolPairGraph';
 
 interface RouteInfo {
@@ -52,6 +55,21 @@ const PoolPairPage = (props: PoolPairPageProps) => {
   useEffect(() => {
     fetchPoolPairPageStartedRequest(poolPairId);
   }, []);
+
+  const PoolPairPageTableComponent = React.useCallback(
+    () =>
+      poolPairId ? <PoolPairPageTable poolPairId={poolPairId} /> : <div />,
+    [poolPairId]
+  );
+  const PoolPairAddRemoveLpPageTableComponent = React.useCallback(
+    () =>
+      poolPairId ? (
+        <PoolPairAddRemoveLpPageTable poolPairId={poolPairId} />
+      ) : (
+        <div />
+      ),
+    [poolPairId]
+  );
 
   if (isError) return <>{isError}</>;
   if (!isEmpty(data)) {
@@ -82,7 +100,7 @@ const PoolPairPage = (props: PoolPairPageProps) => {
               <div className={styles.iconTitle}>{data.symbol}</div>
             </span>
           </h1>
-          <Row>
+          <Row className='mb-5'>
             <Col xs='12' md='4'>
               <KeyValueLi
                 label={I18n.t('containers.poolPairPage.oneCurrencyLabel', {
@@ -292,10 +310,15 @@ const PoolPairPage = (props: PoolPairPageProps) => {
           </Row>
           {/* {poolPairId && <PoolPairGraph poolPairId={poolPairId} />}
           {poolPairId && <PoolPairVolumeGraph poolPairId={poolPairId} />} */}
-          {poolPairId && <PoolPairPageTable poolPairId={poolPairId} />}
-          {poolPairId && (
-            <PoolPairAddRemoveLpPageTable poolPairId={poolPairId} />
-          )}
+          <ListTabs
+            id={poolPairId}
+            tab1Key={SWAP_TABLE}
+            tab2Key={LP_TABLE}
+            tab1Label={I18n.t('containers.poolPairPage.swapTable')}
+            tab2Label={I18n.t('containers.poolPairPage.liquidityPool')}
+            tab1Component={PoolPairPageTableComponent}
+            tab2Component={PoolPairAddRemoveLpPageTableComponent}
+          />
         </div>
       </>
     );
