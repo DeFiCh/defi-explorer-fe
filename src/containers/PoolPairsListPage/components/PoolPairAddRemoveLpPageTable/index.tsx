@@ -5,6 +5,7 @@ import { fetchPoolPairAddRemoveLiquidityStartedRequest } from '../../reducer';
 import CustomTable from '../../../../components/CustomTable';
 import {
   camelCaseToNormalCase,
+  convertToSentenceCase,
   numberWithCommas,
 } from '../../../../utils/utility';
 import {
@@ -124,7 +125,7 @@ const PoolPairAddRemoveLpPageTable = (
         cell: (obj) => {
           return (
             <div title={`${obj.txType}-${obj.blockHeight}`}>
-              {camelCaseToNormalCase(obj?.txType || '')}
+              {convertToSentenceCase(camelCaseToNormalCase(obj?.txType || ''))}
             </div>
           );
         },
@@ -138,7 +139,7 @@ const PoolPairAddRemoveLpPageTable = (
             <ValueLi
               copyable
               clickble
-              textLimit='40'
+              textLimit='60'
               value={obj.txid}
               onclick={() => handelTxClick(obj.txid)}
             />

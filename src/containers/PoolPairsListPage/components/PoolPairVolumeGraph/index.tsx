@@ -90,6 +90,7 @@ const PoolPairGraph = (props: PoolPairsGraphProps) => {
 
   const options = {
     onClick(e) {
+      // @ts-ignore
       const isValid = this.getElementAtEvent(e);
       if (!isEmpty(isValid)) {
         const xLabel = this.scales['x-axis-0'].getValueForPixel(e.x);

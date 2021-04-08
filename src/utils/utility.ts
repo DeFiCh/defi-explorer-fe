@@ -31,6 +31,15 @@ export const setIntervalSynchronous = (func, delay) => {
   return clear;
 };
 
+export const convertToSentenceCase = (string) => {
+  const rg = /(^\s*\w|[\.\!\?]\s*\w)/g;
+  const sentence = string.replace(/(^|\s)\S/g, (t) => t.toLowerCase());
+  const convertedString = sentence
+    .toLowerCase()
+    .replace(rg, (c) => c.toUpperCase());
+  return convertedString;
+};
+
 export const isInputValid = (inputValue) => {
   if (isValidBlockOrTx(inputValue)) {
     return { isValid: true, type: 'blockOrTx' };
