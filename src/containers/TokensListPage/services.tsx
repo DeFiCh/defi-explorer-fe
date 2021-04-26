@@ -161,6 +161,8 @@ export const fetchBalancesByAddress = async (
       item.balance = new BigNumber(unitConversion)
         .plus(item.balance)
         .toNumber();
+      item.utxos = unitConversion;
+      item.tokenDFI = item.balance;
     }
 
     const tokenInfo = await handleGetToken(query);

@@ -5,6 +5,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Row, Col, Card, Table, Button } from 'reactstrap';
 import {
   ADDRESS_TOKENS_LIST_PAGE_LIMIT,
+  DFI,
   TOKEN_LIST_PAGE_URL_NAME,
 } from '../../../../constants';
 import { fetchAddressTokensListStartedRequest } from '../../reducer';
@@ -148,7 +149,24 @@ const AddressTokenList = (props: AddressTokenListProps) => {
               </div>
             </span>
           </td>
-          <td className='text-right'>{numberWithCommas(item.balance)}</td>
+          <td className='text-right'>
+            {numberWithCommas(item.balance)}
+            {item.id === DFI ||
+              (item.name === DFI && (
+                <div className={styles.colorMuted}>
+                  <p className='m-0'>
+                    {`${I18n.t('containers.addresstokensListPage.utxos')}: ${
+                      item.utxos
+                    }`}
+                  </p>
+                  <p className='m-0'>
+                    {`${I18n.t(
+                      'containers.addresstokensListPage.dfiTokens'
+                    )}:: ${item.tokenDFI}`}
+                  </p>
+                </div>
+              ))}
+          </td>
         </tr>
       ));
     if (!isLoading && totalCount === 0) {
