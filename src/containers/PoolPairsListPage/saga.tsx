@@ -7,7 +7,7 @@ import {
   fetchPoolPairPageStartedRequest,
   fetchPoolPairPageSuccessRequest,
   fetchPoolPairPageFailureRequest,
-  updateTotalValueLocked,
+  updateTotalValueBlockCountLocked,
   fetchSwapTransactionStartedRequest,
   fetchSwapTransactionFailureRequest,
   fetchSwapTransactionSuccessRequest,
@@ -29,6 +29,7 @@ import {
   getPoolPairGraph,
   getPoolPairAddRemoveLP,
   getPoolPairVolumeGraph,
+  handleBlockCount,
 } from './services';
 
 function* getNetwork() {
@@ -61,10 +62,11 @@ function* fetchPoolPairsListStarted(action) {
         totalVolume,
       };
     });
-    yield put(updateTotalValueLocked(tvl));
+    const tbc = yield call(handleBlockCount, query);
+    yield put(updateTotalValueBlockCountLocked({ tvl, tbc }));
     yield put(fetchPoolPairsListSuccessRequest(data));
   } catch (err) {
-    yield put(updateTotalValueLocked(0));
+    yield put(updateTotalValueBlockCountLocked({ tvl: 0, tbc: 0 }));
     yield put(fetchPoolPairsListFailureRequest(err.message));
   }
 }

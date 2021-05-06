@@ -15,6 +15,16 @@ import {
 } from '../../constants';
 import ApiRequest from '../../utils/apiRequest';
 
+export const handleBlockCount = async (query: { network: string }) => {
+  const apiRequest = new ApiRequest();
+
+  const { data: blockCount } = await apiRequest.get('/v1/getblockcount', {
+    baseURL: QUICK_STATS_BASE_ENDPOINT,
+    params: query,
+  });
+  return blockCount.data;
+};
+
 export const handlePoolPairList = async (query: { network: string }) => {
   const apiRequest = new ApiRequest();
 

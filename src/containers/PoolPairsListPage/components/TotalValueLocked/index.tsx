@@ -8,10 +8,11 @@ import styles from '../../PoolPairsListPage.module.scss';
 
 interface TotalValueLocked {
   totalValueLocked: number;
+  totalBlockCount: number;
 }
 
 const TotalValueLocked = (props: TotalValueLocked) => {
-  const { totalValueLocked } = props;
+  const { totalValueLocked, totalBlockCount } = props;
 
   return (
     <Row>
@@ -20,7 +21,9 @@ const TotalValueLocked = (props: TotalValueLocked) => {
         <span className={styles.currency}>
           {I18n.t('containers.poolPairsListPage.totalValueLockedCurrency')}
         </span>
-        <h4>{numberWithCommas(totalValueLocked, DEFAULT_DECIMAL_PLACE)}</h4>
+        <h4 className='mb-1'>{numberWithCommas(totalValueLocked, DEFAULT_DECIMAL_PLACE)}</h4>
+        {I18n.t('containers.poolPairsListPage.totalBlockCount')}{' '}
+        <h4>{numberWithCommas(totalBlockCount, 0)}</h4>
       </Col>
     </Row>
   );
@@ -28,6 +31,7 @@ const TotalValueLocked = (props: TotalValueLocked) => {
 
 const mapStateToProps = ({ poolPairsListPage, app }) => ({
   totalValueLocked: poolPairsListPage.totalValueLocked,
+  totalBlockCount: poolPairsListPage.totalBlockCount,
 });
 
 export default connect(mapStateToProps, {})(TotalValueLocked);

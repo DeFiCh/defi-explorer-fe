@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 import { I18n } from 'react-redux-i18n';
 import { fetchPoolPairAddRemoveLiquidityStartedRequest } from '../../reducer';
 import CustomTable from '../../../../components/CustomTable';
-import { numberWithCommas } from '../../../../utils/utility';
+import {
+  camelCaseToNormalCase,
+  convertToSentenceCase,
+  numberWithCommas,
+} from '../../../../utils/utility';
 import {
   MAINNET_EXPLORER,
   TESTNET_EXPLORER,
@@ -116,6 +120,18 @@ const PoolPairAddRemoveLpPageTable = (
         sortable: true,
       },
       {
+        name: I18n.t('containers.poolPairsAddRemoveLPListPage.txType'),
+        field: 'txType',
+        cell: (obj) => {
+          return (
+            <div title={`${obj.txType}-${obj.blockHeight}`}>
+              {convertToSentenceCase(camelCaseToNormalCase(obj?.txType || ''))}
+            </div>
+          );
+        },
+        sortable: true,
+      },
+      {
         name: I18n.t('containers.poolPairsAddRemoveLPListPage.txn'),
         field: 'txid',
         cell: (obj) => {
@@ -123,7 +139,7 @@ const PoolPairAddRemoveLpPageTable = (
             <ValueLi
               copyable
               clickble
-              textLimit='40'
+              textLimit='60'
               value={obj.txid}
               onclick={() => handelTxClick(obj.txid)}
             />

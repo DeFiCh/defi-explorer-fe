@@ -5,6 +5,7 @@ export const initialState = {
   data: [],
   isError: '',
   totalValueLocked: 0,
+  totalBlockCount: 0,
   poolPairPage: {
     isLoading: false,
     data: {},
@@ -44,6 +45,7 @@ const configSlice = createSlice({
       state.data = [];
       state.isError = '';
       state.totalValueLocked = 0;
+      state.totalBlockCount = 0;
     },
     fetchPoolPairsListFailureRequest(state, action) {
       state.isLoading = false;
@@ -55,8 +57,9 @@ const configSlice = createSlice({
       state.data = action.payload;
       state.isError = '';
     },
-    updateTotalValueLocked(state, action) {
-      state.totalValueLocked = action.payload;
+    updateTotalValueBlockCountLocked(state, action) {
+      state.totalValueLocked = action.payload.tvl;
+      state.totalBlockCount = action.payload.tbc;
     },
     fetchPoolPairPageStartedRequest(state, action) {
       state.poolPairPage.isLoading = true;
@@ -147,7 +150,7 @@ export const {
   fetchPoolPairsListStartedRequest,
   fetchPoolPairsListFailureRequest,
   fetchPoolPairsListSuccessRequest,
-  updateTotalValueLocked,
+  updateTotalValueBlockCountLocked,
   fetchPoolPairPageStartedRequest,
   fetchPoolPairPageFailureRequest,
   fetchPoolPairPageSuccessRequest,
