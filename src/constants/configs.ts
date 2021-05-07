@@ -39,6 +39,8 @@ export const GRANULARITY_YTD = 'YTD';
 export const GRANULARITY_MONTH = 'M';
 export const GRANULARITY_WEEK = 'W';
 export const GRANULARITY_DAY = 'D';
+export const SWAP_TABLE = 'SWAP_TABLE';
+export const LP_TABLE = 'LP_TABLE';
 
 export const SYMBOL_MAPPINGS = {
   BTC: 'bitcoin',

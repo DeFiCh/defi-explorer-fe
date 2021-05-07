@@ -121,7 +121,7 @@ const PoolPairPageTable = (props: PoolPairPageTable) => {
             <ValueLi
               copyable
               clickble
-              textLimit='40'
+              textLimit='60'
               value={obj.txid}
               onclick={() => handelTxClick(obj.txid)}
             />
