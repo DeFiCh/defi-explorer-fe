@@ -9,6 +9,8 @@ import styles from '../../PoolPairsListPage.module.scss';
 interface TotalValueLocked {
   totalValueLocked: number;
   totalBlockCount: number;
+  hideTVL: boolean;
+  hideBlocksCount: boolean;
 }
 
 const TotalValueLocked = (props: TotalValueLocked) => {
@@ -17,13 +19,19 @@ const TotalValueLocked = (props: TotalValueLocked) => {
   return (
     <Row>
       <Col md='12'>
-        {I18n.t('containers.poolPairsListPage.totalValueLocked')}{' '}
-        <span className={styles.currency}>
-          {I18n.t('containers.poolPairsListPage.totalValueLockedCurrency')}
-        </span>
-        <h4 className='mb-1'>{numberWithCommas(totalValueLocked, DEFAULT_DECIMAL_PLACE)}</h4>
-        {I18n.t('containers.poolPairsListPage.totalBlockCount')}{' '}
-        <h4>{numberWithCommas(totalBlockCount, 0)}</h4>
+      {!props.hideTVL &&
+        (<>
+          {I18n.t('containers.poolPairsListPage.totalValueLocked')}{' '}
+          <span className={styles.currency}>
+            {I18n.t('containers.poolPairsListPage.totalValueLockedCurrency')}
+          </span>
+        </>)}
+        {!props.hideBlocksCount && 
+        (<>
+          <h4 className='mb-1'>{numberWithCommas(totalValueLocked, DEFAULT_DECIMAL_PLACE)}</h4>
+          {I18n.t('containers.poolPairsListPage.totalBlockCount')}{' '}
+          <h4>{numberWithCommas(totalBlockCount, 0)}</h4>
+        </>)}
       </Col>
     </Row>
   );
