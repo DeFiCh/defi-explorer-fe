@@ -25,10 +25,10 @@ const TotalValueLocked = (props: TotalValueLocked) => {
           <span className={styles.currency}>
             {I18n.t('containers.poolPairsListPage.totalValueLockedCurrency')}
           </span>
+          <h4 className='mb-1'>{numberWithCommas(totalValueLocked, DEFAULT_DECIMAL_PLACE)}</h4>
         </>)}
         {!props.hideBlocksCount && 
         (<>
-          <h4 className='mb-1'>{numberWithCommas(totalValueLocked, DEFAULT_DECIMAL_PLACE)}</h4>
           {I18n.t('containers.poolPairsListPage.totalBlockCount')}{' '}
           <h4>{numberWithCommas(totalBlockCount, 0)}</h4>
         </>)}
