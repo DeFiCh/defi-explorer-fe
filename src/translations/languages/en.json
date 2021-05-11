@@ -195,13 +195,13 @@
       "liquidity": "Liquidity",
       "priceRatio": "Price Ratio",
       "apy": "APY",
-      "24hr": "(30d moving avg)",
+      "24hr": "(30d avg)",
       "apyTooltipMessage": "APY indicated here only includes DFI incentives, without commission. Actual APY with commission is thus, more",
       "rewardPct": "DeFi incentive dist share",
       "paginationRange": "%{to} – %{from} of %{total}",
       "noDataPresent": "No Pool Pair is present",
       "totalValueLocked": "Total Value Locked",
-      "totalBlockCount": "Total Block Count",
+      "totalBlockCount": "Blocks Synced",
       "totalValueLockedCurrency": "USD"
     },
     "poolPairsSwapListPage": {

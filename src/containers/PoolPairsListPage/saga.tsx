@@ -52,8 +52,8 @@ function* fetchPoolPairsListStarted(action) {
         )
       : pools;
     const data = poolData.map((item) => {
-      const totalVolume = new BigNumber(item.volumeA)
-        .plus(item.volumeB)
+      const totalVolume = new BigNumber(item.volumeA30)
+        .plus(item.volumeB30)
         .toNumber();
       const totalApy = new BigNumber(item.commission).plus(item.apy).toNumber();
       return {
@@ -90,7 +90,7 @@ function* fetchPoolPairPageStarted(action) {
 
 function fetchPoolPairData(item) {
   const { totalLiquidity } = item;
-  const totalVolume = new BigNumber(item.volumeA).plus(item.volumeB);
+  const totalVolume = new BigNumber(item.volumeA30).plus(item.volumeB30);
 
   const commission = totalLiquidity
     ? totalVolume.multipliedBy(0.2).multipliedBy(365).dividedBy(totalLiquidity)

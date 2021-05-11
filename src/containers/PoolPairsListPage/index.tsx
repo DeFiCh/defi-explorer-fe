@@ -10,9 +10,10 @@ const poolPairsListPage = () => {
   return (
     <>
       <h1>{I18n.t('containers.poolPairsListPage.poolPairsListPageTitle')}</h1>
-      <TotalValueLocked />
+      <TotalValueLocked hideTVL={false} hideBlocksCount={true} />
       <LiquidityPoolPairsDownload />
       <PoolPairsTable />
+      <TotalValueLocked hideTVL={true} hideBlocksCount={false} />
     </>
   );
 };
