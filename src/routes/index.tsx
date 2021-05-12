@@ -5,6 +5,7 @@ import {
   TOKEN_BASE_PATH,
   POOL_PAGE_PATH,
   POOL_BASE_PATH,
+  ANCHORS_BASE_PATH,
   TESTNET_DEFAULT_PAGE,
   MAINNET_DEFAULT_PAGE,
   DEFAULT_NETWORK_CHAIN,
@@ -18,6 +19,7 @@ import TokensListPage from '../containers/TokensListPage';
 import TokenPage from '../containers/TokensListPage/components/TokenPage';
 import AddressTokenListPage from '../containers/TokensListPage/components/AddressTokenListPage';
 import { getNetworkNameFromLocation } from '../utils/utility';
+import AnchorsPage from '../containers/AnchorsPage';
 
 const Routes = (location) => {
   const network = getNetworkNameFromLocation(location.pathname);
@@ -48,6 +50,7 @@ const Routes = (location) => {
         <Route exact path={TOKEN_BASE_PATH} component={TokensListPage} />
         <Route exact path={POOL_PAGE_PATH} component={PoolPairPage} />
         <Route exact path={POOL_BASE_PATH} component={PoolPairsListPage} />
+        <Route exact path={ANCHORS_BASE_PATH} component={AnchorsPage} />
       </Switch>
     </>
   );

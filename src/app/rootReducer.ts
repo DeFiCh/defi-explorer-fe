@@ -11,6 +11,7 @@ import blockListPageReducer from '../containers/BlockListPage/reducer';
 import richListPageReducer from '../containers/RichListPage/reducer';
 import tokensListPageReducer from '../containers/TokensListPage/reducer';
 import poolPairsListPageReducer from '../containers/PoolPairsListPage/reducer';
+import anchorsListPageReducer from '../containers/AnchorsPage/reducer';
 
 export default combineReducers({
   app: appReducer,
@@ -25,4 +26,5 @@ export default combineReducers({
   richListPage: richListPageReducer,
   tokensListPage: tokensListPageReducer,
   poolPairsListPage: poolPairsListPageReducer,
+  anchorsListPage: anchorsListPageReducer,
 });

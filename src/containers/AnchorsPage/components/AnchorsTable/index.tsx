@@ -1,0 +1,213 @@
+import React, { useCallback, useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { I18n } from 'react-redux-i18n';
+import { Link } from 'react-router-dom';
+import {
+  Row,
+  Col,
+  Card,
+  Table,
+  Button,
+  UncontrolledTooltip,
+  PopoverBody,
+} from 'reactstrap';
+import {
+  DEFAULT_DECIMAL_PLACE,
+  POOL_LIST_PAGE_URL_NAME,
+  TOKENS_LIST_PAGE_LIMIT,
+} from '../../../../constants';
+import { fetchAnchorsListStartedRequest } from '../../reducer';
+import Pagination from '../../../../components/Pagination';
+import styles from '../../AnchorsPage.scss';
+import {
+  numberWithCommas,
+  setRoute,
+  tableSorter,
+} from '../../../../utils/utility';
+import { cloneDeep } from 'lodash';
+import BigNumber from 'bignumber.js';
+import { RiAddLine } from 'react-icons/ri';
+import { MdArrowDownward, MdArrowUpward } from 'react-icons/md';
+import { getBlockDetailService } from '../../services';
+
+interface AnchorsTable {
+  fetchAnchorsListStartedRequest: () => void;
+  isLoading: boolean;
+  data: any[];
+  isError: string;
+}
+
+const AnchorsTable = (props: AnchorsTable) => {
+  const { fetchAnchorsListStartedRequest, isLoading, data, isError } = props;
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [tableRows, setTableRows] = useState<any[]>([]);
+  const [sortedField, setSortedField] = useState<any>({
+    field: '',
+    mode: 0,
+  });
+  const [tableData, setTableData] = useState<any[]>([]);
+  const totalCount = tableData.length;
+
+  const fetchData = (pageNum) => {
+    setCurrentPage(pageNum);
+    setTableRows(tableData);
+  };
+
+  useEffect(() => {
+    fetchAnchorsListStartedRequest();
+  }, []);
+
+  useEffect(() => {
+    setTableData(data);
+  }, [data]);
+
+  const sorter = (fieldName) => {
+    const { field, mode } = sortedField;
+    let flip = true;
+    let updatedMode = (mode + 1) % 3;
+    let updatedTableData = tableData;
+    if (tableData.length) {
+      if (fieldName !== field) {
+        flip = true;
+        updatedMode = 1;
+      } else {
+        if (updatedMode > 0) {
+          if (updatedMode === 2) {
+            flip = false;
+          }
+
+          if (updatedMode === 1) {
+            flip = true;
+          }
+        } else {
+          updatedTableData = data;
+        }
+      }
+      const newCloneTableData = cloneDeep(updatedTableData);
+      if (updatedMode === 0) {
+        setTableData(newCloneTableData);
+      } else {
+        setTableData(newCloneTableData.sort(tableSorter(flip, fieldName)));
+      }
+      setSortedField({
+        field: fieldName,
+        mode: updatedMode,
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchData(currentPage);
+  }, [tableData]);
+
+  const loadRows = () => {
+    if (isError)
+      return (
+        <tr key='error'>
+          <td>{isError}</td>
+        </tr>
+      );
+    if (tableRows.length) {
+      return loadTableRows();
+    }
+    if (!isLoading && totalCount === 0) {
+      return (
+        <tr key='noDataPresent'>
+          <td colSpan={4}>
+            {I18n.t('containers.anchorsListPage.noDataPresent')}
+          </td>
+        </tr>
+      );
+    }
+    return (
+      <tr key={'Loading'}>
+        <td colSpan={4}>{I18n.t('containers.poolPairsListPage.loading')}</td>
+      </tr>
+    );
+  };
+
+  const loadTableRows = useCallback(() => {
+    return tableRows.map((item, id) => (
+      <tr key={`${item.anchorHeight}-${id}`}>
+        <td>{item.anchorHeight}</td>
+        <td>{item.btcAnchorHeight}</td>
+        <td>{item.anchorHash}</td>
+        <td>{item.rewardAddress}</td>
+      </tr>
+    ));
+  }, [tableRows]);
+
+  const getSortingIcon = (fieldName) => {
+    const { field, mode } = sortedField;
+    if (fieldName === field) {
+      if (mode === 1) {
+        return <MdArrowDownward className={styles.sortIcon} />;
+      }
+      if (mode === 2) {
+        return <MdArrowUpward className={styles.sortIcon} />;
+      }
+    }
+    return '';
+  };
+
+  const handleBlockClick = async (blockHeight) => {
+    const data = await getBlockDetailService(blockHeight);
+    if (data && data.hash) {
+      window.open(`${API_PREFIX}block/${data.hash}`, '_blank');
+    }
+  };
+
+  return (
+    <Row className='mt-5'>
+      <Col xs='12'>
+        <Card className={styles.card}>
+          <div className={`${styles.tableResponsive} table-responsive-xl`}>
+            <Table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>
+                    <Button
+                      color='link'
+                      className='d-flex'
+                      onClick={() => sorter('anchorHeight')}
+                    >
+                      {I18n.t('containers.anchorsListPage.dfcHeight')}
+                      {getSortingIcon('anchorHeight')}
+                    </Button>
+                  </th>
+                  <th>
+                    <Button
+                      color='link'
+                      className='d-flex'
+                      onClick={() => sorter('btcAnchorHeight')}
+                    >
+                      {I18n.t('containers.anchorsListPage.btcHeight')}
+                      {getSortingIcon('btcAnchorHeight')}
+                    </Button>
+                  </th>
+                  <th>{I18n.t('containers.anchorsListPage.anchorHash')}</th>
+                  <th>{I18n.t('containers.anchorsListPage.rewardAddress')}</th>
+                </tr>
+              </thead>
+              <tbody>{loadRows()}</tbody>
+            </Table>
+          </div>
+        </Card>
+      </Col>
+    </Row>
+  );
+};
+
+const mapStateToProps = ({ anchorsListPage, app }) => ({
+  isLoading: anchorsListPage.isLoading,
+  data: anchorsListPage.data,
+  isError: anchorsListPage.isError,
+  unit: app.unit,
+});
+
+const mapDispatchToProps = {
+  fetchAnchorsListStartedRequest: () => fetchAnchorsListStartedRequest({}),
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnchorsTable);

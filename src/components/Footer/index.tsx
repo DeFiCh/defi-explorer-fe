@@ -14,6 +14,7 @@ import {
   // VERIFY_MESSAGE_PATH,
   POOL_LIST_PAGE_URL_NAME,
   TOKEN_LIST_PAGE_URL_NAME,
+  ANCHORS_LIST_PAGE_URL_NAME,
   FOOTER_DEFICHAIN_STAMP,
   ANCHOR_PAGE,
 } from '../../constants';
@@ -64,11 +65,11 @@ const FooterComponent = () => (
               {I18n.t('components.footerComponent.explorer.pool')}
             </Link>
           </Col>
-          {/* <Col xs='6'>
-            <Link to={ANCHOR_PAGE}>
+          <Col xs='12'>
+            <Link to={setRoute(ANCHORS_LIST_PAGE_URL_NAME)}>
               {I18n.t('components.footerComponent.explorer.anchoredBlocks')}
             </Link>
-          </Col> */}
+          </Col>
         </Row>
       </Col>
       <Col xs='12' md='2' className={styles.footerDefichainLink}>
