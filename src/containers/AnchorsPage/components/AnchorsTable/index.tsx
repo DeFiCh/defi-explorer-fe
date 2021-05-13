@@ -15,6 +15,8 @@ import {
   DEFAULT_DECIMAL_PLACE,
   POOL_LIST_PAGE_URL_NAME,
   TOKENS_LIST_PAGE_LIMIT,
+  MAINNET_EXPLORER,
+  TESTNET_EXPLORER,
 } from '../../../../constants';
 import { fetchAnchorsListStartedRequest } from '../../reducer';
 import Pagination from '../../../../components/Pagination';
@@ -28,13 +30,13 @@ import { cloneDeep } from 'lodash';
 import BigNumber from 'bignumber.js';
 import { RiAddLine } from 'react-icons/ri';
 import { MdArrowDownward, MdArrowUpward } from 'react-icons/md';
-import { getBlockDetailService } from '../../services';
 
 interface AnchorsTable {
   fetchAnchorsListStartedRequest: () => void;
   isLoading: boolean;
   data: any[];
   isError: string;
+  network: string;
 }
 
 const AnchorsTable = (props: AnchorsTable) => {
@@ -47,11 +49,20 @@ const AnchorsTable = (props: AnchorsTable) => {
     mode: 0,
   });
   const [tableData, setTableData] = useState<any[]>([]);
+  const pageSize = TOKENS_LIST_PAGE_LIMIT;
   const totalCount = tableData.length;
+
+  const API_PREFIX =
+    props.network === 'mainnet' ? MAINNET_EXPLORER : TESTNET_EXPLORER;
+
+  const pagesCount = Math.ceil(totalCount / pageSize);
+  const to = (currentPage - 1) * pageSize + 1;
+  const from = Math.min(totalCount, to + pageSize - 1);
 
   const fetchData = (pageNum) => {
     setCurrentPage(pageNum);
-    setTableRows(tableData);
+    const rows = tableData.slice((pageNum - 1) * pageSize, pageNum * pageSize);
+    setTableRows(rows);
   };
 
   useEffect(() => {
@@ -132,7 +143,15 @@ const AnchorsTable = (props: AnchorsTable) => {
       <tr key={`${item.anchorHeight}-${id}`}>
         <td>{item.anchorHeight}</td>
         <td>{item.btcAnchorHeight}</td>
-        <td>{item.anchorHash}</td>
+        <td>
+          <span>
+            <div className={styles.iconTitle}>
+              <a href={`${API_PREFIX}block/${item.anchorHash}`}>
+                {item.anchorHash}
+              </a>
+            </div>
+          </span>
+        </td>
         <td>{item.rewardAddress}</td>
       </tr>
     ));
@@ -149,13 +168,6 @@ const AnchorsTable = (props: AnchorsTable) => {
       }
     }
     return '';
-  };
-
-  const handleBlockClick = async (blockHeight) => {
-    const data = await getBlockDetailService(blockHeight);
-    if (data && data.hash) {
-      window.open(`${API_PREFIX}block/${data.hash}`, '_blank');
-    }
   };
 
   return (
@@ -195,6 +207,20 @@ const AnchorsTable = (props: AnchorsTable) => {
           </div>
         </Card>
       </Col>
+      <Col xs='12'>
+        {!!tableRows.length && (
+          <Pagination
+            label={I18n.t('containers.poolPairsListPage.paginationRange', {
+              from,
+              total: totalCount,
+              to,
+            })}
+            currentPage={currentPage}
+            pagesCount={pagesCount}
+            handlePageClick={fetchData}
+          />
+        )}
+      </Col>
     </Row>
   );
 };
@@ -204,6 +230,7 @@ const mapStateToProps = ({ anchorsListPage, app }) => ({
   data: anchorsListPage.data,
   isError: anchorsListPage.isError,
   unit: app.unit,
+  network: app.network,
 });
 
 const mapDispatchToProps = {
