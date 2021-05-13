@@ -20,7 +20,7 @@ import {
 } from '../../../../constants';
 import { fetchAnchorsListStartedRequest } from '../../reducer';
 import Pagination from '../../../../components/Pagination';
-import styles from '../../AnchorsPage.scss';
+import styles from '../../AnchorsPage.module.scss';
 import {
   numberWithCommas,
   setRoute,
