@@ -12,6 +12,7 @@ import {
 import {
   TOKEN_LIST_PAGE_URL_NAME,
   POOL_LIST_PAGE_URL_NAME,
+  ANCHORS_LIST_PAGE_URL_NAME,
   ADDRESS_TOKEN_LIST_PAGE_URL_NAME,
   DEFAULT_PAGE,
 } from '../../constants';
@@ -100,6 +101,14 @@ const NavbarComponent = (props: NavbarComponentProps) => {
             <NavItem>
               <NavLink to={setRoute(TOKEN_LIST_PAGE_URL_NAME)} tag={RRNavLink}>
                 {I18n.t('containers.navBar.tokens')}
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                to={setRoute(ANCHORS_LIST_PAGE_URL_NAME)}
+                tag={RRNavLink}
+              >
+                {I18n.t('containers.navBar.anchors')}
               </NavLink>
             </NavItem>
             <NavItem>

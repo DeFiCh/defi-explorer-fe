@@ -89,6 +89,7 @@
       "transactions": "Transactions",
       "tokens": "Tokens",
       "pool": "Pool",
+      "anchors": "Anchors",
       "explorerTitle": "Explorer"
     },
     "blockPage": {
@@ -183,6 +184,14 @@
     "customTable": {
       "loading": "Loading",
       "noDataPresent": "No data available"
+    },
+    "anchorsListPage": {
+      "anchorsListPageTitle": "Anchor Block List",
+      "dfcHeight": "DFC Height",
+      "btcHeight": "BTC Height",
+      "anchorHash": "Block Hash",
+      "noDataPresent": "No anchors are present",
+      "rewardAddress": "Reward Address"
     },
     "poolPairsListPage": {
       "loading": "Loading",

@@ -10,6 +10,7 @@ import transactionsListPageSaga from '../containers/TransactionsListPage/saga';
 import richListPageSaga from '../containers/RichListPage/saga';
 import tokensListPageSaga from '../containers/TokensListPage/saga';
 import poolPairsListPage from '../containers/PoolPairsListPage/saga';
+import anchorsListPage from '../containers/AnchorsPage/saga';
 import { changeNetwork } from '../containers/App/reducer';
 
 function* appStarting() {
@@ -39,6 +40,7 @@ function* rootSaga() {
     fork(richListPageSaga),
     fork(tokensListPageSaga),
     fork(poolPairsListPage),
+    fork(anchorsListPage),
   ]);
 }
 
