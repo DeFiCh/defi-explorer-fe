@@ -25,6 +25,7 @@
   "keywords": [],
   "license": "ISC",
   "dependencies": {
+    "@aws-crypto/sha256-browser": "^1.1.0",
     "@babel/preset-typescript": "^7.9.0",
     "@storybook/addon-actions": "^5.3.9",
     "@storybook/addon-docs": "^5.3.9",
@@ -37,6 +38,7 @@
     "axios": "^0.19.2",
     "bignumber.js": "^9.0.0",
     "bootstrap": "^4.4.1",
+    "bs58": "^4.0.1",
     "chart.js": "^2.9.4",
     "chartjs-plugin-zoom": "^0.7.7",
     "comma-number": "^2.0.1",

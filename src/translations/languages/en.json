@@ -193,6 +193,9 @@
       "noDataPresent": "No anchors are present",
       "rewardAddress": "Reward Address"
     },
+    "txInfoPage": {
+      "txInfoPageTitle": "DFI Transaction Info"
+    },
     "poolPairsListPage": {
       "loading": "Loading",
       "poolPairsListPageTitle": "Liquidity Pool Pairs",

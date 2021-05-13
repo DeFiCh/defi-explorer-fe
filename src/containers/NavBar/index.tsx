@@ -14,6 +14,7 @@ import {
   POOL_LIST_PAGE_URL_NAME,
   ANCHORS_LIST_PAGE_URL_NAME,
   ADDRESS_TOKEN_LIST_PAGE_URL_NAME,
+  TX_PAGE_URL_NAME,
   DEFAULT_PAGE,
 } from '../../constants';
 import {
@@ -48,9 +49,13 @@ const NavbarComponent = (props: NavbarComponentProps) => {
   const handleSubmitFunc = (event) => {
     event.preventDefault();
     if (searchValue) {
-      history.push(
-        setRoute(`${ADDRESS_TOKEN_LIST_PAGE_URL_NAME}/${searchValue}`)
-      );
+      if (searchValue.length === 64) {
+        history.push(setRoute(`${TX_PAGE_URL_NAME}/${searchValue}`));
+      } else {
+        history.push(
+          setRoute(`${ADDRESS_TOKEN_LIST_PAGE_URL_NAME}/${searchValue}`)
+        );
+      }
       setShowSearchBar(false);
     }
   };

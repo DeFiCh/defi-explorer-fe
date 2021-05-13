@@ -12,6 +12,7 @@ import {
   TESTNET_BASE_PATH,
   MAINNET_BASE_PATH,
   ADDRESS_TOKEN_LIST_PAGE,
+  TX_INFO_PAGE,
 } from '../constants';
 import PoolPairsListPage from '../containers/PoolPairsListPage';
 import PoolPairPage from '../containers/PoolPairsListPage/components/PoolPairPage';
@@ -20,6 +21,7 @@ import TokenPage from '../containers/TokensListPage/components/TokenPage';
 import AddressTokenListPage from '../containers/TokensListPage/components/AddressTokenListPage';
 import { getNetworkNameFromLocation } from '../utils/utility';
 import AnchorsPage from '../containers/AnchorsPage';
+import TxInfoPage from '../containers/TxInfoPage';
 
 const Routes = (location) => {
   const network = getNetworkNameFromLocation(location.pathname);
@@ -46,6 +48,7 @@ const Routes = (location) => {
           path={ADDRESS_TOKEN_LIST_PAGE}
           component={AddressTokenListPage}
         />
+        <Route exact path={TX_INFO_PAGE} component={TxInfoPage} />
 
         <Route exact path={TOKEN_BASE_PATH} component={TokensListPage} />
         <Route exact path={POOL_PAGE_PATH} component={PoolPairPage} />

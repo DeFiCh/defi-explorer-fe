@@ -11,6 +11,7 @@ import richListPageSaga from '../containers/RichListPage/saga';
 import tokensListPageSaga from '../containers/TokensListPage/saga';
 import poolPairsListPage from '../containers/PoolPairsListPage/saga';
 import anchorsListPage from '../containers/AnchorsPage/saga';
+import txInfoPage from '../containers/TxInfoPage/saga';
 import { changeNetwork } from '../containers/App/reducer';
 
 function* appStarting() {
@@ -41,6 +42,7 @@ function* rootSaga() {
     fork(tokensListPageSaga),
     fork(poolPairsListPage),
     fork(anchorsListPage),
+    fork(txInfoPage),
   ]);
 }
 

@@ -1,0 +1,121 @@
+// App and Bootstrap variables required
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '../../scss/variables';
+@import '../../scss/bootstrap/variables';
+
+.card {
+  overflow: hidden;
+}
+
+// .tableResponsive {
+//   height: calc(100vh - 186px);
+//   min-height: 400px;
+//   overflow: auto;
+// }
+
+.table {
+  margin-bottom: 0;
+  thead th {
+    position: sticky;
+    top: 0;
+    background-color: $card-bg;
+    box-shadow: 0 $table-border-width $table-border-color;
+    button {
+      text-transform: none !important;
+      padding: 0 !important;
+      color: #000 !important;
+      background-color: transparent !important;
+      border-color: transparent !important;
+    }
+  }
+  td {
+    vertical-align: middle;
+  }
+  tr:first-child td,
+  tr:first-child th {
+    border-top: none;
+  }
+}
+
+.status {
+  width: 24px;
+  height: 24px;
+  color: $secondary;
+}
+
+.sortIcon {
+  width: 14px !important;
+}
+
+.staticCol {
+  width: 250px !important;
+}
+
+.iconTitle {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.infoText {
+  background-color: $card-bg;
+  box-shadow: 0 $table-border-width $table-border-color;
+  padding: 25px;
+  white-space: pre-wrap;
+  border-radius: 20px;
+}
+
+.infoIcon {
+  margin-top: 4px;
+  color: $secondary;
+}
+
+.subHeader {
+  color: $secondary;
+}
+
+.currency {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.lpDownloadImg {
+  height: 117px;
+  max-width: 100%;
+}
+
+.lpDownloadDescriptionWrapper {
+  @include media-breakpoint-down(sm) {
+    .downloadDescription {
+      margin-top: 1rem;
+    }
+  }
+}
+
+.lpBackgroundImg {
+  display: flex;
+  justify-content: center;
+  background-image: url(../../assets/img/pool-bg.png);
+  background-size: 100% 100%;
+  background-position: top center;
+}
+
+.doge {
+  font-family: 'Comic Sans MS', 'Comic Sans', 'IBM Plex Sans', sans-serif;
+}
+.buttonGroup {
+  float: right;
+}
+
+.totalValueLocked {
+  padding-left: 22px;
+  padding-top: 18px;
+}
+
+.buttonActive {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
