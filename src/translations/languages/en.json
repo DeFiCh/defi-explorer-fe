@@ -77,7 +77,7 @@
       }
     },
     "navBar": {
-      "searchPlaceholder": "Search address",
+      "searchPlaceholder": "Search address/transaction",
       "menuDropdown": {
         "network": "Network",
         "units": "Units"

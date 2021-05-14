@@ -17,7 +17,7 @@ const txInfoPage = (props) => {
 
   useEffect(() => {
     fetchTxInfoStartedRequest(txid);
-  }, []);
+  }, [txid]);
 
   return (
     <>

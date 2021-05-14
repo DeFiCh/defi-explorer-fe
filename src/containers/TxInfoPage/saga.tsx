@@ -19,8 +19,10 @@ function* fetchTxInfoStarted(action) {
       network,
       txid: action.payload,
     };
-    const blocks = yield call(handleGetTxInfo, query);
-    const data = blocks;
+    const data = {
+      tx: yield call(handleGetTxInfo, query),
+      network,
+    };
     yield put(fetchTxInfoSuccessRequest(data));
   } catch (err) {
     yield put(fetchTxInfoFailureRequest(err.message));

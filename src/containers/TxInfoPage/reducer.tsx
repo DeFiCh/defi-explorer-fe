@@ -1,24 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import {Sha256} from '@aws-crypto/sha256-browser';
+import hash from 'hash.js';
+import { Buffer } from 'buffer/';
+import bs58 from 'bs58';
 
-// const convertAddress = (scriptAddress) => {
-//   const doubleHash = (bytes) => {
-//       let scriptKeySha256 = new Sha256().update(bytes).digest();
-//       return new Sha256().update(scriptKeySha256).digest().subarray(0, 4);
-//   }
+const convertAddress = (network, scriptAddress) => {
+  if (scriptAddress.length !== 46 && scriptAddress.length !== 50) {
+    return scriptAddress;
+  }
 
-//   const keyNoHash = scriptAddress.subarray(0, scriptAddress.length - 4);
-//   const outputAddress = doubleHash(keyNoHash);
-//   const decodedString = scriptAddress.toString('hex');
+  let scriptKey = scriptAddress;
+  if (scriptKey.substring(0, 2) === 'a9') {
+    scriptKey =
+      (network === 'mainnet' ? '5a' : '0f') + scriptKey.substring(4, 44);
+  } else {
+    scriptKey =
+      (network === 'mainnet' ? '12' : '80') + scriptKey.substring(6, 46);
+  }
+  const bytes = Buffer.from(scriptKey, 'hex');
+  const scriptKeySha256 = hash.sha256().update(bytes).digest();
+  const shortHash = hash.sha256().update(scriptKeySha256).digest().slice(0, 4);
+  const address = bs58.encode(
+    Buffer.concat([new Buffer(bytes), new Buffer(shortHash)])
+  );
 
-//   if(decodedString.substring(0, 2) === '5a') {
-//     return outputAddress;
-//   } else if(decodedString.substring(0, 2) === '12') {
-//     return outputAddress;
-//   } else { // bech32, not commmonly used
-//     return null;
-//   }
-// }
+  return address;
+};
 
 export const initialState = {
   isLoading: false,
@@ -43,21 +49,55 @@ const configSlice = createSlice({
     fetchTxInfoSuccessRequest(state, action) {
       state.isLoading = false;
 
+      const network = action.payload.network;
+      function iterateTo(obj) {
+        for (const property in obj) {
+          if (obj.hasOwnProperty(property)) {
+            const convertedAddress = convertAddress(network, property);
+            obj[convertedAddress] = obj[property];
+            delete obj[property];
+          }
+        }
+      }
+
       function iterate(obj) {
         for (const property in obj) {
           if (obj.hasOwnProperty(property)) {
             if (typeof obj[property] === 'object') {
-              iterate(obj[property]);
-            } else if (property.toLowerCase().indexOf('address') !== -1) {
+              if (property === 'to') {
+                iterateTo(obj[property]);
+              } else {
+                iterate(obj[property]);
+              }
+            } else if (
+              property.toLowerCase().indexOf('address') !== -1 ||
+              property === 'from'
+            ) {
               // console.log(property + '   ' + obj[property]);
+              obj[property] = convertAddress(network, obj[property]);
             }
           }
         }
       }
 
-      iterate(action.payload);
+      function iterateError(obj) {
+        let errorString = '';
+        for (const property in obj) {
+          if (obj.hasOwnProperty(property)) {
+            errorString += obj[property];
+            delete obj[property];
+          }
+        }
+        obj.error = errorString;
+      }
 
-      state.data = action.payload;
+      if (action.payload.tx['0']) {
+        iterateError(action.payload.tx);
+      } else {
+        iterate(action.payload.tx);
+      }
+
+      state.data = action.payload.tx;
       state.isError = '';
     },
   },

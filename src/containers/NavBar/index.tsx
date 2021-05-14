@@ -76,6 +76,11 @@ const NavbarComponent = (props: NavbarComponentProps) => {
               {I18n.t('containers.navBar.tokens')}
             </NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink to={setRoute(ANCHORS_LIST_PAGE_URL_NAME)} tag={RRNavLink}>
+              {I18n.t('containers.navBar.anchors')}
+            </NavLink>
+          </NavItem>
         </Nav>
         <NetworkCurrency {...props} />
       </>
