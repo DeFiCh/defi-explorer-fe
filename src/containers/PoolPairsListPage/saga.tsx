@@ -91,6 +91,7 @@ function* fetchPoolPairPageStarted(action) {
 function fetchPoolPairData(item) {
   const { totalLiquidity } = item;
   const totalVolume = new BigNumber(item.volumeA30).plus(item.volumeB30);
+  const totalVolume24h = new BigNumber(item.volumeA).plus(item.volumeB);
 
   const commission = totalLiquidity
     ? totalVolume.multipliedBy(0.2).multipliedBy(365).dividedBy(totalLiquidity)
@@ -100,6 +101,7 @@ function fetchPoolPairData(item) {
   return {
     ...item,
     totalVolume: totalVolume.toNumber(),
+    totalVolume24h: totalVolume24h.toNumber(),
     totalApy,
     commission: commission.toNumber(),
     'reserveA/reserveB': new BigNumber(item['reserveA/reserveB']).toNumber(),

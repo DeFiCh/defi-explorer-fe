@@ -247,7 +247,7 @@ const PoolPairPage = (props: PoolPairPageProps) => {
                   </>
                 }
                 value={numberWithCommas(
-                  data.totalVolume,
+                  data.totalVolume24h,
                   DEFAULT_DECIMAL_PLACE
                 )}
               />
