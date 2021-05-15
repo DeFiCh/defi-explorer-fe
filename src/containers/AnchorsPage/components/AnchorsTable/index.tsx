@@ -18,7 +18,10 @@ import {
   MAINNET_EXPLORER,
   TESTNET_EXPLORER,
 } from '../../../../constants';
-import { fetchAnchorsListStartedRequest } from '../../reducer';
+import {
+  fetchAnchorsListStartedRequest,
+  fetchTimestampsStartedRequest,
+} from '../../reducer';
 import Pagination from '../../../../components/Pagination';
 import styles from '../../AnchorsPage.module.scss';
 import {
@@ -33,14 +36,23 @@ import { MdArrowDownward, MdArrowUpward } from 'react-icons/md';
 
 interface AnchorsTable {
   fetchAnchorsListStartedRequest: () => void;
+  fetchTimestampsStartedRequest: (payload: any) => void;
   isLoading: boolean;
   data: any[];
+  timestamps: any;
   isError: string;
   network: string;
 }
 
 const AnchorsTable = (props: AnchorsTable) => {
-  const { fetchAnchorsListStartedRequest, isLoading, data, isError } = props;
+  const {
+    fetchAnchorsListStartedRequest,
+    fetchTimestampsStartedRequest,
+    isLoading,
+    data,
+    isError,
+    timestamps,
+  } = props;
 
   const [currentPage, setCurrentPage] = useState(1);
   const [tableRows, setTableRows] = useState<any[]>([]);
@@ -62,6 +74,8 @@ const AnchorsTable = (props: AnchorsTable) => {
   const fetchData = (pageNum) => {
     setCurrentPage(pageNum);
     const rows = tableData.slice((pageNum - 1) * pageSize, pageNum * pageSize);
+    const hashes = rows.map((x) => x.anchorHash);
+    fetchTimestampsStartedRequest(hashes);
     setTableRows(rows);
   };
 
@@ -138,7 +152,7 @@ const AnchorsTable = (props: AnchorsTable) => {
     );
   };
 
-  const loadTableRows = useCallback(() => {
+  const loadTableRows = () => {
     return tableRows.map((item, id) => (
       <tr key={`${item.anchorHeight}-${id}`}>
         <td>
@@ -151,7 +165,11 @@ const AnchorsTable = (props: AnchorsTable) => {
           </span>
         </td>
         <td>{item.btcAnchorHeight}</td>
-        <td>{item.anchorHash}</td>
+        <td>
+          {timestamps[item.anchorHash]
+            ? new Date(timestamps[item.anchorHash]).toLocaleString()
+            : 'Loading...'}
+        </td>
         <td>
           <span>
             <div className={styles.iconTitle}>
@@ -163,7 +181,7 @@ const AnchorsTable = (props: AnchorsTable) => {
         </td>
       </tr>
     ));
-  }, [tableRows]);
+  };
 
   const getSortingIcon = (fieldName) => {
     const { field, mode } = sortedField;
@@ -206,17 +224,16 @@ const AnchorsTable = (props: AnchorsTable) => {
                       {getSortingIcon('btcAnchorHeight')}
                     </Button>
                   </th>
-                  <th>{I18n.t('containers.anchorsListPage.anchorHash')}</th>
-                  {/* <th>
+                  <th>
                     <Button
                       color='link'
                       className='d-flex'
-                      onClick={() => sorter('time')}
+                      onClick={() => sorter('anchorHeight')}
                     >
                       {I18n.t('containers.anchorsListPage.time')}
-                      {getSortingIcon('time')}
+                      {getSortingIcon('anchorHeight')}
                     </Button>
-                  </th> */}
+                  </th>
                   <th>{I18n.t('containers.anchorsListPage.rewardAddress')}</th>
                 </tr>
               </thead>
@@ -246,6 +263,7 @@ const AnchorsTable = (props: AnchorsTable) => {
 const mapStateToProps = ({ anchorsListPage, app }) => ({
   isLoading: anchorsListPage.isLoading,
   data: anchorsListPage.data,
+  timestamps: anchorsListPage.timestamps,
   isError: anchorsListPage.isError,
   unit: app.unit,
   network: app.network,
@@ -253,6 +271,8 @@ const mapStateToProps = ({ anchorsListPage, app }) => ({
 
 const mapDispatchToProps = {
   fetchAnchorsListStartedRequest: () => fetchAnchorsListStartedRequest({}),
+  fetchTimestampsStartedRequest: (payload) =>
+    fetchTimestampsStartedRequest(payload),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnchorsTable);

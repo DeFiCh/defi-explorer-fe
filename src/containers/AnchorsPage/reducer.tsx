@@ -31,6 +31,19 @@ const configSlice = createSlice({
       state.data = action.payload.data.reverse();
       state.isError = '';
     },
+    fetchTimestampsStartedRequest(state, action) {
+      state.isLoading = true;
+      state.isError = '';
+    },
+    fetchTimestampsFailureRequest(state, action) {
+      state.isLoading = false;
+      state.isError = action.payload;
+    },
+    fetchTimestampsSuccessRequest(state, action) {
+      state.isLoading = false;
+      state.timestamps = { ...state.timestamps, ...action.payload };
+      state.isError = '';
+    },
   },
 });
 
@@ -40,6 +53,9 @@ export const {
   fetchAnchorsListStartedRequest,
   fetchAnchorsListFailureRequest,
   fetchAnchorsListSuccessRequest,
+  fetchTimestampsStartedRequest,
+  fetchTimestampsFailureRequest,
+  fetchTimestampsSuccessRequest,
 } = actions;
 
 export default reducer;

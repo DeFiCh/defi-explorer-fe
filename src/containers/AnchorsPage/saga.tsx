@@ -4,8 +4,11 @@ import {
   fetchAnchorsListStartedRequest,
   fetchAnchorsListFailureRequest,
   fetchAnchorsListSuccessRequest,
+  fetchTimestampsStartedRequest,
+  fetchTimestampsFailureRequest,
+  fetchTimestampsSuccessRequest,
 } from './reducer';
-import { handleGetAnchorsList } from './services';
+import { handleGetAnchorsList, handleGetTimestamp } from './services';
 
 function* getNetwork() {
   const { network } = yield select((state) => state.app);
@@ -26,11 +29,31 @@ function* fetchAnchorsListStarted(action) {
   }
 }
 
+function* fetchTimestampsStarted(action) {
+  const data = {};
+
+  try {
+    for (const blockHash of action.payload) {
+      const network = yield call(getNetwork);
+      const query = {
+        network,
+        blockHash,
+      };
+      data[query.blockHash] = (yield call(handleGetTimestamp, query)).time;
+    }
+  } catch (err) {
+    yield put(fetchTimestampsFailureRequest(err.message));
+  }
+
+  yield put(fetchTimestampsSuccessRequest(data));
+}
+
 function* mySaga() {
   yield takeLatest(
     fetchAnchorsListStartedRequest.type,
     fetchAnchorsListStarted
   );
+  yield takeLatest(fetchTimestampsStartedRequest.type, fetchTimestampsStarted);
 }
 
 export default mySaga;

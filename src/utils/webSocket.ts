@@ -32,7 +32,6 @@ class Websocket {
     });
     this.socket.on('connect', () => {
       if (this.socket) {
-        console.log('Socket Connected');
         store.dispatch(connected());
         this.socket.emit('room', `/${this.chain}/${this.network}/inv`);
       }

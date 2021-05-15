@@ -73,7 +73,6 @@ const configSlice = createSlice({
               property.toLowerCase().indexOf('address') !== -1 ||
               property === 'from'
             ) {
-              // console.log(property + '   ' + obj[property]);
               obj[property] = convertAddress(network, obj[property]);
             }
           }
