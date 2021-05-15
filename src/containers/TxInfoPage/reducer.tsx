@@ -64,7 +64,7 @@ const configSlice = createSlice({
         for (const property in obj) {
           if (obj.hasOwnProperty(property)) {
             if (typeof obj[property] === 'object') {
-              if (property === 'to') {
+              if (property === 'to' || property === 'from') {
                 iterateTo(obj[property]);
               } else {
                 iterate(obj[property]);
