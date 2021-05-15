@@ -194,7 +194,7 @@
       "rewardAddress": "Reward Address"
     },
     "txInfoPage": {
-      "txInfoPageTitle": "DFI Transaction Info"
+      "txInfoPageTitle": "DeFiChain Custom Transaction"
     },
     "poolPairsListPage": {
       "loading": "Loading",
