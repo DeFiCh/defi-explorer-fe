@@ -14,7 +14,7 @@ import {
 import {
   DEFAULT_DECIMAL_PLACE,
   POOL_LIST_PAGE_URL_NAME,
-  TOKENS_LIST_PAGE_LIMIT,
+  ANCHORS_LIST_PAGE_LIMIT,
   MAINNET_EXPLORER,
   TESTNET_EXPLORER,
 } from '../../../../constants';
@@ -61,7 +61,7 @@ const AnchorsTable = (props: AnchorsTable) => {
     mode: 0,
   });
   const [tableData, setTableData] = useState<any[]>([]);
-  const pageSize = TOKENS_LIST_PAGE_LIMIT;
+  const pageSize = ANCHORS_LIST_PAGE_LIMIT;
   const totalCount = tableData.length;
 
   const API_PREFIX =
