@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const initialState = {
   isLoading: false,
   data: [],
+  timestamps: {},
   isError: '',
   anchorsListPage: {
     isLoading: false,

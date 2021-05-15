@@ -187,8 +187,9 @@
     },
     "anchorsListPage": {
       "anchorsListPageTitle": "Anchor Block List",
-      "dfcHeight": "DFC Height",
-      "btcHeight": "BTC Height",
+      "time": "Anchor Time",
+      "dfcHeight": "DeFiChain Block Height",
+      "btcHeight": "Bitcoin Block Height",
       "anchorHash": "Block Hash",
       "noDataPresent": "No anchors are present",
       "rewardAddress": "Reward Address"

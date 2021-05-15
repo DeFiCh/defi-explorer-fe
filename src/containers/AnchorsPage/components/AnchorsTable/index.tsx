@@ -141,18 +141,26 @@ const AnchorsTable = (props: AnchorsTable) => {
   const loadTableRows = useCallback(() => {
     return tableRows.map((item, id) => (
       <tr key={`${item.anchorHeight}-${id}`}>
-        <td>{item.anchorHeight}</td>
-        <td>{item.btcAnchorHeight}</td>
         <td>
           <span>
             <div className={styles.iconTitle}>
               <a href={`${API_PREFIX}block/${item.anchorHash}`}>
-                {item.anchorHash}
+                {item.anchorHeight}
               </a>
             </div>
           </span>
         </td>
-        <td>{item.rewardAddress}</td>
+        <td>{item.btcAnchorHeight}</td>
+        <td>{item.anchorHash}</td>
+        <td>
+          <span>
+            <div className={styles.iconTitle}>
+              <a href={`${API_PREFIX}address/${item.rewardAddress}`}>
+                {item.rewardAddress}
+              </a>
+            </div>
+          </span>
+        </td>
       </tr>
     ));
   }, [tableRows]);
@@ -199,6 +207,16 @@ const AnchorsTable = (props: AnchorsTable) => {
                     </Button>
                   </th>
                   <th>{I18n.t('containers.anchorsListPage.anchorHash')}</th>
+                  {/* <th>
+                    <Button
+                      color='link'
+                      className='d-flex'
+                      onClick={() => sorter('time')}
+                    >
+                      {I18n.t('containers.anchorsListPage.time')}
+                      {getSortingIcon('time')}
+                    </Button>
+                  </th> */}
                   <th>{I18n.t('containers.anchorsListPage.rewardAddress')}</th>
                 </tr>
               </thead>
