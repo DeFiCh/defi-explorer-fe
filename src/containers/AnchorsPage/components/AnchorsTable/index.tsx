@@ -74,7 +74,9 @@ const AnchorsTable = (props: AnchorsTable) => {
   const fetchData = (pageNum) => {
     setCurrentPage(pageNum);
     const rows = tableData.slice((pageNum - 1) * pageSize, pageNum * pageSize);
-    const hashes = rows.map((x) => x.anchorHash);
+    const hashes = rows
+      .filter((x) => !timestamps[x.anchorHash])
+      .map((x) => x.anchorHash);
     fetchTimestampsStartedRequest(hashes);
     setTableRows(rows);
   };
