@@ -265,7 +265,7 @@ function* fetchPoolPairAddRemoveLiquidity(action) {
     });
     yield put(fetchPoolPairAddRemoveLPSuccessRequest(data));
   } catch (err) {
-    yield put(fetchPoolPairAddRemoveLPErrorRequest(err));
+    yield put(fetchPoolPairAddRemoveLPErrorRequest(err.message));
   }
 }
 

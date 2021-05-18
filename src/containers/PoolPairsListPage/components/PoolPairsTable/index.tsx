@@ -306,7 +306,7 @@ const PoolPairsTable = (props: PoolPairsTable) => {
                       className='d-flex float-right'
                       onClick={() => sorter('totalApy')}
                     >
-                      {I18n.t('containers.poolPairsListPage.apy')}
+                      {I18n.t('containers.poolPairsListPage.apr')}
                       &nbsp;
                       {getSortingIcon('totalApy')}
                     </Button>

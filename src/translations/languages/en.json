@@ -207,6 +207,7 @@
       "usd": "USD",
       "liquidity": "Liquidity",
       "priceRatio": "Price Ratio",
+      "apr": "APR",
       "apy": "APY",
       "24hr": "(30d avg)",
       "apyTooltipMessage": "APY indicated here only includes DFI incentives, without commission. Actual APY with commission is thus, more",
@@ -296,7 +297,9 @@
       "addressTokenListPageTitle": "Balance",
       "name": "Name",
       "balance": "Balance",
-      "paginationRange": "%{to} - %{from} of %{total}"
+      "paginationRange": "%{to} - %{from} of %{total}",
+      "utxos": "UTXOS",
+      "dfiTokens": "DFI Tokens"
     },
     "poolPairGraph": {
       "loading": "Loading",
