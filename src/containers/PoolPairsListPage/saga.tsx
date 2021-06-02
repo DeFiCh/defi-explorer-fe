@@ -30,6 +30,7 @@ import {
   getPoolPairAddRemoveLP,
   getPoolPairVolumeGraph,
   handleBlockCount,
+  handleBlockIndex,
 } from './services';
 
 function* getNetwork() {
@@ -63,10 +64,11 @@ function* fetchPoolPairsListStarted(action) {
       };
     });
     const tbc = yield call(handleBlockCount, query);
-    yield put(updateTotalValueBlockCountLocked({ tvl, tbc }));
+    const tbi = yield call(handleBlockIndex, query);
+    yield put(updateTotalValueBlockCountLocked({ tvl, tbc, tbi }));
     yield put(fetchPoolPairsListSuccessRequest(data));
   } catch (err) {
-    yield put(updateTotalValueBlockCountLocked({ tvl: 0, tbc: 0 }));
+    yield put(updateTotalValueBlockCountLocked({ tvl: 0, tbc: 0, tbi: 0 }));
     yield put(fetchPoolPairsListFailureRequest(err.message));
   }
 }

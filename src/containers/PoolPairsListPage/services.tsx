@@ -25,6 +25,17 @@ export const handleBlockCount = async (query: { network: string }) => {
   return blockCount.data;
 };
 
+
+export const handleBlockIndex = async (query: { network: string }) => {
+  const apiRequest = new ApiRequest();
+
+  const { data: data } = await apiRequest.get(`/v1/getswaptransaction?id=5&network=${query.network}&skip=0&limit=1`, {
+    baseURL: QUICK_STATS_BASE_ENDPOINT,
+  });
+
+  return data.data[0].blockHeight;
+};
+
 export const handlePoolPairList = async (query: { network: string }) => {
   const apiRequest = new ApiRequest();
 

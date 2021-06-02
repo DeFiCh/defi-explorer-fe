@@ -9,12 +9,13 @@ import styles from '../../PoolPairsListPage.module.scss';
 interface TotalValueLocked {
   totalValueLocked: number;
   totalBlockCount: number;
+  totalBlockIndex: number;
   hideTVL: boolean;
   hideBlocksCount: boolean;
 }
 
 const TotalValueLocked = (props: TotalValueLocked) => {
-  const { totalValueLocked, totalBlockCount } = props;
+  const { totalValueLocked, totalBlockCount, totalBlockIndex } = props;
 
   return (
     <Row>
@@ -31,6 +32,8 @@ const TotalValueLocked = (props: TotalValueLocked) => {
         (<>
           {I18n.t('containers.poolPairsListPage.totalBlockCount')}{' '}
           <h4>{numberWithCommas(totalBlockCount, 0)}</h4>
+          {I18n.t('containers.poolPairsListPage.totalBlockIndex')}{' '}
+          <h4>{numberWithCommas(totalBlockIndex, 0)}</h4>
         </>)}
       </Col>
     </Row>
@@ -40,6 +43,7 @@ const TotalValueLocked = (props: TotalValueLocked) => {
 const mapStateToProps = ({ poolPairsListPage, app }) => ({
   totalValueLocked: poolPairsListPage.totalValueLocked,
   totalBlockCount: poolPairsListPage.totalBlockCount,
+  totalBlockIndex: poolPairsListPage.totalBlockIndex,
 });
 
 export default connect(mapStateToProps, {})(TotalValueLocked);

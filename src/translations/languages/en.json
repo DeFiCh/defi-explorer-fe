@@ -215,6 +215,7 @@
       "noDataPresent": "No Pool Pair is present",
       "totalValueLocked": "Total Value Locked",
       "totalBlockCount": "Blocks Synced",
+      "totalBlockIndex": "Blocks Indexed",
       "totalValueLockedCurrency": "USD"
     },
     "poolPairsSwapListPage": {
