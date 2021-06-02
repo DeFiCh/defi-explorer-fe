@@ -189,7 +189,9 @@ const PoolPairsTable = (props: PoolPairsTable) => {
           {numberWithCommas(item.totalStaked, DEFAULT_DECIMAL_PLACE)}
         </td>
         <td className='text-right'>
-          {numberWithCommas(item.totalVolume, DEFAULT_DECIMAL_PLACE)}
+          {item.totalVolume !== 0
+            ? numberWithCommas(item.totalVolume, DEFAULT_DECIMAL_PLACE)
+            : 'Indexing...'}
         </td>
         <td colSpan={2} className='text-right'>
           <div className='d-flex justify-content-end align-items-center'>
