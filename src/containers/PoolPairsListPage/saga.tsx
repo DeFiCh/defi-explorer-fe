@@ -64,9 +64,16 @@ function* fetchPoolPairsListStarted(action) {
       };
     });
     const tbc = yield call(handleBlockCount, query);
-    const tbi = yield call(handleBlockIndex, query);
-    yield put(updateTotalValueBlockCountLocked({ tvl, tbc, tbi }));
     yield put(fetchPoolPairsListSuccessRequest(data));
+
+    let tbi = 0;
+    yield put(updateTotalValueBlockCountLocked({ tvl, tbc, tbi }));
+
+    try {
+      tbi = yield call(handleBlockIndex, query);
+    } catch(e) {}
+  
+    yield put(updateTotalValueBlockCountLocked({ tvl, tbc, tbi }));
   } catch (err) {
     yield put(updateTotalValueBlockCountLocked({ tvl: 0, tbc: 0, tbi: 0 }));
     yield put(fetchPoolPairsListFailureRequest(err.message));
