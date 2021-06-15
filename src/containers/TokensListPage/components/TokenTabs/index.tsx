@@ -20,7 +20,7 @@ const TokenTabs: React.FunctionComponent<TokenTabsProps> = (
 
   return (
     <div>
-      <Nav pills>
+      {/* <Nav pills>
         <Card className={`mr-2 ${styles.tokenTab}`}>
           <NavItem>
             <NavLink
@@ -35,7 +35,7 @@ const TokenTabs: React.FunctionComponent<TokenTabsProps> = (
             </NavLink>
           </NavItem>
         </Card>
-        {tokenId && (
+        {false && (
           <Card className={`mr-2 ${styles.tokenTab}`}>
             <NavItem>
               <NavLink
@@ -51,7 +51,7 @@ const TokenTabs: React.FunctionComponent<TokenTabsProps> = (
             </NavItem>
           </Card>
         )}
-      </Nav>
+      </Nav> */}
       <div className='mt-5'>
         <TabContent activeTab={activeTab}>
           <TabPane tabId={PAIRS}>
