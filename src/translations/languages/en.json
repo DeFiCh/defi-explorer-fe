@@ -20,10 +20,11 @@
     },
     "footerComponent": {
       "deFiChain": {
-        "deFiChainTitle": "DeFiChain",
+        "deFiChainTitle": "Links",
         "defiChainLink": "DeFichain.io",
         "gitHubLink": "GitHub",
-        "whitePaperLink": "White paper"
+        "whitePaperLink": "White paper",
+        "coinMarketCapLink": "CoinMarketCap"
       },
       "explorer": {
         "explorerTitle": "Explorer",

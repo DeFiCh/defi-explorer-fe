@@ -7,6 +7,7 @@ import {
   DEFICHAIN_IO_SITE,
   GITHUB_LINK,
   WHITE_PAPER_LINK,
+  CMC_LINK,
   // BLOCK_PAGE_BASE_PATH,
   // RICH_LIST_PATH,
   // TRANSACTION_BASE_PATH,
@@ -92,6 +93,11 @@ const FooterComponent = () => (
           <Col xs='12'>
             <a href={WHITE_PAPER_LINK} target='_blank'>
               {I18n.t('components.footerComponent.deFiChain.whitePaperLink')}
+            </a>
+          </Col>
+          <Col xs='12'>
+            <a href={CMC_LINK} target='_blank'>
+              {I18n.t('components.footerComponent.deFiChain.coinMarketCapLink')}
             </a>
           </Col>
         </Row>

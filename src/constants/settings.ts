@@ -44,3 +44,4 @@ export const DEFICHAIN_DOWNLOAD_SITE = 'https://defichain.com/downloads/';
 export const GITHUB_LINK = 'https://github.com/defich/ain/';
 export const RELEASE_LINK = 'https://github.com/defich/ain/releases';
 export const WHITE_PAPER_LINK = 'https://defichain.io/white-paper/';
+export const CMC_LINK = 'https://coinmarketcap.com/exchanges/defichain-dex/';
